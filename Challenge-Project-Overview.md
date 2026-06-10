@@ -4,7 +4,7 @@
 >
 > > 💡 **These grey text instructions are just for you, the team's Challenge Advisor; please delete them once you have completed the steps below.**
 >
-> We've pre-populated this Challenge Project Overview page — which is what will be shared with your Break Through Tech student team in August — using the details from your submission form. You should have received an email inviting you to join this repo as a Collaborator, enabling you to add files and make edits.
+> We've pre-populated this Challenge Project Overview page — which is what will be shared with your Break Through Tech student team in August — using the details from your submission form. You should have received an email inviting you to join this repo as a Collaborator, which will allow you to add files and make edits.
 > 
 > In order for your project to be finalized and assigned to a team, please:
 > 1. **Review all sections below** and update or expand any content as needed, making sure to address the SME Feedback in the section immediately below. Look for square brackets to find the places below that require additional inputs from you (e.g., "About [Company / Org Name]").
@@ -17,46 +17,54 @@
 > ❌ Remember that this is a public repo. Do NOT include: Proprietary data, PII, API keys, credentials, or anything confidential.
 
 ---
+## 📋 BTT Internal Evaluation Notes
 
-### 🔍 SME Feedback from the Break Through Tech Evaluation Team
+| Check   | Status | Notes                                                                                          |
+|---------|--------|------------------------------------------------------------------------------------------------|
+| Python Compatibility | 🟢  | The project utilizes Python-compatible tools and libraries throughout the tech stack, making it suitable for the students' current skill level. |
+| Data Readiness | 🟡 | The datasets are substantially populated, though potential nuances in the documents may require cleaning; students should expect to invest time in data preparation. |
+| Resource Check | 🟢  | No proprietary software requirements; all tools and environments are freely accessible to students via cloud resources. |
 
-*Challenge Advisor: Please address the following feedback by editing this page. Your AI Studio Coach can help make project adjustments as needed, too. In addition to the grey section above, this section should be removed before sharing the repo with your student team.*
+**Student Fit Score:** 7/10  
+**Technical Depth Score:** 8/10  
+**Overall Recommendation:** REVISE
+
+**Advisor Feedback Draft:**
+Strengths include a clearly defined use case within a relevant domain for AI applications, providing students with a strong real-world context. However, students should be prepared for extensive work in NLP and the unique challenges associated with the security-clearance context. For improvements: 1) Simplify document processing requirements to ensure students can focus on modeling and evaluation. 2) Consider adding scaffolding for LLM interactions to aid students who may not be comfortable with complex model implementations. Overall, encourage the team to engage in close iterative collaboration with faculty for optimal success.
 
 ---
 
-# [Project Title]
+# Explainable AI for Security Clearance Decision
 
-**Company / Org:** [Company / Org Name]  
-**Challenge Advisor:** [Name, Title, Email]  
+**Company / Org:** A3 Consulting LLC  
+**Challenge Advisor:** Teneika Askew, teneika.askew@a3consultingllc.com  
 **Program:** Break Through Tech AI Studio - Fall 2026
 
 ---
 
-## 🏢 About [Company / Org Name]
+## 🏢 About A3 Consulting LLC
 
-[2-3 sentences about your company: what you do, your industry, etc. You may also choose to specify your specific department or team.]
+A3 Consulting LLC specializes in providing innovative solutions tailored to the security clearance domain, utilizing data-driven methodologies to enhance decision-making processes within governmental and defense sectors.
 
 ---
 
 ## 🎯 The Challenge
 
 ### Project Summary
-[In 2-3 sentences, describe what you're asking the team to do. Be specific about the type of data, ML techniques, and potential impact.]
-
-> **Example:** "In this project, your team will use customer transaction data and classification algorithms to build a model that predicts which users are likely to churn. This will help our retention team prioritize outreach."
+In this project, students will use ~36,700 DOHA security clearance decision documents to build a system that classifies case narratives against SEAD-4 adjudicative guidelines, detects disqualifying and mitigating conditions with citations, predicts case outcomes, and retrieves similar precedent cases to improve the efficiency and consistency of the adjudication process.
 
 ### Success Criteria
-[What does success look like? Describe evaluation metrics (accuracy, F1 score, etc.) or qualitative outcomes that would make this project valuable to your company.]
+Quantitative: outcome-prediction performance (accuracy, F1, AUC), multi-label guideline classification (per-label F1), and retrieval quality (precision@k). Qualitative: A working, explainable pipeline with traceable citations and analogous precedent retrieval.
 
 ### Project Milestones
 
 Use these milestones to guide your work. Your team will create a **GitHub Projects board** to track tasks within each milestone.
 
-| Month | Milestone | Key Activities |
-|-------|-----------|----------------|
-| **September** | [e.g., Data Understanding] | [e.g., Explore dataset, handle missing values, document findings] |
-| **October** | [e.g., Model Development] | [e.g., Train baseline model, experiment with approaches, iterate] |
-| **November** | [e.g., Evaluation & Presentation] | [e.g., Finalize model, prepare presentation, document results] |
+| Month     | Milestone             | Key Activities                                                      |
+|-----------|-----------------------|---------------------------------------------------------------------|
+| **September** | Data Understanding       | Explore dataset, handle missing values, document findings          |
+| **October** | Model Development        | Train baseline model, experiment with approaches, iterate         |
+| **November** | Evaluation & Presentation | Finalize model, prepare presentation, document results            |
 
 > **Note for the team:** Please create a GitHub Projects board in this repository to break these milestones into weekly tasks. Go to the **Projects** tab → **New project** → Choose **Board** → Add columns for each month.
 
@@ -64,27 +72,34 @@ Use these milestones to guide your work. Your team will create a **GitHub Projec
 
 ## 📊 Dataset
 
-**Name and Source:** [Dataset name and where it's from]  
-**Format:** [e.g., CSV, JSON, images]  
-**Size:** [Approximate size in MB/GB]  
+**Name and Source:** DOHA Security Clearance Decision Documents  
+**Format:** CSV, JSON, Parquet, PDF  
+**Size:** 5gb to 10gb  
 **Location:** [Link to dataset or instructions for accessing it]
 
 ### Key Details
-- [Brief description of what's in the data]
-- [Any known limitations or preprocessing needed]
+- ~36,700 publicly available DOHA (Defense Office of Hearings and Appeals) documents containing numerical, categorical, and text data, stored in CSV, JSON, Parquet, and PDF formats.
+- Some documents may require preprocessing to handle inconsistencies in formatting or missing information.
 - [Link to data dictionary or documentation, if available]
 
 ---
 
 ## 🛠️ Suggested Approach
 
-**ML Problem Type:** [e.g., Classification, Regression, NLP, Computer Vision, LLM/RAG]
+**ML Problem Type:** NLP
 
 **Recommended Libraries:**
-- [e.g., pandas, scikit-learn, TensorFlow, Hugging Face]
+- NLP
+- Large Language Models (LLMs)
+- Retrieval-Augmented Generation (RAG)
+- TF-IDF
+- Logistic Regression
+- Lightweight transformer
+- Gemini API
+- Streamlit
 
 **Evaluation Metrics:**
-- [e.g., Accuracy, Precision/Recall, RMSE, BLEU score]
+- Accuracy, Precision/Recall, F1 score, AUC
 
 ---
 
@@ -93,16 +108,16 @@ Use these milestones to guide your work. Your team will create a **GitHub Projec
 The following resources will help your team understand the problem space and potential technical approaches for this project:
 
 **Background Reading:**
-- [e.g., Link to an article or blog post about the problem domain]
-- [e.g., Link to an industry report or case study]
+- [Link to an article or blog post about the problem domain]
+- [Link to an industry report or case study]
 
 **Technical Tutorials:**
-- [e.g., Link to a free tutorial on the ML technique(s) involved]
-- [e.g., Link to documentation for a key library or tool]
+- [Link to a free tutorial on the ML technique(s) involved]
+- [Link to documentation for a key library or tool]
 
 **Code Examples:**
-- [e.g., Link to a relevant GitHub repo]
-- [e.g., Link to a sample implementation or starter code]
+- [Link to a relevant GitHub repo]
+- [Link to a sample implementation or starter code]
 
 **Other:**
 - [Links to any additional resources — e.g., papers, videos, podcasts, etc.]
@@ -114,13 +129,13 @@ The following resources will help your team understand the problem space and pot
 ## 🤝 How We'll Work Together
 
 **Check-ins:** During our biweekly 60-min AI Studio Lab Section meeting block (2nd and 4th week of every month)  
-**Communication:** [e.g., Slack (Break Through Tech workspace) or email]  
-**Response time:** [e.g., Within 48 hours on weekdays]  
+**Communication:** Slack (Break Through Tech workspace)  
+**Response time:** Within 48 hours on weekdays  
 
 **Recommended Tools:**
-- **Coding:** [e.g., Google Colab, VS Code]
-- **Collaboration:** [e.g., GitHub, Notion]
-- **Virtual Meetings:** [e.g., Zoom, Google Meet]
+- **Coding:** Google Colab
+- **Collaboration:** GitHub, Notion
+- **Virtual Meetings:** Zoom, Google Meet
 
 ---
 
@@ -130,10 +145,10 @@ The following resources will help your team understand the problem space and pot
 2. **Begin reviewing the dataset** using the link above
 3. **Read the GitHub Projects documentation** [here](https://docs.github.com/en/issues/planning-and-tracking-with-projects/learning-about-projects/about-projects)
 
-I’m excited to work with you!
+I'm excited to work with you!
 
 ---
 
 ## ❓ Questions?
 
-Please bring any questions to our first meeting during the week of August 24th (Break Through Tech’s Bridge to Studio - Session B). 
+Please bring any questions to our first meeting during the week of August 24th (Break Through Tech's Bridge to Studio - Session B).
