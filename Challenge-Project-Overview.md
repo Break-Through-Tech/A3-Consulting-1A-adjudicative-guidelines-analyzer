@@ -37,7 +37,7 @@ Strengths include a clearly defined use case within a relevant domain for AI app
 # Explainable AI for Security Clearance Decision
 
 **Company / Org:** A3 Consulting LLC  
-**Challenge Advisor:** Bismarck Macauley, [Email address] 
+**Challenge Advisor:** Bismarck Macauley, [Email address]  
 **Program:** Break Through Tech AI Studio - Fall 2026
 
 ---
