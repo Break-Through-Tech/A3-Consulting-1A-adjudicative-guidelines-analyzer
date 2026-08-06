@@ -89,14 +89,7 @@ Use these milestones to guide your work. Your team will create a **GitHub Projec
 **ML Problem Type:** NLP
 
 **Recommended Libraries:**
-- NLP
-- Large Language Models (LLMs)
-- Retrieval-Augmented Generation (RAG)
-- TF-IDF
-- Logistic Regression
-- Lightweight transformer
-- Gemini API
-- Streamlit
+- [e.g., pandas, scikit-learn, TensorFlow, Hugging Face]
 
 **Evaluation Metrics:**
 - Accuracy, Precision/Recall, F1 score, AUC
@@ -128,14 +121,19 @@ The following resources will help your team understand the problem space and pot
 
 ## 🤝 How We'll Work Together
 
-**Check-ins:** During our biweekly 60-min AI Studio Lab Section meeting block (2nd and 4th week of every month)  
-**Communication:** Slack (Break Through Tech workspace)  
-**Response time:** Within 48 hours on weekdays  
+**Official check-ins:** During our biweekly 45-minute AI Studio Lab Section meeting block (2nd and 4th week of every month)
 
-**Recommended Tools:**
-- **Coding:** Google Colab
-- **Collaboration:** GitHub, Notion
-- **Virtual Meetings:** Zoom, Google Meet
+ **Other ways to reach out to me with questions:** 
+* [e.g., Your team's channel within Break Through Tech’s Discord space]
+* [e.g., Email; please copy your teammates and AI Studio Coach]
+* [e.g., Request a team check-in on Zoom]
+* [Note: I will aim to respond within 48 hours. Please reach out to your AI Studio Coach with urgent questions.]
+
+> 💡 **Challenge Advisor: Please update the above based on your availability and preference. If you are not able to answer questions or meet with fellows outside of the biweekly Lab Section check-ins, simply write in "N/A (only available during the official check-in times)"**
+
+**Recommended free coding / collaboration tools**
+* […]
+* […]
 
 ---
 
@@ -151,4 +149,4 @@ I'm excited to work with you!
 
 ## ❓ Questions?
 
-Please bring any questions to our first meeting during the week of August 24th (Break Through Tech's Bridge to Studio - Session B).
+Please bring any questions to our first meeting during the week of August 24th (Break Through Tech's Bridge to Studio - Session C).
