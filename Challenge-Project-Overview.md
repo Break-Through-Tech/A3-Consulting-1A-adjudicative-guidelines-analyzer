@@ -54,7 +54,8 @@ A3 Consulting LLC specializes in providing innovative solutions tailored to the 
 In this project, you will use ~36,700 publicly available DOHA (Defense Office of Hearings and Appeals) security clearance decision documents and a combination of NLP, large language models, and retrieval-augmented generation (RAG) to build a system that classifies clearance case narratives against the 13 SEAD-4 adjudicative guidelines (A through M), detects disqualifying and mitigating conditions with specific paragraph citations, predicts the likely outcome (granted/denied), and retrieves similar precedent cases. This will help our company address the slow, inconsistent, and labor-intensive nature of security clearance adjudication for federal defense and intelligence customers by providing fast, explainable, precedent-grounded decision support.
 
 ### Success Criteria
-Quantitative: outcome-prediction performance (accuracy, F1, AUC), multi-label guideline classification (per-label F1), and retrieval quality (precision@k). Qualitative: A working, explainable pipeline with traceable citations and analogous precedent retrieval.
+- Quantitative: outcome-prediction performance (accuracy, F1, AUC) against held-out cases, with attention to class balance since most cases skew toward one outcome; multi-label guideline classification (per-label F1, micro/macro averages); and retrieval quality (precision@k on whether retrieved precedents share guidelines/outcome with the query case).    
+- Qualitative: a successful December outcome is a working, explainable pipeline where the model's cited disqualifiers and mitigators are traceable to actual SEAD-4 paragraphs, the precedent retrieval surfaces genuinely analogous cases, and the team can articulate where the model is and is not trustworthy.
 
 ### Project Milestones
 
