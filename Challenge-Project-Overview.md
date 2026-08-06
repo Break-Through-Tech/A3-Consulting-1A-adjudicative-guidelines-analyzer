@@ -51,10 +51,11 @@ A3 Consulting LLC specializes in providing innovative solutions tailored to the 
 ## 🎯 The Challenge
 
 ### Project Summary
-In this project, students will use ~36,700 DOHA security clearance decision documents to build a system that classifies case narratives against SEAD-4 adjudicative guidelines, detects disqualifying and mitigating conditions with citations, predicts case outcomes, and retrieves similar precedent cases to improve the efficiency and consistency of the adjudication process.
+In this project, you will use ~36,700 publicly available DOHA (Defense Office of Hearings and Appeals) security clearance decision documents and a combination of NLP, large language models, and retrieval-augmented generation (RAG) to build a system that classifies clearance case narratives against the 13 SEAD-4 adjudicative guidelines (A through M), detects disqualifying and mitigating conditions with specific paragraph citations, predicts the likely outcome (granted/denied), and retrieves similar precedent cases. This will help our company address the slow, inconsistent, and labor-intensive nature of security clearance adjudication for federal defense and intelligence customers by providing fast, explainable, precedent-grounded decision support.
 
 ### Success Criteria
-Quantitative: outcome-prediction performance (accuracy, F1, AUC), multi-label guideline classification (per-label F1), and retrieval quality (precision@k). Qualitative: A working, explainable pipeline with traceable citations and analogous precedent retrieval.
+- Quantitative: outcome-prediction performance (accuracy, F1, AUC) against held-out cases, with attention to class balance since most cases skew toward one outcome; multi-label guideline classification (per-label F1, micro/macro averages); and retrieval quality (precision@k on whether retrieved precedents share guidelines/outcome with the query case).    
+- Qualitative: a successful December outcome is a working, explainable pipeline where the model's cited disqualifiers and mitigators are traceable to actual SEAD-4 paragraphs, the precedent retrieval surfaces genuinely analogous cases, and the team can articulate where the model is and is not trustworthy.
 
 ### Project Milestones
 
@@ -62,9 +63,9 @@ Use these milestones to guide your work. Your team will create a **GitHub Projec
 
 | Month     | Milestone             | Key Activities                                                      |
 |-----------|-----------------------|---------------------------------------------------------------------|
-| **September** | Data Understanding       | Explore dataset, handle missing values, document findings          |
-| **October** | Model Development        | Train baseline model, experiment with approaches, iterate         |
-| **November** | Evaluation & Presentation | Finalize model, prepare presentation, document results            |
+| **September** | [Title] | Onboard team onto the provided DOHA dataset (parsed Parquet, no scraping needed). Exploratory data analysis on case outcomes, guideline frequency, and text characteristics. Establish a baseline classification model (TF-IDF plus logistic regression / lightweight transformer) predicting granted vs. denied, and a labeled subset for evaluation.          |
+| **October** | [Title] | Build the guideline-classification component (multi-label A through M) and the LLM-based disqualifier/mitigator extraction using the free-tier Gemini API. Stand up the RAG precedent-retrieval pipeline against the provided vector index. Compare LLM-based vs. traditional ML approaches on the same eval set.         |
+| **November** | [Title] | Integrate components into an end-to-end analyzer that outputs a structured assessment (recommendation, confidence, guideline breakdown, cited precedents). Build a Streamlit demo UI. Run final evaluation, error analysis, and document limitations. Prepare presentation and GitHub deliverable.            |
 
 > **Note for the team:** Please create a GitHub Projects board in this repository to break these milestones into weekly tasks. Go to the **Projects** tab → **New project** → Choose **Board** → Add columns for each month.
 
