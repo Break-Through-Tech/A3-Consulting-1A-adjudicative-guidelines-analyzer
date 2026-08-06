@@ -57,6 +57,9 @@ In this project, you will use ~36,700 publicly available DOHA (Defense Office of
 - Quantitative: outcome-prediction performance (accuracy, F1, AUC) against held-out cases, with attention to class balance since most cases skew toward one outcome; multi-label guideline classification (per-label F1, micro/macro averages); and retrieval quality (precision@k on whether retrieved precedents share guidelines/outcome with the query case).    
 - Qualitative: a successful December outcome is a working, explainable pipeline where the model's cited disqualifiers and mitigators are traceable to actual SEAD-4 paragraphs, the precedent retrieval surfaces genuinely analogous cases, and the team can articulate where the model is and is not trustworthy.
 
+### Stretch Goals
+Calibration analysis on the confidence scores. Fairness/consistency auditing (do similar fact patterns get similar predictions across years or guidelines?). Fine-tuning a small open model on the corpus and comparing it to the prompted-LLM approach. Severity-scoring regression (A through D scale). Temporal drift analysis on how adjudication patterns shift across 2016 to 2026. An "explanation quality" rubric scored by a held-out LLM judge.
+
 ### Project Milestones
 
 Use these milestones to guide your work. Your team will create a **GitHub Projects board** to track tasks within each milestone.
@@ -76,7 +79,7 @@ Use these milestones to guide your work. Your team will create a **GitHub Projec
 **Name and Source:** DOHA Security Clearance Decision Documents  
 **Format:** CSV, JSON, Parquet, PDF  
 **Size:** 5gb to 10gb  
-**Location:** [Link to dataset or instructions for accessing it]
+**Location:** https://github.com/TeneikaAskew/doha
 
 ### Key Details
 - ~36,700 publicly available DOHA (Defense Office of Hearings and Appeals) documents containing numerical, categorical, and text data, stored in CSV, JSON, Parquet, and PDF formats.
