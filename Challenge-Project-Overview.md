@@ -38,6 +38,7 @@ Strengths include a clearly defined use case within a relevant domain for AI app
 
 **Company / Org:** A3 Consulting LLC  
 **Challenge Advisor:** Teneika Askew, teneika.askew@a3consultingllc.com  
+**AI Studio Coach:** Shaun Figueiro, shaun.figueiro@breakthroughtech.org                 
 **Program:** Break Through Tech AI Studio - Fall 2026
 
 ---
