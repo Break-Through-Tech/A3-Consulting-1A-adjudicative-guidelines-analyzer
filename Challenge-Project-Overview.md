@@ -9,22 +9,38 @@
 
 ## 🏢 About A3 Consulting LLC
 
-A3 Consulting LLC specializes in providing innovative solutions tailored to the security clearance domain, utilizing data-driven methodologies to enhance decision-making processes within governmental and defense sectors.
+A3 Consulting works at the intersection of data science and national security policy, building tools that help reviewers and adjudicators reason over public precedent. This project adapts their SEAD‑4 expertise into a reproducible educational pipeline that demonstrates explainable automated analysis of security‑clearance decisions.
 
 ---
 
 ## 🎯 The Challenge
 
 ### Project Summary
-In this project, you will use ~36,700 publicly available DOHA (Defense Office of Hearings and Appeals) security clearance decision documents and a combination of NLP, large language models, and retrieval-augmented generation (RAG) to build a system that classifies clearance case narratives against the 13 SEAD-4 adjudicative guidelines (A through M), detects disqualifying and mitigating conditions with specific paragraph citations, predicts the likely outcome (granted/denied), and retrieves similar precedent cases. This will help our company address the slow, inconsistent, and labor-intensive nature of security clearance adjudication for federal defense and intelligence customers by providing fast, explainable, precedent-grounded decision support.
+Build an explainable NLP + LLM pipeline that ingests ~36,700 public DOHA security‑clearance decision documents to:
+
+- Predict the likely adjudication outcome for a case,
+- Identify which SEAD‑4 guideline letters (A–M) are relevant (multi‑label classification),
+- Extract specific disqualifiers and mitigating factors with supporting evidence (text spans and AG paragraph references),
+- Retrieve and surface relevant precedent cases (RAG) with relevance scores and short similarity notes, so a human reviewer can quickly verify the model's reasoning and recommendations.
 
 ### Success Criteria
-- Quantitative: outcome-prediction performance (accuracy, F1, AUC) against held-out cases, with attention to class balance since most cases skew toward one outcome; multi-label guideline classification (per-label F1, micro/macro averages); and retrieval quality (precision@k on whether retrieved precedents share guidelines/outcome with the query case).    
-- Qualitative: a successful December outcome is a working, explainable pipeline where the model's cited disqualifiers and mitigators are traceable to actual SEAD-4 paragraphs, the precedent retrieval surfaces genuinely analogous cases, and the team can articulate where the model is and is not trustworthy.
+- Quantitative:
+  - Strong baseline-to‑improved outcome prediction on held‑out cases (report Accuracy, Macro/Micro F1; per‑label metrics for A–M).
+  - Reliable multi‑label guideline classification (per‑label precision/recall/F1).
+
+- Qualitative:
+  - Extracted disqualifiers/mitigators are traceable to source text spans or explicit SEAD‑4 paragraphs; show provenance for LLM outputs.
+  - Precedent retrieval returns semantically relevant cases with interpretable similarity indicators and no obvious hallucination.
+
+- Deliverable:
+  - A working end‑to‑end demo (Streamlit or similar) that accepts a case (PDF/text) and outputs: recommendation + confidence, per‑guideline assessments, cited evidence (text spans + AG references), and similar precedents.
 
 ### Stretch Goals
-Calibration analysis on the confidence scores. Fairness/consistency auditing (do similar fact patterns get similar predictions across years or guidelines?). Fine-tuning a small open model on the corpus and comparing it to the prompted-LLM approach. Severity-scoring regression (A through D scale). Temporal drift analysis on how adjudication patterns shift across 2016 to 2026. An "explanation quality" rubric scored by a held-out LLM judge.
-
+- Calibration analysis of confidence scores and per‑label calibration.
+- Fairness / consistency audits (do similar fact patterns across years produce consistent outputs?).
+- Fine‑tune a compact open LLM on the parsed DOHA corpus for improved extraction quality.
+- Automated evaluation of explanation traceability (matching extracted spans against ground truth).
+  
 ### Project Milestones
 
 Use these milestones to guide your work. Your team will create a **GitHub Projects board** to track tasks within each milestone.
