@@ -1,0 +1,57 @@
+Loaded 33,610 rows
+Dropped 3,093 rows outside ['DENIED', 'GRANTED'] -> 30,517 rows
+Train 24,413 / test 6,104
+
+Vectorizing...
+  20,000 features
+Fitting...
+
+Majority-class accuracy to beat: 0.691
+
+=== Classification report ===
+              precision    recall f1-score   support
+
+      DENIED      0.984     0.949    0.966      4217
+     GRANTED      0.895     0.965    0.929      1887
+
+    accuracy    0.954      6104
+   macro avg      0.939     0.957    0.947      6104
+weighted avg      0.956     0.954    0.955      6104
+
+=== Confusion matrix (rows=true, cols=pred) ===
+         DENIED  GRANTED
+DENIED     4003      214
+GRANTED      66     1821
+
+=== Top 15 features -> DENIED ===
+against                -16.176378
+against applicant      -15.603024
+not                    -12.467444
+is denied              -12.328267
+subparagraph against   -10.259675
+denied                  -9.036065
+guideline against       -7.165868
+has not                 -6.794700
+not clearly             -6.341995
+failed to               -5.603515
+is not                  -5.500897
+not mitigated           -5.422577
+failed                  -5.409833
+against the             -5.215417
+denied statement        -5.202824
+
+=== Top 15 features -> GRANTED ===
+is granted             15.963800
+granted                 9.718417
+for applicant           8.641247
+granted statement       6.927175
+guideline for           6.670032
+for                     6.640158
+is clearly              6.338809
+subparagraph for        5.946446
+applicant mitigated     5.171261
+and                     4.497753
+has mitigated           4.471970
+ae                      4.023311
+sec                     3.492171
+paid                    3.437195
