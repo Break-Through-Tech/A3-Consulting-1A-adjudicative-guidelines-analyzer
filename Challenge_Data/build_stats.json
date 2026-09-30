@@ -1,0 +1,47 @@
+{
+  "shards": [
+    {
+      "file": "all_cases_1.parquet",
+      "rows": 17742,
+      "size_mb": 94.0
+    },
+    {
+      "file": "all_cases_2.parquet",
+      "rows": 15868,
+      "size_mb": 77.0
+    }
+  ],
+  "subparagraph_parse_failures": 10258,
+  "rows_loaded": 33610,
+  "columns_loaded": 19,
+  "labels_inherited": 2914,
+  "rows_before_dedupe": 33610,
+  "true_duplicates_deleted": 3093,
+  "case_number_collisions": 192,
+  "degenerate_flagged": 7,
+  "rows_after_dedupe": 30517,
+  "elapsed_seconds": 117.7,
+  "shards_written": [
+    {
+      "file": "cases_clean_1.parquet",
+      "rows": 7630,
+      "size_mb": 49.5
+    },
+    {
+      "file": "cases_clean_2.parquet",
+      "rows": 7630,
+      "size_mb": 61.9
+    },
+    {
+      "file": "cases_clean_3.parquet",
+      "rows": 7630,
+      "size_mb": 52.1
+    },
+    {
+      "file": "cases_clean_4.parquet",
+      "rows": 7627,
+      "size_mb": 60.1
+    }
+  ],
+  "judge_variant_groups": 45
+}
