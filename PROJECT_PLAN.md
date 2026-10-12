@@ -124,8 +124,8 @@ with incompatible citation schemes; averaging them averages incomparable things.
 
 **98.0% of documents exceed 512 tokens. Only 0.3% exceed 8,192.** A 512-token encoder such as
 Legal-BERT would truncate essentially every document to its first ~2,000 characters. A long-context
-encoder such as ModernBERT-base (8,192 tokens) fits the corpus nearly untruncated; on our 8 GB GPU we cap
-it at 4,096 tokens, which still keeps ~94% of documents whole (§6 October). We will run both, because
+encoder such as ModernBERT-base (8,192 tokens) fits the corpus nearly untruncated; on our hardware (free
+Colab, an 8 GB laptop GPU) we cap it at 4,096 tokens, which still keeps ~94% of documents whole (§6 October). We will run both, because
 domain pre-training versus seeing the whole document is a real trade-off and which one wins here is worth
 reporting.
 
@@ -248,39 +248,74 @@ which is why every measurement in this document was taken with a column subset.
 
 ---
 
-## 6. The work, by month
+## 6. The work: October and November
 
-### Who owns what
+We have two months, October and November, and four people: Rashed, Aryan, Brian and Sam. Every task
+below has an owner and a due date, and nothing is due before the work it depends on.
 
-Four of us: Rashed, Aryan, Brian and Sam.
+Check-ins fall in the 2nd and 4th week of each month (Oct 8–14, Oct 22–28, Nov 8–14, Nov 22–28), so each
+check-in's showcase items are due just before it; if a check-in falls early in its week, move that week's
+dates up. Thanksgiving is Thursday Nov 26, so the final deliverables are due Tuesday Nov 24, with Nov 25–30
+as buffer. All LLM calls are Rashed's, so prompts, credentials and spending stay in one place; the app shows
+those outputs from his cached runs.
 
-| Person | Now (overdue September work) | October | November |
+### Schedule
+
+| Due | Owner | Deliverable | Needs first |
 |---|---|---|---|
-| **Rashed** | Loader and pinned requirements (done), this plan | LLM channel: prompt templates, the pilot and the API run (§6 October, item 3), `src/llm/verify.py`, and `src/schema.py` | LLM layer part two (similarity notes, narrative rationale); pipeline integration |
-| **Aryan** | `splits.parquet`, plus split checks in `src/validate.py` | Precedent index: embeddings + FAISS over findings of fact | BM25 + dense hybrid retrieval; precision@5 / MRR evaluation |
-| **Brian** | EDA fixes (§5) and `EDA_REPORT.md`, then `DATA_CARD.md` | Rule-based extractor `src/conditions.py` (all citation forms in §4) and `src/sead4_reference.py` | Streamlit app and dashboard |
-| **Sam** | Re-run the existing TF-IDF baseline leak-free and commit it | 13-head TF-IDF baseline, then ModernBERT / Legal-BERT, calibration | Evaluation write-up; model card; README rewrite |
-| **Everyone** | Label check: 50 cases, ~13 each (§7) | Traceability check: ~25 findings each, once the extractor runs | Retrieval relevance: ~13 queries each |
+| Oct 11 (done) | Rashed | Loader `src/dataset.py`, pinned `requirements.txt`, this plan | — |
+| Tue Oct 13 | Sam | Leak-free baseline committed: the existing TF-IDF model re-run on `text_features` with a grouped split | Loader |
+| Wed Oct 14 | Aryan | `Challenge_Data/splits.parquet`, plus split checks in `src/validate.py` | Loader |
+| Fri Oct 16 | Brian | EDA fixes (§5) and `notebooks/EDA_REPORT.md` | Loader |
+| Fri Oct 16 | Sam | Baseline re-run on the frozen split | Split |
+| Fri Oct 16 | Rashed | Laptop GPU ready: CUDA 12.8+ PyTorch, local LLM installed | — |
+| Tue Oct 20 | Aryan | `Challenge_Data/DATA_CARD.md` | EDA report |
+| Tue Oct 20 | Brian | `src/sead4_reference.py`, the closed list of condition codes | — |
+| Fri Oct 23 | Everyone | Label check: 50 cases, ~13 each (§7) | — |
+| Fri Oct 23 | Sam | 13-head TF-IDF baseline (per-guideline FOR/AGAINST) | Split, baseline |
+| Fri Oct 23 | Rashed | LLM prompt templates and `src/llm/verify.py` | Code list |
+| Tue Oct 27 | Brian | Rule-based extractor `src/conditions.py`, with negative tests | Code list |
+| Tue Oct 27 | Aryan | Precedent index v1: embeddings + FAISS, smoke-tested | Loader |
+| Fri Oct 30 | Rashed | LLM pilot: ~50 cited cases, scored against the rule-based extractor | Templates, extractor |
+| Fri Oct 30 | Sam | First ModernBERT run (2,048-token cap) | 13-head baseline |
+| Fri Nov 6 | Rashed | LLM run on the test split's uncited F cases; `src/schema.py` | Pilot, split, extractor |
+| Fri Nov 6 | Sam | ModernBERT at 4,096 tokens and the Legal-BERT comparison; per-head calibration; composed-vs-direct outcome | First run |
+| Fri Nov 6 | Aryan | Hybrid retrieval (BM25 + dense, RRF); the 50-query set with relevance defined | Index v1 |
+| Fri Nov 6 | Brian | Dashboard | Loader |
+| Fri Nov 6 | Everyone | Traceability check: ~25 findings each (§7) | Extractor, pilot |
+| Wed Nov 11 | Everyone | Retrieval relevance labels: ~13 queries each (§7) | Query set |
+| Fri Nov 13 | Rashed | LLM layer, part two: similarity notes and narrative rationale | Retrieval, classifier |
+| Fri Nov 13 | Sam | Mitigator head; metrics against the judge-ruled labels by regime, with the label check's accuracy | Extractor, classifier, label check |
+| Fri Nov 13 | Aryan | precision@5 and MRR | Relevance labels |
+| Fri Nov 13 | Brian | Analyzer app shell running on cached outputs | `schema.py` |
+| Wed Nov 18 | Rashed | Pipeline integration, plus cached outputs for the demo | Classifier, extraction, retrieval, LLM layer |
+| Fri Nov 20 | Brian | Analyzer wired to the pipeline, end to end from a raw PDF | Integration |
+| Fri Nov 20 | Sam | Evaluation write-up, model card, README draft | All metrics |
+| Fri Nov 20 | Aryan | CI: `pytest`, pre-commit and GitHub Actions running the tests and `src.validate` | — |
+| Tue Nov 24 | Everyone | Final README, demo rehearsal, final presentation | Everything above |
 
-All LLM and API calls belong to Rashed, so prompts, credentials and spending stay in one place; the app
-shows those outputs from Rashed's cached runs. The split and the baseline both depend on the loader, and
-the LLM channel is scored against the rule-based extractor, so those go first.
+**Two chains decide the final date.** Extraction: code list (Oct 20) → extractor (Oct 27) → LLM pilot
+(Oct 30) → LLM run (Nov 6). Retrieval: index (Oct 27) → hybrid retrieval (Nov 6) → similarity notes
+(Nov 13). Both feed integration (Nov 18) → the wired app (Nov 20) → the final week (Nov 24). A slip on
+either chain moves everything after it, so tasks on them get help first.
 
-### September — Data & Baseline
+**If something has to give,** cut in this order: the Legal-BERT comparison, the local-vs-Claude comparison,
+then the stretch goals. The heaviest week is Sam's, Oct 30 to Nov 6.
 
-**Goal: a dataset everyone loads the same way, a frozen split, and an honest EDA report.**
+### Foundations — due by October 20
 
-**Status, 2026-10-11: overdue.** The loader and pinned requirements are in. The split, the EDA report,
-the data card and a committed leak-free baseline remain, and they are first on everyone's list above.
+**Goal: a dataset everyone loads the same way, a frozen split, a committed leak-free baseline and an
+honest EDA report.** These are the brief's September items; they come first because everything else
+builds on them.
 
-| Deliverable | Notes |
-|---|---|
-| `PROJECT_PLAN.md` | This document |
-| `src/dataset.py` | The single loader described above — done |
-| `Challenge_Data/splits.parquet` | Frozen train/val/test, committed |
-| `notebooks/EDA_REPORT.md` | Written EDA report with corrected figures |
-| `Challenge_Data/DATA_CARD.md` | Data dictionary, per-tier counts, known gaps, ethics note |
-| Baseline | The TF-IDF + logistic-regression model is already trained: `notebooks/02_baseline.py`, run by Sam. As committed it trains on `full_text` with a random split — 95.4%, leaky. The fix is a re-run of the same model with three changes — `load_cases()`, `text_features`, a grouped split — which reproduces at 82.7% vs 64.3%; it still needs committing |
+| Deliverable | Owner | Due | Notes |
+|---|---|---|---|
+| `src/dataset.py` | Rashed | done | The single loader described above |
+| `PROJECT_PLAN.md` | Rashed | done | This document |
+| Baseline | Sam | Oct 13; on the split Oct 16 | The TF-IDF + logistic-regression model is already trained: `notebooks/02_baseline.py`. As committed it trains on `full_text` with a random split — 95.4%, leaky. The fix is a re-run of the same model with three changes — `load_cases()`, `text_features`, a grouped split — which reproduces at 82.7% vs 64.3% |
+| `Challenge_Data/splits.parquet` | Aryan | Oct 14 | Frozen train/val/test, committed |
+| `notebooks/EDA_REPORT.md` | Brian | Oct 16 | Written EDA report with corrected figures |
+| `Challenge_Data/DATA_CARD.md` | Aryan | Oct 20 | Data dictionary, per-tier counts, known gaps, ethics note |
 
 **On the split:** use `StratifiedGroupKFold`, not `GroupShuffleSplit` — the latter takes no `stratify`
 argument, and we need grouping and stratification together. Group on `split_group` (= `case_number`) so
@@ -295,12 +330,12 @@ Check regime balance afterwards instead; at 17,428 / 2,629 / 1,902 it balances o
 `StratifiedGroupKFold` makes k equal folds, so 70/15/15 takes two stages: `n_splits=7` (shuffled, seed 42)
 with one fold as test, then `n_splits=6` on the remainder with one fold as validation — about 71/14/14.
 
-**Done when:** `python -m src.validate` passes with the new split assertions, `splits.parquet` is
-committed, and the EDA report carries the corrected figures.
+**Done when (Oct 20):** `python -m src.validate` passes with the new split assertions, `splits.parquet` is
+committed, the leak-free baseline is committed, and the EDA report carries the corrected figures.
 
 ---
 
-### October — Guideline Classification & Extraction
+### October — Guideline Classification & Extraction (through Oct 30)
 
 **Goal: a validated multi-label A–M classifier, disqualifier/mitigator extraction built two ways, and a
 precedent index under construction.**
@@ -311,10 +346,12 @@ AGAINST*. Collapsing {FOR, AGAINST} gives the multi-label A–M classifier, whic
 - Baseline: TF-IDF + one-vs-rest logistic regression, 13 × 3-class, extending `02_baseline.py`. This has
   to be beaten before a transformer is justified.
 - Main: fine-tuned ModernBERT-base on `text_features`, with Legal-BERT at 512 tokens as the comparison.
-- Compute: one RTX 5060 Laptop GPU (8 GB, Rashed's), with free Colab (T4, 16 GB) as the fallback. Iterate
-  at a 2,048-token cap and run the final model at 4,096, which keeps ~94% of documents whole (estimated
-  at characters ÷ 4 — confirm with the real tokenizer); bf16, gradient checkpointing, small batches with
-  accumulation. Needs a CUDA 12.8+ build of PyTorch.
+- Compute: fine-tuning runs on free Colab (T4, 16 GB). Rashed's RTX 5060 laptop GPU (8 GB) runs the local
+  LLM — template testing, the pilot and the run — from Oct 19 to Nov 6, and is free for training outside
+  that window. Iterate at a
+  2,048-token cap and run the final model at 4,096, which keeps ~94% of documents whole (estimated at
+  characters ÷ 4 — confirm with the real tokenizer); bf16, gradient checkpointing, small batches with
+  accumulation.
 - Missing directions: 1,823 pool cases (8.3%) list guidelines with no FOR/AGAINST at all, and 223 more
   lack it on some guidelines — 3,234 (case, guideline) pairs in all. Those pairs are masked out of the
   direction loss, not treated as *not at issue*.
@@ -343,14 +380,13 @@ cited a paragraph number, which leaves 2,907 F cases citing nothing and 4,532 ci
 mitigator (that count includes Directive-era cases that cite `E2.A6` mitigators instead). That gap is the
 LLM's job.
 
-- **Model and runs (Rashed):** a Claude Pro subscription covers prompt development — writing the
-  templates, testing them by hand, and a 20–50-case pilot in claude.ai or Claude Code — but it has no API
-  key, so it can't run a script. The run itself goes through the Claude API's Batch endpoint on a small
-  prepaid credit: the test split's uncited F cases (~650) plus a validation sample of cited ones, about
-  1,300 calls. The pilot picks the model: Claude Haiku 5.5 costs under $1 at this scope, Claude Opus 5.5
-  roughly $20–35 (estimates at Batch pricing). We will ask the advisor whether the program can cover the
-  credit. A local open model (7–8B, 4-bit, e.g. via Ollama) runs the same inputs once, as a
-  reproducibility comparison.
+- **Model and runs (Rashed):** the default is an open-source model run locally — a 7–8B instruct model,
+  4-bit, e.g. via Ollama, on the 8 GB laptop GPU — so the run needs no key and no spending. Prompts are
+  drafted and hand-checked in Claude on a Pro subscription first; it has no API key, so it can't run a
+  script. The pilot (Oct 30) runs ~50 cited cases and scores them against the rule-based channel; the run
+  (Nov 6) covers the test split's uncited F cases (~650) plus a validation sample of cited ones. If the
+  advisor covers a small API credit (§8, question 4), the same pilot also runs on Claude Haiku 5.5 through
+  the Batch API (under $1 at this scope), and whichever model scores better does the run.
 - `src/sead4_reference.py` — the closed list of 142 `AG ¶` condition codes with their paragraph text, so
   the model selects from a fixed set and cannot invent a code. See §8, open question 1.
 - `src/llm/templates.py` — templates returning strict JSON `{condition_code, exact_quote}`.
@@ -371,15 +407,16 @@ evaluation follows in November. `sentence-transformers` for embeddings, FAISS fo
 over FINDINGS OF FACT paragraphs. Never index `full_text` — retrieving a verdict-bearing passage would
 leak the answer into the demo.
 
-**5. Label check — starts now.** 50 pool cases, about 13 each. See §7.
+**5. Label check — due Oct 23.** 50 pool cases, about 13 each. See §7.
 
-**Done when:** baseline beaten; 13-label table with tier caveats and calibration curves; composed-vs-
-direct outcome comparison; rule-based extractor validated on a hand-checked sample; LLM channel scored
-against it; index returns sensible neighbours; 50-case label check done.
+**Done when (Oct 30):** the 13-head TF-IDF baseline and a first ModernBERT run, each in a 13-label table
+with tier caveats; rule-based extractor validated on a hand-checked sample; LLM pilot scored against it;
+index returns sensible neighbours; 50-case label check done. Calibration curves, the Legal-BERT comparison
+and the composed-vs-direct outcome comparison follow by Nov 6.
 
 ---
 
-### November — End-to-End Analyzer & Demo
+### November — End-to-End Analyzer & Demo (through Nov 24)
 
 **Goal: everything wired into one app that takes a PDF and returns a traceable assessment, with every
 number tied to a hand-checked sample.**
@@ -405,8 +442,8 @@ only from findings the classifier and extractor already established. Same guardr
   label-tier coverage; and the cleaning before-and-after. Built on `src/dataset.py` so it cannot repeat
   the tier-mixing issue.
 - Ships with cached model outputs — no API key and no GPU required to run the demo. For a newly uploaded
-  PDF, the classifier and the rule-based channel run offline; the LLM channel runs only when an API key is
-  configured.
+  PDF, the classifier and the rule-based channel run offline; the LLM channel runs if the local model is
+  installed.
 
 **4. Evaluation and portfolio.** Report every metric against the judge-ruled labels, with the label
 check's measured accuracy beside it. Traceability pass rate and retrieval relevance (§7). Rewrite
@@ -418,10 +455,11 @@ presentation.
 New tests must include **negative cases**. `tests/test_units.py` exists precisely because the upstream
 repo's 147 regex tests all assert `should_match=True`, which is how two label bugs shipped undetected.
 
-**Align deliverables to the check-ins** (weeks 2 and 4): Oct wk2 the baseline table, Oct wk4 the
-transformer and extractor, Nov wk2 retrieval and the LLM layer, Nov wk4 the full app.
+**At each check-in:** Oct 8–14 the leak-free baseline and the split; Oct 22–28 the 13-head baseline, the
+extractor and index v1; Nov 8–14 retrieval, the calibrated classifier and the LLM layer; Nov 22–28 the full
+app and the presentation. Each item's date is in the schedule above.
 
-**Done when:** the app runs end to end from a raw PDF, offline; every displayed span resolves in
+**Done when (Nov 24):** the app runs end to end from a raw PDF, offline; every displayed span resolves in
 `full_text`; metrics carry the label check's measured accuracy; README is no longer a template; CI is
 green.
 
@@ -458,9 +496,9 @@ rather than a full gold set.
 
 | Check | What a person does | When |
 |---|---|---|
-| **Label check** — 50 pool cases, ~13 each | Read the decision's FORMAL FINDINGS and confirm each stored guideline and FOR/AGAINST, noting any guideline the labels missed | Now |
-| **Traceability** — ~100 extracted findings | Confirm each cited span supports the `AG ¶` condition it is attached to | Once the extractor runs (late October) |
-| **Retrieval relevance** — 50 queries × top 5 | Mark each precedent relevant or not, against a definition fixed before looking at results | Once retrieval runs (November) |
+| **Label check** — 50 pool cases, ~13 each | Read the decision's FORMAL FINDINGS and confirm each stored guideline and FOR/AGAINST, noting any guideline the labels missed | Due Oct 23 |
+| **Traceability** — ~100 extracted findings | Confirm each cited span supports the `AG ¶` condition it is attached to | Due Nov 6, after the extractor (Oct 27) and the LLM pilot (Oct 30) |
+| **Retrieval relevance** — 50 queries × top 5 | Mark each precedent relevant or not, against a definition fixed before looking at results | Due Nov 11, after the query set (Nov 6) |
 
 **What 50 cases buys, stated plainly:** the judge-ruled labels' accuracy to roughly ±6 points (95% CI, if
 it is near 95%), corpus-wide. Not per guideline, and not the Guideline F conditions — the LLM channel is
@@ -488,9 +526,9 @@ get done if left until November.
 3. **Does the two-tier reporting approach work for you?** We would rather publish 8 guidelines with
    defensible per-label metrics and 5 clearly marked as under-supported than present 13 numbers of
    uneven quality.
-4. **Can the program cover a small Claude API credit?** The extraction run needs API access, which a
-   Claude subscription doesn't include. At our scope it costs under $1 on Claude Haiku 5.5, or roughly
-   $20–35 on Claude Opus 5.5 (§6 October, item 3).
+4. **Can the program cover a small Claude API credit?** Optional: our default is an open-source model run
+   locally. A credit would let us compare it against Claude Haiku 5.5 on the same pilot, which costs under
+   $1 at our scope (§6 October, item 3). A Claude subscription doesn't include API access.
 
 ### One clarification on corpus size
 
@@ -520,7 +558,7 @@ cleaning pipeline replaced them with character offsets computed from the documen
 | Sep | EDA: outcome distribution | `analyzeOutcomes` |
 | Sep | EDA: guideline frequency | `analyzeGuidelines` (see §5) |
 | Sep | EDA: text lengths | `analyzeTextLengths` (see §5) |
-| Sep | TF-IDF + LogReg baseline for outcome prediction | `notebooks/02_baseline.py` — leak-free version still to commit (§6 September) |
+| Sep | TF-IDF + LogReg baseline for outcome prediction | `notebooks/02_baseline.py` — leak-free version due Oct 13 (§6 Foundations) |
 | Sep | Short EDA report | `notebooks/EDA_REPORT.md` |
 | Sep | Reproducible train/val/test split | `Challenge_Data/splits.parquet` |
 | Oct | Multi-label classifier for guidelines A–M | §6 October, item 1 |
@@ -533,6 +571,8 @@ cleaning pipeline replaced them with character offsets computed from the documen
 | Nov | Quantitative evaluation | §7 |
 | Nov | Manual qualitative evaluation | §7 — label check, traceability pass rate, retrieval relevance |
 | Nov | Finalize README and presentation | §6 November, item 4 |
+
+The brief's September items are our Foundations block, due by Oct 20 (§6).
 
 | Success criterion | Where |
 |---|---|
@@ -547,10 +587,10 @@ cleaning pipeline replaced them with character offsets computed from the documen
 | Automated explanation-traceability evaluation | §7 — treated as core, not stretch |
 
 Recommended stack, all used: `pandas`, `pyarrow`, `PyMuPDF`, `scikit-learn`, `transformers`, `PyTorch`,
-`sentence-transformers`, `faiss`, Claude through the API (Haiku 5.5 or Opus 5.5, chosen on a pilot),
-`streamlit`, `pytest`, pre-commit, GitHub Actions. The brief also suggests small open models for
-reproducibility — one run of the extraction channel through a local open model on the same inputs lets the
-write-up report what a fully reproducible, zero-key version scores.
+`sentence-transformers`, `faiss`, an open-source LLM run locally (Claude through the API as an optional
+comparison), `streamlit`, `pytest`, pre-commit, GitHub Actions. The brief also suggests small open models
+for reproducibility — running the extraction channel on one by default means the write-up reports a fully
+reproducible, zero-key version.
 
 ---
 
