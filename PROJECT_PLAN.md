@@ -256,14 +256,15 @@ Four of us: Rashed, Aryan, Brian and Sam.
 
 | Person | Now (overdue September work) | October | November |
 |---|---|---|---|
-| **Rashed** | Loader and pinned requirements (done), this plan | Rule-based extractor `src/conditions.py`, all citation forms in §4, and `src/schema.py` | Pipeline integration; README rewrite |
+| **Rashed** | Loader and pinned requirements (done), this plan | LLM channel: prompt templates, the pilot and the API run (§6 October, item 3), `src/llm/verify.py`, and `src/schema.py` | LLM layer part two (similarity notes, narrative rationale); pipeline integration |
 | **Aryan** | `splits.parquet`, plus split checks in `src/validate.py` | Precedent index: embeddings + FAISS over findings of fact | BM25 + dense hybrid retrieval; precision@5 / MRR evaluation |
-| **Brian** | EDA fixes (§5) and `EDA_REPORT.md`, then `DATA_CARD.md` | LLM channel: local model, templates, quote verification | Streamlit app and dashboard |
-| **Sam** | Commit the leak-free baseline | 13-head TF-IDF baseline, then ModernBERT / Legal-BERT, calibration | Evaluation write-up; model card |
+| **Brian** | EDA fixes (§5) and `EDA_REPORT.md`, then `DATA_CARD.md` | Rule-based extractor `src/conditions.py` (all citation forms in §4) and `src/sead4_reference.py` | Streamlit app and dashboard |
+| **Sam** | Re-run the existing TF-IDF baseline leak-free and commit it | 13-head TF-IDF baseline, then ModernBERT / Legal-BERT, calibration | Evaluation write-up; model card; README rewrite |
 | **Everyone** | Label check: 50 cases, ~13 each (§7) | Traceability check: ~25 findings each, once the extractor runs | Retrieval relevance: ~13 queries each |
 
-The split and the baseline both depend on the loader, and the LLM channel is scored against the rule-based
-extractor, so those go first.
+All LLM and API calls belong to Rashed, so prompts, credentials and spending stay in one place; the app
+shows those outputs from Rashed's cached runs. The split and the baseline both depend on the loader, and
+the LLM channel is scored against the rule-based extractor, so those go first.
 
 ### September — Data & Baseline
 
@@ -279,7 +280,7 @@ the data card and a committed leak-free baseline remain, and they are first on e
 | `Challenge_Data/splits.parquet` | Frozen train/val/test, committed |
 | `notebooks/EDA_REPORT.md` | Written EDA report with corrected figures |
 | `Challenge_Data/DATA_CARD.md` | Data dictionary, per-tier counts, known gaps, ethics note |
-| Baseline | `notebooks/02_baseline.py` as committed trains on `full_text` with a random split — 95.4%, leaky. The leak-free version (`text_features`, grouped split) measured 82.5% vs 64.3% and reproduces at 82.7%; it still needs committing |
+| Baseline | The TF-IDF + logistic-regression model is already trained: `notebooks/02_baseline.py`, run by Sam. As committed it trains on `full_text` with a random split — 95.4%, leaky. The fix is a re-run of the same model with three changes — `load_cases()`, `text_features`, a grouped split — which reproduces at 82.7% vs 64.3%; it still needs committing |
 
 **On the split:** use `StratifiedGroupKFold`, not `GroupShuffleSplit` — the latter takes no `stratify`
 argument, and we need grouping and stratification together. Group on `split_group` (= `case_number`) so
@@ -342,10 +343,14 @@ cited a paragraph number, which leaves 2,907 F cases citing nothing and 4,532 ci
 mitigator (that count includes Directive-era cases that cite `E2.A6` mitigators instead). That gap is the
 LLM's job.
 
-- **Model:** we have no API key — a Claude subscription doesn't include API access — so this channel runs
-  on a local open model (7–8B, 4-bit quantized, e.g. via Ollama) on the 8 GB GPU. It runs on the test
-  split's uncited F cases (~650) plus a validation sample of cited ones. A free Gemini key or donated API
-  credits would be an optional comparison.
+- **Model and runs (Rashed):** a Claude Pro subscription covers prompt development — writing the
+  templates, testing them by hand, and a 20–50-case pilot in claude.ai or Claude Code — but it has no API
+  key, so it can't run a script. The run itself goes through the Claude API's Batch endpoint on a small
+  prepaid credit: the test split's uncited F cases (~650) plus a validation sample of cited ones, about
+  1,300 calls. The pilot picks the model: Claude Haiku 5.5 costs under $1 at this scope, Claude Opus 5.5
+  roughly $20–35 (estimates at Batch pricing). We will ask the advisor whether the program can cover the
+  credit. A local open model (7–8B, 4-bit, e.g. via Ollama) runs the same inputs once, as a
+  reproducibility comparison.
 - `src/sead4_reference.py` — the closed list of 142 `AG ¶` condition codes with their paragraph text, so
   the model selects from a fixed set and cannot invent a code. See §8, open question 1.
 - `src/llm/templates.py` — templates returning strict JSON `{condition_code, exact_quote}`.
@@ -385,7 +390,7 @@ and docket-number matches that legal search depends on. Evaluate precision@5 and
 queries, with relevance defined *before* looking at results as sharing the query's guideline set and
 direction.
 
-**2. LLM layer, part two.** Two more templates, extending October's `src/llm/`: short **similarity
+**2. LLM layer, part two (Rashed).** Two more templates, extending October's `src/llm/`: short **similarity
 notes** per retrieved precedent (the brief asks for these by name) and a **narrative rationale** built
 only from findings the classifier and extractor already established. Same guardrails, unchanged.
 
@@ -399,7 +404,9 @@ only from findings the classifier and extractor already established. Same guardr
 - *Dashboard:* outcome × guideline × year (from `date`) × regime; direction rate per guideline;
   label-tier coverage; and the cleaning before-and-after. Built on `src/dataset.py` so it cannot repeat
   the tier-mixing issue.
-- Ships with cached model outputs — no API key and no GPU required to run the demo.
+- Ships with cached model outputs — no API key and no GPU required to run the demo. For a newly uploaded
+  PDF, the classifier and the rule-based channel run offline; the LLM channel runs only when an API key is
+  configured.
 
 **4. Evaluation and portfolio.** Report every metric against the judge-ruled labels, with the label
 check's measured accuracy beside it. Traceability pass rate and retrieval relevance (§7). Rewrite
@@ -481,6 +488,9 @@ get done if left until November.
 3. **Does the two-tier reporting approach work for you?** We would rather publish 8 guidelines with
    defensible per-label metrics and 5 clearly marked as under-supported than present 13 numbers of
    uneven quality.
+4. **Can the program cover a small Claude API credit?** The extraction run needs API access, which a
+   Claude subscription doesn't include. At our scope it costs under $1 on Claude Haiku 5.5, or roughly
+   $20–35 on Claude Opus 5.5 (§6 October, item 3).
 
 ### One clarification on corpus size
 
@@ -537,10 +547,10 @@ cleaning pipeline replaced them with character offsets computed from the documen
 | Automated explanation-traceability evaluation | §7 — treated as core, not stretch |
 
 Recommended stack, all used: `pandas`, `pyarrow`, `PyMuPDF`, `scikit-learn`, `transformers`, `PyTorch`,
-`sentence-transformers`, `faiss`, a local open model (Gemini optional), `streamlit`, `pytest`,
-pre-commit, GitHub Actions. The brief also suggests small open models for reproducibility — with no API
-key, the extraction channel runs on one by default, so the write-up reports a fully reproducible, zero-key
-version; a hosted model is an optional comparison.
+`sentence-transformers`, `faiss`, Claude through the API (Haiku 5.5 or Opus 5.5, chosen on a pilot),
+`streamlit`, `pytest`, pre-commit, GitHub Actions. The brief also suggests small open models for
+reproducibility — one run of the extraction channel through a local open model on the same inputs lets the
+write-up report what a fully reproducible, zero-key version scores.
 
 ---
 
