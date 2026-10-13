@@ -1,7 +1,6 @@
 """Exploratory Data Analysis for DOHA Security Clearance Decisions
 
 Focus: Outcome distribution, guideline frequency, text length analysis
-Security: Uses cleaned Challenge_Data parquet files with proper data validation
 """
 import glob
 from pathlib import Path
@@ -18,430 +17,331 @@ plt.rcParams['figure.figsize'] = (12, 6)
 
 dataDir = Path(__file__).resolve().parents[1] / "Challenge_Data"
 
+#Helper to print stats
+def printStats(data, label):
+    print(f"\n{label}:")
+    print(f"  Min:    {data.min():,}")
+    print(f"  Max:    {data.max():,}")
+    print(f"  Mean:   {data.mean():,.0f}")
+    print(f"  Median: {data.median():,.0f}")
+    print(f"  StdDev: {data.std():,.0f}")
+
 
 def loadData():
-    #Load all cleaned parquet shards
-    parquetFiles = sorted(glob.glob(str(dataDir / "cases_clean_*.parquet")))
-    if not parquetFiles:
+    files = sorted(glob.glob(str(dataDir / "cases_clean_*.parquet")))
+    if not files:
         raise FileNotFoundError(f"No parquet files in {dataDir}")
     
-    dataFrames = [pd.read_parquet(f) for f in parquetFiles]
-    combinedData = pd.concat(dataFrames, ignore_index=True)
-    
-    print(f"\n{'='*60}")
-    print(f"Dataset loaded: {combinedData.shape[0]:,} rows × {combinedData.shape[1]} columns")
-    print(f"{'='*60}\n")
-    
-    return combinedData
+    df = pd.concat([pd.read_parquet(f) for f in files], ignore_index=True)
+    print(f"\nLoaded {df.shape[0]:,} rows, {df.shape[1]} cols\n")
+    return df
 
 
-def analyzeOutcomes(dataFrame):
-    #Outcome distribution analysis
-    print("OUTCOME DISTRIBUTION ANALYSIS")
-    print("-" * 60)
+def analyzeOutcomes(df):
+    print("OUTCOME DISTRIBUTION")
+    print("-" * 50)
     
-    outcomeData = dataFrame['outcome'].copy()
-    totalCases = len(outcomeData)
+    total = len(df)
+    counts = df['outcome'].value_counts()
     
-    #Count valid outcomes only
-    validOutcomes = outcomeData.dropna()
-    outcomeCounts = validOutcomes.value_counts()
-    outcomePercents = (outcomeCounts / totalCases * 100).round(2)
+    print("\nFrequencies:")
+    for outcome, count in counts.items():
+        pct = count / total * 100
+        print(f"  {outcome:15s}: {count:6,} ({pct:5.2f}%)")
     
-    print("\nOutcome frequencies:")
-    for outcome, count in outcomeCounts.items():
-        percent = outcomePercents[outcome]
-        print(f"  {outcome:15s}: {count:6,} ({percent:5.2f}%)")
+    missing = df['outcome'].isna().sum()
+    if missing > 0:
+        print(f"  {'Missing':15s}: {missing:6,} ({missing/total*100:.2f}%)")
     
-    #Missing values
-    missingCount = outcomeData.isna().sum()
-    if missingCount > 0:
-        missingPercent = (missingCount / totalCases * 100).round(2)
-        print(f"  {'Missing':15s}: {missingCount:6,} ({missingPercent:5.2f}%)")
+    print("\nBy case type:")
+    crosstab = pd.crosstab(df['case_type'], df['outcome'], normalize='index') * 100
+    print(crosstab.round(2).to_string())
     
-    #Outcome by case type
-    print("\nOutcome by case type:")
-    caseTypeOutcome = pd.crosstab(
-        dataFrame['case_type'], 
-        dataFrame['outcome'], 
-        normalize='index'
-    ) * 100
-    print(caseTypeOutcome.round(2).to_string())
-    
-    #Visualize outcomes
+    #Charts
     fig, axes = plt.subplots(1, 2, figsize=(14, 5))
     
-    #Bar chart
-    outcomeCounts.plot(kind='bar', ax=axes[0], color='steelblue', edgecolor='black')
-    axes[0].set_title('Outcome Distribution', fontsize=14, fontweight='bold')
-    axes[0].set_xlabel('Outcome', fontsize=12)
-    axes[0].set_ylabel('Count', fontsize=12)
-    axes[0].tick_params(axis='x', rotation=45)
+    counts.plot(kind='bar', ax=axes[0], color='steelblue', edgecolor='black')
+    axes[0].set_title('Outcome Distribution')
+    axes[0].set_ylabel('Count')
+    plt.setp(axes[0].xaxis.get_majorticklabels(), rotation=45)
     
-    for i, v in enumerate(outcomeCounts):
-        axes[0].text(i, v + 500, f'{v:,}', ha='center', fontsize=10)
+    for i, v in enumerate(counts):
+        axes[0].text(i, v + 500, f'{v:,}', ha='center')
     
-    #Pie chart
-    axes[1].pie(
-        outcomeCounts, 
-        labels=outcomeCounts.index, 
-        autopct='%1.1f%%',
-        startangle=90,
-        colors=sns.color_palette("Set2")
-    )
-    axes[1].set_title('Outcome Proportions', fontsize=14, fontweight='bold')
+    axes[1].pie(counts, labels=counts.index, autopct='%1.1f%%', 
+                startangle=90, colors=sns.color_palette("Set2"))
+    axes[1].set_title('Outcome Proportions')
     
     plt.tight_layout()
     plt.savefig(dataDir.parent / 'notebooks' / 'outcome_distribution.png', dpi=300, bbox_inches='tight')
-    print(f"\nVisualization saved: outcome_distribution.png")
+    print("\nSaved: outcome_distribution.png")
     plt.close()
     
-    return outcomeCounts
+    return counts
 
 
-def analyzeGuidelines(dataFrame):
-    #Guideline frequency analysis
-    print(f"\n{'='*60}")
-    print("GUIDELINE FREQUENCY ANALYSIS")
-    print("-" * 60)
+def analyzeGuidelines(df):
+    print(f"\n{'='*50}")
+    print("GUIDELINE FREQUENCY")
+    print("-" * 50)
     
-    #Separate by label quality
-    formalRulingData = dataFrame[dataFrame['label_source'] == 'formal_ruling']
-    otherLabels = dataFrame[dataFrame['label_source'] != 'formal_ruling']
+    #Only use formal rulings (high quality labels)
+    formal = df[df['label_source'] == 'formal_ruling']
+    other = df[df['label_source'] != 'formal_ruling']
     
-    print(f"\nLabel source breakdown:")
-    print(f"  Formal ruling (authoritative): {len(formalRulingData):,}")
-    print(f"  Other sources (lower quality):  {len(otherLabels):,}")
+    print(f"\nLabel breakdown:")
+    print(f"  Formal ruling: {len(formal):,}")
+    print(f"  Other sources: {len(other):,}")
     
-    #Analyze formal ruling guidelines only
-    guidelineData = formalRulingData['guidelines'].explode()
-    guidelineData = guidelineData[guidelineData.notna()]
-    totalGuidelines = len(guidelineData)
-    casesWithGuidelines = formalRulingData['guidelines'].apply(
-        lambda x: len(x) > 0 if hasattr(x, '__len__') else False
-    ).sum()
+    guidelines = formal['guidelines'].explode().dropna()
+    totalGuides = len(guidelines)
+    casesWithGuides = formal['guidelines'].apply(lambda x: len(x) > 0 if hasattr(x, '__len__') else False).sum()
     
-    print(f"\nFormal ruling cases with guidelines: {casesWithGuidelines:,}")
-    print(f"Total guideline instances: {totalGuidelines:,}")
-    if casesWithGuidelines > 0:
-        print(f"Average guidelines per case: {totalGuidelines / casesWithGuidelines:.2f}")
+    print(f"\nFormal cases with guidelines: {casesWithGuides:,}")
+    print(f"Total instances: {totalGuides:,}")
+    if casesWithGuides > 0:
+        print(f"Avg per case: {totalGuides / casesWithGuides:.2f}")
     
-    #Count each guideline
-    guidelineCounts = guidelineData.value_counts().sort_index()
-    guidelinePercents = (guidelineCounts / casesWithGuidelines * 100).round(2)
+    counts = guidelines.value_counts().sort_index()
+    pcts = (counts / casesWithGuides * 100).round(2)
     
-    print("\nGuideline frequencies (formal rulings only):")
-    guidelineNames = {
-        'A': 'Allegiance to US',
-        'B': 'Foreign Influence',
-        'C': 'Foreign Preference',
-        'D': 'Sexual Behavior',
-        'E': 'Personal Conduct',
-        'F': 'Financial Considerations',
-        'G': 'Alcohol Consumption',
-        'H': 'Drug Involvement',
-        'I': 'Psychological Conditions',
-        'J': 'Criminal Conduct',
-        'K': 'Handling Protected Info',
-        'L': 'Outside Activities',
-        'M': 'Info Technology Use'
+    names = {
+        'A': 'Allegiance', 'B': 'Foreign Influence', 'C': 'Foreign Preference',
+        'D': 'Sexual Behavior', 'E': 'Personal Conduct', 'F': 'Financial',
+        'G': 'Alcohol', 'H': 'Drug Involvement', 'I': 'Psychological',
+        'J': 'Criminal Conduct', 'K': 'Protected Info', 'L': 'Outside Activities',
+        'M': 'Info Technology'
     }
     
-    for guideline in sorted(guidelineNames.keys()):
-        if guideline in guidelineCounts.index:
-            count = guidelineCounts[guideline]
-            percent = guidelinePercents[guideline]
-            name = guidelineNames[guideline]
-            print(f"  {guideline} - {name:25s}: {count:6,} ({percent:5.2f}%)")
+    print("\nFrequencies (formal only):")
+    for code in sorted(names.keys()):
+        if code in counts.index:
+            print(f"  {code} - {names[code]:20s}: {counts[code]:6,} ({pcts[code]:5.2f}%)")
     
-    #Guidelines per case distribution
-    guidelinesPerCase = formalRulingData['guidelines'].apply(
-        lambda x: len(x) if hasattr(x, '__len__') else 0
-    )
+    perCase = formal['guidelines'].apply(lambda x: len(x) if hasattr(x, '__len__') else 0)
+    print(f"\nPer case stats:")
+    print(f"  Min: {perCase.min()}, Max: {perCase.max()}")
+    print(f"  Mean: {perCase.mean():.2f}, Median: {perCase.median():.0f}")
     
-    print(f"\nGuidelines per case statistics:")
-    print(f"  Min:    {guidelinesPerCase.min()}")
-    print(f"  Max:    {guidelinesPerCase.max()}")
-    print(f"  Mean:   {guidelinesPerCase.mean():.2f}")
-    print(f"  Median: {guidelinesPerCase.median():.0f}")
+    print("\nLabel sources (all):")
+    labelSrc = df['label_source'].value_counts()
+    for src, cnt in labelSrc.items():
+        print(f"  {src:25s}: {cnt:6,} ({cnt/len(df)*100:.2f}%)")
     
-    #Label source quality distribution
-    print("\nLabel source distribution (all data):")
-    labelSource = dataFrame['label_source'].value_counts()
-    for source, count in labelSource.items():
-        percent = round(count / len(dataFrame) * 100, 2)
-        print(f"  {source:25s}: {count:6,} ({percent:5.2f}%)")
-    
-    #Visualizations
+    #Charts
     fig, axes = plt.subplots(2, 2, figsize=(16, 12))
     
-    #Guideline frequency bar chart (formal only)
-    guidelineCounts.plot(kind='bar', ax=axes[0, 0], color='coral', edgecolor='black')
-    axes[0, 0].set_title('Guideline Frequency - Formal Rulings Only', fontsize=14, fontweight='bold')
-    axes[0, 0].set_xlabel('Guideline', fontsize=12)
-    axes[0, 0].set_ylabel('Count', fontsize=12)
-    axes[0, 0].tick_params(axis='x', rotation=0)
+    counts.plot(kind='bar', ax=axes[0, 0], color='coral', edgecolor='black')
+    axes[0, 0].set_title('Guideline Frequency - Formal Rulings')
+    axes[0, 0].set_ylabel('Count')
     
-    #Guidelines per case histogram
-    axes[0, 1].hist(guidelinesPerCase, bins=range(0, guidelinesPerCase.max() + 2), 
+    axes[0, 1].hist(perCase, bins=range(0, perCase.max() + 2), 
                     color='skyblue', edgecolor='black', alpha=0.7)
-    axes[0, 1].set_title('Guidelines per Case - Formal Rulings', fontsize=14, fontweight='bold')
-    axes[0, 1].set_xlabel('Number of Guidelines', fontsize=12)
-    axes[0, 1].set_ylabel('Case Count', fontsize=12)
-    axes[0, 1].axvline(guidelinesPerCase.mean(), color='red', linestyle='--', 
-                       linewidth=2, label=f'Mean: {guidelinesPerCase.mean():.2f}')
+    axes[0, 1].set_title('Guidelines per Case')
+    axes[0, 1].set_xlabel('Number of Guidelines')
+    axes[0, 1].axvline(perCase.mean(), color='red', linestyle='--', 
+                       label=f'Mean: {perCase.mean():.2f}')
     axes[0, 1].legend()
     
-    #Top 10 guidelines horizontal bar
-    topGuidelines = guidelineCounts.nlargest(10)
-    axes[1, 0].barh(range(len(topGuidelines)), topGuidelines.values, color='teal', edgecolor='black')
-    axes[1, 0].set_yticks(range(len(topGuidelines)))
-    axes[1, 0].set_yticklabels([f"{g} - {guidelineNames.get(g, 'Unknown')}" for g in topGuidelines.index])
-    axes[1, 0].set_title('Top 10 Guidelines - Formal Rulings', fontsize=14, fontweight='bold')
-    axes[1, 0].set_xlabel('Count', fontsize=12)
+    top10 = counts.nlargest(10)
+    axes[1, 0].barh(range(len(top10)), top10.values, color='teal', edgecolor='black')
+    axes[1, 0].set_yticks(range(len(top10)))
+    axes[1, 0].set_yticklabels([f"{g} - {names.get(g, 'Unknown')}" for g in top10.index])
+    axes[1, 0].set_title('Top 10 Guidelines')
     axes[1, 0].invert_yaxis()
     
-    #Label source quality breakdown
     labelColors = {'formal_ruling': '#2ecc71', 'inherited_from_hearing': '#3498db', 
                    'regex_fallback': '#e74c3c', 'none': '#95a5a6'}
-    colors = [labelColors.get(x, '#7f8c8d') for x in labelSource.index]
-    axes[1, 1].pie(
-        labelSource.values, 
-        labels=[f"{x}\n({v:,})" for x, v in zip(labelSource.index, labelSource.values)], 
-        autopct='%1.1f%%',
-        startangle=90,
-        colors=colors
-    )
-    axes[1, 1].set_title('Label Source Quality Tiers', fontsize=14, fontweight='bold')
+    colors = [labelColors.get(x, '#7f8c8d') for x in labelSrc.index]
+    axes[1, 1].pie(labelSrc.values, 
+                   labels=[f"{x}\n({v:,})" for x, v in zip(labelSrc.index, labelSrc.values)], 
+                   autopct='%1.1f%%', startangle=90, colors=colors)
+    axes[1, 1].set_title('Label Quality Tiers')
     
     plt.tight_layout()
     plt.savefig(dataDir.parent / 'notebooks' / 'guideline_analysis.png', dpi=300, bbox_inches='tight')
-    print(f"\nVisualization saved: guideline_analysis.png")
+    print("\nSaved: guideline_analysis.png")
     plt.close()
     
-    return guidelineCounts, labelSource
+    return counts, labelSrc
 
-
-def analyzeTextLengths(dataFrame):
-    #Text length analysis for ML features
-    print(f"\n{'='*60}")
+def analyzeTextLengths(df):
+    print(f"\n{'='*50}")
     print("TEXT LENGTH ANALYSIS")
-    print("-" * 60)
+    print("-" * 50)
     
-    #Filter out empty strings properly
-    validTextFeatures = dataFrame['text_features'].str.strip().str.len() > 0
-    emptyCount = (~validTextFeatures).sum()
+    #Fix: exclude empty strings
+    hasText = df['text_features'].str.strip().str.len() > 0
+    emptyCount = (~hasText).sum()
     
-    print(f"\nData quality check:")
-    print(f"  Empty text_features: {emptyCount:,} ({emptyCount / len(dataFrame) * 100:.2f}%)")
-    print(f"  Valid text_features: {validTextFeatures.sum():,} ({validTextFeatures.sum() / len(dataFrame) * 100:.2f}%)")
+    print(f"\nQuality check:")
+    print(f"  Empty: {emptyCount:,} ({emptyCount/len(df)*100:.2f}%)")
+    print(f"  Valid: {hasText.sum():,} ({hasText.sum()/len(df)*100:.2f}%)")
     
-    #Full text length
-    fullTextLengths = dataFrame['full_text'].str.len()
+    fullLen = df['full_text'].str.len()
+    printStats(fullLen, "Full text (chars)")
     
-    print("\nFull text statistics (characters):")
-    print(f"  Min:     {fullTextLengths.min():,}")
-    print(f"  Max:     {fullTextLengths.max():,}")
-    print(f"  Mean:    {fullTextLengths.mean():,.0f}")
-    print(f"  Median:  {fullTextLengths.median():,.0f}")
-    print(f"  Std Dev: {fullTextLengths.std():,.0f}")
-    
-    #Percentiles
-    percentiles = [10, 25, 50, 75, 90, 95, 99]
     print("\nPercentiles:")
-    for p in percentiles:
-        value = fullTextLengths.quantile(p / 100)
-        print(f"  {p:2d}th: {value:,.0f}")
+    for p in [10, 25, 50, 75, 90, 95, 99]:
+        print(f"  {p:2d}th: {fullLen.quantile(p/100):,.0f}")
     
-    #Text features length (leak-free, excluding empty)
-    validData = dataFrame[validTextFeatures]
-    textFeaturesLengths = validData['text_features'].str.len()
+    #Only valid cases
+    valid = df[hasText]
+    featLen = valid['text_features'].str.len()
     
-    print(f"\nText features statistics (valid only, {len(textFeaturesLengths):,} cases):")
-    print(f"  Min:     {textFeaturesLengths.min():,}")
-    print(f"  Max:     {textFeaturesLengths.max():,}")
-    print(f"  Mean:    {textFeaturesLengths.mean():,.0f}")
-    print(f"  Median:  {textFeaturesLengths.median():,.0f}")
-    print(f"  Std Dev: {textFeaturesLengths.std():,.0f}")
+    print(f"\nText features (valid only, {len(featLen):,} cases):")
+    printStats(featLen, "Features")
     
-    #Word counts
-    fullTextWords = dataFrame['full_text'].str.split().str.len()
-    textFeaturesWords = validData['text_features'].str.split().str.len()
+    fullWords = df['full_text'].str.split().str.len()
+    featWords = valid['text_features'].str.split().str.len()
     
     print(f"\nWord counts:")
-    print(f"  Full text mean:     {fullTextWords.mean():,.0f}")
-    print(f"  Text features mean: {textFeaturesWords.mean():,.0f}")
-    print(f"  Reduction:          {(1 - textFeaturesWords.mean() / fullTextWords.mean()) * 100:.1f}%")
+    print(f"  Full text:  {fullWords.mean():,.0f}")
+    print(f"  Features:   {featWords.mean():,.0f}")
+    print(f"  Reduction:  {(1 - featWords.mean()/fullWords.mean())*100:.1f}%")
     
-    #Text length by outcome
-    print("\nMean text length by outcome:")
-    lengthByOutcome = dataFrame.groupby('outcome')['full_text'].apply(lambda x: x.str.len().mean())
-    for outcome, length in lengthByOutcome.items():
-        print(f"  {outcome:15s}: {length:,.0f} chars")
+    print("\nLength by outcome:")
+    byOutcome = df.groupby('outcome')['full_text'].apply(lambda x: x.str.len().mean())
+    for outcome, length in byOutcome.items():
+        print(f"  {outcome:12s}: {length:,.0f} chars")
     
-    #Visualizations
+    #Charts
     fig, axes = plt.subplots(2, 2, figsize=(16, 12))
     
-    #Full text length histogram
-    axes[0, 0].hist(fullTextLengths / 1000, bins=50, color='lightgreen', edgecolor='black', alpha=0.7)
-    axes[0, 0].set_title('Full Text Length Distribution', fontsize=14, fontweight='bold')
-    axes[0, 0].set_xlabel('Length (thousands of characters)', fontsize=12)
-    axes[0, 0].set_ylabel('Count', fontsize=12)
-    axes[0, 0].axvline(fullTextLengths.mean() / 1000, color='red', linestyle='--', 
-                       linewidth=2, label=f'Mean: {fullTextLengths.mean() / 1000:.1f}k')
+    axes[0, 0].hist(fullLen / 1000, bins=50, color='lightgreen', edgecolor='black', alpha=0.7)
+    axes[0, 0].set_title('Full Text Length')
+    axes[0, 0].set_xlabel('Length (thousands of chars)')
+    axes[0, 0].axvline(fullLen.mean() / 1000, color='red', linestyle='--', 
+                       label=f'Mean: {fullLen.mean()/1000:.1f}k')
     axes[0, 0].legend()
     
-    #Text features length histogram (valid only)
-    axes[0, 1].hist(textFeaturesLengths / 1000, bins=50, color='lightcoral', edgecolor='black', alpha=0.7)
-    axes[0, 1].set_title('Text Features Length (Valid Only)', fontsize=14, fontweight='bold')
-    axes[0, 1].set_xlabel('Length (thousands of characters)', fontsize=12)
-    axes[0, 1].set_ylabel('Count', fontsize=12)
-    axes[0, 1].axvline(textFeaturesLengths.mean() / 1000, color='red', linestyle='--', 
-                       linewidth=2, label=f'Mean: {textFeaturesLengths.mean() / 1000:.1f}k')
+    axes[0, 1].hist(featLen / 1000, bins=50, color='lightcoral', edgecolor='black', alpha=0.7)
+    axes[0, 1].set_title('Features Length (Valid Only)')
+    axes[0, 1].set_xlabel('Length (thousands of chars)')
+    axes[0, 1].axvline(featLen.mean() / 1000, color='red', linestyle='--', 
+                       label=f'Mean: {featLen.mean()/1000:.1f}k')
     axes[0, 1].legend()
     
-    #Box plot by outcome
+    #Box by outcome
     outcomeData = []
     outcomeLabels = []
-    for outcome in dataFrame['outcome'].dropna().unique():
-        lengths = dataFrame[dataFrame['outcome'] == outcome]['full_text'].str.len() / 1000
+    for outcome in df['outcome'].dropna().unique():
+        lengths = df[df['outcome'] == outcome]['full_text'].str.len() / 1000
         outcomeData.append(lengths)
         outcomeLabels.append(outcome)
     
     axes[1, 0].boxplot(outcomeData, labels=outcomeLabels, patch_artist=True)
-    axes[1, 0].set_title('Text Length by Outcome', fontsize=14, fontweight='bold')
-    axes[1, 0].set_xlabel('Outcome', fontsize=12)
-    axes[1, 0].set_ylabel('Length (thousands of characters)', fontsize=12)
-    axes[1, 0].tick_params(axis='x', rotation=45)
+    axes[1, 0].set_title('Length by Outcome')
+    axes[1, 0].set_ylabel('Length (thousands of chars)')
+    plt.setp(axes[1, 0].xaxis.get_majorticklabels(), rotation=45)
     
-    #Word count comparison (valid data only)
-    validFullText = dataFrame.loc[validTextFeatures, 'full_text'].str.split().str.len()
-    comparisonData = pd.DataFrame({
-        'Full Text': validFullText,
-        'Features Only': textFeaturesWords
-    })
-    comparisonData.plot(kind='hist', bins=50, alpha=0.6, ax=axes[1, 1], edgecolor='black')
-    axes[1, 1].set_title('Word Count Comparison (Valid Data)', fontsize=14, fontweight='bold')
-    axes[1, 1].set_xlabel('Word Count', fontsize=12)
-    axes[1, 1].set_ylabel('Count', fontsize=12)
-    axes[1, 1].legend(['Full Text', 'Features Only'])
+    validFull = df.loc[hasText, 'full_text'].str.split().str.len()
+    comparison = pd.DataFrame({'Full Text': validFull, 'Features': featWords})
+    comparison.plot(kind='hist', bins=50, alpha=0.6, ax=axes[1, 1], edgecolor='black')
+    axes[1, 1].set_title('Word Count Comparison')
+    axes[1, 1].set_xlabel('Word Count')
     
     plt.tight_layout()
     plt.savefig(dataDir.parent / 'notebooks' / 'text_length_analysis.png', dpi=300, bbox_inches='tight')
-    print(f"\nVisualization saved: text_length_analysis.png")
+    print("\nSaved: text_length_analysis.png")
     plt.close()
     
-    return fullTextLengths, textFeaturesLengths, emptyCount
+    return fullLen, featLen, emptyCount
 
 
-def analyzeDataQuality(dataFrame):
-    #Data quality checks for ML readiness
-    print(f"\n{'='*60}")
-    print("DATA QUALITY ANALYSIS")
-    print("-" * 60)
+def analyzeDataQuality(df):
+    print(f"\n{'='*50}")
+    print("DATA QUALITY")
+    print("-" * 50)
     
-    #Training data availability
-    useForTraining = dataFrame['use_for_training'].sum()
-    formalRuling = (dataFrame['label_source'] == 'formal_ruling').sum()
-    trainingReady = (dataFrame['use_for_training'] & (dataFrame['label_source'] == 'formal_ruling')).sum()
+    useTrain = df['use_for_training'].sum()
+    formal = (df['label_source'] == 'formal_ruling').sum()
+    ready = (df['use_for_training'] & (df['label_source'] == 'formal_ruling')).sum()
     
-    print(f"\nML training readiness:")
-    print(f"  Use for training flag:     {useForTraining:,} ({useForTraining / len(dataFrame) * 100:.1f}%)")
-    print(f"  Formal ruling labels:      {formalRuling:,} ({formalRuling / len(dataFrame) * 100:.1f}%)")
-    print(f"  Training-ready (both):     {trainingReady:,} ({trainingReady / len(dataFrame) * 100:.1f}%)")
+    print(f"\nML readiness:")
+    print(f"  Training flag: {useTrain:,} ({useTrain/len(df)*100:.1f}%)")
+    print(f"  Formal labels: {formal:,} ({formal/len(df)*100:.1f}%)")
+    print(f"  Ready (both):  {ready:,} ({ready/len(df)*100:.1f}%)")
     
-    #Missing and empty critical fields
-    print(f"\nCritical field quality:")
+    print(f"\nField quality:")
+    nullOutcome = df['outcome'].isna().sum()
+    print(f"  outcome null:      {nullOutcome:6,} ({nullOutcome/len(df)*100:.2f}%)")
     
-    outcomeNull = dataFrame['outcome'].isna().sum()
-    print(f"  outcome (null):         {outcomeNull:6,} ({outcomeNull / len(dataFrame) * 100:.2f}%)")
+    emptyFeat = (df['text_features'].str.strip().str.len() == 0).sum()
+    print(f"  text_features empty: {emptyFeat:6,} ({emptyFeat/len(df)*100:.2f}%)")
     
-    textFeaturesEmpty = (dataFrame['text_features'].str.strip().str.len() == 0).sum()
-    print(f"  text_features (empty):  {textFeaturesEmpty:6,} ({textFeaturesEmpty / len(dataFrame) * 100:.2f}%)")
+    nullGuide = df['guidelines'].isna().sum()
+    print(f"  guidelines null:     {nullGuide:6,} ({nullGuide/len(df)*100:.2f}%)")
     
-    guidelinesNull = dataFrame['guidelines'].isna().sum()
-    print(f"  guidelines (null):      {guidelinesNull:6,} ({guidelinesNull / len(dataFrame) * 100:.2f}%)")
+    splits = df['split_group'].nunique()
+    print(f"\nSplitting:")
+    print(f"  Split groups: {splits:,}")
+    print(f"  Avg per group: {len(df)/splits:.1f}")
     
-    regimeNull = dataFrame['guideline_regime'].isna().sum()
-    print(f"  guideline_regime (null):{regimeNull:6,} ({regimeNull / len(dataFrame) * 100:.2f}%)")
+    print(f"\nRegime breakdown:")
+    regimes = df[df['use_for_training']]['guideline_regime'].value_counts()
+    for regime, cnt in regimes.items():
+        print(f"  {regime:12s}: {cnt:6,} ({cnt/useTrain*100:.2f}%)")
     
-    #Split groups
-    splitGroups = dataFrame['split_group'].nunique()
-    print(f"\nData splitting:")
-    print(f"  Unique split groups: {splitGroups:,}")
-    print(f"  Cases per group:     {len(dataFrame) / splitGroups:.1f} avg")
-    
-    #Guideline regime balance
-    print(f"\nGuideline regime for training:")
-    regimeTraining = dataFrame[dataFrame['use_for_training']]['guideline_regime'].value_counts()
-    for regime, count in regimeTraining.items():
-        percent = round(count / useForTraining * 100, 2)
-        print(f"  {regime:15s}: {count:6,} ({percent:5.2f}%)")
-    
-    return trainingReady
+    return ready
 
 
-def generateSummary(dataFrame, outcomeCounts, guidelineCounts, fullTextLengths, trainingReady, emptyCount):
-    #Generate comprehensive summary report
-    print(f"\n{'='*60}")
-    print("EXPLORATORY DATA ANALYSIS SUMMARY")
-    print("=" * 60)
+def generateSummary(df, outcomes, guidelines, fullLen, ready, emptyCount):
+    print(f"\n{'='*50}")
+    print("SUMMARY")
+    print("=" * 50)
     
-    print(f"\nDataset Overview:")
-    print(f"  Total cases:            {len(dataFrame):,}")
-    print(f"  Training-ready cases:   {trainingReady:,}")
-    print(f"  Date range:             {dataFrame['date'].min()} to {dataFrame['date'].max()}")
+    print(f"\nOverview:")
+    print(f"  Total cases:   {len(df):,}")
+    print(f"  Training-ready: {ready:,}")
+    print(f"  Date range:    {df['date'].min()} to {df['date'].max()}")
     
-    print(f"\nOutcome Summary:")
-    topOutcome = outcomeCounts.index[0]
-    print(f"  Most common:            {topOutcome} ({outcomeCounts[topOutcome]:,} cases)")
-    print(f"  Class imbalance ratio:  {outcomeCounts.max() / outcomeCounts.min():.2f}:1")
+    print(f"\nOutcomes:")
+    top = outcomes.index[0]
+    print(f"  Most common:   {top} ({outcomes[top]:,})")
+    print(f"  Imbalance:     {outcomes.max()/outcomes.min():.1f}:1")
     
-    print(f"\nGuideline Summary (Formal Rulings):")
-    print(f"  Most frequent:          {guidelineCounts.index[0]} ({guidelineCounts.iloc[0]:,} cases)")
-    print(f"  Least frequent:         {guidelineCounts.index[-1]} ({guidelineCounts.iloc[-1]:,} cases)")
-    print(f"  Total guideline types:  {len(guidelineCounts)}")
+    print(f"\nGuidelines (formal):")
+    print(f"  Most frequent: {guidelines.index[0]} ({guidelines.iloc[0]:,})")
+    print(f"  Least frequent: {guidelines.index[-1]} ({guidelines.iloc[-1]:,})")
+    print(f"  Total types:   {len(guidelines)}")
     
-    print(f"\nText Summary:")
-    print(f"  Avg document length:    {fullTextLengths.mean():,.0f} characters")
-    print(f"  Avg word count:         {dataFrame['full_text'].str.split().str.len().mean():,.0f} words")
-    print(f"  Empty text_features:    {emptyCount:,} cases")
+    print(f"\nText:")
+    print(f"  Avg length:    {fullLen.mean():,.0f} chars")
+    print(f"  Avg words:     {df['full_text'].str.split().str.len().mean():,.0f}")
+    print(f"  Empty features: {emptyCount:,}")
     
-    print(f"\nCritical Issues Fixed:")
-    print(f"  ✓ Empty strings now excluded from text analysis")
-    print(f"  ✓ Label tiers separated in visualizations")
-    print(f"  ✓ Formal rulings isolated for guideline analysis")
+    print(f"\nFixes applied:")
+    print(f"  - Empty strings excluded")
+    print(f"  - Label tiers separated")
+    print(f"  - Formal rulings isolated")
     
-    print(f"\nML Pipeline Recommendations:")
-    print(f"  ✓ Use text_features column (leak-free)")
-    print(f"  ✓ Filter: use_for_training=True AND label_source='formal_ruling'")
-    print(f"  ✓ Exclude cases with empty text_features")
-    print(f"  ✓ Group splits by split_group column")
-    print(f"  ✓ Handle class imbalance with stratification")
+    print(f"\nFor ML pipeline:")
+    print(f"  - Use text_features (leak-free)")
+    print(f"  - Filter: use_for_training=True AND label_source='formal_ruling'")
+    print(f"  - Exclude empty text_features")
+    print(f"  - Group splits by split_group")
+    print(f"  - Handle imbalance with stratification")
     
-    print(f"\n{'='*60}\n")
+    print(f"\n{'='*50}\n")
 
 
 def main():
-    #Execute complete EDA pipeline
     try:
-        #Load data
-        dataFrame = loadData()
+        df = loadData()
         
-        #Run analyses
-        outcomeCounts = analyzeOutcomes(dataFrame)
-        guidelineCounts, labelSource = analyzeGuidelines(dataFrame)
-        fullTextLengths, textFeaturesLengths, emptyCount = analyzeTextLengths(dataFrame)
-        trainingReady = analyzeDataQuality(dataFrame)
+        outcomes = analyzeOutcomes(df)
+        guidelines, labels = analyzeGuidelines(df)
+        fullLen, featLen, emptyCount = analyzeTextLengths(df)
+        ready = analyzeDataQuality(df)
         
-        #Generate summary
-        generateSummary(dataFrame, outcomeCounts, guidelineCounts, fullTextLengths, trainingReady, emptyCount)
+        generateSummary(df, outcomes, guidelines, fullLen, ready, emptyCount)
         
-        print("Exploratory data analysis complete!")
-        print(f"Visualizations saved in: {dataDir.parent / 'notebooks'}")
+        print("EDA complete!")
+        print(f"Charts saved in: {dataDir.parent / 'notebooks'}")
         
     except Exception as e:
-        print(f"\nError during analysis: {str(e)}")
+        print(f"\nError: {e}")
         raise
 
 
