@@ -246,4 +246,10 @@ The pipeline is deterministic: the same input produces byte-identical output.
 - **PASS** - out-of-order sections never reach the feature text
 - **PASS** - no byte-identical duplicates remain
 - **PASS** - every row has a label_source
+- **PASS** - Challenge_Data/splits.parquet exists
+- **PASS** - splits covers exactly the 21,959 pool cases
+- **PASS** - splits has required columns
+- **PASS** - split contains exactly train, val, test
+- **PASS** - no case_number / split_group overlap across splits
+- **PASS** - split sizes match ~70/15/15 target
 <!-- AUTOGEN:END -->
