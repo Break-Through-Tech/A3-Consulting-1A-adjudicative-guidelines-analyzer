@@ -74,20 +74,38 @@ def _normalise_subparagraphs(value) -> list[dict]:
     return items
 
 
+SPLITS_PATH = config.OUT_DIR / "splits.parquet"
+
+
+def load_splits() -> pd.DataFrame:
+    """Return the frozen splits DataFrame (train / val / test)."""
+    if not SPLITS_PATH.exists():
+        raise FileNotFoundError(f"Missing splits at {SPLITS_PATH}. Run: python -m src.build_splits")
+    return pd.read_parquet(SPLITS_PATH)
+
+
 def load_cases(pool: bool = True, columns: list[str] | None = None) -> pd.DataFrame:
     """Load the cleaned dataset.
 
     pool=True   the trainable pool: use_for_training, a formal_ruling label and
-                non-empty text_features (21,959 rows).
+                non-empty text_features (21,959 rows). Attaches 'split' column
+                if splits.parquet exists.
     pool=False  every row (30,517), normalised but unfiltered -- for EDA, which
                 needs to see the empty texts and weaker label tiers.
     columns     the columns to return. Default: everything except full_text.
+                Can include 'split' to explicitly request split assignment.
     """
     paths = shard_files()
+    attach_split = False
     if columns is None:
         columns = [c for c in pq.read_schema(paths[0]).names if c not in HEAVY_COLUMNS]
+        attach_split = pool and SPLITS_PATH.exists()
     else:
         columns = list(columns)
+        if "split" in columns:
+            attach_split = True
+            columns.remove("split")
+
     helpers = [c for c in _POOL_COLUMNS if pool and c not in columns]
 
     df = pd.concat(
@@ -106,4 +124,12 @@ def load_cases(pool: bool = True, columns: list[str] | None = None) -> pd.DataFr
             & (df["text_features"].str.len() > 0)
         )
         df = df.loc[keep, columns].reset_index(drop=True)
+
+    if attach_split and SPLITS_PATH.exists():
+        splits_df = pd.read_parquet(SPLITS_PATH)
+        if pool and len(df) == len(splits_df):
+            df["split"] = splits_df["split"].to_numpy()
+        elif "source_url" in df.columns:
+            df = df.merge(splits_df[["source_url", "split"]], on="source_url", how="left")
+
     return df

@@ -57,6 +57,23 @@ def test_splits_file_integrity():
     assert 0.12 <= test_pct <= 0.17, f"Test proportion unexpected: {test_pct:.1%}"
 
 
+def test_load_cases_and_load_splits_integration():
+    from src.dataset import load_cases, load_splits
+    splits = load_splits()
+    assert len(splits) == 21959
+    assert set(splits["split"].unique()) == {"train", "val", "test"}
+
+    # Default pool=True attaches split
+    pool = load_cases(pool=True)
+    assert "split" in pool.columns
+    assert len(pool) == 21959
+    assert (pool["split"] == splits["split"]).all()
+
+    # Explicit column subset with 'split'
+    sub = load_cases(pool=True, columns=["text_features", "outcome", "split"])
+    assert list(sub.columns) == ["text_features", "outcome", "split"]
+
+
 if __name__ == "__main__":
     raise SystemExit(run_module(dict(globals()), "split tests"))
 
