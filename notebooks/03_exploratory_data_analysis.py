@@ -58,7 +58,7 @@ def analyzeOutcomes(df):
     print(crosstab.round(2).to_string())
     
     #Charts
-    fig, axes = plt.subplots(1, 2, figsize=(14, 5))
+    fig, axes = plt.subplots(1, 2, figsize=(16, 6))
     
     counts.plot(kind='bar', ax=axes[0], color='steelblue', edgecolor='black')
     axes[0].set_title('Outcome Distribution')
@@ -68,8 +68,16 @@ def analyzeOutcomes(df):
     for i, v in enumerate(counts):
         axes[0].text(i, v + 500, f'{v:,}', ha='center')
     
-    axes[1].pie(counts, labels=counts.index, autopct='%1.1f%%', 
-                startangle=90, colors=sns.color_palette("Set2"))
+    #Pie with legend - only show % for slices > 1%
+    def showPercent(pct):
+        return f'{pct:.1f}%' if pct > 1 else ''
+    
+    colors = sns.color_palette("Set2", len(counts))
+    wedges, texts, autotexts = axes[1].pie(counts, autopct=showPercent, 
+                                             startangle=140, colors=colors,
+                                             textprops={'fontsize': 11})
+    axes[1].legend(wedges, [f'{k}: {v:,} ({v/total*100:.1f}%)' for k, v in counts.items()],
+                   loc="center left", bbox_to_anchor=(0.95, 0.5), fontsize=10)
     axes[1].set_title('Outcome Proportions')
     
     plt.tight_layout()
@@ -150,12 +158,23 @@ def analyzeGuidelines(df):
     axes[1, 0].set_title('Top 10 Guidelines')
     axes[1, 0].invert_yaxis()
     
+    #Fix pie chart with legend to avoid overlap
+    def showPct(pct):
+        return f'{pct:.1f}%' if pct > 5 else ''
+    
     labelColors = {'formal_ruling': '#2ecc71', 'inherited_from_hearing': '#3498db', 
                    'regex_fallback': '#e74c3c', 'none': '#95a5a6'}
     colors = [labelColors.get(x, '#7f8c8d') for x in labelSrc.index]
-    axes[1, 1].pie(labelSrc.values, 
-                   labels=[f"{x}\n({v:,})" for x, v in zip(labelSrc.index, labelSrc.values)], 
-                   autopct='%1.1f%%', startangle=90, colors=colors)
+    wedges, texts, autotexts = axes[1, 1].pie(labelSrc.values, autopct=showPct,
+                                               startangle=90, colors=colors,
+                                               textprops={'fontsize': 10})
+    
+    #Create cleaner legend with counts and percentages
+    totalCases = labelSrc.sum()
+    legendLabels = [f'{src}: {cnt:,} ({cnt/totalCases*100:.1f}%)' 
+                    for src, cnt in labelSrc.items()]
+    axes[1, 1].legend(wedges, legendLabels, loc="center left", 
+                      bbox_to_anchor=(1, 0.5), fontsize=9)
     axes[1, 1].set_title('Label Quality Tiers')
     
     plt.tight_layout()
