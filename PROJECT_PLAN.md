@@ -325,7 +325,10 @@ can't form a stratum of their own, since it would be smaller than the fold count
 second guideline (E, B, M, E), so they are stratified on that instead; the smallest stratum is then L,
 with 40. Do *not* stratify on `(guideline, regime)` — tested, 37 strata of which 4 are smaller than the
 fold count — and do not stratify on the exact guideline-presence pattern, which produces strata of size 1.
-Check regime balance afterwards instead; at 17,428 / 2,629 / 1,902 it balances on its own.
+Check regime balance afterwards instead; at 17,428 / 2,629 / 1,902 it balances on its own. We considered
+iterative stratification for this multi-label split and kept the rarest-guideline method. Iterative
+stratification can't keep a hearing and its appeal together, and our split already holds every guideline
+within about one point of its pool rate in all three parts.
 
 `StratifiedGroupKFold` makes k equal folds, so 70/15/15 takes two stages: `n_splits=7` (shuffled, seed 42)
 with one fold as test, then `n_splits=6` on the remainder with one fold as validation — about 71/14/14.
@@ -359,9 +362,13 @@ AGAINST*. Collapsing {FOR, AGAINST} gives the multi-label A–M classifier, whic
 - Calibration: temperature scaling **per head**, not one global temperature — a head trained on 12,353
   Guideline F findings is not miscalibrated the same way as one trained on 386 Guideline D findings.
   Reliability curve per defensible guideline plus the pooled curve.
+- Decision thresholds: tune each head's cutoff on the validation set instead of taking the most likely
+  class, and report precision-recall curves. Taking the most likely class under-predicts the rare
+  direction on small heads such as D, I, K and M.
 - Case recommendation: compose via "any AGAINST ⇒ DENIED" *and* train a direct head; report both.
 - Metrics: Accuracy, Macro-F1, Micro-F1, per-label precision/recall/F1 and average precision for all 13
-  with counts shown, AUC where applicable, **split by regime**.
+  with counts shown, AUC where applicable, **split by regime**. Within each guideline, report precision
+  and recall for FOR and for AGAINST separately.
 - Routing baseline: the statement of the case usually names the alleged guidelines, so a bare keyword
   match on `text_features` already gets 0.90–0.99 precision and ~0.8 recall (B/E/F/G/H/J). Report it
   beside the model — direction, not routing, is the real test.
