@@ -16,6 +16,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
+import pandas as pd  # noqa: E402
 from _harness import parametrize, run_module  # noqa: E402
 from src import fields, labels, normalize, segment  # noqa: E402
 
@@ -96,8 +97,7 @@ def test_appeal_outcome_is_a_composition(text, expected):
 
 
 def test_unresolvable_outcome_is_null_not_a_guess():
-    import pandas as pd
-    text = "The parties submitted written argument on the matter."
+    text ="The parties submitted written argument on the matter."
     assert pd.isna(fields.extract_outcome(text, (0, len(text)))[0])
 
 
@@ -242,7 +242,6 @@ def test_apostrophe_variants_share_an_identity_key():
 
 def test_implausible_years_are_nulled_not_kept():
     """Source dates parsed to years 214 and 9201."""
-    import pandas as pd
     value, source = fields.extract_date("Date: March 3, 0214\n", "03-12345")
     assert pd.isna(value)
     assert source == "unresolved"
@@ -250,8 +249,7 @@ def test_implausible_years_are_nulled_not_kept():
 
 def test_date_must_be_consistent_with_the_docket_year():
     """A decision cannot predate the docket. 19-02453 cannot be decided in 1999."""
-    import pandas as pd
-    value, _ = fields.extract_date("Date: June 1, 1999\n", "19-02453")
+    value, _ =fields.extract_date("Date: June 1, 1999\n", "19-02453")
     assert pd.isna(value)
 
 
