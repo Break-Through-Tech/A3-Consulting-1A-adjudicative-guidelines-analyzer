@@ -107,6 +107,8 @@ def load_cases(pool: bool = True, columns: list[str] | None = None) -> pd.DataFr
             columns.remove("split")
 
     helpers = [c for c in _POOL_COLUMNS if pool and c not in columns]
+    if attach_split and "source_url" not in columns and "source_url" not in helpers:
+        helpers.append("source_url")
 
     df = pd.concat(
         [pd.read_parquet(p, columns=columns + helpers, engine=config.PARQUET_ENGINE) for p in paths],
@@ -123,13 +125,13 @@ def load_cases(pool: bool = True, columns: list[str] | None = None) -> pd.DataFr
             & (df["label_source"] == labels.SOURCE_FORMAL)
             & (df["text_features"].str.len() > 0)
         )
-        df = df.loc[keep, columns].reset_index(drop=True)
+        df = df.loc[keep].reset_index(drop=True)
 
     if attach_split and SPLITS_PATH.exists():
-        splits_df = pd.read_parquet(SPLITS_PATH)
-        if pool and len(df) == len(splits_df):
-            df["split"] = splits_df["split"].to_numpy()
-        elif "source_url" in df.columns:
-            df = df.merge(splits_df[["source_url", "split"]], on="source_url", how="left")
+        splits_df = pd.read_parquet(SPLITS_PATH, columns=["source_url", "split"])
+        df = df.merge(splits_df, on="source_url", how="left")
 
-    return df
+    return_cols = [c for c in columns if c in df.columns]
+    if attach_split and "split" in df.columns and "split" not in return_cols:
+        return_cols.append("split")
+    return df[return_cols]

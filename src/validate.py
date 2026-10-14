@@ -170,6 +170,52 @@ def run_checks(df: pd.DataFrame) -> list[tuple[str, bool, str]]:
             f"train={train_pct:.1%}, val={val_pct:.1%}, test={test_pct:.1%}",
         )
 
+        pool_mask = (
+            df["use_for_training"]
+            & (df["label_source"] == "formal_ruling")
+            & (df["text_features"].fillna("").str.len() > 0)
+        )
+        pool_df = df.loc[pool_mask, ["source_url", "guideline_regime", "guidelines"]].merge(
+            splits[["source_url", "split"]], on="source_url"
+        )
+
+        regime_skew = 0.0
+        worst_regime = ""
+        for reg in ["sead4", "directive", "unknown"]:
+            p_rate = (pool_df["guideline_regime"] == reg).mean()
+            for s in ["train", "val", "test"]:
+                s_rate = (pool_df.loc[pool_df["split"] == s, "guideline_regime"] == reg).mean()
+                diff = abs(s_rate - p_rate)
+                if diff > regime_skew:
+                    regime_skew = diff
+                    worst_regime = reg
+
+        check(
+            "every regime appears in train, val and test at close to its pool rate",
+            regime_skew < 0.02,
+            f"max deviation {100 * regime_skew:.2f}pp ({worst_regime})",
+        )
+
+        guideline_skew = 0.0
+        worst_code = ""
+        for code in config.GUIDELINE_CODES:
+            if code == "A":
+                continue  # Exempt: all 4 cases in train
+            has_code = pool_df["guidelines"].map(lambda g: code in g if g is not None else False)
+            p_rate = has_code.mean()
+            for s in ["train", "val", "test"]:
+                s_rate = has_code[pool_df["split"] == s].mean()
+                diff = abs(s_rate - p_rate)
+                if diff > guideline_skew:
+                    guideline_skew = diff
+                    worst_code = code
+
+        check(
+            "every guideline appears in train, val and test at close to its pool rate (Guideline A exempt: all 4 cases in train)",
+            guideline_skew < 0.02,
+            f"max deviation {100 * guideline_skew:.2f}pp (Guideline {worst_code})",
+        )
+
     return checks
 
 
@@ -177,7 +223,7 @@ def summary_stats(df: pd.DataFrame) -> dict:
     total = len(df)
     exploded = _codes(df["guidelines"])
     stored = _codes(df["guidelines_stored"])
-    return {
+    stats = {
         "rows": total,
         "columns": len(df.columns),
         "outcome_resolved": int(df["outcome"].notna().sum()),

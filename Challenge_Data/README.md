@@ -235,6 +235,14 @@ The pipeline is deterministic: the same input produces byte-identical output.
 | `unknown` | 7,791 |
 | `directive` | 3,937 |
 
+### Frozen Train / Val / Test Splits
+
+| split | rows | pct |
+|---|---:|---:|
+| `train` | 15,685 | 71.4% |
+| `val` | 3,137 | 14.3% |
+| `test` | 3,137 | 14.3% |
+
 ### Validation
 
 - **PASS** - no sentinel strings in cleaned columns
@@ -252,4 +260,6 @@ The pipeline is deterministic: the same input produces byte-identical output.
 - **PASS** - split contains exactly train, val, test
 - **PASS** - no case_number / split_group overlap across splits
 - **PASS** - split sizes match ~70/15/15 target
+- **PASS** - every regime appears in train, val and test at close to its pool rate
+- **PASS** - every guideline appears in train, val and test at close to its pool rate (Guideline A exempt: all 4 cases in train)
 <!-- AUTOGEN:END -->
