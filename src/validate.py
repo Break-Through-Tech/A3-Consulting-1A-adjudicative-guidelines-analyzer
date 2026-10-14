@@ -7,14 +7,13 @@ defect was actually observed in the source data, not as a hypothetical.
 """
 from __future__ import annotations
 
-import glob
 import json
 import re
 import sys
 
 import pandas as pd
 
-from src import config
+from src import config, dataset, segment
 
 # Phrases that must never survive into the model input. If any appear, the
 # section boundaries drifted and the outcome task is silently invalidated --
@@ -29,12 +28,13 @@ _AUTOGEN = re.compile(
 
 
 def load_clean() -> pd.DataFrame:
-    paths = sorted(glob.glob(str(config.OUT_DIR / "cases_clean_*.parquet")))
-    if not paths:
-        raise FileNotFoundError(
-            f"No cleaned shards in {config.OUT_DIR}. Run: python -m src.build_dataset --full"
-        )
-    return pd.concat([pd.read_parquet(p) for p in paths], ignore_index=True)
+    """Every row and column, unnormalised -- the checks test the files as written."""
+    return pd.concat([pd.read_parquet(p) for p in dataset.shard_files()], ignore_index=True)
+
+
+def _codes(lists: pd.Series) -> list[str]:
+    """Flatten a column of guideline-code lists."""
+    return [code for codes in lists if codes is not None for code in codes]
 
 
 def run_checks(df: pd.DataFrame) -> list[tuple[str, bool, str]]:
@@ -54,26 +54,18 @@ def run_checks(df: pd.DataFrame) -> list[tuple[str, bool, str]]:
     check("no sentinel strings in cleaned columns", sentinel_hits == 0,
           f"{sentinel_hits} found")
 
-    bad_codes = {
-        code
-        for codes in df["guidelines"]
-        if codes is not None
-        for code in codes
-        if code not in config.GUIDELINE_CODES
-    }
+    bad_codes = set(_codes(df["guidelines"])) - set(config.GUIDELINE_CODES)
     check("guideline codes all within A-M", not bad_codes, str(sorted(bad_codes)))
 
-    dates = pd.to_datetime(df["date"], errors="coerce")
-    out_of_range = dates.dropna()[
-        (dates.dropna().dt.year < config.MIN_YEAR) | (dates.dropna().dt.year > config.MAX_YEAR)
-    ]
+    years = pd.to_datetime(df["date"], errors="coerce").dropna().dt.year
+    out_of_range = years[(years < config.MIN_YEAR) | (years > config.MAX_YEAR)]
     check("dates within window or null", len(out_of_range) == 0,
           f"{len(out_of_range)} outside {config.MIN_YEAR}-{config.MAX_YEAR}")
 
     lengths = df["full_text"].str.len().fillna(0)
     bad_offsets = 0
     for name in config.EXPORTED_SECTIONS:
-        column = f"sec_{re.sub(r'[^a-z0-9]+', '_', name.lower()).strip('_')}"
+        column = segment.column_name(name)
         start, end = f"{column}_start", f"{column}_end"
         if start not in df:
             continue
@@ -126,7 +118,7 @@ def run_checks(df: pd.DataFrame) -> list[tuple[str, bool, str]]:
     fof_end = pd.to_numeric(df.get("sec_findings_of_fact_end"), errors="coerce")
     verdict_start = pd.to_numeric(df.get("verdict_span_start"), errors="coerce")
     out_of_order = fof_end.notna() & verdict_start.notna() & (fof_end > verdict_start)
-    leaked_rows = int((out_of_order & (df["text_features"].fillna("").str.len() > 0)).sum())
+    leaked_rows = int((out_of_order & (features.str.len() > 0)).sum())
     check(
         "out-of-order sections never reach the feature text",
         leaked_rows == 0,
@@ -143,8 +135,8 @@ def run_checks(df: pd.DataFrame) -> list[tuple[str, bool, str]]:
 
 def summary_stats(df: pd.DataFrame) -> dict:
     total = len(df)
-    exploded = [code for codes in df["guidelines"] if codes is not None for code in codes]
-    stored = [code for codes in df["guidelines_stored"] if codes is not None for code in codes]
+    exploded = _codes(df["guidelines"])
+    stored = _codes(df["guidelines_stored"])
     return {
         "rows": total,
         "columns": len(df.columns),
