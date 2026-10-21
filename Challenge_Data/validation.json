@@ -44,6 +44,46 @@
       "name": "every row has a label_source",
       "passed": true,
       "detail": ""
+    },
+    {
+      "name": "Challenge_Data/splits.parquet exists",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "splits covers exactly the 21,959 pool cases",
+      "passed": true,
+      "detail": "21,959 rows found"
+    },
+    {
+      "name": "splits has required columns",
+      "passed": true,
+      "detail": "missing set()"
+    },
+    {
+      "name": "split contains exactly train, val, test",
+      "passed": true,
+      "detail": "<ArrowStringArray>\n['train', 'val', 'test']\nLength: 3, dtype: str"
+    },
+    {
+      "name": "no case_number / split_group overlap across splits",
+      "passed": true,
+      "detail": "0 overlapping groups"
+    },
+    {
+      "name": "split sizes match ~70/15/15 target",
+      "passed": true,
+      "detail": "train=71.4%, val=14.3%, test=14.3%"
+    },
+    {
+      "name": "every regime appears in train, val and test at close to its pool rate",
+      "passed": true,
+      "detail": "max deviation 0.58pp (sead4)"
+    },
+    {
+      "name": "every guideline appears in train, val and test at close to its pool rate (Guideline A exempt: all 4 cases in train)",
+      "passed": true,
+      "detail": "max deviation 1.02pp (Guideline E)"
     }
   ],
   "stats": {
@@ -125,6 +165,11 @@
         "cleaned": 337
       }
     },
-    "text_features_present_pct": 86.2
+    "text_features_present_pct": 86.2,
+    "splits": {
+      "train": 15685,
+      "val": 3137,
+      "test": 3137
+    }
   }
 }

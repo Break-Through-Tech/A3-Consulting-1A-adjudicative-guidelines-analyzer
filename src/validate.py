@@ -130,6 +130,92 @@ def run_checks(df: pd.DataFrame) -> list[tuple[str, bool, str]]:
 
     check("every row has a label_source", df["label_source"].notna().all(), "")
 
+    # Frozen train/val/test split checks
+    splits_path = config.OUT_DIR / "splits.parquet"
+    if not splits_path.exists():
+        check("Challenge_Data/splits.parquet exists", False, "file not found")
+    else:
+        check("Challenge_Data/splits.parquet exists", True, "")
+        splits = pd.read_parquet(splits_path)
+
+        check(
+            "splits covers exactly the 21,959 pool cases",
+            len(splits) == 21959,
+            f"{len(splits):,} rows found",
+        )
+
+        req_cols = {"case_number", "case_type", "split_group", "split"}
+        check(
+            "splits has required columns",
+            req_cols.issubset(set(splits.columns)),
+            f"missing {req_cols - set(splits.columns)}",
+        )
+
+        valid_splits = set(splits["split"].unique()) == {"train", "val", "test"}
+        check("split contains exactly train, val, test", valid_splits, str(splits["split"].unique()))
+
+        train_grp = set(splits.loc[splits["split"] == "train", "split_group"])
+        val_grp = set(splits.loc[splits["split"] == "val", "split_group"])
+        test_grp = set(splits.loc[splits["split"] == "test", "split_group"])
+        leakage = len(train_grp & val_grp) + len(train_grp & test_grp) + len(val_grp & test_grp)
+        check("no case_number / split_group overlap across splits", leakage == 0, f"{leakage} overlapping groups")
+
+        train_pct = (splits["split"] == "train").mean()
+        val_pct = (splits["split"] == "val").mean()
+        test_pct = (splits["split"] == "test").mean()
+        proportions_ok = (0.68 <= train_pct <= 0.74) and (0.12 <= val_pct <= 0.17) and (0.12 <= test_pct <= 0.17)
+        check(
+            "split sizes match ~70/15/15 target",
+            proportions_ok,
+            f"train={train_pct:.1%}, val={val_pct:.1%}, test={test_pct:.1%}",
+        )
+
+        pool_mask = (
+            df["use_for_training"]
+            & (df["label_source"] == "formal_ruling")
+            & (df["text_features"].fillna("").str.len() > 0)
+        )
+        pool_df = df.loc[pool_mask, ["source_url", "guideline_regime", "guidelines"]].merge(
+            splits[["source_url", "split"]], on="source_url"
+        )
+
+        regime_skew = 0.0
+        worst_regime = ""
+        for reg in ["sead4", "directive", "unknown"]:
+            p_rate = (pool_df["guideline_regime"] == reg).mean()
+            for s in ["train", "val", "test"]:
+                s_rate = (pool_df.loc[pool_df["split"] == s, "guideline_regime"] == reg).mean()
+                diff = abs(s_rate - p_rate)
+                if diff > regime_skew:
+                    regime_skew = diff
+                    worst_regime = reg
+
+        check(
+            "every regime appears in train, val and test at close to its pool rate",
+            regime_skew < 0.02,
+            f"max deviation {100 * regime_skew:.2f}pp ({worst_regime})",
+        )
+
+        guideline_skew = 0.0
+        worst_code = ""
+        for code in config.GUIDELINE_CODES:
+            if code == "A":
+                continue  # Exempt: all 4 cases in train
+            has_code = pool_df["guidelines"].map(lambda g: code in g if g is not None else False)
+            p_rate = has_code.mean()
+            for s in ["train", "val", "test"]:
+                s_rate = has_code[pool_df["split"] == s].mean()
+                diff = abs(s_rate - p_rate)
+                if diff > guideline_skew:
+                    guideline_skew = diff
+                    worst_code = code
+
+        check(
+            "every guideline appears in train, val and test at close to its pool rate (Guideline A exempt: all 4 cases in train)",
+            guideline_skew < 0.02,
+            f"max deviation {100 * guideline_skew:.2f}pp (Guideline {worst_code})",
+        )
+
     return checks
 
 
@@ -137,7 +223,7 @@ def summary_stats(df: pd.DataFrame) -> dict:
     total = len(df)
     exploded = _codes(df["guidelines"])
     stored = _codes(df["guidelines_stored"])
-    return {
+    stats = {
         "rows": total,
         "columns": len(df.columns),
         "outcome_resolved": int(df["outcome"].notna().sum()),
@@ -160,6 +246,11 @@ def summary_stats(df: pd.DataFrame) -> dict:
             100 * (df["text_features"].fillna("").str.len() > 0).mean(), 1
         ),
     }
+    splits_path = config.OUT_DIR / "splits.parquet"
+    if splits_path.exists():
+        splits = pd.read_parquet(splits_path)
+        stats["splits"] = {k: int(v) for k, v in splits["split"].value_counts().items()}
+    return stats
 
 
 def render_stats_block(stats: dict, checks: list) -> str:
@@ -199,6 +290,13 @@ def render_stats_block(stats: dict, checks: list) -> str:
     lines += ["", "### Citation regime", "", "| regime | rows |", "|---|---:|"]
     for regime, count in stats["guideline_regime"].items():
         lines.append(f"| `{regime}` | {count:,} |")
+
+    if "splits" in stats:
+        total_split = sum(stats["splits"].values())
+        lines += ["", "### Frozen Train / Val / Test Splits", "",
+                  "| split | rows | pct |", "|---|---:|---:|"]
+        for split_name, count in stats["splits"].items():
+            lines.append(f"| `{split_name}` | {count:,} | {100 * count / total_split:.1f}% |")
 
     lines += ["", "### Validation", ""]
     for name, ok, detail in checks:
