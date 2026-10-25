@@ -9,7 +9,7 @@
 
 ## Executive Summary
 
-This EDA analyzes 30,517 DOHA security clearance decisions spanning 1996-2026. The dataset shows significant class imbalance (62.8% denied, 32.8% granted) and data quality issues that impact ML readiness. After fixing counting bugs and separating label quality tiers, 22,105 cases (72.4%) are suitable for training high-quality ML models.
+This EDA analyzes 30,517 DOHA security clearance decisions spanning 1996-2026. The dataset shows significant class imbalance (62.8% denied, 32.8% granted) and data quality issues that impact ML readiness. After fixing counting bugs and separating label quality tiers, 21,959 cases (71.9%) are suitable for training high-quality ML models.
 
 ### Critical Fixes Implemented
 
@@ -56,7 +56,7 @@ This EDA analyzes 30,517 DOHA security clearance decisions spanning 1996-2026. T
 
 | Source | Count | Percentage | Trust Level |
 |--------|-------|------------|-------------|
-| formal_ruling | 22,105 | 72.44% | Authoritative |
+| formal_ruling | 21,959 | 71.97% | Authoritative (with non-empty text) |
 | regex_fallback | 6,142 | 20.13% | ~60% precision |
 | inherited_from_hearing | 2,155 | 7.06% | Inferred |
 | none | 115 | 0.38% | No labels |
@@ -82,9 +82,9 @@ This EDA analyzes 30,517 DOHA security clearance decisions spanning 1996-2026. T
 ### Key Findings
 
 - **Multi-label problem**: Average 1.49 guidelines per case (range: 1-5)
-- **Dominant guidelines**: Financial (F) and Personal Conduct (E) appear in 90% of formal rulings
+- **Dominant guidelines**: Financial (F) appears in 59.7% and Personal Conduct (E) in 30.5% of formal rulings; 76.9% of cases have at least one of these two
 - **Rare guidelines**: Allegiance (A) and Outside Activities (L) each <0.2%
-- **Total instances**: 32,844 guideline citations across 22,105 cases
+- **Total instances**: 32,844 guideline citations across formal rulings
 
 ![Guideline Analysis](guideline_analysis.png)
 
@@ -153,7 +153,7 @@ This EDA analyzes 30,517 DOHA security clearance decisions spanning 1996-2026. T
 |----------|-------|------------|
 | use_for_training flag | 30,510 | 100.0% |
 | formal_ruling labels | 22,105 | 72.4% |
-| Both criteria met | 22,105 | 72.4% |
+| All three criteria met | 21,959 | 71.9% |
 
 ### Critical Field Quality
 
@@ -161,7 +161,7 @@ This EDA analyzes 30,517 DOHA security clearance decisions spanning 1996-2026. T
 |-------|-------|-------|------------|
 | outcome | Null | 888 | 2.91% |
 | text_features | Empty | 4,199 | 13.76% |
-| guidelines | Null | 0 | 0.00% |
+| guidelines | Empty | 115 | 0.38% |
 | guideline_regime | Null | 0 | 0.00% |
 
 ### Guideline Regime Distribution (Training Set)
@@ -222,7 +222,7 @@ guidelineData = formalRulingData['guidelines'].explode()
 ```
 
 **Result**:
-- Guideline counts now reflect formal rulings only (22,105 cases)
+- Guideline counts now reflect formal rulings only
 - Label source quality visualized separately
 - Clear guidance to use formal_ruling tier for training
 
@@ -237,12 +237,12 @@ guidelineData = formalRulingData['guidelines'].explode()
 trainingData = dataFrame[
     (dataFrame['use_for_training'] == True) &
     (dataFrame['label_source'] == 'formal_ruling') &
-    (dataFrame['text_features'].str.strip().str.len() > 0) &
+    (dataFrame['text_features'].str.len() > 0) &
     (dataFrame['outcome'].notna())
 ]
 ```
 
-**Expected result**: ~18,000-20,000 high-quality training cases
+**Expected result**: 21,959 high-quality training cases
 
 ### Feature Engineering
 
@@ -250,22 +250,29 @@ trainingData = dataFrame[
 2. **Target variables**:
    - Outcome prediction: `outcome` (4 classes, handle imbalance)
    - Guideline classification: `guidelines` (multi-label, 13 classes)
-3. **Text preprocessing**: Standard NLP pipeline (tokenization, lowercase, stopwords)
+3. **Text preprocessing**: Standard NLP pipeline (tokenization, lowercase)
+4. **Note**: 98% of documents exceed 512 tokens, so consider using models that support longer sequences (1024+ tokens) or implement truncation strategies
 
 ### Train/Test Split
 
-```python
-#Group by split_group to keep hearing-appeal pairs together
-from sklearn.model_selection import GroupShuffleSplit
+Use the frozen `split` column already present in `Challenge_Data`:
 
-splitter = GroupShuffleSplit(n_splits=1, test_size=0.2, random_state=42)
-trainIdx, testIdx = next(splitter.split(X, y, groups=dataFrame['split_group']))
+```python
+#Use pre-computed split assignments
+train = df[df['split'] == 'train']
+test = df[df['split'] == 'test']
+val = df[df['split'] == 'val']  #if validation split exists
 ```
+
+The split column ensures:
+- Hearing-appeal pairs stay together
+- Balanced distribution across splits
+- Reproducible experiments
 
 ### Handling Class Imbalance
 
-1. **Stratified sampling**: Preserve outcome ratios in train/test
-2. **Class weights**: Use `compute_class_weight` for minority classes
+1. **Stratification**: Already handled by the frozen split assignments
+2. **Class weights**: Use `compute_class_weight` for minority classes in training
 3. **Evaluation metrics**: Focus on F1-macro, precision/recall per class
 4. **Rare classes**: Consider excluding REVOKED (n=16) or grouping with DENIED
 
@@ -284,7 +291,7 @@ trainIdx, testIdx = next(splitter.split(X, y, groups=dataFrame['split_group']))
 - **Total cases**: 30,517
 - **Date range**: 1996-03-22 to 2026-01-15 (30 years)
 - **Case types**: 25,754 hearings, 4,763 appeals
-- **Training-ready**: 22,105 cases (72.4%)
+- **Training-ready**: 21,959 cases (71.9%)
 - **Valid text features**: 26,318 cases (86.2%)
 
 ### Class Balance
@@ -320,14 +327,3 @@ trainIdx, testIdx = next(splitter.split(X, y, groups=dataFrame['split_group']))
 - **Runtime**: ~48 seconds on full dataset
 - **Dependencies**: pandas, numpy, matplotlib, seaborn
 
----
-
-## Appendix: Code Quality
-
-This analysis follows senior SWE practices:
-
-- **Memory efficiency**: Processes data in chunks via parquet shards
-- **Error handling**: Proper validation of data types and missing values
-- **Performance**: Vectorized pandas operations (no iterrows)
-- **Readability**: Clear variable names (validTextFeatures vs df1)
-- **Reproducibility**: Fixed random seeds, deterministic operations
