@@ -9,7 +9,7 @@
 
 ## Executive Summary
 
-This EDA analyzes 30,517 DOHA security clearance decisions spanning 1996-2026. The dataset shows significant class imbalance (62.8% denied, 32.8% granted) and data quality issues that impact ML readiness. After fixing counting bugs and separating label quality tiers, 21,935 cases (71.9%) are suitable for training high-quality ML models.
+This EDA analyzes 30,517 DOHA security clearance decisions spanning 1996-2026. The dataset shows significant class imbalance (62.8% denied, 32.8% granted) and data quality issues that impact ML readiness. After fixing counting bugs and separating label quality tiers, 21,959 cases (72.0%) are suitable for training high-quality ML models.
 
 ### Critical Fixes Implemented
 
@@ -152,9 +152,10 @@ This EDA analyzes 30,517 DOHA security clearance decisions spanning 1996-2026. T
 |----------|-------|------------|
 | use_for_training flag | 30,510 | 100.0% |
 | formal_ruling labels | 22,105 | 72.4% |
-| All criteria met | 21,935 | 71.9% |
+| Training-ready pool | 21,959 | 72.0% |
+| With resolved outcome | 21,935 | 71.9% |
 
-**Note**: Training-ready requires use_for_training=True AND label_source='formal_ruling' AND non-empty text_features AND non-null outcome.
+**Note**: Training-ready pool requires use_for_training=True AND label_source='formal_ruling' AND non-empty text_features. Of these 21,959 cases, 21,935 have a resolved outcome. The other 24 keep their guideline labels but are excluded from outcome prediction metrics.
 
 ### Critical Field Quality
 
@@ -234,16 +235,18 @@ guidelineData = formalRulingData['guidelines'].explode()
 ### Data Filtering
 
 ```python
-#Recommended filter for training
-trainingData = dataFrame[
+#Training pool (for guideline classification, etc.)
+trainingPool = dataFrame[
     (dataFrame['use_for_training'] == True) &
     (dataFrame['label_source'] == 'formal_ruling') &
-    (dataFrame['text_features'].str.len() > 0) &
-    (dataFrame['outcome'].notna())
-]
+    (dataFrame['text_features'].str.len() > 0)
+]  # 21,959 cases
+
+#For outcome prediction specifically
+outcomePrediction = trainingPool[trainingPool['outcome'].notna()]  # 21,935 cases
 ```
 
-**Expected result**: 21,935 high-quality training cases
+**Expected result**: 21,959 cases in training pool, 21,935 for outcome prediction
 
 ### Feature Engineering
 
@@ -256,19 +259,16 @@ trainingData = dataFrame[
 
 ### Train/Test Split
 
-Use the frozen `split` column already present in `Challenge_Data`:
+Use `split_group` to create train/test splits that keep hearing-appeal pairs together:
 
 ```python
-#Use pre-computed split assignments
-train = df[df['split'] == 'train']
-test = df[df['split'] == 'test']
-val = df[df['split'] == 'val']  #if validation split exists
+from sklearn.model_selection import GroupShuffleSplit
+
+splitter = GroupShuffleSplit(n_splits=1, test_size=0.2, random_state=42)
+trainIdx, testIdx = next(splitter.split(X, y, groups=df['split_group']))
 ```
 
-The split column ensures:
-- Hearing-appeal pairs stay together
-- Balanced distribution across splits
-- Reproducible experiments
+The `split_group` column ensures hearing-appeal pairs stay together, preventing data leakage.
 
 ### Handling Class Imbalance
 
@@ -292,7 +292,8 @@ The split column ensures:
 - **Total cases**: 30,517
 - **Date range**: 1996-03-22 to 2026-01-15 (30 years)
 - **Case types**: 25,754 hearings, 4,763 appeals
-- **Training-ready**: 21,935 cases (71.9%)
+- **Training-ready**: 21,959 cases (72.0%)
+- **With resolved outcome**: 21,935 cases (71.9%)
 - **Valid text features**: 26,318 cases (86.2%)
 
 ### Class Balance

@@ -12,6 +12,10 @@ import pandas as pd
 import numpy as np
 import seaborn as sns
 
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from src.dataset import load_cases  # noqa: E402
+
 sns.set_style("whitegrid")
 plt.rcParams['figure.figsize'] = (12, 6)
 
@@ -28,16 +32,11 @@ def printStats(data, label):
 
 
 def loadData():
-    #Load only necessary columns
+    #Load only necessary columns using shared loader
     cols = ['outcome', 'case_type', 'label_source', 'guidelines', 'guideline_regime',
             'text_features', 'use_for_training', 'split_group', 'date']
     
-    files = sorted(glob.glob(str(dataDir / "cases_clean_*.parquet")))
-    if not files:
-        raise FileNotFoundError(f"No parquet files in {dataDir}")
-    
-    #Note: split column for train/test assignments will be added when it's available
-    df = pd.concat([pd.read_parquet(f, columns=cols) for f in files], ignore_index=True)
+    df = load_cases(pool=False, columns=cols)
     print(f"\nLoaded {df.shape[0]:,} rows, {len(cols)} cols\n")
     return df
 
@@ -278,16 +277,22 @@ def analyzeDataQuality(df):
     
     useTrain = df['use_for_training'].sum()
     formal = (df['label_source'] == 'formal_ruling').sum()
-    #Fix: add empty-text filter and outcome filter
+    #Training-ready: use_for_training, formal_ruling, non-empty text_features
     ready = (df['use_for_training'] & 
              (df['label_source'] == 'formal_ruling') & 
-             (df['text_features'].str.len() > 0) &
-             (df['outcome'].notna())).sum()
+             (df['text_features'].str.len() > 0)).sum()
+    
+    #Of these, how many have resolved outcomes
+    readyWithOutcome = (df['use_for_training'] & 
+                        (df['label_source'] == 'formal_ruling') & 
+                        (df['text_features'].str.len() > 0) &
+                        (df['outcome'].notna())).sum()
     
     print(f"\nML readiness:")
     print(f"  Training flag: {useTrain:,} ({useTrain/len(df)*100:.1f}%)")
     print(f"  Formal labels: {formal:,} ({formal/len(df)*100:.1f}%)")
-    print(f"  Ready (all):    {ready:,} ({ready/len(df)*100:.1f}%)")
+    print(f"  Ready (all):   {ready:,} ({ready/len(df)*100:.1f}%)")
+    print(f"  With outcome:  {readyWithOutcome:,} ({readyWithOutcome/len(df)*100:.1f}%)")
     
     print(f"\nField quality:")
     nullOutcome = df['outcome'].isna().sum()
@@ -310,18 +315,19 @@ def analyzeDataQuality(df):
     for regime, cnt in regimes.items():
         print(f"  {regime:12s}: {cnt:6,} ({cnt/useTrain*100:.2f}%)")
     
-    return ready
+    return ready, readyWithOutcome
 
 
-def generateSummary(df, outcomes, guidelines, featLen, ready, emptyCount):
+def generateSummary(df, outcomes, guidelines, featLen, ready, readyWithOutcome, emptyCount):
     print(f"\n{'='*50}")
     print("SUMMARY")
     print("=" * 50)
     
     print(f"\nOverview:")
-    print(f"  Total cases:    {len(df):,}")
-    print(f"  Training-ready: {ready:,}")
-    print(f"  Date range:     {df['date'].min()} to {df['date'].max()}")
+    print(f"  Total cases:         {len(df):,}")
+    print(f"  Training-ready:      {ready:,}")
+    print(f"  With resolved outcome: {readyWithOutcome:,}")
+    print(f"  Date range:          {df['date'].min()} to {df['date'].max()}")
     
     print(f"\nOutcomes:")
     #Exclude Unresolved for imbalance calculation
@@ -347,8 +353,8 @@ def generateSummary(df, outcomes, guidelines, featLen, ready, emptyCount):
     
     print(f"\nFor ML pipeline:")
     print(f"  - Use text_features (leak-free)")
-    print(f"  - Filter: use_for_training=True AND label_source='formal_ruling' AND non-empty text_features AND non-null outcome")
-    print(f"  - Expected training size: {ready:,} cases")
+    print(f"  - Training pool: {ready:,} cases (use_for_training + formal_ruling + non-empty text)")
+    print(f"  - For outcome prediction: filter to {readyWithOutcome:,} cases with resolved outcomes")
     print(f"  - Use frozen split column for train/test assignments")
     print(f"  - Handle class imbalance with stratification")
     
@@ -362,9 +368,9 @@ def main():
         outcomes = analyzeOutcomes(df)
         guidelines, labels = analyzeGuidelines(df)
         featLen, emptyCount = analyzeTextLengths(df)
-        ready = analyzeDataQuality(df)
+        ready, readyWithOutcome = analyzeDataQuality(df)
         
-        generateSummary(df, outcomes, guidelines, featLen, ready, emptyCount)
+        generateSummary(df, outcomes, guidelines, featLen, ready, readyWithOutcome, emptyCount)
         
         print("EDA complete!")
         print(f"Charts saved in: {dataDir.parent / 'notebooks'}")
