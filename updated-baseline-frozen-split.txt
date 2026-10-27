@@ -1,0 +1,96 @@
+Loaded 21,959 trainable rows with frozen split assignments
+Dropped 38 rows outside ['DENIED', 'GRANTED'] -> 21,921 rows
+Train 15,656 rows (15,635 case numbers)
+Val   3,132 rows (3,127 case numbers)
+Test  3,133 rows (3,128 case numbers)
+
+Vectorizing...
+  20,000 features
+Fitting...
+
+Majority-class accuracy to beat: 0.620
+Frozen test accuracy: 0.824
+
+=== Classification report ===
+              precision    recall  f1-score   support
+
+      DENIED      0.891     0.815     0.852      1944
+     GRANTED      0.735     0.838     0.783      1189
+
+    accuracy                          0.824      3133
+   macro avg      0.813     0.827     0.817      3133
+weighted avg      0.832     0.824     0.826      3133
+
+=== Confusion matrix (rows=true, cols=pred) ===
+         DENIED  GRANTED
+DENIED     1585      359
+GRANTED     193      996
+
+=== Frozen test metrics by citation regime ===
+
+directive (n=373, accuracy=0.775)
+              precision    recall  f1-score   support
+
+      DENIED      0.851     0.779     0.813       235
+     GRANTED      0.671     0.768     0.716       138
+
+    accuracy                          0.775       373
+   macro avg      0.761     0.773     0.765       373
+weighted avg      0.784     0.775     0.777       373
+
+
+sead4 (n=2,496, accuracy=0.837)
+              precision    recall  f1-score   support
+
+      DENIED      0.900     0.830     0.864      1556
+     GRANTED      0.751     0.847     0.796       940
+
+    accuracy                          0.837      2496
+   macro avg      0.825     0.839     0.830      2496
+weighted avg      0.844     0.837     0.838      2496
+
+
+unknown (n=264, accuracy=0.773)
+              precision    recall  f1-score   support
+
+      DENIED      0.866     0.719     0.786       153
+     GRANTED      0.686     0.847     0.758       111
+
+    accuracy                          0.773       264
+   macro avg      0.776     0.783     0.772       264
+weighted avg      0.790     0.773     0.774       264
+
+
+=== Top 15 features -> DENIED ===
+stated        -4.180639
+not           -4.154612
+claimed       -4.004426
+provided no   -3.490971
+000           -3.321844
+claims        -3.295729
+delinquent    -3.208533
+unresolved    -3.194110
+said          -3.184743
+not provide   -2.991934
+that he       -2.822111
+did not       -2.816444
+has not       -2.800409
+or            -2.775787
+debts         -2.723802
+
+=== Top 15 features -> GRANTED ===
+paid                  4.215938
+ae                    4.166751
+credibly              3.768049
+and                   3.305657
+the                   3.170738
+in full               2.915470
+settled               2.866511
+never                 2.763243
+full                  2.722604
+credibly testified    2.335414
+paid in               2.248327
+exhibit               2.219574
+has                   2.120131
+learned               2.114710
+since                 2.049422
