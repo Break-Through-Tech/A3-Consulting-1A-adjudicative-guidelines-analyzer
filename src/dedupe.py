@@ -56,42 +56,34 @@ def classify(df: pd.DataFrame) -> pd.DataFrame:
     return out
 
 
+_REPORT_COLUMNS = ["case_number", "case_type", "reason", "detail"]
+
+# (flag column, reason, detail for the flagged rows) -- in report order.
+_EXCLUSIONS = [
+    ("is_duplicate", "true_duplicate_deleted",
+     lambda rows: "byte-identical full_text; discarded source_url: " + rows["source_url"].astype(str)),
+    ("is_degenerate", "degenerate_text_flagged",
+     lambda rows: f"full_text under {MIN_USABLE_CHARS} chars: " + rows["full_text"].str.len().astype(str)),
+    ("case_number_collision", "case_number_collision_kept",
+     lambda rows: "different document sharing this case number; both retained"),
+]
+
+
 def excluded_report(df: pd.DataFrame) -> pd.DataFrame:
     """One row per excluded record, with the reason and what was discarded."""
     frames = []
-
-    dupes = df[df["is_duplicate"]]
-    if len(dupes):
-        frames.append(pd.DataFrame({
-            "case_number": dupes["case_number"],
-            "case_type": dupes["case_type"],
-            "reason": "true_duplicate_deleted",
-            "detail": "byte-identical full_text; discarded source_url: "
-                      + dupes["source_url"].astype(str),
-        }))
-
-    degen = df[df["is_degenerate"]]
-    if len(degen):
-        frames.append(pd.DataFrame({
-            "case_number": degen["case_number"],
-            "case_type": degen["case_type"],
-            "reason": "degenerate_text_flagged",
-            "detail": "full_text under "
-                      + str(MIN_USABLE_CHARS) + " chars: "
-                      + degen["full_text"].str.len().astype(str),
-        }))
-
-    collide = df[df["case_number_collision"]]
-    if len(collide):
-        frames.append(pd.DataFrame({
-            "case_number": collide["case_number"],
-            "case_type": collide["case_type"],
-            "reason": "case_number_collision_kept",
-            "detail": "different document sharing this case number; both retained",
-        }))
+    for flag, reason, detail in _EXCLUSIONS:
+        rows = df[df[flag]]
+        if len(rows):
+            frames.append(pd.DataFrame({
+                "case_number": rows["case_number"],
+                "case_type": rows["case_type"],
+                "reason": reason,
+                "detail": detail(rows),
+            }))
 
     if not frames:
-        return pd.DataFrame(columns=["case_number", "case_type", "reason", "detail"])
+        return pd.DataFrame(columns=_REPORT_COLUMNS)
     return pd.concat(frames, ignore_index=True)
 
 

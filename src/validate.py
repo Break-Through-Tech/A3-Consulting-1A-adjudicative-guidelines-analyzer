@@ -7,14 +7,13 @@ defect was actually observed in the source data, not as a hypothetical.
 """
 from __future__ import annotations
 
-import glob
 import json
 import re
 import sys
 
 import pandas as pd
 
-from src import config
+from src import config, dataset, segment
 
 # Phrases that must never survive into the model input. If any appear, the
 # section boundaries drifted and the outcome task is silently invalidated --
@@ -29,12 +28,13 @@ _AUTOGEN = re.compile(
 
 
 def load_clean() -> pd.DataFrame:
-    paths = sorted(glob.glob(str(config.OUT_DIR / "cases_clean_*.parquet")))
-    if not paths:
-        raise FileNotFoundError(
-            f"No cleaned shards in {config.OUT_DIR}. Run: python -m src.build_dataset --full"
-        )
-    return pd.concat([pd.read_parquet(p) for p in paths], ignore_index=True)
+    """Every row and column, unnormalised -- the checks test the files as written."""
+    return pd.concat([pd.read_parquet(p) for p in dataset.shard_files()], ignore_index=True)
+
+
+def _codes(lists: pd.Series) -> list[str]:
+    """Flatten a column of guideline-code lists."""
+    return [code for codes in lists if codes is not None for code in codes]
 
 
 def run_checks(df: pd.DataFrame) -> list[tuple[str, bool, str]]:
@@ -54,26 +54,18 @@ def run_checks(df: pd.DataFrame) -> list[tuple[str, bool, str]]:
     check("no sentinel strings in cleaned columns", sentinel_hits == 0,
           f"{sentinel_hits} found")
 
-    bad_codes = {
-        code
-        for codes in df["guidelines"]
-        if codes is not None
-        for code in codes
-        if code not in config.GUIDELINE_CODES
-    }
+    bad_codes = set(_codes(df["guidelines"])) - set(config.GUIDELINE_CODES)
     check("guideline codes all within A-M", not bad_codes, str(sorted(bad_codes)))
 
-    dates = pd.to_datetime(df["date"], errors="coerce")
-    out_of_range = dates.dropna()[
-        (dates.dropna().dt.year < config.MIN_YEAR) | (dates.dropna().dt.year > config.MAX_YEAR)
-    ]
+    years = pd.to_datetime(df["date"], errors="coerce").dropna().dt.year
+    out_of_range = years[(years < config.MIN_YEAR) | (years > config.MAX_YEAR)]
     check("dates within window or null", len(out_of_range) == 0,
           f"{len(out_of_range)} outside {config.MIN_YEAR}-{config.MAX_YEAR}")
 
     lengths = df["full_text"].str.len().fillna(0)
     bad_offsets = 0
     for name in config.EXPORTED_SECTIONS:
-        column = f"sec_{re.sub(r'[^a-z0-9]+', '_', name.lower()).strip('_')}"
+        column = segment.column_name(name)
         start, end = f"{column}_start", f"{column}_end"
         if start not in df:
             continue
@@ -126,7 +118,7 @@ def run_checks(df: pd.DataFrame) -> list[tuple[str, bool, str]]:
     fof_end = pd.to_numeric(df.get("sec_findings_of_fact_end"), errors="coerce")
     verdict_start = pd.to_numeric(df.get("verdict_span_start"), errors="coerce")
     out_of_order = fof_end.notna() & verdict_start.notna() & (fof_end > verdict_start)
-    leaked_rows = int((out_of_order & (df["text_features"].fillna("").str.len() > 0)).sum())
+    leaked_rows = int((out_of_order & (features.str.len() > 0)).sum())
     check(
         "out-of-order sections never reach the feature text",
         leaked_rows == 0,
@@ -138,14 +130,100 @@ def run_checks(df: pd.DataFrame) -> list[tuple[str, bool, str]]:
 
     check("every row has a label_source", df["label_source"].notna().all(), "")
 
+    # Frozen train/val/test split checks
+    splits_path = config.OUT_DIR / "splits.parquet"
+    if not splits_path.exists():
+        check("Challenge_Data/splits.parquet exists", False, "file not found")
+    else:
+        check("Challenge_Data/splits.parquet exists", True, "")
+        splits = pd.read_parquet(splits_path)
+
+        check(
+            "splits covers exactly the 21,959 pool cases",
+            len(splits) == 21959,
+            f"{len(splits):,} rows found",
+        )
+
+        req_cols = {"case_number", "case_type", "split_group", "split"}
+        check(
+            "splits has required columns",
+            req_cols.issubset(set(splits.columns)),
+            f"missing {req_cols - set(splits.columns)}",
+        )
+
+        valid_splits = set(splits["split"].unique()) == {"train", "val", "test"}
+        check("split contains exactly train, val, test", valid_splits, str(splits["split"].unique()))
+
+        train_grp = set(splits.loc[splits["split"] == "train", "split_group"])
+        val_grp = set(splits.loc[splits["split"] == "val", "split_group"])
+        test_grp = set(splits.loc[splits["split"] == "test", "split_group"])
+        leakage = len(train_grp & val_grp) + len(train_grp & test_grp) + len(val_grp & test_grp)
+        check("no case_number / split_group overlap across splits", leakage == 0, f"{leakage} overlapping groups")
+
+        train_pct = (splits["split"] == "train").mean()
+        val_pct = (splits["split"] == "val").mean()
+        test_pct = (splits["split"] == "test").mean()
+        proportions_ok = (0.68 <= train_pct <= 0.74) and (0.12 <= val_pct <= 0.17) and (0.12 <= test_pct <= 0.17)
+        check(
+            "split sizes match ~70/15/15 target",
+            proportions_ok,
+            f"train={train_pct:.1%}, val={val_pct:.1%}, test={test_pct:.1%}",
+        )
+
+        pool_mask = (
+            df["use_for_training"]
+            & (df["label_source"] == "formal_ruling")
+            & (df["text_features"].fillna("").str.len() > 0)
+        )
+        pool_df = df.loc[pool_mask, ["source_url", "guideline_regime", "guidelines"]].merge(
+            splits[["source_url", "split"]], on="source_url"
+        )
+
+        regime_skew = 0.0
+        worst_regime = ""
+        for reg in ["sead4", "directive", "unknown"]:
+            p_rate = (pool_df["guideline_regime"] == reg).mean()
+            for s in ["train", "val", "test"]:
+                s_rate = (pool_df.loc[pool_df["split"] == s, "guideline_regime"] == reg).mean()
+                diff = abs(s_rate - p_rate)
+                if diff > regime_skew:
+                    regime_skew = diff
+                    worst_regime = reg
+
+        check(
+            "every regime appears in train, val and test at close to its pool rate",
+            regime_skew < 0.02,
+            f"max deviation {100 * regime_skew:.2f}pp ({worst_regime})",
+        )
+
+        guideline_skew = 0.0
+        worst_code = ""
+        for code in config.GUIDELINE_CODES:
+            if code == "A":
+                continue  # Exempt: all 4 cases in train
+            has_code = pool_df["guidelines"].map(lambda g: code in g if g is not None else False)
+            p_rate = has_code.mean()
+            for s in ["train", "val", "test"]:
+                s_rate = has_code[pool_df["split"] == s].mean()
+                diff = abs(s_rate - p_rate)
+                if diff > guideline_skew:
+                    guideline_skew = diff
+                    worst_code = code
+
+        check(
+            "every guideline appears in train, val and test at close to its pool rate (Guideline A exempt: all 4 cases in train)",
+            guideline_skew < 0.02,
+            f"max deviation {100 * guideline_skew:.2f}pp (Guideline {worst_code})",
+        )
+
     return checks
 
 
 def summary_stats(df: pd.DataFrame) -> dict:
     total = len(df)
-    exploded = [code for codes in df["guidelines"] if codes is not None for code in codes]
-    stored = [code for codes in df["guidelines_stored"] if codes is not None for code in codes]
-    return {
+    exploded = _codes(df["guidelines"])
+    stored = _codes(df["guidelines_stored"])
+    stats = {
         "rows": total,
         "columns": len(df.columns),
         "outcome_resolved": int(df["outcome"].notna().sum()),
@@ -168,6 +246,11 @@ def summary_stats(df: pd.DataFrame) -> dict:
             100 * (df["text_features"].fillna("").str.len() > 0).mean(), 1
         ),
     }
+    splits_path = config.OUT_DIR / "splits.parquet"
+    if splits_path.exists():
+        splits = pd.read_parquet(splits_path)
+        stats["splits"] = {k: int(v) for k, v in splits["split"].value_counts().items()}
+    return stats
 
 
 def render_stats_block(stats: dict, checks: list) -> str:
@@ -207,6 +290,13 @@ def render_stats_block(stats: dict, checks: list) -> str:
     lines += ["", "### Citation regime", "", "| regime | rows |", "|---|---:|"]
     for regime, count in stats["guideline_regime"].items():
         lines.append(f"| `{regime}` | {count:,} |")
+
+    if "splits" in stats:
+        total_split = sum(stats["splits"].values())
+        lines += ["", "### Frozen Train / Val / Test Splits", "",
+                  "| split | rows | pct |", "|---|---:|---:|"]
+        for split_name, count in stats["splits"].items():
+            lines.append(f"| `{split_name}` | {count:,} | {100 * count / total_split:.1f}% |")
 
     lines += ["", "### Validation", ""]
     for name, ok, detail in checks:

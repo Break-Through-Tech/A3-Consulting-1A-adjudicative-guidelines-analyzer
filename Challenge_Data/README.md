@@ -143,18 +143,24 @@ train = df[df.use_for_training & (df.label_source == "formal_ruling")]
 
 ## What is still missing
 
-- **4,286 cases were never downloaded** and have no text here at all. Recovering
-  them means re-running the scraper against DOHA.
+- **About 2,960 decisions are missing.** The 36,703 collected links point to 33,477
+  distinct documents: 709 were never collected, and 2,251 rows carried another
+  case's text (appeals whose PDFs overwrote one another) and were deleted as
+  duplicates. `failed_cases.json` lists 4,286 failures, but it is a stale log —
+  every one of those URLs is present in the source shards. Recovering the missing
+  decisions means re-running the scraper against DOHA.
 - **`sor_allegations` is empty for ~96% of hearings.** The allegation *structure* is
   captured in `guideline_subparagraphs`, but the allegation *text* is enumerated in
   only ~13% of decisions; most paraphrase it.
 - **Appeals are labelled at a lower rate** than hearings. They contain no formal
   findings section, so only those citing a hearing we hold can inherit labels.
-- **The 221 case-number collisions are flagged but undiagnosed** — rehearings after
+- **The 192 case-number collisions are flagged but undiagnosed** — rehearings after
   remand, multi-case compilation pages, or extraction errors. Both documents are
   kept until someone checks a few source PDFs.
-- **About a third of rows match neither citation scheme** (`guideline_regime` =
-  `unknown`), suggesting a third convention we have not mapped.
+- **About a quarter of rows (7,791) match neither citation scheme**
+  (`guideline_regime` = `unknown`). Most are not a third convention: among
+  Guideline F cases in the trainable pool, 64% cite conditions in short forms
+  (`20(a)`, `MC 20(a)`, `DC 1`) that the regime patterns don't recognise.
 
 ## How to reproduce
 
@@ -229,6 +235,14 @@ The pipeline is deterministic: the same input produces byte-identical output.
 | `unknown` | 7,791 |
 | `directive` | 3,937 |
 
+### Frozen Train / Val / Test Splits
+
+| split | rows | pct |
+|---|---:|---:|
+| `train` | 15,685 | 71.4% |
+| `val` | 3,137 | 14.3% |
+| `test` | 3,137 | 14.3% |
+
 ### Validation
 
 - **PASS** - no sentinel strings in cleaned columns
@@ -240,4 +254,12 @@ The pipeline is deterministic: the same input produces byte-identical output.
 - **PASS** - out-of-order sections never reach the feature text
 - **PASS** - no byte-identical duplicates remain
 - **PASS** - every row has a label_source
+- **PASS** - Challenge_Data/splits.parquet exists
+- **PASS** - splits covers exactly the 21,959 pool cases
+- **PASS** - splits has required columns
+- **PASS** - split contains exactly train, val, test
+- **PASS** - no case_number / split_group overlap across splits
+- **PASS** - split sizes match ~70/15/15 target
+- **PASS** - every regime appears in train, val and test at close to its pool rate
+- **PASS** - every guideline appears in train, val and test at close to its pool rate (Guideline A exempt: all 4 cases in train)
 <!-- AUTOGEN:END -->
