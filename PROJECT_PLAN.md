@@ -59,8 +59,9 @@ mitigated at very different rates.
 
 For contrast, standalone case-outcome prediction is close to exhausted — 82.5% accuracy against a 64.3%
 majority baseline (the DENIED share of that experiment's test split) using plain TF-IDF on leak-free text,
-measured during data cleaning and since reproduced at 82.7%. That becomes our baseline chapter, not our
-headline.
+measured during data cleaning and since reproduced at 82.7%. Those measurements used a random grouped
+split, not the committed frozen split; the frozen-split rerun is the comparable score for later models.
+That becomes our baseline chapter, not our headline.
 
 ---
 
@@ -312,7 +313,7 @@ builds on them.
 |---|---|---|---|
 | `src/dataset.py` | Rashed | done | The single loader described above |
 | `PROJECT_PLAN.md` | Rashed | done | This document |
-| Baseline | Sam | Oct 13; on the split Oct 16 | The TF-IDF + logistic-regression model is already trained: `notebooks/02_baseline.py`. As committed it trains on `full_text` with a random split — 95.4%, leaky. The fix is a re-run of the same model with three changes — `load_cases()`, `text_features`, a grouped split — which reproduces at 82.7% vs 64.3% |
+| Baseline | Sam | Oct 13; on the split Oct 16 | `notebooks/02_baseline.py` uses `load_cases()`, `text_features`, and the committed frozen train/val/test split. It fits on train, holds val out, and reports test metrics overall and by citation regime. The earlier 82.7% vs 64.3% result used a random grouped split; `updated-baseline-frozen-split.txt` records the comparable frozen-test result. |
 | `Challenge_Data/splits.parquet` | Aryan | done | Frozen train/val/test, committed |
 | `notebooks/EDA_REPORT.md` | Brian | Oct 16 | Written EDA report with corrected figures |
 | `Challenge_Data/DATA_CARD.md` | Aryan | Oct 20 | Data dictionary, per-tier counts, known gaps, ethics note |

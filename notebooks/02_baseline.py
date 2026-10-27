@@ -4,30 +4,30 @@ Leak-free version. Two things differ from the first baseline:
 
 1. Features come from `text_features`, the cleaned text built from the
    leak-free sections only (verdict region excluded), not from `full_text`.
-2. The train/test split is grouped by case_number, so a hearing and its appeal
-   (which share a case number) can never land on opposite sides of the split.
+2. The committed frozen split is used, so results are comparable with later
+   models. It groups cases by case_number and provides train, val, and test.
 
-Expected accuracy is about 0.827. The earlier full_text baseline scored about
-0.954, which was mostly the model reading the ruling.
+The validation split is held out. The model trains on train and is evaluated
+once on test. The earlier random grouped split scored about 0.827; the
+full_text baseline scored about 0.954, mostly from reading the ruling.
 
-Reads Challenge_Data/ (built by `python -m src.build_dataset --full`).
+Reads Challenge_Data/ through `src.dataset.load_cases()`.
 
 Run from anywhere:
-    python notebooks\02_baseline.py                  # full corpus
-    python notebooks\02_baseline.py --sample 2000    # quick smoke test
+    python notebooks\02_baseline.py
 """
-import argparse
-import glob
+import sys
 from pathlib import Path
 
 import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
-from sklearn.model_selection import GroupShuffleSplit
 
-# parents[0] is notebooks/, parents[1] is the project root.
-DATA_DIR = Path(__file__).resolve().parents[1] / "Challenge_Data"
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(PROJECT_ROOT))
+
+from src.dataset import load_cases
 
 # The corpus has 5 outcome values, but REMANDED (110) and REVOKED (7) are too
 # rare to learn and UNKNOWN means "the parser could not tell". Keep the two
@@ -35,40 +35,22 @@ DATA_DIR = Path(__file__).resolve().parents[1] / "Challenge_Data"
 KEEP = ["DENIED", "GRANTED"]
 
 TEXT_COL = "text_features"
-GROUP_COL = "case_number"
-EXPECTED_ACCURACY = 0.827
-
-
-def load_clean() -> pd.DataFrame:
-    """Load the cleaned dataset (all shards) from Challenge_Data/.
-
-    src.load only has load_raw(), which reads doha's untouched shards. This
-    reads the repaired output instead. Only the columns the baseline needs
-    are read.
-    """
-    files = sorted(glob.glob(str(DATA_DIR / "cases_clean_*.parquet")))
-    if not files:
-        raise SystemExit(
-            f"No parquet files found in {DATA_DIR}\n"
-            "Build the dataset first from the project root:\n"
-            "    python -m src.build_dataset --full"
-        )
-    cols = [TEXT_COL, GROUP_COL, "outcome"]
-    df = pd.concat([pd.read_parquet(f, columns=cols) for f in files],
-                   ignore_index=True)
-    print(f"Loaded {len(df):,} rows from {len(files)} file(s)")
-    return df
+SPLITS = ("train", "val", "test")
 
 
 def main():
-    ap = argparse.ArgumentParser()
-    ap.add_argument("--sample", type=int, default=None,
-                    help="use only N rows (faster; omit for full corpus)")
-    args = ap.parse_args()
+    df = load_cases(
+        pool=True,
+        columns=["case_number", "guideline_regime", "outcome", TEXT_COL, "split"],
+    )
+    print(f"Loaded {len(df):,} trainable rows with frozen split assignments")
 
-    df = load_clean()
+    if df["split"].isna().any():
+        raise ValueError("Some trainable rows are missing a frozen split assignment")
+    unexpected_splits = set(df["split"].unique()) - set(SPLITS)
+    if unexpected_splits:
+        raise ValueError(f"Unexpected frozen split values: {sorted(unexpected_splits)}")
 
-    df = df.dropna(subset=[TEXT_COL, GROUP_COL, "outcome"])
     before = len(df)
     df = df[df["outcome"].isin(KEEP)]
     print(f"Dropped {before - len(df):,} rows outside {KEEP} -> {len(df):,} rows")
@@ -78,30 +60,21 @@ def main():
     if empty.any():
         print(f"Dropped {int(empty.sum()):,} rows with empty {TEXT_COL}")
         df = df[~empty]
+    parts = {name: df.loc[df["split"] == name].copy() for name in SPLITS}
+    for name, part in parts.items():
+        print(
+            f"{name.capitalize():5} {len(part):,} rows "
+            f"({part['case_number'].nunique():,} case numbers)"
+        )
 
-    if args.sample:
-        df = df.sample(n=min(args.sample, len(df)), random_state=42)
-        print(f"Sampled down to {len(df):,} rows")
+    for left, right in (("train", "val"), ("train", "test"), ("val", "test")):
+        overlap = set(parts[left]["case_number"]) & set(parts[right]["case_number"])
+        if overlap:
+            raise ValueError(
+                f"Frozen split leakage: {len(overlap)} case numbers in {left} and {right}"
+            )
 
-    df = df.reset_index(drop=True)
-
-    # Grouped split: every document of a given case_number goes to the same side.
-    # (GroupShuffleSplit cannot stratify, so class balance is checked below.)
-    splitter = GroupShuffleSplit(n_splits=1, test_size=0.2, random_state=42)
-    train_idx, test_idx = next(splitter.split(df, df["outcome"], groups=df[GROUP_COL]))
-    train, test = df.iloc[train_idx], df.iloc[test_idx]
-
-    overlap = set(train[GROUP_COL]) & set(test[GROUP_COL])
-    if overlap:
-        raise RuntimeError(f"{len(overlap)} case numbers appear in both train and test")
-    print(f"Train {len(train):,} / test {len(test):,} "
-          f"({train[GROUP_COL].nunique():,} / {test[GROUP_COL].nunique():,} case numbers, "
-          f"0 shared)")
-    print("Class share  train: "
-          + ", ".join(f"{k} {v:.3f}" for k, v in train['outcome'].value_counts(normalize=True).items())
-          + "  |  test: "
-          + ", ".join(f"{k} {v:.3f}" for k, v in test['outcome'].value_counts(normalize=True).items()))
-
+    train, test = parts["train"], parts["test"]
     X_train, y_train = train[TEXT_COL], train["outcome"]
     X_test, y_test = test[TEXT_COL], test["outcome"]
 
@@ -121,19 +94,30 @@ def main():
     baseline = y_test.value_counts(normalize=True).max()
     accuracy = accuracy_score(y_test, preds)
     print(f"\nMajority-class accuracy to beat: {baseline:.3f}")
-    print(f"Accuracy: {accuracy:.3f}  (expected about {EXPECTED_ACCURACY:.3f}; "
-          f"leaky full_text baseline was about 0.954)")
-    if args.sample:
-        print("  (sampled run, so expect more noise than the full corpus)")
+    print(f"Frozen test accuracy: {accuracy:.3f}")
 
     print("\n=== Classification report ===")
-    print(classification_report(y_test, preds, digits=3))
+    print(classification_report(y_test, preds, labels=KEEP, digits=3, zero_division=0))
 
     print("=== Confusion matrix (rows=true, cols=pred) ===")
     print(pd.DataFrame(
-        confusion_matrix(y_test, preds, labels=clf.classes_),
-        index=clf.classes_, columns=clf.classes_,
+        confusion_matrix(y_test, preds, labels=KEEP),
+        index=KEEP, columns=KEEP,
     ).to_string())
+
+    print("\n=== Frozen test metrics by citation regime ===")
+    for regime, regime_test in test.groupby("guideline_regime", dropna=False):
+        regime_preds = clf.predict(vec.transform(regime_test[TEXT_COL]))
+        regime_accuracy = accuracy_score(regime_test["outcome"], regime_preds)
+        regime_name = "missing" if pd.isna(regime) else regime
+        print(f"\n{regime_name} (n={len(regime_test):,}, accuracy={regime_accuracy:.3f})")
+        print(classification_report(
+            regime_test["outcome"],
+            regime_preds,
+            labels=KEEP,
+            digits=3,
+            zero_division=0,
+        ))
 
     # Which words drive the prediction. With the verdict excluded, words like
     # "denied" or "granted" should no longer dominate these lists. If they do,
