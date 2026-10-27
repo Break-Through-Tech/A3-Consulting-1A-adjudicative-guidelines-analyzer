@@ -36,6 +36,7 @@ def loadData():
     if not files:
         raise FileNotFoundError(f"No parquet files in {dataDir}")
     
+    #Note: split column for train/test assignments will be added when it's available
     df = pd.concat([pd.read_parquet(f, columns=cols) for f in files], ignore_index=True)
     print(f"\nLoaded {df.shape[0]:,} rows, {len(cols)} cols\n")
     return df
@@ -277,15 +278,16 @@ def analyzeDataQuality(df):
     
     useTrain = df['use_for_training'].sum()
     formal = (df['label_source'] == 'formal_ruling').sum()
-    #Fix: add empty-text filter
+    #Fix: add empty-text filter and outcome filter
     ready = (df['use_for_training'] & 
              (df['label_source'] == 'formal_ruling') & 
-             (df['text_features'].str.len() > 0)).sum()
+             (df['text_features'].str.len() > 0) &
+             (df['outcome'].notna())).sum()
     
     print(f"\nML readiness:")
     print(f"  Training flag: {useTrain:,} ({useTrain/len(df)*100:.1f}%)")
     print(f"  Formal labels: {formal:,} ({formal/len(df)*100:.1f}%)")
-    print(f"  Ready (all 3):  {ready:,} ({ready/len(df)*100:.1f}%)")
+    print(f"  Ready (all):    {ready:,} ({ready/len(df)*100:.1f}%)")
     
     print(f"\nField quality:")
     nullOutcome = df['outcome'].isna().sum()
@@ -345,9 +347,9 @@ def generateSummary(df, outcomes, guidelines, featLen, ready, emptyCount):
     
     print(f"\nFor ML pipeline:")
     print(f"  - Use text_features (leak-free)")
-    print(f"  - Filter: use_for_training=True AND label_source='formal_ruling' AND text_features non-empty")
+    print(f"  - Filter: use_for_training=True AND label_source='formal_ruling' AND non-empty text_features AND non-null outcome")
     print(f"  - Expected training size: {ready:,} cases")
-    print(f"  - Use split column from Challenge_Data for train/test split")
+    print(f"  - Use frozen split column for train/test assignments")
     print(f"  - Handle class imbalance with stratification")
     
     print(f"\n{'='*50}\n")
