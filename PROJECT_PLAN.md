@@ -266,7 +266,7 @@ those outputs from his cached runs.
 |---|---|---|---|
 | Oct 11 (done) | Rashed | Loader `src/dataset.py`, pinned `requirements.txt`, this plan | — |
 | Tue Oct 13 | Sam | Leak-free baseline committed: the existing TF-IDF model re-run on `text_features` with a grouped split | Loader |
-| Wed Oct 14 | Aryan | `Challenge_Data/splits.parquet`, plus split checks in `src/validate.py` | Loader |
+| Wed Oct 14 (done) | Aryan | `Challenge_Data/splits.parquet`, plus split checks in `src/validate.py` | Loader |
 | Fri Oct 16 | Brian | EDA fixes (§5) and `notebooks/EDA_REPORT.md` | Loader |
 | Fri Oct 16 | Sam | Baseline re-run on the frozen split | Split |
 | Fri Oct 16 | Rashed | Laptop GPU ready: CUDA 12.8+ PyTorch, local LLM installed | — |
@@ -314,7 +314,7 @@ builds on them.
 | `src/dataset.py` | Rashed | done | The single loader described above |
 | `PROJECT_PLAN.md` | Rashed | done | This document |
 | Baseline | Sam | Oct 13; on the split Oct 16 | `notebooks/02_baseline.py` uses `load_cases()`, `text_features`, and the committed frozen train/val/test split. It fits on train, holds val out, and reports test metrics overall and by citation regime. The earlier 82.7% vs 64.3% result used a random grouped split; `updated-baseline-frozen-split.txt` records the comparable frozen-test result. |
-| `Challenge_Data/splits.parquet` | Aryan | Oct 14 | Frozen train/val/test, committed |
+| `Challenge_Data/splits.parquet` | Aryan | done | Frozen train/val/test, committed |
 | `notebooks/EDA_REPORT.md` | Brian | Oct 16 | Written EDA report with corrected figures |
 | `Challenge_Data/DATA_CARD.md` | Aryan | Oct 20 | Data dictionary, per-tier counts, known gaps, ethics note |
 
@@ -396,7 +396,8 @@ LLM's job.
   advisor covers a small API credit (§8, question 4), the same pilot also runs on Claude Haiku 5.5 through
   the Batch API (under $1 at this scope), and whichever model scores better does the run.
 - `src/sead4_reference.py` — the closed list of 142 `AG ¶` condition codes with their paragraph text, so
-  the model selects from a fixed set and cannot invent a code. See §8, open question 1.
+  the model selects from a fixed set and cannot invent a code. Vendored, with attribution, from
+  `sead4_llm/config/guidelines.py` in the `doha` repo (§8, question 1, answered).
 - `src/llm/templates.py` — templates returning strict JSON `{condition_code, exact_quote}`.
 - `src/llm/verify.py` — runs `full_text.find(quote)` on every returned quote and **drops any that does
   not resolve exactly**. We never ask the model for character offsets; we recover them ourselves from
@@ -527,7 +528,8 @@ get done if left until November.
    guidelines with 142 `AG ¶` codes and full paragraph text — exactly the closed list our prompt
    templates and UI need, and the brief points at `sead4_llm/` for it. There is no LICENSE file in the
    `doha` repo, so we would rather ask than assume. If preferred, we can regenerate it from the official
-   SEAD-4 PDF instead.
+   SEAD-4 PDF instead. **Answered (Oct 20):** yes. Both repos are ours to use, so we vendor it with
+   attribution instead of regenerating it from the PDF.
 2. **Is restricting the modeling target to hearing decisions acceptable?** Appeal Board decisions carry
    no formal findings section, so only 0.15% (7 of 4,763) have judge-written per-guideline labels. Appeals stay in the
    dataset and the precedent index, but not as a prediction target.
@@ -634,7 +636,9 @@ pool = df[df.use_for_training
 Or use the loader, which does the normalization and the pool filter: `from src.dataset import load_cases;
 pool = load_cases()` (21,959 rows).
 
-Once the split lands, filter on it rather than re-splitting, so results stay comparable across the team.
+The frozen split is `Challenge_Data/splits.parquet` (train 15,685 / val 3,137 / test 3,137, from
+`python -m src.build_splits`). `load_cases()` attaches it as a `split` column, so filter on that rather
+than re-splitting, and results stay comparable across the team.
 
 ---
 

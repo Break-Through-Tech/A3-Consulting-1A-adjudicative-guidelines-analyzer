@@ -55,11 +55,11 @@ def main():
     df = df[df["outcome"].isin(KEEP)]
     print(f"Dropped {before - len(df):,} rows outside {KEEP} -> {len(df):,} rows")
 
+    # A row whose leak-free sections could not be found has empty features.
     empty = df[TEXT_COL].str.strip() == ""
     if empty.any():
         print(f"Dropped {int(empty.sum()):,} rows with empty {TEXT_COL}")
         df = df[~empty]
-
     parts = {name: df.loc[df["split"] == name].copy() for name in SPLITS}
     for name, part in parts.items():
         print(
