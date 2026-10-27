@@ -1,0 +1,130 @@
+{
+  "checks": [
+    {
+      "name": "no sentinel strings in cleaned columns",
+      "passed": true,
+      "detail": "0 found"
+    },
+    {
+      "name": "guideline codes all within A-M",
+      "passed": true,
+      "detail": "[]"
+    },
+    {
+      "name": "dates within window or null",
+      "passed": true,
+      "detail": "0 outside 1990-2027"
+    },
+    {
+      "name": "section offsets index full_text",
+      "passed": true,
+      "detail": "0 out of range"
+    },
+    {
+      "name": "html_prefix_len only where a header exists",
+      "passed": true,
+      "detail": "0 mismatched"
+    },
+    {
+      "name": "verdict phrasing in text_features carries no signal",
+      "passed": true,
+      "detail": "9536 rows contain a phrase; DENIED rate 62.2% vs baseline 64.7% (skew 2.5pp)"
+    },
+    {
+      "name": "out-of-order sections never reach the feature text",
+      "passed": true,
+      "detail": "0 leaked of 41 out-of-order rows"
+    },
+    {
+      "name": "no byte-identical duplicates remain",
+      "passed": true,
+      "detail": "0 left"
+    },
+    {
+      "name": "every row has a label_source",
+      "passed": true,
+      "detail": ""
+    }
+  ],
+  "stats": {
+    "rows": 30517,
+    "columns": 66,
+    "outcome_resolved": 29629,
+    "outcome_resolved_pct": 97.1,
+    "outcome_changed": 1637,
+    "date_resolved_pct": 99.9,
+    "judge_resolved_pct": 87.8,
+    "case_type_corrected": 66,
+    "label_source": {
+      "formal_ruling": 22105,
+      "regex_fallback": 6142,
+      "inherited_from_hearing": 2155,
+      "none": 115
+    },
+    "guideline_regime": {
+      "sead4": 18789,
+      "unknown": 7791,
+      "directive": 3937
+    },
+    "case_type": {
+      "hearing": 25754,
+      "appeal": 4763
+    },
+    "rows_with_evidence_spans": 19989,
+    "guideline_counts": {
+      "A": {
+        "stored": 20975,
+        "cleaned": 960
+      },
+      "B": {
+        "stored": 5085,
+        "cleaned": 4565
+      },
+      "C": {
+        "stored": 3219,
+        "cleaned": 1814
+      },
+      "D": {
+        "stored": 896,
+        "cleaned": 711
+      },
+      "E": {
+        "stored": 10531,
+        "cleaned": 9947
+      },
+      "F": {
+        "stored": 19157,
+        "cleaned": 17293
+      },
+      "G": {
+        "stored": 2861,
+        "cleaned": 2516
+      },
+      "H": {
+        "stored": 4358,
+        "cleaned": 3992
+      },
+      "I": {
+        "stored": 5286,
+        "cleaned": 260
+      },
+      "J": {
+        "stored": 5516,
+        "cleaned": 4784
+      },
+      "K": {
+        "stored": 779,
+        "cleaned": 332
+      },
+      "L": {
+        "stored": 231,
+        "cleaned": 71
+      },
+      "M": {
+        "stored": 1447,
+        "cleaned": 337
+      }
+    },
+    "text_features_present_pct": 86.2
+  }
+}
