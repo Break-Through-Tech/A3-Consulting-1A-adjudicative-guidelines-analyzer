@@ -259,16 +259,18 @@ outcomePrediction = trainingPool[trainingPool['outcome'].notna()]  # 21,935 case
 
 ### Train/Test Split
 
-Use `split_group` to create train/test splits that keep hearing-appeal pairs together:
+Use the frozen train/val/test split in Challenge_Data/splits.parquet. load_cases() returns it as the split column:
 
 ```python
-from sklearn.model_selection import GroupShuffleSplit
+from src.dataset import load_cases
 
-splitter = GroupShuffleSplit(n_splits=1, test_size=0.2, random_state=42)
-trainIdx, testIdx = next(splitter.split(X, y, groups=df['split_group']))
+df = load_cases(columns=["text_features", "outcome", "split"])
+train = df[df["split"] == "train"]  # 15,685 cases
+val = df[df["split"] == "val"]      # 3,137 cases
+test = df[df["split"] == "test"]    # 3,137 cases
 ```
 
-The `split_group` column ensures hearing-appeal pairs stay together, preventing data leakage.
+The frozen split keeps hearing-appeal pairs on the same side, keeps every guideline and regime close to its pool rate in all three parts, and means every model on the team is scored on the same test set.
 
 ### Handling Class Imbalance
 
