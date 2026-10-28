@@ -273,7 +273,7 @@ those outputs from his cached runs.
 | Tue Oct 20 | Aryan | `Challenge_Data/DATA_CARD.md` | EDA report |
 | Tue Oct 20 | Brian | `src/sead4_reference.py`, the closed list of condition codes | — |
 | Fri Oct 23 | Everyone | Label check: 50 cases, ~13 each (§7) | — |
-| Fri Oct 23 | Sam | 13-head TF-IDF baseline (per-guideline FOR/AGAINST) | Split, baseline |
+| Fri Oct 23 | Sam | 13-head TF-IDF baseline: NOT_AT_ISSUE / FOR / AGAINST, thresholded on validation, scored on frozen test by regime | Split, outcome baseline; results in `guideline_baseline_frozen_split.csv` and `guideline_baseline_frozen_split_summary.csv` |
 | Fri Oct 23 | Rashed | LLM prompt templates and `src/llm/verify.py` | Code list |
 | Tue Oct 27 | Brian | Rule-based extractor `src/conditions.py`, with negative tests | Code list |
 | Tue Oct 27 | Aryan | Precedent index v1: embeddings + FAISS, smoke-tested | Loader |
@@ -349,6 +349,11 @@ AGAINST*. Collapsing {FOR, AGAINST} gives the multi-label A–M classifier, whic
 
 - Baseline: TF-IDF + one-vs-rest logistic regression, 13 × 3-class, extending `02_baseline.py`. This has
   to be beaten before a transformer is justified.
+- `notebooks/04_guideline_classifier_baseline.py` implements the three-way baseline with one class-weighted
+  logistic-regression head per guideline. Listed guidelines without an observed direction are masked;
+  at-issue thresholds are selected on validation. Frozen-test metrics include case counts and are reported
+  per guideline and by citation regime in `guideline_baseline_frozen_split.csv`, with regime aggregates in
+  `guideline_baseline_frozen_split_summary.csv`.
 - Main: fine-tuned ModernBERT-base on `text_features`, with Legal-BERT at 512 tokens as the comparison.
 - Compute: fine-tuning runs on free Colab (T4, 16 GB). Rashed's RTX 5060 laptop GPU (8 GB) runs the local
   LLM — template testing, the pilot and the run — from Oct 19 to Nov 6, and is free for training outside
