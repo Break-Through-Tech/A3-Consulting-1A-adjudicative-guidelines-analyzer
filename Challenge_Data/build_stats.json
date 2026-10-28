@@ -20,7 +20,7 @@
   "case_number_collisions": 192,
   "degenerate_flagged": 7,
   "rows_after_dedupe": 30517,
-  "elapsed_seconds": 117.7,
+  "elapsed_seconds": 405.6,
   "shards_written": [
     {
       "file": "cases_clean_1.parquet",

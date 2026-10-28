@@ -62,31 +62,30 @@ _COMPOSITION = {
 }
 
 
-def _compose_appeal_outcome(body: str) -> str | None:
-    """Resolve underlying decision x board action. None if either is absent."""
+def _board_action(body: str) -> str | None:
+    """What the Appeal Board did: 'remand', 'affirm', 'reverse', or None."""
     if _ACTION_REMAND.search(body):
-        return "REMANDED"
-    action = None
+        return "remand"
     if _ACTION_AFFIRM.search(body):
-        action = "affirm"
-    elif _ACTION_REVERSE.search(body):
-        action = "reverse"
-    if action is None:
-        return None
+        return "affirm"
+    if _ACTION_REVERSE.search(body):
+        return "reverse"
+    return None
 
+
+def _underlying_in_span(body: str) -> str | None:
+    """The decision being acted on, when the verdict span names it."""
     adverse = _UNDERLYING_ADVERSE.search(body)
     favorable = _UNDERLYING_FAVORABLE.search(body)
     if adverse and favorable:
         # Both words present: the one nearer the action verb is the one being
         # acted on, e.g. "reversed the favorable decision, finding adverse ...".
-        underlying = "adverse" if adverse.start() > favorable.start() else "favorable"
-    elif adverse:
-        underlying = "adverse"
-    elif favorable:
-        underlying = "favorable"
-    else:
-        return None
-    return _COMPOSITION[(underlying, action)]
+        return "adverse" if adverse.start() > favorable.start() else "favorable"
+    if adverse:
+        return "adverse"
+    if favorable:
+        return "favorable"
+    return None
 
 
 # Where the Order states an action but not a direction -- "The decision of the
@@ -143,16 +142,17 @@ def extract_outcome(text: str, span: tuple[int, int] | None) -> tuple[object, st
     if candidates:
         return max(candidates)[2], "verdict_span_tail" if fallback else "verdict_span"
 
-    composed = _compose_appeal_outcome(body)
-    if composed is not None:
-        return composed, "appeal_composition"
-
-    # Action stated without direction. Recover the direction from the opinion
-    # body, which is where "the Judge denied Applicant a clearance" appears.
-    if _ACTION_REMAND.search(body):
+    # Appeal composition: underlying decision x board action.
+    action = _board_action(body)
+    if action == "remand":
         return "REMANDED", "appeal_composition"
-    action = "affirm" if _ACTION_AFFIRM.search(body) else ("reverse" if _ACTION_REVERSE.search(body) else None)
     if action:
+        underlying = _underlying_in_span(body)
+        if underlying:
+            return _COMPOSITION[(underlying, action)], "appeal_composition"
+        # Action stated without direction. Recover the direction from the
+        # opinion body, which is where "the Judge denied Applicant a
+        # clearance" appears.
         underlying = _underlying_from_body(text[: span[0]])
         if underlying:
             return _COMPOSITION[(underlying, action)], "appeal_composition_body"
@@ -198,7 +198,7 @@ def extract_case_type(text: str, stored: str) -> tuple[str, bool]:
 # --- date --------------------------------------------------------------------
 # Runs on de-prefixed text so the browser print timestamp cannot be picked up.
 # The docket year from case_number is a DIFFERENT fact -- decisions land one to
-# two years after docketing and the two agree exactly only 11% of the time -- so
+# two years after docketing and the two agree exactly only 29.5% of the time -- so
 # it is used to sanity-check a parsed date, never to substitute for one.
 _DATE_PATTERNS = [
     re.compile(r"(?:Date|Dated)\s*[:\s]\s*([A-Z][a-z]+\s+\d{1,2},?\s+\d{4})", re.I),

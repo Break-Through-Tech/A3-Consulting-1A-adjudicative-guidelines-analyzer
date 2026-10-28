@@ -1,0 +1,61 @@
+Loaded 30,517 rows from 4 file(s)
+Dropped 453 rows outside ['DENIED', 'GRANTED'] -> 29,176 rows
+Dropped 2,964 rows with empty text_features
+Train 20,969 / test 5,243 (20,716 / 5,179 case numbers, 0 shared)
+Class share  train: DENIED 0.640, GRANTED 0.360  |  test: DENIED 0.643, GRANTED 0.357
+
+Vectorizing...
+  20,000 features
+Fitting...
+
+Majority-class accuracy to beat: 0.643
+Accuracy: 0.827  (expected about 0.827; leaky full_text baseline was about 0.954)
+
+=== Classification report ===
+              precision    recall  f1-score   support
+
+      DENIED      0.899     0.823     0.859      3373
+     GRANTED      0.723     0.834     0.774      1870
+
+    accuracy                          0.827      5243
+   macro avg      0.811     0.828     0.817      5243
+weighted avg      0.836     0.827     0.829      5243
+
+=== Confusion matrix (rows=true, cols=pred) ===
+         DENIED  GRANTED
+DENIED     2776      597
+GRANTED     311     1559
+
+=== Top 15 features -> DENIED ===
+stated         -4.422298
+claimed        -4.301122
+claims         -3.902435
+provided no    -3.756987
+delinquent     -3.392936
+000            -3.333619
+not            -3.329342
+not provide    -3.227929
+unresolved     -3.123898
+unpaid         -3.073170
+said           -2.993172
+has not        -2.915148
+any payments   -2.819296
+any of         -2.775735
+made any       -2.754680
+
+=== Top 15 features -> GRANTED ===
+credibly                  4.683125
+ae                        4.228871
+paid                      4.090070
+never                     3.385635
+and                       3.253917
+the                       3.232013
+settled                   2.882003
+full                      2.641597
+credibly testified        2.628180
+in full                   2.530551
+provided documentation    2.497533
+has                       2.466015
+applicant exhibit         2.452324
+exhibit                   2.432967
+since                     2.362593
