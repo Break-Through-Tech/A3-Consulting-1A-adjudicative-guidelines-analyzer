@@ -9,7 +9,7 @@
 
 ## Executive Summary
 
-This EDA analyzes 30,517 DOHA security clearance decisions spanning 1996-2026. The dataset shows significant class imbalance (62.8% denied, 32.8% granted) and data quality issues that impact ML readiness. After fixing counting bugs and separating label quality tiers, 21,959 cases (71.9%) are suitable for training high-quality ML models.
+This EDA analyzes 30,517 DOHA security clearance decisions spanning 1996-2026. The dataset shows significant class imbalance (62.8% denied, 32.8% granted) and data quality issues that impact ML readiness. After fixing counting bugs and separating label quality tiers, 21,959 cases (72.0%) are suitable for training high-quality ML models.
 
 ### Critical Fixes Implemented
 
@@ -56,7 +56,7 @@ This EDA analyzes 30,517 DOHA security clearance decisions spanning 1996-2026. T
 
 | Source | Count | Percentage | Trust Level |
 |--------|-------|------------|-------------|
-| formal_ruling | 21,959 | 71.97% | Authoritative (with non-empty text) |
+| formal_ruling | 22,105 | 72.44% | Authoritative |
 | regex_fallback | 6,142 | 20.13% | ~60% precision |
 | inherited_from_hearing | 2,155 | 7.06% | Inferred |
 | none | 115 | 0.38% | No labels |
@@ -99,18 +99,6 @@ This EDA analyzes 30,517 DOHA security clearance decisions spanning 1996-2026. T
 
 ## 3. Text Length Analysis
 
-### Full Text Statistics
-
-| Metric | Characters | Words |
-|--------|------------|-------|
-| Mean | 19,250 | 2,853 |
-| Median | 18,069 | N/A |
-| Std Dev | 9,472 | N/A |
-| Min | 0 | N/A |
-| Max | 115,347 | N/A |
-| 10th percentile | 8,173 | N/A |
-| 90th percentile | 30,957 | N/A |
-
 ### Text Features (Leak-Free, Valid Cases Only)
 
 | Metric | Characters | Words |
@@ -118,20 +106,31 @@ This EDA analyzes 30,517 DOHA security clearance decisions spanning 1996-2026. T
 | Valid cases | 26,318 (86.24%) | 26,318 |
 | Empty cases | 4,199 (13.76%) | 4,199 |
 | Mean | 7,712 | 1,216 |
-| Median | 6,652 | N/A |
+| Median | 6,652 | 1,057 |
 | Std Dev | 4,821 | N/A |
 | Min | 348 | N/A |
 | Max | 78,398 | N/A |
 
+### Percentiles (Characters)
+
+| Percentile | Characters |
+|------------|------------|
+| 10th | 3,155 |
+| 25th | 4,551 |
+| 50th | 6,652 |
+| 75th | 9,486 |
+| 90th | 13,385 |
+| 95th | 16,638 |
+| 99th | 25,089 |
+
 ### Key Findings
 
-- **Content reduction**: text_features is 57.4% shorter than full_text (removes verdict leakage)
 - **Empty data**: 4,199 cases (13.76%) have empty text_features after cleaning
-- **Length by outcome**:
-  - REVOKED: 23,339 chars (longest)
-  - GRANTED: 20,421 chars
-  - DENIED: 19,127 chars
-  - REMANDED: 11,955 chars (shortest)
+- **Length by outcome** (text_features):
+  - REVOKED: 8,805 chars (longest)
+  - GRANTED: 8,055 chars
+  - DENIED: 7,528 chars
+  - REMANDED: 3,661 chars (shortest)
 - **Usable training data**: 26,318 cases with valid features
 
 ![Text Length Analysis](text_length_analysis.png)
@@ -140,8 +139,8 @@ This EDA analyzes 30,517 DOHA security clearance decisions spanning 1996-2026. T
 
 - Filter out 4,199 cases with empty text_features before training
 - Use text_features column exclusively (prevents verdict leakage)
-- Consider sequence length limits (e.g., 512/1024 tokens for transformers)
-- Document length varies 200x (348 to 78,398 chars)
+- Document length varies 225x (348 to 78,398 chars)
+- 98% of documents exceed 512 tokens
 
 ---
 
@@ -153,7 +152,10 @@ This EDA analyzes 30,517 DOHA security clearance decisions spanning 1996-2026. T
 |----------|-------|------------|
 | use_for_training flag | 30,510 | 100.0% |
 | formal_ruling labels | 22,105 | 72.4% |
-| All three criteria met | 21,959 | 71.9% |
+| Training-ready pool | 21,959 | 72.0% |
+| With resolved outcome | 21,935 | 71.9% |
+
+**Note**: Training-ready pool requires use_for_training=True AND label_source='formal_ruling' AND non-empty text_features. Of these 21,959 cases, 21,935 have a resolved outcome. The other 24 keep their guideline labels but are excluded from outcome prediction metrics.
 
 ### Critical Field Quality
 
@@ -233,16 +235,18 @@ guidelineData = formalRulingData['guidelines'].explode()
 ### Data Filtering
 
 ```python
-#Recommended filter for training
-trainingData = dataFrame[
+#Training pool (for guideline classification, etc.)
+trainingPool = dataFrame[
     (dataFrame['use_for_training'] == True) &
     (dataFrame['label_source'] == 'formal_ruling') &
-    (dataFrame['text_features'].str.len() > 0) &
-    (dataFrame['outcome'].notna())
-]
+    (dataFrame['text_features'].str.len() > 0)
+]  # 21,959 cases
+
+#For outcome prediction specifically
+outcomePrediction = trainingPool[trainingPool['outcome'].notna()]  # 21,935 cases
 ```
 
-**Expected result**: 21,959 high-quality training cases
+**Expected result**: 21,959 cases in training pool, 21,935 for outcome prediction
 
 ### Feature Engineering
 
@@ -255,19 +259,18 @@ trainingData = dataFrame[
 
 ### Train/Test Split
 
-Use the frozen `split` column already present in `Challenge_Data`:
+Use the frozen train/val/test split in Challenge_Data/splits.parquet. load_cases() returns it as the split column:
 
 ```python
-#Use pre-computed split assignments
-train = df[df['split'] == 'train']
-test = df[df['split'] == 'test']
-val = df[df['split'] == 'val']  #if validation split exists
+from src.dataset import load_cases
+
+df = load_cases(columns=["text_features", "outcome", "split"])
+train = df[df["split"] == "train"]  # 15,685 cases
+val = df[df["split"] == "val"]      # 3,137 cases
+test = df[df["split"] == "test"]    # 3,137 cases
 ```
 
-The split column ensures:
-- Hearing-appeal pairs stay together
-- Balanced distribution across splits
-- Reproducible experiments
+The frozen split keeps hearing-appeal pairs on the same side, keeps every guideline and regime close to its pool rate in all three parts, and means every model on the team is scored on the same test set.
 
 ### Handling Class Imbalance
 
@@ -291,7 +294,8 @@ The split column ensures:
 - **Total cases**: 30,517
 - **Date range**: 1996-03-22 to 2026-01-15 (30 years)
 - **Case types**: 25,754 hearings, 4,763 appeals
-- **Training-ready**: 21,959 cases (71.9%)
+- **Training-ready**: 21,959 cases (72.0%)
+- **With resolved outcome**: 21,935 cases (71.9%)
 - **Valid text features**: 26,318 cases (86.2%)
 
 ### Class Balance
