@@ -37,6 +37,11 @@ SPLITS = ("train", "val", "test")
 CLASSES = ("NOT_AT_ISSUE", "FOR", "AGAINST")
 DIRECTIONS = ("FOR", "AGAINST")
 MAX_FEATURES = 20_000
+DEFENSIBLE_GUIDELINES = {"B", "C", "D", "E", "F", "G", "H", "J"}
+GUIDELINE_TIERS = {
+    code: "defensible" if code in DEFENSIBLE_GUIDELINES else "caveat"
+    for code in config.GUIDELINE_CODES
+}
 
 
 def targets_for_guideline(df: pd.DataFrame, code: str) -> pd.Series:
@@ -257,6 +262,7 @@ def main() -> None:
                 {
                     "regime": regime_name,
                     "guideline": code,
+                    "tier": GUIDELINE_TIERS[code],
                     "regime_test_cases": int(regime_df["case_number"].nunique()),
                     "known_test_cases": n_cases,
                     "at_issue_threshold": result["threshold"],
@@ -279,10 +285,18 @@ def main() -> None:
                 np.asarray(all_predicted),
                 np.asarray(all_probabilities),
             )
+            regime_defensible_macro_f1 = np.mean(
+                [
+                    row["macro_f1"]
+                    for row in rows
+                    if row["regime"] == regime_name and row["tier"] == "defensible"
+                ]
+            )
             summary_rows.append(
                 {
                     "regime": regime_name,
                     "test_cases": int(regime_df["case_number"].nunique()),
+                    "defensible_macro_f1": float(regime_defensible_macro_f1),
                     **aggregate,
                 }
             )
