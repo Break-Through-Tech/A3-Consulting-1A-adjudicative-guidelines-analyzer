@@ -5,6 +5,7 @@
 from __future__ import annotations
 
 import sys
+from datetime import date
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
@@ -74,7 +75,8 @@ def test_the_same_condition_cited_twice_keeps_both_positions():
 
 def test_directive_codes_and_fc_ordinals_are_the_closed_directive_list():
     text = "See Directive ¶ E2.A6.1.3.3 and FC DC 3 and FC MC 1."
-    hits = extract(text)
+    # No regime and no date skips numbered forms. 2005 selects the Directive list.
+    hits = extract(text, decided=date(2005, 1, 1))
     assert [(hit["code"], hit["kind"]) for hit in hits] == [
         ("E2.A6.1.3.3", "mitigator"),
         ("E2.A6.1.2.3", "disqualifier"),
@@ -114,6 +116,68 @@ def test_a_policies_recitation_is_not_a_citation():
     text = "POLICIES AG ¶ 19(a) and AG ¶ 20(b) are the standards.\nThe judge applied AG ¶ 20(d)."
     policies = (0, text.index("The judge"))
     assert _codes(text, policies=policies) == ["AG ¶ 20(d)"]
+
+
+@parametrize("text,expected", [
+    ("AG ¶¶ 20(a), (b), and (c)", ["AG ¶ 20(a)", "AG ¶ 20(b)", "AG ¶ 20(c)"]),
+    ("AG ¶¶ 19 (a), (b), and (c) apply", ["AG ¶ 19(a)", "AG ¶ 19(b)", "AG ¶ 19(c)"]),
+    ("AG ¶¶ 20(a), (b), or (d)", ["AG ¶ 20(a)", "AG ¶ 20(b)", "AG ¶ 20(d)"]),
+    ("AG ¶ 20(a) through 20(d)", ["AG ¶ 20(a)", "AG ¶ 20(b)", "AG ¶ 20(c)", "AG ¶ 20(d)"]),
+    ("AG ¶¶ 20(a) - 20(c) do not apply", ["AG ¶ 20(a)", "AG ¶ 20(b)", "AG ¶ 20(c)"]),
+    ("AG ¶ 20(a)—(c)", ["AG ¶ 20(a)", "AG ¶ 20(b)", "AG ¶ 20(c)"]),
+    ("AG ¶ 20(a) to (c)", ["AG ¶ 20(a)", "AG ¶ 20(b)", "AG ¶ 20(c)"]),
+    ("AG ¶¶ 20(a)-(c), and (e)", ["AG ¶ 20(a)", "AG ¶ 20(b)", "AG ¶ 20(c)", "AG ¶ 20(e)"]),
+    (
+        "AG ¶¶ 20(a)-(b) are potentially applicable: (c) the individual has received counseling",
+        ["AG ¶ 20(a)", "AG ¶ 20(b)"],
+    ),
+    ("mitigated under E2.A6.1.3. 6. The", ["E2.A6.1.3.6"]),
+    ("FC MC E2.A6.\n1.3.1 applies", ["E2.A6.1.3.1"]),
+])
+def test_ranges_lists_and_broken_directive_codes(text, expected):
+    assert _codes(text) == expected
+
+
+@parametrize("text,decided,guidelines,expected", [
+    ("Under Guideline F, DC 1 and DC 3 apply.", date(2005, 1, 1), None,
+     ["E2.A6.1.2.1", "E2.A6.1.2.3"]),
+    ("Under Guideline F, MC 6 applies.", date(2005, 1, 1), None, ["E2.A6.1.3.6"]),
+    ("Financial Considerations Mitigating Condition 3 applies.", date(2005, 1, 1), None,
+     ["E2.A6.1.3.3"]),
+    ("Under Guideline F, MC 1 applies.", date(2010, 1, 1), None, ["AG ¶ 20(a)"]),
+    ("Under Guideline F, DC 3 applies.", date(2010, 1, 1), None, ["AG ¶ 19(c)"]),
+    ("FC MC 1 applies.", date(2010, 1, 1), None, ["AG ¶ 20(a)"]),
+    ("FC DC 3 applies.", date(2005, 1, 1), None, ["E2.A6.1.2.3"]),
+    ("MC 1 applies.", date(2005, 1, 1), ["F"], ["E2.A6.1.3.1"]),
+])
+def test_numbered_forms_follow_the_date_when_no_regime_is_given(text, decided, guidelines, expected):
+    assert _codes(text, decided=decided, guidelines=guidelines) == expected
+
+
+def test_regime_beats_the_date_for_numbered_forms():
+    text = "Under Guideline F, MC 2 applies."
+    decided = date(2007, 3, 19)
+    assert _codes(text, decided=decided, regime="directive") == ["E2.A6.1.3.2"]
+    assert _codes(text, decided=decided, regime="sead4") == ["AG ¶ 20(b)"]
+    assert _codes(text, decided=decided, regime="unknown") == []
+
+
+@parametrize("text,kwargs", [
+    ("Under Guideline F, MC 1 applies.", {}),
+    ("Under Guideline F, MC 1 applies.", {"decided": date(2006, 11, 1)}),
+    ("Under Guideline J, MC 1 applies.", {"decided": date(2005, 1, 1)}),
+    (
+        "Under Guideline F, debts. Under Guideline J, MC 1 applies.",
+        {"decided": date(2005, 1, 1)},
+    ),
+    ("MC 1 applies.", {"decided": date(2005, 1, 1), "guidelines": ["F", "J"]}),
+    ("Under Guideline F, MC 7 applies.", {"decided": date(2005, 1, 1)}),
+    ("Under Guideline F, DC 6 applies.", {"decided": date(2005, 1, 1)}),
+    ("Under Guideline F, MC 8 applies.", {"decided": date(2010, 1, 1)}),
+    ("Washington, DC 20301", {"decided": date(2010, 1, 1), "guidelines": ["F"]}),
+])
+def test_numbered_forms_that_are_not_guideline_f_conditions(text, kwargs):
+    assert extract(text, **kwargs) == []
 
 
 def test_search_can_be_limited_to_the_analysis():
