@@ -216,6 +216,17 @@ def run_checks(df: pd.DataFrame) -> list[tuple[str, bool, str]]:
             f"max deviation {100 * guideline_skew:.2f}pp (Guideline {worst_code})",
         )
 
+    # Precedent search index checks (Task 13)
+    precedents_index_path = config.OUT_DIR / "precedents.faiss"
+    precedents_meta_path = config.OUT_DIR / "precedents_metadata.parquet"
+    if precedents_index_path.exists():
+        import faiss
+        idx = faiss.read_index(str(precedents_index_path))
+        check("precedents.faiss covers exactly 24,238 cases at dim 384", idx.ntotal == 24238 and idx.d == 384, f"ntotal={idx.ntotal}, d={idx.d}")
+    if precedents_meta_path.exists():
+        pmeta = pd.read_parquet(precedents_meta_path)
+        check("precedents_metadata.parquet covers exactly 24,238 cases", len(pmeta) == 24238, f"{len(pmeta):,} rows found")
+
     return checks
 
 
