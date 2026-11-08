@@ -48,12 +48,16 @@ def test_precedent_metadata_schema_and_alignment():
         "date",
         "case_year",
         "split",
-        "fof_text",
+        "para_offsets_fof",
     }
     assert expected_cols.issubset(set(meta.columns)), f"Missing columns: {expected_cols - set(meta.columns)}"
 
-    # All fof_text must be non-empty
-    assert (meta["fof_text"].str.len() > 0).all(), "Found empty Findings of Fact texts in metadata"
+    # fof_text should be excluded to keep metadata under 2 MB
+    assert "fof_text" not in meta.columns, "fof_text should be omitted from metadata to save space"
+
+    # All para_offsets_fof must have at least one paragraph offset
+    has_paras = meta["para_offsets_fof"].apply(lambda p: len(p) > 0 if hasattr(p, "__len__") else False)
+    assert has_paras.all(), "Found cases without paragraph offsets in metadata"
 
     # All outcomes must be resolved (DENIED, GRANTED, REVOKED)
     assert set(meta["outcome"].unique()).issubset({"DENIED", "GRANTED", "REVOKED"})
@@ -81,12 +85,15 @@ def test_retriever_search_and_highlighting():
         "split",
         "source_url",
         "best_paragraph",
+        "best_paragraph_start",
+        "best_paragraph_end",
         "best_paragraph_score",
     }
     assert expected_keys.issubset(set(top.keys())), f"Missing keys in hit: {expected_keys - set(top.keys())}"
 
     assert 0.0 <= top["score"] <= 1.0, f"Score out of range: {top['score']}"
     assert len(top["best_paragraph"]) > 20, "Expected non-empty highlighted paragraph"
+    assert top["best_paragraph_end"] > top["best_paragraph_start"], "Expected valid paragraph char offsets"
     # Guideline F should be in top hit for financial debt query
     assert "F" in top["guidelines"], f"Expected Guideline F in top hit, got {top['guidelines']}"
 

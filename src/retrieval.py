@@ -16,22 +16,33 @@ from typing import Any
 import faiss
 import numpy as np
 import pandas as pd
+import pyarrow.dataset as ds
 import torch
 from sentence_transformers import SentenceTransformer
 
 from src import config
-from src.dataset import load_cases, load_splits
+from src.dataset import load_cases, load_splits, shard_files
 from src.normalize import normalize_body
 
 # Precedent corpus artifact paths
 INDEX_PATH = config.OUT_DIR / "precedents.faiss"
 METADATA_PATH = config.OUT_DIR / "precedents_metadata.parquet"
+CHECKPOINT_PATH = config.OUT_DIR / ".precedents_embeddings_checkpoint.npy"
 DEFAULT_MODEL_NAME = "BAAI/bge-small-en-v1.5"
 VECTOR_DIM = 384
 
 
-def get_precedent_corpus() -> pd.DataFrame:
-    """Load and normalize the 24,238 precedent cases qualified for retrieval.
+def get_default_device() -> str:
+    """Detect fastest available acceleration hardware (CUDA, MPS, or CPU fallback)."""
+    if torch.cuda.is_available():
+        return "cuda"
+    if torch.backends.mps.is_available():
+        return "mps"
+    return "cpu"
+
+
+def get_precedent_corpus() -> tuple[pd.DataFrame, list[str], list[tuple[int, int]]]:
+    """Load qualified precedent cases and extract all individual Findings of Fact paragraphs.
 
     Per PROJECT_PLAN.md §4:
     Usable corpus requires:
@@ -39,6 +50,11 @@ def get_precedent_corpus() -> pd.DataFrame:
     - resolved outcome (DENIED, GRANTED, REVOKED)
     - non-empty para_offsets_fof (findings-of-fact paragraphs)
     Exactly 24,238 cases qualify.
+
+    Returns:
+        corpus: Metadata DataFrame (without heavy full_text/fof_text to keep file size ~1 MB)
+        all_paras: Flattened list of all normalized paragraph strings across the corpus
+        case_para_ranges: List of (start_idx, end_idx) mapping each case to its paragraphs in all_paras
     """
     cols = [
         "case_number",
@@ -72,17 +88,28 @@ def get_precedent_corpus() -> pd.DataFrame:
     except Exception:
         corpus["split"] = "unassigned"
 
-    # Extract and normalize Findings of Fact for each case
-    fof_texts = []
+    all_paras: list[str] = []
+    case_para_ranges: list[tuple[int, int]] = []
+
     for _, row in corpus.iterrows():
-        s = int(row["sec_findings_of_fact_start"])
-        e = int(row["sec_findings_of_fact_end"])
-        fof_raw = row["full_text"][s:e]
-        fof_texts.append(normalize_body(fof_raw))
+        ft = row["full_text"] or ""
+        offsets = row["para_offsets_fof"]
+        c_start = len(all_paras)
 
-    corpus["fof_text"] = fof_texts
+        for item in offsets:
+            ps, pe = int(item[0]), int(item[1])
+            if pe > ps:
+                pt = normalize_body(ft[ps:pe])
+                if len(pt) >= 20:
+                    all_paras.append(pt)
 
-    # Drop heavy raw full_text and offset columns from saved metadata to conserve space
+        # Fallback to whole Findings of Fact if all paragraph slices were < 20 chars
+        if len(all_paras) == c_start:
+            fs, fe = int(row["sec_findings_of_fact_start"]), int(row["sec_findings_of_fact_end"])
+            all_paras.append(normalize_body(ft[fs:fe]))
+
+        case_para_ranges.append((c_start, len(all_paras)))
+
     meta_cols = [
         "case_number",
         "source_url",
@@ -94,53 +121,126 @@ def get_precedent_corpus() -> pd.DataFrame:
         "date",
         "case_year",
         "split",
-        "fof_text",
+        "para_offsets_fof",
     ]
-    return corpus[meta_cols]
+    return corpus[meta_cols], all_paras, case_para_ranges
 
 
 def build_precedent_index(
     model_name: str = DEFAULT_MODEL_NAME,
-    batch_size: int = 256,
+    batch_size: int = 128,
+    case_chunk_size: int = 1000,
     device: str | None = None,
     output_index_path: Path = INDEX_PATH,
     output_metadata_path: Path = METADATA_PATH,
+    checkpoint_path: Path = CHECKPOINT_PATH,
 ) -> tuple[faiss.Index, pd.DataFrame]:
-    """Encode Findings of Fact across all qualified precedent cases and save FAISS index.
+    """Encode all paragraphs in memory-safe chunks, average per case, and save FAISS index & metadata.
+
+    Each case's embedding is the L2-normalized mean of its L2-normalized paragraph
+    embeddings. Processing in chunks of cases prevents GPU/MPS memory accumulation
+    and supports resume on interruption.
 
     Produces:
-        Challenge_Data/precedents.faiss (IndexFlatIP, 384-dim, normalized)
-        Challenge_Data/precedents_metadata.parquet
+        Challenge_Data/precedents.faiss (IndexFlatIP, 24,238 vectors, 384-dim)
+        Challenge_Data/precedents_metadata.parquet (~1 MB, offsets only)
     """
     if device is None:
-        device = "mps" if torch.backends.mps.is_available() else "cpu"
+        device = get_default_device()
 
-    print(f"Loading precedent corpus (target: 24,238 cases)...")
+    print(f"Loading precedent corpus and extracting paragraphs (target: 24,238 cases)...")
     t0 = time.time()
-    corpus = get_precedent_corpus()
-    print(f"Loaded {len(corpus):,} precedent cases in {time.time() - t0:.2f}s")
+    corpus, all_paras, case_para_ranges = get_precedent_corpus()
+    n_cases = len(corpus)
+    print(
+        f"Loaded {n_cases:,} cases with {len(all_paras):,} paragraphs in {time.time() - t0:.2f}s"
+    )
 
     print(f"Loading embedding model: {model_name} on device '{device}'...")
     model = SentenceTransformer(model_name, device=device)
+    model.max_seq_length = 256
 
-    print(f"Encoding {len(corpus):,} Findings of Fact texts (batch_size={batch_size})...")
-    t1 = time.time()
-    embeddings = model.encode(
-        corpus["fof_text"].tolist(),
-        batch_size=batch_size,
-        show_progress_bar=True,
-        normalize_embeddings=True,
+    # Check for existing checkpoint to resume
+    case_embeddings = np.zeros((n_cases, VECTOR_DIM), dtype=np.float32)
+    start_chunk = 0
+    if checkpoint_path.exists():
+        try:
+            saved = np.load(checkpoint_path)
+            if saved.shape == (n_cases, VECTOR_DIM):
+                non_zero_cases = np.where(np.linalg.norm(saved, axis=1) > 0)[0]
+                if len(non_zero_cases) > 0:
+                    start_case = int(non_zero_cases[-1]) + 1
+                    start_chunk = start_case // case_chunk_size
+                    case_embeddings = saved
+                    print(
+                        f"Found checkpoint at {checkpoint_path}: resuming from chunk {start_chunk} (case {start_chunk * case_chunk_size:,})"
+                    )
+        except Exception as e:
+            print(f"Could not load checkpoint: {e}. Starting fresh.")
+
+    n_chunks = (n_cases + case_chunk_size - 1) // case_chunk_size
+    t_start_encoding = time.time()
+
+    for chunk_idx in range(start_chunk, n_chunks):
+        c_start_case = chunk_idx * case_chunk_size
+        c_end_case = min((chunk_idx + 1) * case_chunk_size, n_cases)
+
+        # Slice paragraphs for this chunk of cases
+        chunk_case_ranges = case_para_ranges[c_start_case:c_end_case]
+        chunk_start_para = chunk_case_ranges[0][0]
+        chunk_end_para = chunk_case_ranges[-1][1]
+        chunk_paras = all_paras[chunk_start_para:chunk_end_para]
+
+        t_c = time.time()
+        with torch.no_grad():
+            chunk_para_embs = model.encode(
+                chunk_paras,
+                batch_size=batch_size,
+                show_progress_bar=False,
+                normalize_embeddings=True,
+            )
+
+        # Compute averaged and normalized vector for each case in this chunk
+        for i, (p_start, p_end) in enumerate(chunk_case_ranges):
+            case_idx = c_start_case + i
+            cs = p_start - chunk_start_para
+            ce = p_end - chunk_start_para
+            mean_vec = np.mean(chunk_para_embs[cs:ce], axis=0)
+            norm = np.linalg.norm(mean_vec)
+            if norm > 0:
+                mean_vec = mean_vec / norm
+            case_embeddings[case_idx] = mean_vec
+
+        # Free GPU / MPS memory buffers
+        del chunk_para_embs
+        if hasattr(torch, "mps") and torch.backends.mps.is_available():
+            torch.mps.empty_cache()
+        elif torch.cuda.is_available():
+            torch.cuda.empty_cache()
+
+        elapsed = time.time() - t_c
+        total_elapsed = time.time() - t_start_encoding
+        done_cases = c_end_case
+        est_total = (total_elapsed / max(1, chunk_idx - start_chunk + 1)) * (n_chunks - start_chunk)
+        eta = max(0, est_total - total_elapsed)
+
+        print(
+            f"Chunk {chunk_idx + 1}/{n_chunks} ({done_cases:,}/{n_cases:,} cases, "
+            f"{len(chunk_paras):,} paras) encoded in {elapsed:.1f}s | ETA: {eta/60:.1f} min"
+        )
+
+        # Save checkpoint after each chunk
+        np.save(checkpoint_path, case_embeddings)
+
+    total_encode_time = time.time() - t_start_encoding
+    print(
+        f"All case embeddings complete in {total_encode_time:.2f}s "
+        f"({n_cases / total_encode_time:.1f} cases/sec)"
     )
-    encode_time = time.time() - t1
-    print(f"Encoding complete in {encode_time:.2f}s ({len(corpus) / encode_time:.1f} cases/sec)")
-
-    dim = embeddings.shape[1]
-    if dim != VECTOR_DIM:
-        raise ValueError(f"Expected embedding dimension {VECTOR_DIM}, got {dim}")
 
     print("Constructing FAISS IndexFlatIP (cosine similarity on normalized vectors)...")
-    index = faiss.IndexFlatIP(dim)
-    index.add(np.ascontiguousarray(embeddings, dtype=np.float32))
+    index = faiss.IndexFlatIP(VECTOR_DIM)
+    index.add(np.ascontiguousarray(case_embeddings, dtype=np.float32))
     print(f"Index built: {index.ntotal:,} vectors of dimension {index.d}")
 
     # Save FAISS index
@@ -149,10 +249,14 @@ def build_precedent_index(
     index_mb = output_index_path.stat().st_size / (1024 * 1024)
     print(f"Saved FAISS index to {output_index_path} ({index_mb:.2f} MB)")
 
-    # Save metadata parquet table
+    # Save metadata parquet table (offsets only, no full text to save space)
     corpus.to_parquet(output_metadata_path, engine=config.PARQUET_ENGINE, compression="gzip")
     meta_mb = output_metadata_path.stat().st_size / (1024 * 1024)
     print(f"Saved metadata to {output_metadata_path} ({meta_mb:.2f} MB)")
+
+    # Remove temporary checkpoint file upon successful completion
+    if checkpoint_path.exists():
+        checkpoint_path.unlink()
 
     return index, corpus
 
@@ -170,15 +274,12 @@ class PrecedentRetriever:
         self.index_path = Path(index_path)
         self.metadata_path = Path(metadata_path)
         self.model_name = model_name
-
-        if device is None:
-            self.device = "mps" if torch.backends.mps.is_available() else "cpu"
-        else:
-            self.device = device
+        self.device = device if device is not None else get_default_device()
 
         self._index: faiss.Index | None = None
         self._metadata: pd.DataFrame | None = None
         self._model: SentenceTransformer | None = None
+        self._dataset: ds.Dataset | None = None
 
     @property
     def index(self) -> faiss.Index:
@@ -207,6 +308,19 @@ class PrecedentRetriever:
         if self._model is None:
             self._model = SentenceTransformer(self.model_name, device=self.device)
         return self._model
+
+    def _fetch_full_texts(self, source_urls: list[str]) -> dict[str, str]:
+        """Fetch verbatim full_text on demand for a list of source_urls from parquet shards."""
+        if not source_urls:
+            return {}
+        if self._dataset is None:
+            self._dataset = ds.dataset(shard_files(), format="parquet")
+        table = self._dataset.to_table(
+            filter=ds.field("source_url").isin(source_urls),
+            columns=["source_url", "full_text"],
+        )
+        df_lookup = table.to_pandas()
+        return dict(zip(df_lookup["source_url"], df_lookup["full_text"]))
 
     def search(
         self,
@@ -244,7 +358,7 @@ class PrecedentRetriever:
         scores = scores[0]
         indices = indices[0]
 
-        results = []
+        candidates = []
         for sim, idx in zip(scores, indices):
             if idx < 0 or idx >= len(self.metadata):
                 continue
@@ -265,8 +379,8 @@ class PrecedentRetriever:
                 if str(row["split"]).lower() != split.lower():
                     continue
 
-            result_item = {
-                "rank": len(results) + 1,
+            item = {
+                "rank": len(candidates) + 1,
                 "case_number": row["case_number"],
                 "score": round(float(sim), 4),
                 "outcome": row["outcome"],
@@ -278,28 +392,55 @@ class PrecedentRetriever:
                 "date": str(row["date"]),
                 "split": row["split"],
                 "source_url": row["source_url"],
+                "para_offsets": row["para_offsets_fof"],
                 "best_paragraph": "",
+                "best_paragraph_start": 0,
+                "best_paragraph_end": 0,
                 "best_paragraph_score": round(float(sim), 4),
             }
-
-            # Highlight best matching paragraph within the case
-            if highlight_paragraph:
-                fof_text = str(row["fof_text"])
-                paragraphs = [p.strip() for p in fof_text.split("\n\n") if len(p.strip()) > 30]
-                if paragraphs:
-                    p_embs = self.model.encode(paragraphs, normalize_embeddings=True, show_progress_bar=False)
-                    p_sims = np.dot(p_embs, q_emb)
-                    best_p_idx = int(np.argmax(p_sims))
-                    result_item["best_paragraph"] = paragraphs[best_p_idx]
-                    result_item["best_paragraph_score"] = round(float(p_sims[best_p_idx]), 4)
-                else:
-                    result_item["best_paragraph"] = fof_text[:400]
-
-            results.append(result_item)
-            if len(results) >= top_k:
+            candidates.append(item)
+            if len(candidates) >= top_k:
                 break
 
-        return results
+        # Highlight best matching paragraph within each retrieved case using para_offsets_fof
+        if highlight_paragraph and candidates:
+            urls = [c["source_url"] for c in candidates]
+            full_texts = self._fetch_full_texts(urls)
+
+            for c in candidates:
+                ft = full_texts.get(c["source_url"], "")
+                offsets = c.pop("para_offsets", [])
+                paras: list[str] = []
+                spans: list[tuple[int, int]] = []
+
+                if offsets is not None:
+                    for item in offsets:
+                        ps, pe = int(item[0]), int(item[1])
+                        if pe > ps:
+                            pt = normalize_body(ft[ps:pe])
+                            if len(pt) >= 20:
+                                paras.append(pt)
+                                spans.append((ps, pe))
+
+                if paras:
+                    p_embs = self.model.encode(
+                        paras, normalize_embeddings=True, show_progress_bar=False
+                    )
+                    p_sims = np.dot(p_embs, q_emb)
+                    best_i = int(np.argmax(p_sims))
+                    c["best_paragraph"] = paras[best_i]
+                    c["best_paragraph_start"] = spans[best_i][0]
+                    c["best_paragraph_end"] = spans[best_i][1]
+                    c["best_paragraph_score"] = round(float(p_sims[best_i]), 4)
+                else:
+                    c["best_paragraph"] = normalize_body(ft[:400])
+                    c["best_paragraph_start"] = 0
+                    c["best_paragraph_end"] = min(400, len(ft))
+        else:
+            for c in candidates:
+                c.pop("para_offsets", None)
+
+        return candidates
 
     def format_results(self, results: list[dict[str, Any]], query: str | None = None) -> str:
         """Format retrieval results as a readable markdown summary."""
@@ -311,7 +452,9 @@ class PrecedentRetriever:
         for r in results:
             g_str = ", ".join(r["guidelines"]) if r["guidelines"] else "None"
             outcome_badge = f"**{r['outcome']}**"
-            trust_warning = " ⚠️ *(candidate-only labels)*" if r["label_source"] == "regex_fallback" else ""
+            trust_warning = (
+                " ⚠️ *(candidate-only labels)*" if r["label_source"] == "regex_fallback" else ""
+            )
 
             lines.append(f"#### #{r['rank']} Case {r['case_number']} — Similarity: `{r['score']:.4f}`")
             lines.append(
@@ -325,7 +468,10 @@ class PrecedentRetriever:
 
             if r.get("best_paragraph"):
                 snippet = r["best_paragraph"].replace("\n", " ")
-                lines.append(f"- **Most Relevant Findings Excerpt** (sim `{r['best_paragraph_score']:.4f}`):")
+                span_info = f"offsets `[{r['best_paragraph_start']}:{r['best_paragraph_end']}]`"
+                lines.append(
+                    f"- **Most Relevant Findings Excerpt** (sim `{r['best_paragraph_score']:.4f}`, {span_info}):"
+                )
                 lines.append(f"  > \"{snippet}\"\n")
             else:
                 lines.append("")
@@ -336,7 +482,7 @@ class PrecedentRetriever:
 def run_smoke_test(retriever: PrecedentRetriever) -> bool:
     """Run smoke test queries across diverse guidelines and assert relevancy."""
     print("=" * 70)
-    print("Running Precedent Index Smoke Tests")
+    print("Running Precedent Index Smoke Tests (Paragraph-Averaged Dense Vectors)")
     print("=" * 70)
 
     test_queries = [
@@ -377,23 +523,34 @@ def run_smoke_test(retriever: PrecedentRetriever) -> bool:
         has_expected_guideline = item["expected_guideline"] in top_hit["guidelines"]
         score_in_range = 0.0 <= top_hit["score"] <= 1.0
         has_paragraph = len(top_hit["best_paragraph"]) > 20
+        has_offsets = top_hit["best_paragraph_end"] > top_hit["best_paragraph_start"]
 
-        print(f"  Top Match: Case {top_hit['case_number']} (Score: {top_hit['score']:.4f}, Outcome: {top_hit['outcome']})")
+        print(
+            f"  Top Match: Case {top_hit['case_number']} "
+            f"(Score: {top_hit['score']:.4f}, Outcome: {top_hit['outcome']})"
+        )
         print(f"  Guidelines in Top Match: {top_hit['guidelines']}")
+        print(
+            f"  Span in full_text: [{top_hit['best_paragraph_start']}:{top_hit['best_paragraph_end']}]"
+        )
         print(f"  Excerpt: \"{top_hit['best_paragraph'][:140]}...\"")
 
-        if score_in_range and has_paragraph and has_expected_guideline:
-            print(f"  [PASS] Expected guideline '{item['expected_guideline']}' matched with sensible similarity score.")
+        if score_in_range and has_paragraph and has_expected_guideline and has_offsets:
+            print(
+                f"  [PASS] Expected guideline '{item['expected_guideline']}' matched with sensible similarity score and full_text span."
+            )
         else:
-            print(f"  [WARN/FAIL] Score={top_hit['score']}, GuidelineMatch={has_expected_guideline}, Paragraph={has_paragraph}")
-            if not score_in_range:
-                all_passed = False
+            print(
+                f"  [FAIL] Score={top_hit['score']}, GuidelineMatch={has_expected_guideline}, "
+                f"Paragraph={has_paragraph}, Offsets={has_offsets}"
+            )
+            all_passed = False
 
     print("\n" + "=" * 70)
     if all_passed:
         print("ALL SMOKE TESTS PASSED!")
     else:
-        print("SOME SMOKE TESTS FAILED OR WARNED.")
+        print("SOME SMOKE TESTS FAILED!")
     print("=" * 70)
     return all_passed
 
@@ -401,16 +558,29 @@ def run_smoke_test(retriever: PrecedentRetriever) -> bool:
 def main():
     parser = argparse.ArgumentParser(description="DOHA Precedent Search Index (Task 13)")
     parser.add_argument("--build", action="store_true", help="Build the FAISS index and metadata")
-    parser.add_argument("--smoke-test", action="store_true", help="Run validation smoke tests on index")
+    parser.add_argument(
+        "--smoke-test", action="store_true", help="Run validation smoke tests on index"
+    )
     parser.add_argument("--query", type=str, help="Search for precedent cases matching a query")
     parser.add_argument("--guideline", type=str, help="Optional guideline filter (e.g. F, B)")
     parser.add_argument("--outcome", type=str, help="Optional outcome filter (DENIED, GRANTED)")
     parser.add_argument("--top-k", type=int, default=5, help="Number of precedent cases to return")
-    parser.add_argument("--batch-size", type=int, default=256, help="Batch size for embedding generation")
+    parser.add_argument(
+        "--batch-size",
+        type=int,
+        default=128,
+        help="Batch size for embedding generation (default: 128)",
+    )
+    parser.add_argument(
+        "--chunk-size",
+        type=int,
+        default=1000,
+        help="Number of cases per chunk to prevent memory accumulation (default: 1000)",
+    )
     args = parser.parse_args()
 
     if args.build:
-        build_precedent_index(batch_size=args.batch_size)
+        build_precedent_index(batch_size=args.batch_size, case_chunk_size=args.chunk_size)
         return
 
     retriever = PrecedentRetriever()
@@ -434,4 +604,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
