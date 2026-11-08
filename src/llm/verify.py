@@ -1,9 +1,15 @@
 """Keep only the LLM quotes that really appear in the decision.
 
-    from src.llm.verify import verify_quotes
-    result = verify_quotes(full_text, items, allowed_codes=codes, region=(start, end))
+    from src.llm.verify import verify_guideline_quotes
+    result = verify_guideline_quotes(full_text, items, "F", region=(start, end), mask_token="[CITE]")
     result.kept     # VerifiedQuote: code, start, end, text, context, n_matches
     result.counts   # Counter: "kept" plus one entry per drop reason
+
+`verify_guideline_quotes` is the call the pipeline should use. It takes the
+guideline's codes and their SEAD-4 wording from the closed list in
+src/sead4_reference.py, so a code the list doesn't have, or a "quote" that is
+only the condition's own wording, can't get through. `verify_quotes` underneath
+takes those as arguments, for tests and for any other list.
 
 The model is asked for `[{condition_code, exact_quote}]` and nothing else. It is
 never asked for character offsets: every offset here comes from where the quote
@@ -74,6 +80,8 @@ from collections import Counter
 from collections.abc import Iterable, Mapping, Sequence
 from dataclasses import dataclass, field
 from difflib import SequenceMatcher
+
+from src.sead4_reference import conditions_for
 
 MALFORMED = "malformed"
 EMPTY_QUOTE = "empty_quote"
@@ -242,11 +250,12 @@ def _candidates(qkey: str) -> list[str]:
 
 # --- condition codes -------------------------------------------------------------
 
-_SEAD4_CODE = re.compile(r"^(?:AG)?[\s¶]*(\d{1,2})\s*\(\s*([a-z])\s*\)$", re.IGNORECASE)
+_SEAD4_CODE = re.compile(r"^(?:AG)?[\s¶&]*(\d{1,2})\.?\s*\(\s*([a-z])\s*\)$", re.IGNORECASE)
 
 
 def normalize_code(code: str) -> str:
-    """`AG ¶ 20(b)`, `20(b)`, `¶20 (B)` and `AG ¶¶ 20(b)` all become `AG ¶ 20(b)`.
+    """`AG ¶ 20(b)`, `20(b)`, `¶20 (B)`, `AG ¶¶ 20(b)`, `AG & 20(b)` and `20.(b)`
+    all become `AG ¶ 20(b)`, the form the closed list uses.
 
     Directive-era codes such as `E2.A6.1.3.1` are kept, uppercased, without spaces.
     """
@@ -419,6 +428,40 @@ def _sentence_around(full_text: str, start: int, end: int) -> tuple[int, int]:
 
 # --- the check ----------------------------------------------------------------------
 
+def guideline_conditions(guideline: str) -> dict[str, str]:
+    """A guideline's closed-list codes with their SEAD-4 wording, e.g. 16 for F."""
+    conditions = {row["code"]: row["text"] for row in conditions_for(guideline)}
+    if not conditions:
+        raise ValueError(f"no SEAD-4 conditions for guideline {guideline!r}")
+    return conditions
+
+
+def verify_guideline_quotes(
+    full_text: str,
+    items: Sequence[object],
+    guideline: str = "F",
+    *,
+    region: tuple[int, int] | None = None,
+    mask_token: str | None = None,
+    min_chars: int = DEFAULT_MIN_CHARS,
+) -> VerifyResult:
+    """verify_quotes with the closed list filled in for one guideline.
+
+    Only that guideline's codes are allowed, and a quote that restates any of its
+    conditions' wording is dropped. This is the call the pilot and the run use.
+    """
+    conditions = guideline_conditions(guideline)
+    return verify_quotes(
+        full_text,
+        items,
+        allowed_codes=conditions,
+        region=region,
+        mask_token=mask_token,
+        reference_texts=conditions,
+        min_chars=min_chars,
+    )
+
+
 def verify_quotes(
     full_text: str,
     items: Sequence[object],
@@ -431,8 +474,8 @@ def verify_quotes(
 ) -> VerifyResult:
     """Check each `{condition_code, exact_quote}` item against `full_text`.
 
-    allowed_codes    the closed code list; codes are compared after normalize_code.
-                     None skips the check until src/sead4_reference.py exists.
+    allowed_codes    the codes the model may use; compared after normalize_code.
+                     None skips the check. verify_guideline_quotes fills it in.
     region           (start, end) offsets of the part of full_text the model was
                      given. A quote found only outside it is dropped.
     mask_token       the placeholder that replaced AG citations in the model's input.

@@ -376,5 +376,58 @@ def test_empty_decision_finds_nothing():
     assert res.dropped[0].reason == V.NOT_FOUND
 
 
+# --- the closed list, through verify_guideline_quotes ---------------------------------
+
+def guided(quote, code="AG ¶ 20(b)", **kw):
+    kw.setdefault("region", REGION)
+    return V.verify_guideline_quotes(FULL_TEXT, [item(quote, code)], "F", **kw)
+
+
+def test_guideline_f_has_its_16_conditions_with_wording():
+    conditions = V.guideline_conditions("F")
+    assert len(conditions) == 16
+    assert "AG ¶ 19(a)" in conditions and "AG ¶ 20(g)" in conditions
+    assert "largely beyond the person's control" in conditions["AG ¶ 20(b)"]
+
+
+@parametrize("code", ["AG ¶ 19(a)", "AG ¶ 19(i)", "AG ¶ 20(a)", "AG ¶ 20(g)", "20(d)", "AG & 20(c)", "20.(e)"])
+def test_every_guideline_f_code_form_is_accepted(code):
+    res = guided("He contacted every creditor in 2020", code=code)
+    assert res.kept and res.kept[0].condition_code.startswith("AG ¶ ")
+
+
+@parametrize("code", ["AG ¶ 20(h)", "AG ¶ 19(j)", "AG ¶ 17(c)", "AG ¶ 2(d)", "E2.A6.1.3.3", "20(b) and 20(d)"])
+def test_codes_off_the_guideline_f_list_are_dropped(code):
+    """20(h) and 19(j) don't exist, 17(c) is Guideline E, 2(d) is a whole-person
+    factor, and Directive codes are not on the SEAD-4 list the model chooses from."""
+    assert guided("He contacted every creditor in 2020", code=code).dropped[0].reason == V.BAD_CODE
+
+
+def test_the_official_wording_is_caught_without_passing_it_in():
+    quote = "the conditions that resulted in the financial problem were largely beyond the person's control"
+    assert guided(quote).dropped[0].reason == V.RESTATES_GUIDELINE
+
+
+def test_a_disqualifier_wording_is_caught_too():
+    text = FULL_TEXT + "AG ¶ 19(a) is inability to satisfy debts, as the record shows. \n"
+    res = V.verify_guideline_quotes(text, [item("inability to satisfy debts", "AG ¶ 19(a)")], "F")
+    assert res.dropped[0].reason == V.RESTATES_GUIDELINE
+
+
+def test_the_guideline_helper_passes_region_and_mask_through():
+    assert guided("individual who is financially overextended is at greater risk").dropped[0].reason \
+        == V.OUTSIDE_REGION
+    assert guided("[CITE] provides that the conditions", mask_token="[CITE]").dropped[0].reason \
+        == V.CONTAINS_MASK
+
+
+def test_an_unknown_guideline_letter_is_an_error():
+    try:
+        V.verify_guideline_quotes(FULL_TEXT, [], "Z")
+    except ValueError:
+        return
+    raise AssertionError("expected ValueError")
+
+
 if __name__ == "__main__":
     raise SystemExit(run_module(dict(globals()), "verify tests"))
