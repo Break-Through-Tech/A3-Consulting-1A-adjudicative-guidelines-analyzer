@@ -225,6 +225,8 @@ def test_a_policies_list_under_a_bare_paragraph_is_not_a_citation():
     "AG ¶ 20 applies. " + ("x" * 500) + "\n(a) the behavior happened so long ago",
     "AG ¶ 20 provides conditions: (h) not a condition letter",
     "AG ¶ 19 and AG ¶ 20 are discussed below.",
+    "AG ¶ 190. The following apply: (a) inability to satisfy debts; and (c) a history",
+    "¶ 2001 lists: (a) inability to satisfy debts",
 ])
 def test_a_bare_paragraph_does_not_invent_a_list(text):
     assert extract(text) == []

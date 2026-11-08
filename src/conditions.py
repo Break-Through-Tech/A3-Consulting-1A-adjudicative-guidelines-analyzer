@@ -91,9 +91,10 @@ _ORDINAL = re.compile(
     re.IGNORECASE,
 )
 # `AG ¶ 19` with no letter, then `(a) inability` on its own list line.
-# `AG & 19` and a bare `¶ 19` are the same header. A following `19(a)` is not.
+# `AG & 19` and a bare `¶ 19` are the same header. A following `19(a)` is not,
+# and neither is a longer number such as `AG ¶ 190` or `¶ 2001`.
 _BARE_HEADER = re.compile(
-    r"(?:AG\s*(?:¶{1,2}|&)|¶{1,2})\s*(19|20)(?!\s*\.?\s*\(\s*[a-z]\s*\))",
+    r"(?:AG\s*(?:¶{1,2}|&)|¶{1,2})\s*(?<!\d)(19|20)(?!\d)(?!\s*\.?\s*\(\s*[a-z]\s*\))",
     re.IGNORECASE,
 )
 _NEXT_PARAGRAPH = re.compile(
