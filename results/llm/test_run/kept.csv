@@ -1,0 +1,240 @@
+custom_id,mode,code,start,end,quote,context
+test-0-citation,citation,AG ¶ 19(a),12870,12958,"The record establishes the following two disqualifying conditions under this 
+guideline:","May 1, 2012)) 
+The record establishes the following two disqualifying conditions under this 
+guideline: AG ¶ 19(a) (inability to satisfy debts); and AG ¶ 19(c) (a history of not meeting 
+financial obligations)."
+test-0-citation,citation,AG ¶ 19(c),12870,12958,"The record establishes the following two disqualifying conditions under this 
+guideline:","May 1, 2012)) 
+The record establishes the following two disqualifying conditions under this 
+guideline: AG ¶ 19(a) (inability to satisfy debts); and AG ¶ 19(c) (a history of not meeting 
+financial obligations)."
+test-0-citation,citation,AG ¶ 20(a),15500,15592,"He demonstrated poor judgment by using his company credit card in an 
+manner not authorized.","He demonstrated poor judgment by using his company credit card in an 
+manner not authorized."
+test-0-citation,citation,AG ¶ 20(b),14557,14657,"Applicant’s delinquent debts appear to have largely resulted from circumstances 
+beyond his control.","Applicant’s delinquent debts appear to have largely resulted from circumstances 
+beyond his control."
+test-0-citation,citation,AG ¶ 20(d),14730,14867,"I also give him credit for initiating action to resolve his student loan and tax debts in
+November 2019, well before issuance of the SOR.","I also give him credit for initiating action to resolve his student loan and tax debts in
+November 2019, well before issuance of the SOR."
+test-0-citation,citation,AG ¶ 20(g),14730,14867,"I also give him credit for initiating action to resolve his student loan and tax debts in
+November 2019, well before issuance of the SOR.","I also give him credit for initiating action to resolve his student loan and tax debts in
+November 2019, well before issuance of the SOR."
+test-0-blind,blind,AG ¶ 19(c),14658,14729,"I credit him with the reduced balance of the debt alleged in SOR ¶
+1.a.","I credit him with the reduced balance of the debt alleged in SOR ¶
+1.a."
+test-0-blind,blind,AG ¶ 20(a),15458,15498,"his indebtedness is not 
+likely to recur","I am unable to conclude that Applicant is 
+adhering to good-faith efforts to resolve his debts or otherwise acted responsibly to 
+address his debts; that he is able to repay his debts; and that his indebtedness is not 
+likely to recur."
+test-0-blind,blind,AG ¶ 20(b),14557,14657,"Applicant’s delinquent debts appear to have largely resulted from circumstances 
+beyond his control.","Applicant’s delinquent debts appear to have largely resulted from circumstances 
+beyond his control."
+test-0-blind,blind,AG ¶ 20(d),14730,14867,"I also give him credit for initiating action to resolve his student loan and tax debts in
+November 2019, well before issuance of the SOR.","I also give him credit for initiating action to resolve his student loan and tax debts in
+November 2019, well before issuance of the SOR."
+test-0-blind,blind,AG ¶ 20(d),15264,15358,"I am unable to conclude that Applicant is 
+adhering to good-faith efforts to resolve his debts","I am unable to conclude that Applicant is 
+adhering to good-faith efforts to resolve his debts or otherwise acted responsibly to 
+address his debts; that he is able to repay his debts; and that his indebtedness is not 
+likely to recur."
+test-1-citation,citation,AG ¶ 19(c),12711,12838,"Applicant’s delinquent debts alleged in the SOR are confirmed by his credit 
+reports, clearance interview and answer to the SOR","Applicant’s delinquent debts alleged in the SOR are confirmed by his credit 
+reports, clearance interview and answer to the SOR."
+test-1-citation,citation,AG ¶ 20(a),15459,15532,his debts were incurred under circumstances making them unlikely to recur,"Applicant has met his burden to 
+provide sufficient evidence to show that his financial problems are under control, and 
+that his debts were incurred under circumstances making them unlikely to recur."
+test-1-citation,citation,AG ¶ 20(b),15208,15331,"He has now produced relevant and responsive documentation, demonstrating 
+that he acted responsibly under the circumstances","He has now produced relevant and responsive documentation, demonstrating 
+that he acted responsibly under the circumstances."
+test-1-citation,citation,AG ¶ 20(b),14779,14873,"had a long period of unemployment from 2008 to August 
+2015 during the downturn in the economy","Then, he was employed briefly for six 
+months at a laboratory, but had a long period of unemployment from 2008 to August 
+2015 during the downturn in the economy."
+test-1-citation,citation,AG ¶ 20(d),15534,15640,"He has 
+either paid off, or has made consistent payments pursuant to a plan, most of his 
+delinquent debts","He has 
+either paid off, or has made consistent payments pursuant to a plan, most of his 
+delinquent debts."
+test-1-blind,blind,AG ¶ 19(c),12711,12839,"Applicant’s delinquent debts alleged in the SOR are confirmed by his credit 
+reports, clearance interview and answer to the SOR.","Applicant’s delinquent debts alleged in the SOR are confirmed by his credit 
+reports, clearance interview and answer to the SOR."
+test-1-blind,blind,AG ¶ 20(a),15454,15532,that his debts were incurred under circumstances making them unlikely to recur,"Applicant has met his burden to 
+provide sufficient evidence to show that his financial problems are under control, and 
+that his debts were incurred under circumstances making them unlikely to recur."
+test-1-blind,blind,AG ¶ 20(c),15407,15447,his financial problems are under control,"Applicant has met his burden to 
+provide sufficient evidence to show that his financial problems are under control, and 
+that his debts were incurred under circumstances making them unlikely to recur."
+test-1-blind,blind,AG ¶ 20(d),15534,15641,"He has 
+either paid off, or has made consistent payments pursuant to a plan, most of his 
+delinquent debts.","He has 
+either paid off, or has made consistent payments pursuant to a plan, most of his 
+delinquent debts."
+test-2-citation,citation,AG ¶ 19(c),10688,10770,Applicant had a car loan and a credit card that were delinquent for several years.,Applicant had a car loan and a credit card that were delinquent for several years.
+test-2-citation,citation,AG ¶ 20(a),13780,13835,I find that his financial issues are unlikely to recur.,I find that his financial issues are unlikely to recur.
+test-2-citation,citation,AG ¶ 20(b),13407,13519,"His financial issues 
+resulted from a divorce and unemployment that were conditions largely beyond his 
+control.","His financial issues 
+resulted from a divorce and unemployment that were conditions largely beyond his 
+control."
+test-2-citation,citation,AG ¶ 20(d),13211,13300,"He resolved one of the SOR debts by 
+settling the account for less than the full balance.","He resolved one of the SOR debts by 
+settling the account for less than the full balance."
+test-2-blind,blind,AG ¶ 19(c),10688,10770,Applicant had a car loan and a credit card that were delinquent for several years.,Applicant had a car loan and a credit card that were delinquent for several years.
+test-2-blind,blind,AG ¶ 20(a),13780,13835,I find that his financial issues are unlikely to recur.,I find that his financial issues are unlikely to recur.
+test-2-blind,blind,AG ¶ 20(b),13407,13519,"His financial issues 
+resulted from a divorce and unemployment that were conditions largely beyond his 
+control.","His financial issues 
+resulted from a divorce and unemployment that were conditions largely beyond his 
+control."
+test-2-blind,blind,AG ¶ 20(d),13301,13406,"He has a reasonable plan to settle the 
+car loan that he also followed with the credit card in SOR ¶ 1.b.","He has a reasonable plan to settle the 
+car loan that he also followed with the credit card in SOR ¶ 1.b."
+test-3-citation,citation,AG ¶ 19(a),7572,7626,"a currently pending 
+federal tax lien for over $42,000","Those 
+admitted allegations include his 2011 Chapter 7 bankruptcy petition, a currently pending 
+federal tax lien for over $42,000, a state income tax debt due of about $7,000, and his 
+failure to timely file state tax returns for three tax years."
+test-3-citation,citation,AG ¶ 19(c),7744,7892,"Applicant denied without offering 
+any corroborative documentary evidence, however, a state tax lien for approximately 
+
+ 
+ 
+ 
+ 
+4 
+$3,842 from 2009","Applicant denied without offering 
+any corroborative documentary evidence, however, a state tax lien for approximately 
+
+ 
+ 
+ 
+ 
+4 
+$3,842 from 2009."
+test-3-citation,citation,AG ¶ 19(f),7677,7742,"his 
+failure to timely file state tax returns for three tax years","Those 
+admitted allegations include his 2011 Chapter 7 bankruptcy petition, a currently pending 
+federal tax lien for over $42,000, a state income tax debt due of about $7,000, and his 
+failure to timely file state tax returns for three tax years."
+test-3-citation,citation,AG ¶ 20(a),9704,9886,"While the debts at issue may have been acquired in the past, there is no 
+documentary evidence reflecting attempts to address the debts or complete the unfiled 
+tax returns at issue.","While the debts at issue may have been acquired in the past, there is no 
+documentary evidence reflecting attempts to address the debts or complete the unfiled 
+tax returns at issue."
+test-3-citation,citation,AG ¶ 20(b),10088,10239,"The only bases provided by Applicant for explaining the origin of the delinquent 
+debts at issue are his October 2005 divorce and related marital debt.","Therefore, AG ¶ 20(a) does not apply.  
+ 
+
+ 
+ 
+ 
+ 
+5 
+The only bases provided by Applicant for explaining the origin of the delinquent 
+debts at issue are his October 2005 divorce and related marital debt."
+test-3-citation,citation,AG ¶ 20(c),10581,10662,There is no evidence reflecting that Applicant has received financial counseling.,There is no evidence reflecting that Applicant has received financial counseling.
+test-3-citation,citation,AG ¶ 20(d),10813,10974,"his documentation does not 
+demonstrate a good-faith effort to resolve his financial issues or provide a reasonable 
+basis to dispute the financial issues raised","Similarly, his documentation does not 
+demonstrate a good-faith effort to resolve his financial issues or provide a reasonable 
+basis to dispute the financial issues raised."
+test-3-citation,citation,AG ¶ 20(e),11123,11232,"he failed to offer any documentation showing efforts made to validate, disprove, 
+or dispute the sum at issue","Indeed, even with regard to the state tax lien 
+for which Applicant denies responsibility because he has not lived in that state since the 
+1990s, he failed to offer any documentation showing efforts made to validate, disprove, 
+or dispute the sum at issue."
+test-3-citation,citation,AG ¶ 20(g),12714,12860,"Also lacking is documentation corroborating Applicant’s statements regarding 
+corrective action he has taken to address his late state tax returns","Also lacking is documentation corroborating Applicant’s statements regarding 
+corrective action he has taken to address his late state tax returns, two tax-related liens 
+amounting to about $46,000, and an outstanding state income tax liability of $7,000."
+test-3-blind,blind,AG ¶ 19(a),7572,7626,"a currently pending 
+federal tax lien for over $42,000","Those 
+admitted allegations include his 2011 Chapter 7 bankruptcy petition, a currently pending 
+federal tax lien for over $42,000, a state income tax debt due of about $7,000, and his 
+failure to timely file state tax returns for three tax years."
+test-3-blind,blind,AG ¶ 19(c),7496,7570,"Those 
+admitted allegations include his 2011 Chapter 7 bankruptcy petition","Those 
+admitted allegations include his 2011 Chapter 7 bankruptcy petition, a currently pending 
+federal tax lien for over $42,000, a state income tax debt due of about $7,000, and his 
+failure to timely file state tax returns for three tax years."
+test-3-blind,blind,AG ¶ 19(f),7677,7742,"his 
+failure to timely file state tax returns for three tax years","Those 
+admitted allegations include his 2011 Chapter 7 bankruptcy petition, a currently pending 
+federal tax lien for over $42,000, a state income tax debt due of about $7,000, and his 
+failure to timely file state tax returns for three tax years."
+test-3-blind,blind,AG ¶ 20(a),9959,10032,"Moreover, issues regarding these finance-related concerns remain current.","Moreover, issues regarding these finance-related concerns remain current."
+test-3-blind,blind,AG ¶ 20(a),9765,9885,"there is no 
+documentary evidence reflecting attempts to address the debts or complete the unfiled 
+tax returns at issue","While the debts at issue may have been acquired in the past, there is no 
+documentary evidence reflecting attempts to address the debts or complete the unfiled 
+tax returns at issue."
+test-3-blind,blind,AG ¶ 20(b),10088,10239,"The only bases provided by Applicant for explaining the origin of the delinquent 
+debts at issue are his October 2005 divorce and related marital debt.","Therefore, AG ¶ 20(a) does not apply.  
+ 
+
+ 
+ 
+ 
+ 
+5 
+The only bases provided by Applicant for explaining the origin of the delinquent 
+debts at issue are his October 2005 divorce and related marital debt."
+test-3-blind,blind,AG ¶ 20(c),10581,10662,There is no evidence reflecting that Applicant has received financial counseling.,There is no evidence reflecting that Applicant has received financial counseling.
+test-3-blind,blind,AG ¶ 20(d),10813,10904,"his documentation does not 
+demonstrate a good-faith effort to resolve his financial issues","Similarly, his documentation does not 
+demonstrate a good-faith effort to resolve his financial issues or provide a reasonable 
+basis to dispute the financial issues raised."
+test-3-blind,blind,AG ¶ 20(e),11123,11232,"he failed to offer any documentation showing efforts made to validate, disprove, 
+or dispute the sum at issue","Indeed, even with regard to the state tax lien 
+for which Applicant denies responsibility because he has not lived in that state since the 
+1990s, he failed to offer any documentation showing efforts made to validate, disprove, 
+or dispute the sum at issue."
+test-4-citation,citation,AG ¶ 19(c),12891,12968,"He did not pay his taxes 
+for multiple tax years well before he lost his job.","He did not pay his taxes 
+for multiple tax years well before he lost his job."
+test-4-citation,citation,AG ¶ 19(e),17714,17761,"while 
+he apparently spent lavishly on vehicles","However, he shirked his tax responsibilities for years while 
+he apparently spent lavishly on vehicles."
+test-4-citation,citation,AG ¶ 19(f),13227,13282,"but he did not pay the taxes he owed 
+for that tax year","In 2012 alone, he took out auto loans totaling more than 
+$128,000, with total monthly payments of $2,096, but he did not pay the taxes he owed 
+for that tax year."
+test-4-citation,citation,AG ¶ 20(a),14574,14618,His financial issues are recent and ongoing.,His financial issues are recent and ongoing.
+test-4-citation,citation,AG ¶ 20(b),12837,12890,Applicant’s tax problems were not beyond his control.,Applicant’s tax problems were not beyond his control.
+test-4-citation,citation,AG ¶ 20(b),12666,12748,"He acted responsibly by applying for 
+mortgage relief and attempting a short sale.","He acted responsibly by applying for 
+mortgage relief and attempting a short sale."
+test-4-citation,citation,AG ¶ 20(d),14519,14572,"or that he made a good-faith effort to pay his 
+debts","I am unable to find that he acted 
+responsibly under the circumstances or that he made a good-faith effort to pay his 
+debts."
+test-4-citation,citation,AG ¶ 20(g),14807,14905,"Applicant did not 
+establish that he is in compliance with his installment agreement with the IRS.","AG ¶ 20(g) is not applicable because Applicant did not 
+establish that he is in compliance with his installment agreement with the IRS."
+test-4-blind,blind,AG ¶ 19(c),11025,11179,"Applicant has a history of financial problems including a defaulted mortgage loan, 
+resulting in a foreclosure, and unpaid taxes, resulting in a tax lien.","Applicant has a history of financial problems including a defaulted mortgage loan, 
+resulting in a foreclosure, and unpaid taxes, resulting in a tax lien."
+test-4-blind,blind,AG ¶ 19(e),13120,13283,"In 2012 alone, he took out auto loans totaling more than 
+$128,000, with total monthly payments of $2,096, but he did not pay the taxes he owed 
+for that tax year.","In 2012 alone, he took out auto loans totaling more than 
+$128,000, with total monthly payments of $2,096, but he did not pay the taxes he owed 
+for that tax year."
+test-4-blind,blind,AG ¶ 19(f),12891,12968,"He did not pay his taxes 
+for multiple tax years well before he lost his job.","He did not pay his taxes 
+for multiple tax years well before he lost his job."
+test-4-blind,blind,AG ¶ 20(a),14574,14618,His financial issues are recent and ongoing.,His financial issues are recent and ongoing.
+test-4-blind,blind,AG ¶ 20(b),12554,12665,"The foreclosure of Applicant’s home was related to his job loss and 
+unemployment, followed by underemployment.","The foreclosure of Applicant’s home was related to his job loss and 
+unemployment, followed by underemployment."
+test-4-blind,blind,AG ¶ 20(c),14315,14447,"There is insufficient evidence for a determination that Applicant’s financial 
+problems will be resolved within a reasonable period.","There is insufficient evidence for a determination that Applicant’s financial 
+problems will be resolved within a reasonable period."
+test-4-blind,blind,AG ¶ 20(d),13970,14037,"I suspect that 
+may be true, but he only documented three payments.","I suspect that 
+may be true, but he only documented three payments."
+test-4-blind,blind,AG ¶ 20(g),14807,14905,"Applicant did not 
+establish that he is in compliance with his installment agreement with the IRS.","AG ¶ 20(g) is not applicable because Applicant did not 
+establish that he is in compliance with his installment agreement with the IRS."

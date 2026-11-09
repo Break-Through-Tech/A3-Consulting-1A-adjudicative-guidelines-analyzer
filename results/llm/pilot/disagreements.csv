@@ -1,0 +1,354 @@
+custom_id,mode,type,code,text
+pilot-0-citation,citation,false_negative,AG ¶ 19(a),(a)
+pilot-0-citation,citation,false_negative,AG ¶ 19(d),(d)
+pilot-0-citation,citation,false_negative,AG ¶ 20(b),(b)
+pilot-0-citation,citation,false_negative,AG ¶ 20(c),(c)
+pilot-0-citation,citation,false_negative,AG ¶ 20(d),(d)
+pilot-0-blind,blind,false_negative,AG ¶ 19(d),(d)
+pilot-0-blind,blind,false_negative,AG ¶ 20(b),(b)
+pilot-0-blind,blind,false_negative,AG ¶ 20(c),(c)
+pilot-0-blind,blind,false_negative,AG ¶ 20(d),(d)
+pilot-0-blind,blind,false_negative,AG ¶ 20(g),(g)
+pilot-1-citation,citation,false_positive,AG ¶ 19(b),"He presented no evidence of any debt 
+payments, contacts with creditors, disputes, or that he otherwise attempted to resolve 
+his debts."
+pilot-1-citation,citation,false_positive,AG ¶ 19(e),"Additionally, I have questions about Applicant’s judgment in purchasing four 
+real estate properties in 2003 on a $2,800 salary, all of which were foreclosed."
+pilot-1-blind,blind,false_positive,AG ¶ 19(e),"Additionally, I have questions about Applicant’s judgment in purchasing four 
+real estate properties in 2003 on a $2,800 salary, all of which were foreclosed."
+pilot-1-blind,blind,false_negative,AG ¶ 20(a),(a)
+pilot-1-blind,blind,false_negative,AG ¶ 20(f),(f)
+pilot-2-citation,citation,false_positive,AG ¶ 20(e),"Glaringly, no evidence was
+admitted with regard to efforts undertaken to refute or dispute two of the seven
+obligations set forth in the SOR"
+pilot-2-citation,citation,false_positive,AG ¶ 20(g),"Applicant maintains that he is in repayment with one
+bank and states he has made agreements with regard to his taxes."
+pilot-2-blind,blind,false_positive,AG ¶ 20(e),"Glaringly, no evidence was
+admitted with regard to efforts undertaken to refute or dispute two of the seven
+obligations set forth in the SOR"
+pilot-2-blind,blind,false_positive,AG ¶ 20(g),"Applicant stated he has worked
+out agreements with regard to his state and federal taxes, but no such agreements
+were presented."
+pilot-3-citation,citation,false_negative,AG ¶ 20(a),(a)
+pilot-3-citation,citation,false_negative,AG ¶ 20(c),(c)
+pilot-3-blind,blind,false_positive,AG ¶ 19(b),"he has done little to even 
+begin the process of resolving his debts"
+pilot-4-blind,blind,false_negative,AG ¶ 19(a),AG ¶ 19(a)
+pilot-5-blind,blind,false_positive,AG ¶ 19(b),She admits that she routinely ignored medical debts.
+pilot-6-citation,citation,false_positive,AG ¶ 20(d),"Except
+for one small debt (creditor 1.g for $28), all of his listed creditors have either been paid
+or are being resolved through a repayment plan with the creditor"
+pilot-6-blind,blind,false_positive,AG ¶ 20(d),"Except
+for one small debt (creditor 1.g for $28), all of his listed creditors have either been paid
+or are being resolved through a repayment plan with the creditor (i.e., creditor 1.a)"
+pilot-6-blind,blind,false_negative,AG ¶ 19(a),¶ 19(a)
+pilot-7-citation,citation,false_positive,AG ¶ 19(f),"Applicant admitted that he 
+failed to file his federal and state income tax returns for tax years 2010 to 2012."
+pilot-7-citation,citation,false_positive,AG ¶ 20(g),"Applicant did not provide any documents showing how he was collecting or 
+replacing the documents he lost or correspondence to or from the Internal Revenue 
+Service and state tax authority"
+pilot-7-citation,citation,false_negative,AG ¶ 19(g),AG ¶ 19(g) || AG ¶ 19(g)
+pilot-7-citation,citation,false_negative,AG ¶ 20(a),(a)
+pilot-7-citation,citation,false_negative,AG ¶ 20(d),(d)
+pilot-7-blind,blind,false_positive,AG ¶ 19(f),"Applicant admitted that he 
+failed to file his federal and state income tax returns for tax years 2010 to 2012."
+pilot-7-blind,blind,false_positive,AG ¶ 20(g),"Applicant did not provide any documents showing how he was collecting or 
+replacing the documents he lost or correspondence to or from the Internal Revenue 
+Service and state tax authority"
+pilot-7-blind,blind,false_negative,AG ¶ 19(g),AG ¶ 19(g) || AG ¶ 19(g)
+pilot-8-citation,citation,false_positive,AG ¶ 19(b),She did not ignore her creditors.
+pilot-8-citation,citation,false_positive,AG ¶ 19(e),"Applicant’s financial problems were not caused by her frivolous or irresponsible 
+spending, and she did not spend beyond her means."
+pilot-8-blind,blind,false_positive,AG ¶ 19(e),she did not spend beyond her means
+pilot-8-blind,blind,false_negative,AG ¶ 20(e),AG ¶ 20(e) || AG ¶ 20(e)
+pilot-9-blind,blind,false_negative,AG ¶ 19(c),AG ¶ 19(c)
+pilot-10-citation,citation,false_positive,AG ¶ 19(f),He also had two unresolved state tax liens.
+pilot-10-citation,citation,false_positive,AG ¶ 20(g),"He also 
+entered into a repayment agreement for the unalleged state tax liens."
+pilot-10-citation,citation,false_negative,AG ¶ 19(a),(a)
+pilot-10-blind,blind,false_positive,AG ¶ 19(f),He also had two unresolved state tax liens.
+pilot-10-blind,blind,false_positive,AG ¶ 20(g),"He also 
+entered into a repayment agreement for the unalleged state tax liens."
+pilot-10-blind,blind,false_negative,AG ¶ 19(a),(a)
+pilot-11-citation,citation,false_positive,AG ¶ 19(e),"Today, Applicant continues to live within his means."
+pilot-11-citation,citation,false_positive,AG ¶ 19(f),"He has always
+been timely with his own taxes, lives within his means, and is not financially frivolous."
+pilot-11-citation,citation,false_positive,AG ¶ 20(e),"When inflated estimated taxes
+were assessed, he worked with the state until appropriate assessments were made."
+pilot-11-blind,blind,false_positive,AG ¶ 19(e),"Today, Applicant continues to live within his means."
+pilot-11-blind,blind,false_positive,AG ¶ 19(f),"He has always
+been timely with his own taxes, lives within his means, and is not financially frivolous."
+pilot-11-blind,blind,false_positive,AG ¶ 20(g),"When inflated estimated taxes
+were assessed, he worked with the state until appropriate assessments were made."
+pilot-12-citation,citation,false_positive,AG ¶ 19(f),"it is unclear from the record whether he actually failed to file
+any income tax returns"
+pilot-12-citation,citation,false_negative,AG ¶ 19(g),AG ¶ 19(g)
+pilot-12-citation,citation,false_negative,AG ¶ 20(d),AG ¶ 20(d)
+pilot-12-blind,blind,false_positive,AG ¶ 19(f),"Although multiple tax liens have been entered against Applicant’s
+property over the years, it is unclear from the record whether he actually failed to file
+any income tax returns."
+pilot-12-blind,blind,false_negative,AG ¶ 19(g),AG ¶ 19(g)
+pilot-12-blind,blind,false_negative,AG ¶ 20(d),AG ¶ 20(d)
+pilot-13-citation,citation,false_positive,AG ¶ 20(b),"Applicant’s finances were harmed by his spouse’s 
+death, which is a circumstance beyond his control."
+pilot-13-citation,citation,false_positive,AG ¶ 20(c),"his financial 
+problem is being resolved or is under control"
+pilot-13-blind,blind,false_positive,AG ¶ 20(b),"Applicant’s finances were harmed by his spouse’s 
+death, which is a circumstance beyond his control."
+pilot-14-citation,citation,false_positive,AG ¶ 20(d),"He made no effort to 
+rectify his tax issues until 2022, despite being aware since his PSI that the unfiled returns 
+were an issue for his security clearance eligibility."
+pilot-14-citation,citation,false_negative,AG ¶ 20(c),(c) || AG ¶ 20(c)
+pilot-14-blind,blind,false_positive,AG ¶ 20(d),"Although he began 
+looking for tax paperwork in late January 2022, it was likely his impending security 
+clearance hearing that prompted him to prepare his delinquent tax returns."
+pilot-14-blind,blind,false_negative,AG ¶ 20(c),(c) || AG ¶ 20(c)
+pilot-14-blind,blind,false_negative,AG ¶ 20(g),"(g) || AG ¶ 20(g) || AG ¶ 
+20(g)"
+pilot-16-citation,citation,false_positive,AG ¶ 19(a),"She 
+developed financial problems in 2013 because she was terminated from her job and 
+was unemployed for some time."
+pilot-16-citation,citation,false_positive,AG ¶ 19(c),Applicant’s history of financial problems is documented in the record.
+pilot-16-citation,citation,false_positive,AG ¶ 19(f),"The state’s tax lien and judgment 
+for unauthorized unemployment benefits were paid through wage garnishments."
+pilot-16-blind,blind,false_positive,AG ¶ 19(a),"She 
+developed financial problems in 2013 because she was terminated from her job and 
+was unemployed for some time."
+pilot-16-blind,blind,false_positive,AG ¶ 19(c),Applicant’s history of financial problems is documented in the record.
+pilot-16-blind,blind,false_positive,AG ¶ 19(f),"The state’s tax lien and judgment 
+for unauthorized unemployment benefits were paid through wage garnishments."
+pilot-16-blind,blind,false_negative,AG ¶ 20(c),(c) || AG ¶¶ 20(c)
+pilot-16-blind,blind,false_negative,AG ¶ 20(g),(g)
+pilot-17-citation,citation,false_positive,AG ¶ 19(f),"Applicant admitted that he and his wife did not pay over to the IRS the federal 
+income taxes withheld from their employees."
+pilot-17-citation,citation,false_positive,AG ¶ 20(g),"The tax transcripts reflect that he sought payment agreements in 
+2013 and again in 2014."
+pilot-17-citation,citation,false_negative,AG ¶ 19(g),AG ¶ 19(g)
+pilot-17-blind,blind,false_positive,AG ¶ 19(f),"Applicant admitted that he and his wife did not pay over to the IRS the federal 
+income taxes withheld from their employees."
+pilot-17-blind,blind,false_positive,AG ¶ 20(g),"The tax transcripts reflect that he sought payment agreements in 
+2013 and again in 2014."
+pilot-17-blind,blind,false_negative,AG ¶ 19(g),AG ¶ 19(g)
+pilot-18-blind,blind,false_positive,AG ¶ 19(e),"Applicant accumulated about $41,000 in debt over the past decade or more"
+pilot-20-blind,blind,false_negative,AG ¶ 19(a),AG ¶ 19(a)
+pilot-20-blind,blind,false_negative,AG ¶ 20(a),AG ¶ 20(a)
+pilot-20-blind,blind,false_negative,AG ¶ 20(b),AG ¶ 20(b)
+pilot-20-blind,blind,false_negative,AG ¶ 20(c),AG ¶ 20(c)
+pilot-20-blind,blind,false_negative,AG ¶ 20(d),AG ¶ 20(d)
+pilot-21-citation,citation,false_negative,AG ¶ 20(c),(c) ||  20(c)
+pilot-21-blind,blind,false_positive,AG ¶ 20(d),"Applicant petitioned for 
+Chapter 7 bankruptcy in December 2020."
+pilot-21-blind,blind,false_negative,AG ¶ 19(c),AG ¶ 19(c)
+pilot-21-blind,blind,false_negative,AG ¶ 20(a),(a) || AG ¶¶ 20(a)
+pilot-21-blind,blind,false_negative,AG ¶ 20(c),(c) ||  20(c)
+pilot-23-citation,citation,false_positive,AG ¶ 19(b),"Applicant
+has been capable of repaying some or all of his original debt over the past six years, but
+has not tried to do so"
+pilot-23-citation,citation,false_positive,AG ¶ 20(f),"Applicant claimed his finances are sound but gave no information
+explaining a large credit card balance on his most recent credit report"
+pilot-23-citation,citation,false_negative,AG ¶ 19(a),AG ¶ 19(a)
+pilot-23-citation,citation,false_negative,AG ¶ 20(b),(b) || AG ¶ 20(b)
+pilot-23-citation,citation,false_negative,AG ¶ 20(c),(c) || AG ¶¶ 20(c)
+pilot-23-blind,blind,false_positive,AG ¶ 19(b),"Instead, he has taken the position that because a debt has been
+charged off, and unless someone is actively trying to collect from him, he will not repay
+such a debt."
+pilot-23-blind,blind,false_positive,AG ¶ 19(e),"Applicant claimed his finances are sound but gave no information
+explaining a large credit card balance on his most recent credit report"
+pilot-23-blind,blind,false_negative,AG ¶ 20(c),(c) || AG ¶¶ 20(c)
+pilot-24-citation,citation,false_negative,AG ¶ 20(e),(e)
+pilot-24-citation,citation,false_negative,AG ¶ 20(f),(f)
+pilot-24-blind,blind,false_positive,AG ¶ 19(b),"Her failure to address 
+the remaining SOR debts indicates she is financially overextended."
+pilot-24-blind,blind,false_positive,AG ¶ 19(e),"Considering the number of delinquent debts, the date the debts were 
+acquired, the aggregate value of the debts"
+pilot-24-blind,blind,false_negative,AG ¶ 20(e),(e)
+pilot-24-blind,blind,false_negative,AG ¶ 20(f),(f)
+pilot-25-citation,citation,false_negative,AG ¶ 20(c),(c)
+pilot-25-blind,blind,false_positive,AG ¶ 19(c),"The Government established that the delinquent debts alleged in the SOR were 
+attributable to Applicant."
+pilot-25-blind,blind,false_negative,AG ¶ 19(a),AG ¶¶ 19(a)
+pilot-25-blind,blind,false_negative,AG ¶ 20(c),(c)
+pilot-25-blind,blind,false_negative,AG ¶ 20(e),(e)
+pilot-26-blind,blind,false_negative,AG ¶ 19(c),AG ¶ 19(c)
+pilot-27-citation,citation,false_positive,AG ¶ 19(a),Applicant’s history of financial problems is documented in the record.
+pilot-27-citation,citation,false_positive,AG ¶ 19(c),Applicant’s history of financial problems is documented in the record.
+pilot-27-citation,citation,false_positive,AG ¶ 19(e),purchased a timeshare beyond their financial means
+pilot-27-citation,citation,false_positive,AG ¶ 20(d),"Applicant’s efforts to resolve his debts are somewhat lacking, except for disputing 
+the accounts."
+pilot-27-blind,blind,false_positive,AG ¶ 19(a),His earnings should be sufficient to pay for his family
+pilot-27-blind,blind,false_positive,AG ¶ 19(c),history of financial problems is documented in the record
+pilot-27-blind,blind,false_positive,AG ¶ 19(e),purchased a timeshare beyond their financial means
+pilot-27-blind,blind,false_positive,AG ¶ 20(d),"efforts to resolve his debts are somewhat lacking, except for disputing 
+the accounts"
+pilot-28-citation,citation,false_negative,AG ¶ 20(a),(a)
+pilot-28-citation,citation,false_negative,AG ¶ 20(c),(c)
+pilot-28-blind,blind,false_negative,AG ¶ 20(a),(a)
+pilot-28-blind,blind,false_negative,AG ¶ 20(c),(c)
+pilot-29-citation,citation,false_positive,AG ¶ 20(b),"Applicant’s remaining two SOR-listed debts are relatively small 
+(collectively under $6,000) and are accompanied by both extenuating and mitigating 
+circumstances."
+pilot-29-citation,citation,false_positive,AG ¶ 20(d),"Applicant is making progress on one of her accrued delinquent 
+accounts (SOR ¶ 1.c) and has resolved a second debt with a payoff (SOR ¶ 1.d)."
+pilot-29-citation,citation,false_negative,AG ¶ 19(b), 19(b)
+pilot-29-blind,blind,false_positive,AG ¶ 20(a),"Applicant’s remaining two SOR-listed debts are relatively small 
+(collectively under $6,000) and are accompanied by both extenuating and mitigating 
+circumstances"
+pilot-29-blind,blind,false_positive,AG ¶ 20(d),"Applicant is making progress on one of her accrued delinquent 
+accounts (SOR ¶ 1.c) and has resolved a second debt with a payoff (SOR ¶ 1.d)"
+pilot-29-blind,blind,false_negative,AG ¶ 19(b), 19(b)
+pilot-30-citation,citation,false_positive,AG ¶ 20(b),"Applicant’s failure to file his returns was due, in part, to his 
+employer’s failure to provide him the necessary information for his returns."
+pilot-30-citation,citation,false_positive,AG ¶ 20(d),"Applicant did not meet his burden of showing that he acted in good-faith to pay 
+any of his debts, or that he has taken any action to resolve his tax reporting 
+discrepancies."
+pilot-30-citation,citation,false_positive,AG ¶ 20(g),"A reasonable person in 
+Applicant’s position, after not paying taxes for seven years, would at least have 
+contacted the IRS to find out what he should have done."
+pilot-30-citation,citation,false_negative,AG ¶ 20(a),(a)
+pilot-30-blind,blind,false_positive,AG ¶ 19(b),"Available information shows he has had the means to pay at 
+least some of his debts over the past three years."
+pilot-30-blind,blind,false_positive,AG ¶ 20(b),"Applicant’s failure to file his returns was due, in part, to his 
+employer’s failure to provide him the necessary information for his returns."
+pilot-30-blind,blind,false_positive,AG ¶ 20(d),"Applicant did not meet his burden of showing that he acted in good-faith to pay 
+any of his debts"
+pilot-30-blind,blind,false_positive,AG ¶ 20(g),"or that he has taken any action to resolve his tax reporting 
+discrepancies."
+pilot-30-blind,blind,false_negative,AG ¶ 19(a),AG ¶¶ 19(a)
+pilot-30-blind,blind,false_negative,AG ¶ 20(a),(a)
+pilot-31-citation,citation,false_negative,AG ¶ 19(a),(a)
+pilot-31-citation,citation,false_negative,AG ¶ 20(c),(c)
+pilot-31-blind,blind,false_negative,AG ¶ 19(a),(a)
+pilot-32-citation,citation,false_negative,AG ¶ 19(a),(a)
+pilot-32-citation,citation,false_negative,AG ¶ 19(b),(b)
+pilot-32-blind,blind,false_negative,AG ¶ 19(a),(a)
+pilot-32-blind,blind,false_negative,AG ¶ 19(b),(b)
+pilot-33-citation,citation,false_positive,AG ¶ 19(b),"Applicant accumulated substantial delinquent debt and was unable 
+or unwilling to pay his creditors."
+pilot-33-citation,citation,false_positive,AG ¶ 19(e),"unresolved delinquent debts total approximately $109,000"
+pilot-33-citation,citation,false_negative,AG ¶ 20(e),AG ¶ 20(e) || AG ¶ 20(e)
+pilot-33-blind,blind,false_positive,AG ¶ 19(e),"Applicant’s unresolved delinquent debts total approximately $109,000."
+pilot-33-blind,blind,false_negative,AG ¶ 20(e),AG ¶ 20(e) || AG ¶ 20(e)
+pilot-34-citation,citation,false_negative,AG ¶ 19(a),(a)
+pilot-34-citation,citation,false_negative,AG ¶ 20(a),(a) || AG ¶¶ 20(a)
+pilot-34-blind,blind,false_negative,AG ¶ 19(a),(a)
+pilot-34-blind,blind,false_negative,AG ¶ 19(c),(c)
+pilot-34-blind,blind,false_negative,AG ¶ 20(a),(a) || AG ¶¶ 20(a)
+pilot-35-citation,citation,false_positive,AG ¶ 19(f),"the delay in resolving his income tax debt 
+because of identity theft were conditions beyond his control"
+pilot-35-citation,citation,false_positive,AG ¶ 19(g),"there are 
+no issues regarding unexplained affluence"
+pilot-35-citation,citation,false_positive,AG ¶ 20(g),"he is 
+working with the IRS to resolve his tax debt"
+pilot-35-citation,citation,false_negative,AG ¶ 20(f),AG ¶ 20 (f)
+pilot-35-blind,blind,false_positive,AG ¶ 19(b),"he did not take meaningful or 
+responsible steps to resolve any of the delinquent debts alleged in the SOR until he 
+needed a security clearance"
+pilot-35-blind,blind,false_positive,AG ¶ 19(g),"there are 
+no issues regarding unexplained affluence"
+pilot-35-blind,blind,false_positive,AG ¶ 20(g),"he is 
+working with the IRS to resolve his tax debt"
+pilot-35-blind,blind,false_negative,AG ¶ 20(f),AG ¶ 20 (f)
+pilot-36-citation,citation,false_negative,AG ¶ 20(a),(a)
+pilot-36-citation,citation,false_negative,AG ¶ 20(c),(c)
+pilot-36-blind,blind,false_negative,AG ¶ 20(c),(c)
+pilot-36-blind,blind,false_negative,AG ¶ 20(e),(e)
+pilot-38-citation,citation,false_positive,AG ¶ 20(g),"He has a levy of $400 a month but he still does not have a tax payment plan
+in place."
+pilot-38-citation,citation,false_negative,AG ¶ 19(b),(b)
+pilot-38-citation,citation,false_negative,AG ¶ 19(c),(c) ||  19(c)
+pilot-38-citation,citation,false_negative,AG ¶ 19(d),(d)
+pilot-38-citation,citation,false_negative,AG ¶ 19(e),(e)
+pilot-38-citation,citation,false_negative,AG ¶ 19(g),(g) ||  19(g)
+pilot-38-citation,citation,false_negative,AG ¶ 19(h),(h)
+pilot-38-citation,citation,false_negative,AG ¶ 19(i),(i)
+pilot-38-citation,citation,false_negative,AG ¶ 20(c),(c)
+pilot-38-citation,citation,false_negative,AG ¶ 20(e),(e)
+pilot-38-citation,citation,false_negative,AG ¶ 20(f),(f)
+pilot-38-blind,blind,false_positive,AG ¶ 20(g),"He has a levy of $400 a month but he still does not have a tax payment plan
+in place."
+pilot-38-blind,blind,false_negative,AG ¶ 19(d),(d)
+pilot-38-blind,blind,false_negative,AG ¶ 19(e),(e)
+pilot-38-blind,blind,false_negative,AG ¶ 19(g),(g) ||  19(g)
+pilot-38-blind,blind,false_negative,AG ¶ 19(h),(h)
+pilot-38-blind,blind,false_negative,AG ¶ 19(i),(i)
+pilot-38-blind,blind,false_negative,AG ¶ 20(c),(c)
+pilot-38-blind,blind,false_negative,AG ¶ 20(e),(e)
+pilot-38-blind,blind,false_negative,AG ¶ 20(f),(f)
+pilot-40-citation,citation,false_negative,AG ¶ 19(a),(a)
+pilot-40-citation,citation,false_negative,AG ¶ 20(a),AG ¶ 20(a)
+pilot-40-citation,citation,false_negative,AG ¶ 20(e)," through
+20(f)"
+pilot-40-citation,citation,false_negative,AG ¶ 20(f)," through
+20(f)"
+pilot-40-blind,blind,false_negative,AG ¶ 20(a),AG ¶ 20(a)
+pilot-40-blind,blind,false_negative,AG ¶ 20(c)," through
+20(f)"
+pilot-40-blind,blind,false_negative,AG ¶ 20(e)," through
+20(f)"
+pilot-40-blind,blind,false_negative,AG ¶ 20(f)," through
+20(f)"
+pilot-41-citation,citation,false_positive,AG ¶ 20(d),"Available information
+shows that Applicant has been making regular payments on his loan accounts for more
+than a year."
+pilot-41-blind,blind,false_positive,AG ¶ 20(d),"Available information
+shows that Applicant has been making regular payments on his loan accounts for more
+than a year."
+pilot-41-blind,blind,false_negative,AG ¶ 20(c),AG ¶ 20(c)
+pilot-42-blind,blind,false_negative,AG ¶ 19(a),AG ¶ 19(a)
+pilot-43-citation,citation,false_negative,AG ¶ 20(c),(c)
+pilot-43-blind,blind,false_negative,AG ¶ 20(c),(c)
+pilot-43-blind,blind,false_negative,AG ¶ 20(g),(g) || AG ¶ 20(g)
+pilot-44-citation,citation,false_positive,AG ¶ 19(e),"Applicant’s financial problems were 
+not caused by frivolous or irresponsible spending."
+pilot-44-blind,blind,false_negative,AG ¶ 20(c),AG ¶ 20(c) ||  20(c)
+pilot-45-citation,citation,false_positive,AG ¶ 19(b),"He declined to seek much-
+needed financial counseling once he learned that allegedly delinquent debts were
+raising security issues."
+pilot-45-citation,citation,false_positive,AG ¶ 20(e),"Applicant provided sufficient evidence that the debt noted at SOR allegation ¶ 1.d, is
+related to a car retained by his ex-wife after their divorce and for which she was to have
+assumed all responsibility."
+pilot-45-blind,blind,false_positive,AG ¶ 19(e),"Applicant’s overall neglect of his finances and how they are
+represented has been unnecessarily protracted."
+pilot-45-blind,blind,false_positive,AG ¶ 20(e),"Applicant provided sufficient evidence that the debt noted at SOR allegation ¶ 1.d, is
+related to a car retained by his ex-wife after their divorce"
+pilot-45-blind,blind,false_negative,AG ¶ 20(a),AG ¶ 20(a)
+pilot-47-citation,citation,false_positive,AG ¶ 19(f),"such an error did not justify her failure to file her federal income tax returns for 
+2007 through 2011 in a timely manner"
+pilot-47-citation,citation,false_negative,AG ¶ 19(a),(a)
+pilot-47-citation,citation,false_negative,AG ¶ 19(g),(g)
+pilot-47-blind,blind,false_positive,AG ¶ 19(f),"such an error did not justify her failure to file her federal income tax returns for 
+2007 through 2011 in a timely manner"
+pilot-47-blind,blind,false_negative,AG ¶ 19(a),(a)
+pilot-47-blind,blind,false_negative,AG ¶ 19(g),(g)
+pilot-48-citation,citation,false_positive,AG ¶ 19(b),"the debts generated from those tax returns,
+as alleged in SOR 1.a and 1.b, remained unaddressed until 2012"
+pilot-48-citation,citation,false_positive,AG ¶ 19(f),"Applicant filed his taxes as required for
+2001 and 2002, but he did not support some of the deductions and credits claimed as
+part of his self-employment in sales and marketing"
+pilot-48-citation,citation,false_positive,AG ¶ 20(g),"Applicant has
+corrected those circumstances by filing all of his past-due tax returns and establishing a
+repayment agreement for the tax debts addressed in SOR 1.a and 1.b"
+pilot-48-citation,citation,false_negative,AG ¶ 20(a),(a)
+pilot-48-blind,blind,false_positive,AG ¶ 19(b),"Applicant did not
+immediately address his tax debts after he was hired for his current job because he
+decided to resolve other debts"
+pilot-48-blind,blind,false_positive,AG ¶ 19(f),"Applicant filed his taxes as required for
+2001 and 2002, but he did not support some of the deductions and credits claimed as
+part of his self-employment in sales and marketing"
+pilot-48-blind,blind,false_positive,AG ¶ 20(g),"Applicant has
+corrected those circumstances by filing all of his past-due tax returns and establishing a
+repayment agreement for the tax debts addressed in SOR 1.a and 1.b"
+pilot-49-citation,citation,false_positive,AG ¶ 19(f),"The Government alleges that Applicant failed to file City 2 tax returns for 2011 and 
+2012, and that the returns remain unfiled as of the date of the SOR. || Applicant admits the allegation and acknowledges that he 
+should have had City 2 taxes deducted from his pay beginning in 2005, when he began 
+to work in a new office"
+pilot-49-citation,citation,false_positive,AG ¶ 20(d),"he has now 
+paid the past-due taxes owed for all prior years."
+pilot-49-citation,citation,false_positive,AG ¶ 20(g),"His local tax issues are resolved and are 
+not a security concern."
+pilot-49-citation,citation,false_negative,AG ¶ 19(g),(g) || AG ¶ 19(g) || AG ¶ 19(g)
+pilot-49-blind,blind,false_positive,AG ¶ 19(f),"The Government alleges that Applicant failed to file City 2 tax returns for 2011 and 
+2012, and that the returns remain unfiled as of the date of the SOR."
+pilot-49-blind,blind,false_positive,AG ¶ 20(g),"he has now 
+paid the past-due taxes owed for all prior years"
+pilot-49-blind,blind,false_negative,AG ¶ 19(g),(g) || AG ¶ 19(g) || AG ¶ 19(g)

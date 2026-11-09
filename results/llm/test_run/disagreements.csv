@@ -1,0 +1,31 @@
+custom_id,mode,type,code,text
+test-0-blind,blind,false_negative,AG ¶ 19(a),AG ¶ 19(a)
+test-0-blind,blind,false_negative,AG ¶ 20(g),"AG ¶ 20(g) || , and (g)"
+test-1-citation,citation,false_negative,AG ¶ 19(a),(a) || AG ¶¶ 19(a)
+test-1-citation,citation,false_negative,AG ¶ 19(b),(b) ||  19(b)
+test-1-citation,citation,false_negative,AG ¶ 19(f),(f) ||  19(f)
+test-1-citation,citation,false_negative,AG ¶ 20(c),(c)
+test-1-citation,citation,false_negative,AG ¶ 20(e),(e)
+test-1-citation,citation,false_negative,AG ¶ 20(g),(g)
+test-1-blind,blind,false_negative,AG ¶ 19(a),(a) || AG ¶¶ 19(a)
+test-1-blind,blind,false_negative,AG ¶ 19(b),(b) ||  19(b)
+test-1-blind,blind,false_negative,AG ¶ 19(f),(f) ||  19(f)
+test-1-blind,blind,false_negative,AG ¶ 20(b),(b)
+test-1-blind,blind,false_negative,AG ¶ 20(e),(e)
+test-1-blind,blind,false_negative,AG ¶ 20(g),(g)
+test-2-citation,citation,false_negative,AG ¶ 19(a),(a)
+test-2-blind,blind,false_negative,AG ¶ 19(a),(a)
+test-3-citation,citation,false_positive,AG ¶ 20(g),"Also lacking is documentation corroborating Applicant’s statements regarding 
+corrective action he has taken to address his late state tax returns"
+test-3-citation,citation,false_negative,AG ¶ 19(b),AG ¶ 19(b)
+test-3-blind,blind,false_negative,AG ¶ 19(b),AG ¶ 19(b)
+test-4-citation,citation,false_positive,AG ¶ 19(e),"while 
+he apparently spent lavishly on vehicles"
+test-4-citation,citation,false_negative,AG ¶ 19(a),(a)
+test-4-citation,citation,false_negative,AG ¶ 19(b),(b)
+test-4-citation,citation,false_negative,AG ¶ 20(c),(c) ||  20(c)
+test-4-blind,blind,false_positive,AG ¶ 19(e),"In 2012 alone, he took out auto loans totaling more than 
+$128,000, with total monthly payments of $2,096, but he did not pay the taxes he owed 
+for that tax year."
+test-4-blind,blind,false_negative,AG ¶ 19(a),(a)
+test-4-blind,blind,false_negative,AG ¶ 19(b),(b)

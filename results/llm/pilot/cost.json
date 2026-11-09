@@ -1,0 +1,14 @@
+{
+  "tier": "batch",
+  "requests": 100,
+  "input_tokens": 403553,
+  "output_tokens": 169050,
+  "cost": 0.06244015,
+  "stop_reasons": {
+    "citation:end_turn": 50,
+    "blind:end_turn": 50
+  },
+  "drops": {
+    "citation:not_found": 1
+  }
+}
