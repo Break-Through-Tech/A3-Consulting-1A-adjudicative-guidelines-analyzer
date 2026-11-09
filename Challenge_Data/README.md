@@ -262,4 +262,6 @@ The pipeline is deterministic: the same input produces byte-identical output.
 - **PASS** - split sizes match ~70/15/15 target
 - **PASS** - every regime appears in train, val and test at close to its pool rate
 - **PASS** - every guideline appears in train, val and test at close to its pool rate (Guideline A exempt: all 4 cases in train)
+- **PASS** - precedents.faiss covers exactly 24,238 cases at dim 384
+- **PASS** - precedents_metadata.parquet covers exactly 24,238 cases
 <!-- AUTOGEN:END -->
