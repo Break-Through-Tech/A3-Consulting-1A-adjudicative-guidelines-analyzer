@@ -6,3 +6,6 @@ __pycache__/
 # Working notes - kept local, not team deliverables
 DOHA Legal NLP Project Research.md
 Proj-Summary.md
+
+# Transformer head runs: checkpoints, logits, logs
+runs/
