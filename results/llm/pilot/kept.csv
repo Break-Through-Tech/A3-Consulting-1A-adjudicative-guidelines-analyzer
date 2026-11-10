@@ -1,0 +1,3376 @@
+custom_id,mode,code,start,end,quote,context
+pilot-0-citation,citation,AG ¶ 19(f),10800,10884,"Applicant had significant past-due indebtedness, and fraudulent income tax 
+filings.","Applicant had significant past-due indebtedness, and fraudulent income tax 
+filings."
+pilot-0-citation,citation,AG ¶ 19(c),10800,10884,"Applicant had significant past-due indebtedness, and fraudulent income tax 
+filings.","Applicant had significant past-due indebtedness, and fraudulent income tax 
+filings."
+pilot-0-citation,citation,AG ¶ 20(g),12451,12539,"She still has about $9,484 of 
+outstanding debt, and $4,264 of income tax delinquencies.","She still has about $9,484 of 
+outstanding debt, and $4,264 of income tax delinquencies."
+pilot-0-citation,citation,AG ¶ 20(a),12540,12655,"I cannot ignore Applicant’s 
+fraudulent tax filings going back over ten years ago, covering a period of seven years","I cannot ignore Applicant’s 
+fraudulent tax filings going back over ten years ago, covering a period of seven years; 
+and as such, allegation 1.f is found against Applicant."
+pilot-0-blind,blind,AG ¶ 19(c),10800,10884,"Applicant had significant past-due indebtedness, and fraudulent income tax 
+filings.","Applicant had significant past-due indebtedness, and fraudulent income tax 
+filings."
+pilot-0-blind,blind,AG ¶ 19(a),12451,12539,"She still has about $9,484 of 
+outstanding debt, and $4,264 of income tax delinquencies.","She still has about $9,484 of 
+outstanding debt, and $4,264 of income tax delinquencies."
+pilot-0-blind,blind,AG ¶ 19(f),12540,12655,"I cannot ignore Applicant’s 
+fraudulent tax filings going back over ten years ago, covering a period of seven years","I cannot ignore Applicant’s 
+fraudulent tax filings going back over ten years ago, covering a period of seven years; 
+and as such, allegation 1.f is found against Applicant."
+pilot-0-blind,blind,AG ¶ 20(a),12714,12784,"She has not demonstrated that 
+future financial problems are unlikely.","She has not demonstrated that 
+future financial problems are unlikely."
+pilot-1-citation,citation,AG ¶ 19(a),10037,10176,"The evidence established the six delinquent debts alleged in the SOR, totaling 
+over $51,900, that became delinquent between 2003 and 2010.","The evidence established the six delinquent debts alleged in the SOR, totaling 
+over $51,900, that became delinquent between 2003 and 2010."
+pilot-1-citation,citation,AG ¶ 19(b),11700,11836,"He presented no evidence of any debt 
+payments, contacts with creditors, disputes, or that he otherwise attempted to resolve 
+his debts.","He presented no evidence of any debt 
+payments, contacts with creditors, disputes, or that he otherwise attempted to resolve 
+his debts."
+pilot-1-citation,citation,AG ¶ 19(c),10037,10176,"The evidence established the six delinquent debts alleged in the SOR, totaling 
+over $51,900, that became delinquent between 2003 and 2010.","The evidence established the six delinquent debts alleged in the SOR, totaling 
+over $51,900, that became delinquent between 2003 and 2010."
+pilot-1-citation,citation,AG ¶ 19(e),11837,11995,"Additionally, I have questions about Applicant’s judgment in purchasing four 
+real estate properties in 2003 on a $2,800 salary, all of which were foreclosed.","Additionally, I have questions about Applicant’s judgment in purchasing four 
+real estate properties in 2003 on a $2,800 salary, all of which were foreclosed."
+pilot-1-citation,citation,AG ¶ 20(a),12265,12341,"Applicant’s financial problems are ongoing, 
+and he still owes a large debt.","Applicant’s financial problems are ongoing, 
+and he still owes a large debt."
+pilot-1-citation,citation,AG ¶ 20(b),12342,12478,"I considered that the debts became delinquent, in part, 
+because of the downturn of the U.S. economy, a circumstance beyond his control.","I considered that the debts became delinquent, in part, 
+because of the downturn of the U.S. economy, a circumstance beyond his control."
+pilot-1-citation,citation,AG ¶ 20(c),12615,12685,Applicant presented no evidence that he received financial counseling.,Applicant presented no evidence that he received financial counseling.
+pilot-1-citation,citation,AG ¶ 20(d),12480,12608,"Notwithstanding, he presented no evidence to show financial responsibility with respect 
+to any of the debts alleged in the SOR.","Notwithstanding, he presented no evidence to show financial responsibility with respect 
+to any of the debts alleged in the SOR."
+pilot-1-citation,citation,AG ¶ 20(e),11700,11836,"He presented no evidence of any debt 
+payments, contacts with creditors, disputes, or that he otherwise attempted to resolve 
+his debts.","He presented no evidence of any debt 
+payments, contacts with creditors, disputes, or that he otherwise attempted to resolve 
+his debts."
+pilot-1-citation,citation,AG ¶ 20(f),11586,11699,"Applicant has been fully employed with a government contractor since March 
+2010, and earns over $150,000 a year.","Applicant has been fully employed with a government contractor since March 
+2010, and earns over $150,000 a year."
+pilot-1-blind,blind,AG ¶ 19(a),10037,10176,"The evidence established the six delinquent debts alleged in the SOR, totaling 
+over $51,900, that became delinquent between 2003 and 2010.","The evidence established the six delinquent debts alleged in the SOR, totaling 
+over $51,900, that became delinquent between 2003 and 2010."
+pilot-1-blind,blind,AG ¶ 19(c),12265,12341,"Applicant’s financial problems are ongoing, 
+and he still owes a large debt.","Applicant’s financial problems are ongoing, 
+and he still owes a large debt."
+pilot-1-blind,blind,AG ¶ 19(e),11837,11995,"Additionally, I have questions about Applicant’s judgment in purchasing four 
+real estate properties in 2003 on a $2,800 salary, all of which were foreclosed.","Additionally, I have questions about Applicant’s judgment in purchasing four 
+real estate properties in 2003 on a $2,800 salary, all of which were foreclosed."
+pilot-1-blind,blind,AG ¶ 20(b),12342,12478,"I considered that the debts became delinquent, in part, 
+because of the downturn of the U.S. economy, a circumstance beyond his control.","I considered that the debts became delinquent, in part, 
+because of the downturn of the U.S. economy, a circumstance beyond his control."
+pilot-1-blind,blind,AG ¶ 20(c),12615,12685,Applicant presented no evidence that he received financial counseling.,Applicant presented no evidence that he received financial counseling.
+pilot-1-blind,blind,AG ¶ 20(d),11700,11836,"He presented no evidence of any debt 
+payments, contacts with creditors, disputes, or that he otherwise attempted to resolve 
+his debts.","He presented no evidence of any debt 
+payments, contacts with creditors, disputes, or that he otherwise attempted to resolve 
+his debts."
+pilot-1-blind,blind,AG ¶ 20(e),11700,11836,"He presented no evidence of any debt 
+payments, contacts with creditors, disputes, or that he otherwise attempted to resolve 
+his debts.","He presented no evidence of any debt 
+payments, contacts with creditors, disputes, or that he otherwise attempted to resolve 
+his debts."
+pilot-2-citation,citation,AG ¶ 19(a),15816,15979,"Due to ill
+health, increased competition, and a souring economy, however, Applicant ended up
+with debt that he could no longer manage without resort to bankruptcy.","Due to ill
+health, increased competition, and a souring economy, however, Applicant ended up
+with debt that he could no longer manage without resort to bankruptcy."
+pilot-2-citation,citation,AG ¶ 19(c),15981,16052,"Cumulatively at issue in the SOR is over $1,300,000 in delinquent debt.","Cumulatively at issue in the SOR is over $1,300,000 in delinquent debt."
+pilot-2-citation,citation,AG ¶ 20(a),18222,18353,"Applicant’s business has been vulnerable to both external forces and those affecting
+Applicant, himself, on at least two occasions.","Applicant’s business has been vulnerable to both external forces and those affecting
+Applicant, himself, on at least two occasions."
+pilot-2-citation,citation,AG ¶ 20(b),16771,16922,"These incidents provided a double blow to
+Applicant’s business, impacting both his immediate income and his ability to keep pace
+with his running debt.","These incidents provided a double blow to
+Applicant’s business, impacting both his immediate income and his ability to keep pace
+with his running debt."
+pilot-2-citation,citation,AG ¶ 20(c),19638,19720,"although
+Applicant received financial counseling as part of the bankruptcy process","Similarly, although
+Applicant received financial counseling as part of the bankruptcy process, it is
+premature to determine the applicability of FC MC AG ¶ 20(c) (“the person has received
+or is receiving counseling for the problem and there are clear indications that the
+problem is being resolved or is under control”)."
+pilot-2-citation,citation,AG ¶ 20(d),19365,19490,"That petition, however, was
+initiated in 2007 and no evidence of current payments toward any of his creditors was
+introduced.","That petition, however, was
+initiated in 2007 and no evidence of current payments toward any of his creditors was
+introduced."
+pilot-2-citation,citation,AG ¶ 20(e),24486,24626,"Glaringly, no evidence was
+admitted with regard to efforts undertaken to refute or dispute two of the seven
+obligations set forth in the SOR","Glaringly, no evidence was
+admitted with regard to efforts undertaken to refute or dispute two of the seven
+obligations set forth in the SOR which, combined, represent nearly $75,000 in
+
+10
+delinquent debt."
+pilot-2-citation,citation,AG ¶ 20(g),19168,19285,"Applicant maintains that he is in repayment with one
+bank and states he has made agreements with regard to his taxes.","Applicant maintains that he is in repayment with one
+bank and states he has made agreements with regard to his taxes."
+pilot-2-blind,blind,AG ¶ 19(a),15816,15979,"Due to ill
+health, increased competition, and a souring economy, however, Applicant ended up
+with debt that he could no longer manage without resort to bankruptcy.","Due to ill
+health, increased competition, and a souring economy, however, Applicant ended up
+with debt that he could no longer manage without resort to bankruptcy."
+pilot-2-blind,blind,AG ¶ 19(c),16121,16236,"Payment is only
+currently being made to one creditor, a bank with which Applicant has a long-standing
+relationship.","Payment is only
+currently being made to one creditor, a bank with which Applicant has a long-standing
+relationship."
+pilot-2-blind,blind,AG ¶ 20(a),18472,18574,"there is
+little evidence that his business will be henceforth insulated from such forces in the
+future","Although Applicant continued to conduct
+himself and his business ethically and in accordance with industry practices, there is
+little evidence that his business will be henceforth insulated from such forces in the
+future."
+pilot-2-blind,blind,AG ¶ 20(b),16923,17104,"A decade later, in 2005, Applicant suffered a heart attack at a
+time when competition in his region had increased five-fold and shortly before the
+beginning of an economic downturn.","A decade later, in 2005, Applicant suffered a heart attack at a
+time when competition in his region had increased five-fold and shortly before the
+beginning of an economic downturn."
+pilot-2-blind,blind,AG ¶ 20(c),19627,19771,"Similarly, although
+Applicant received financial counseling as part of the bankruptcy process, it is
+premature to determine the applicability of","Similarly, although
+Applicant received financial counseling as part of the bankruptcy process, it is
+premature to determine the applicability of FC MC AG ¶ 20(c) (“the person has received
+or is receiving counseling for the problem and there are clear indications that the
+problem is being resolved or is under control”)."
+pilot-2-blind,blind,AG ¶ 20(d),19365,19490,"That petition, however, was
+initiated in 2007 and no evidence of current payments toward any of his creditors was
+introduced.","That petition, however, was
+initiated in 2007 and no evidence of current payments toward any of his creditors was
+introduced."
+pilot-2-blind,blind,AG ¶ 20(e),24486,24626,"Glaringly, no evidence was
+admitted with regard to efforts undertaken to refute or dispute two of the seven
+obligations set forth in the SOR","Glaringly, no evidence was
+admitted with regard to efforts undertaken to refute or dispute two of the seven
+obligations set forth in the SOR which, combined, represent nearly $75,000 in
+
+10
+delinquent debt."
+pilot-2-blind,blind,AG ¶ 20(g),24226,24354,"Applicant stated he has worked
+out agreements with regard to his state and federal taxes, but no such agreements
+were presented.","For example, Applicant stated he has worked
+out agreements with regard to his state and federal taxes, but no such agreements
+were presented."
+pilot-3-citation,citation,AG ¶ 19(a),17020,17086,"Applicant 
+has accrued numerous debts over the past several years.","Applicant 
+has accrued numerous debts over the past several years."
+pilot-3-citation,citation,AG ¶ 19(a),18560,18683,"He testified that he has not made any payments on the SOR debts because he 
+has not had funds available to pay these debts.","He testified that he has not made any payments on the SOR debts because he 
+has not had funds available to pay these debts."
+pilot-3-citation,citation,AG ¶ 19(c),18971,19060,"With 
+more than $17,000 in delinquencies, Applicant's debts are both frequent and recent.","With 
+more than $17,000 in delinquencies, Applicant's debts are both frequent and recent."
+pilot-3-citation,citation,AG ¶ 20(b),19312,19452,"Here, Applicant experienced one period of unemployment 
+that lasted only a few months; other than that, he has worked for the past 11 years.","Here, Applicant experienced one period of unemployment 
+that lasted only a few months; other than that, he has worked for the past 11 years."
+pilot-3-citation,citation,AG ¶ 20(b),19811,19908,"The record contains no evidence that Applicant made any substantial 
+effort to resolve his debts.","The record contains no evidence that Applicant made any substantial 
+effort to resolve his debts."
+pilot-3-citation,citation,AG ¶ 20(d),18504,18559,"However, he took no significant steps to address 
+them.","However, he took no significant steps to address 
+them."
+pilot-3-blind,blind,AG ¶ 19(a),18560,18682,"He testified that he has not made any payments on the SOR debts because he 
+has not had funds available to pay these debts","He testified that he has not made any payments on the SOR debts because he 
+has not had funds available to pay these debts."
+pilot-3-blind,blind,AG ¶ 19(b),18693,18761,"he has done little to even 
+begin the process of resolving his debts","However, he has done little to even 
+begin the process of resolving his debts."
+pilot-3-blind,blind,AG ¶ 19(c),18971,19059,"With 
+more than $17,000 in delinquencies, Applicant's debts are both frequent and recent","With 
+more than $17,000 in delinquencies, Applicant's debts are both frequent and recent."
+pilot-3-blind,blind,AG ¶ 20(a),19013,19059,Applicant's debts are both frequent and recent,"With 
+more than $17,000 in delinquencies, Applicant's debts are both frequent and recent."
+pilot-3-blind,blind,AG ¶ 20(b),19312,19397,"Here, Applicant experienced one period of unemployment 
+that lasted only a few months","Here, Applicant experienced one period of unemployment 
+that lasted only a few months; other than that, he has worked for the past 11 years."
+pilot-3-blind,blind,AG ¶ 20(c),18919,18969,he has taken no documented steps in that direction,"Despite testifying that he plans to seek help 
+from a debt consolidator, he has taken no documented steps in that direction."
+pilot-3-blind,blind,AG ¶ 20(d),18763,18845,"He has not contacted the creditors about 
+settlements, or about low-payment plans.","He has not contacted the creditors about 
+settlements, or about low-payment plans."
+pilot-4-citation,citation,AG ¶ 19(a),15765,15996,"Applicant’s admissions in his Answer, four credit bureau reports, his Chapter 7 
+bankruptcy petition, and statements made during his background investigation establish 
+the three above disqualifying conditions under this guideline.","Applicant’s admissions in his Answer, four credit bureau reports, his Chapter 7 
+bankruptcy petition, and statements made during his background investigation establish 
+the three above disqualifying conditions under this guideline."
+pilot-4-citation,citation,AG ¶ 19(c),17540,17613,"Applicant’s delinquent debts are 
+recent, ongoing, and remain unresolved.","Applicant’s delinquent debts are 
+recent, ongoing, and remain unresolved."
+pilot-4-citation,citation,AG ¶ 19(f),19807,20033,"Though Applicant stated during his background 
+interview that he would contact the IRS in 2022 to establish a payment plan to satisfy his 
+delinquent federal income tax debt, there is no evidence that he ever took this action.","Though Applicant stated during his background 
+interview that he would contact the IRS in 2022 to establish a payment plan to satisfy his 
+delinquent federal income tax debt, there is no evidence that he ever took this action."
+pilot-4-citation,citation,AG ¶ 20(a),17540,17613,"Applicant’s delinquent debts are 
+recent, ongoing, and remain unresolved.","Applicant’s delinquent debts are 
+recent, ongoing, and remain unresolved."
+pilot-4-citation,citation,AG ¶ 20(b),17953,18076,"Applicant attributed his financial situation to 
+employment instability, such as working in low-wage jobs during the period","Applicant attributed his financial situation to 
+employment instability, such as working in low-wage jobs during the period, being in 
+6 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+between jobs, struggling to find work, and losing a job due to an accident at work."
+pilot-4-citation,citation,AG ¶ 20(c),17614,17797,"He has not produced evidence of recent 
+financial counseling, contacts with creditors, payments, payment plans, or any other 
+evidence of efforts made to resolve his delinquent debts.","He has not produced evidence of recent 
+financial counseling, contacts with creditors, payments, payment plans, or any other 
+evidence of efforts made to resolve his delinquent debts."
+pilot-4-citation,citation,AG ¶ 20(d),17798,17914,"He also failed to establish that 
+he initiated and is adhering to a good-faith effort to repay his delinquent debts.","He also failed to establish that 
+he initiated and is adhering to a good-faith effort to repay his delinquent debts."
+pilot-4-citation,citation,AG ¶ 20(e),19528,19673,"Although the record indicates Applicant previously 
+disputed two debts with the creditors, he did not present this as an argument in his 
+Answer.","Although the record indicates Applicant previously 
+disputed two debts with the creditors, he did not present this as an argument in his 
+Answer."
+pilot-4-citation,citation,AG ¶ 20(g),19807,20033,"Though Applicant stated during his background 
+interview that he would contact the IRS in 2022 to establish a payment plan to satisfy his 
+delinquent federal income tax debt, there is no evidence that he ever took this action.","Though Applicant stated during his background 
+interview that he would contact the IRS in 2022 to establish a payment plan to satisfy his 
+delinquent federal income tax debt, there is no evidence that he ever took this action."
+pilot-4-blind,blind,AG ¶ 19(c),17540,17613,"Applicant’s delinquent debts are 
+recent, ongoing, and remain unresolved.","Applicant’s delinquent debts are 
+recent, ongoing, and remain unresolved."
+pilot-4-blind,blind,AG ¶ 19(f),19807,20033,"Though Applicant stated during his background 
+interview that he would contact the IRS in 2022 to establish a payment plan to satisfy his 
+delinquent federal income tax debt, there is no evidence that he ever took this action.","Though Applicant stated during his background 
+interview that he would contact the IRS in 2022 to establish a payment plan to satisfy his 
+delinquent federal income tax debt, there is no evidence that he ever took this action."
+pilot-4-blind,blind,AG ¶ 20(a),17540,17613,"Applicant’s delinquent debts are 
+recent, ongoing, and remain unresolved.","Applicant’s delinquent debts are 
+recent, ongoing, and remain unresolved."
+pilot-4-blind,blind,AG ¶ 20(b),17953,18076,"Applicant attributed his financial situation to 
+employment instability, such as working in low-wage jobs during the period","Applicant attributed his financial situation to 
+employment instability, such as working in low-wage jobs during the period, being in 
+6 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+between jobs, struggling to find work, and losing a job due to an accident at work."
+pilot-4-blind,blind,AG ¶ 20(c),17614,17724,"He has not produced evidence of recent 
+financial counseling, contacts with creditors, payments, payment plans","He has not produced evidence of recent 
+financial counseling, contacts with creditors, payments, payment plans, or any other 
+evidence of efforts made to resolve his delinquent debts."
+pilot-4-blind,blind,AG ¶ 20(d),20359,20516,"There is insufficient evidence in this case to make a determination that Applicant’s 
+financial problems will be resolved within a reasonable period of time.","There is insufficient evidence in this case to make a determination that Applicant’s 
+financial problems will be resolved within a reasonable period of time."
+pilot-4-blind,blind,AG ¶ 20(e),19528,19673,"Although the record indicates Applicant previously 
+disputed two debts with the creditors, he did not present this as an argument in his 
+Answer.","Although the record indicates Applicant previously 
+disputed two debts with the creditors, he did not present this as an argument in his 
+Answer."
+pilot-4-blind,blind,AG ¶ 20(g),20034,20106,"He 
+did not offer proof he paid off his delinquent federal income taxes.","He 
+did not offer proof he paid off his delinquent federal income taxes."
+pilot-5-citation,citation,AG ¶ 19(a),13095,13191,"Applicant’s admissions and her CBRs establish two disqualifying conditions 
+under this guideline","Applicant’s admissions and her CBRs establish two disqualifying conditions 
+under this guideline: AG ¶ 19(a) (“inability or unwillingness to satisfy debts”) and AG ¶ 
+19(c) (“a history of not meeting financial obligations”)."
+pilot-5-citation,citation,AG ¶ 19(c),14864,15006,"Instead, she continued to accumulate delinquent debts, 
+with two judgments entered against her within three years of her bankruptcy discharge.","Instead, she continued to accumulate delinquent debts, 
+with two judgments entered against her within three years of her bankruptcy discharge."
+pilot-5-citation,citation,AG ¶ 20(a),14526,14639,"Applicant’s debts are numerous, recent, and were 
+not incurred under circumstances making them unlikely to recur.","Applicant’s debts are numerous, recent, and were 
+not incurred under circumstances making them unlikely to recur."
+pilot-5-citation,citation,AG ¶ 20(b),15245,15291,"However, Applicant has not 
+acted responsibly.","However, Applicant has not 
+acted responsibly."
+pilot-5-citation,citation,AG ¶ 20(c),15418,15526,"Applicant would have received court-ordered 
+counseling in connection with her Chapter 7 bankruptcy in 2003.","Applicant would have received court-ordered 
+counseling in connection with her Chapter 7 bankruptcy in 2003."
+pilot-5-citation,citation,AG ¶ 20(d),15867,16004,"Evidence of past irresponsibility is not mitigated 
+by payment of debts motivated by the pressure of qualifying for a security clearance.","Evidence of past irresponsibility is not mitigated 
+by payment of debts motivated by the pressure of qualifying for a security clearance."
+pilot-5-citation,citation,AG ¶ 20(e),16515,16717,"The SOR allegations for these debts do not comply with the 
+specificity required by Directive ¶ E3.1.3, making it virtually impossible for Applicant to 
+verify the debts or take actions to resolve them.","The SOR allegations for these debts do not comply with the 
+specificity required by Directive ¶ E3.1.3, making it virtually impossible for Applicant to 
+verify the debts or take actions to resolve them."
+pilot-5-blind,blind,AG ¶ 19(a),14925,15005,two judgments entered against her within three years of her bankruptcy discharge,"Instead, she continued to accumulate delinquent debts, 
+with two judgments entered against her within three years of her bankruptcy discharge."
+pilot-5-blind,blind,AG ¶ 19(b),18781,18833,She admits that she routinely ignored medical debts.,She admits that she routinely ignored medical debts.
+pilot-5-blind,blind,AG ¶ 19(c),14864,15006,"Instead, she continued to accumulate delinquent debts, 
+with two judgments entered against her within three years of her bankruptcy discharge.","Instead, she continued to accumulate delinquent debts, 
+with two judgments entered against her within three years of her bankruptcy discharge."
+pilot-5-blind,blind,AG ¶ 20(a),14526,14639,"Applicant’s debts are numerous, recent, and were 
+not incurred under circumstances making them unlikely to recur.","Applicant’s debts are numerous, recent, and were 
+not incurred under circumstances making them unlikely to recur."
+pilot-5-blind,blind,AG ¶ 20(b),15245,15381,"However, Applicant has not 
+acted responsibly. She admitted at the hearing that she routinely set medical bills aside 
+and ignored them.","However, Applicant has not 
+acted responsibly. She admitted at the hearing that she routinely set medical bills aside 
+and ignored them."
+pilot-5-blind,blind,AG ¶ 20(c),15418,15526,"Applicant would have received court-ordered 
+counseling in connection with her Chapter 7 bankruptcy in 2003.","Applicant would have received court-ordered 
+counseling in connection with her Chapter 7 bankruptcy in 2003."
+pilot-5-blind,blind,AG ¶ 20(d),15867,16004,"Evidence of past irresponsibility is not mitigated 
+by payment of debts motivated by the pressure of qualifying for a security clearance.","Evidence of past irresponsibility is not mitigated 
+by payment of debts motivated by the pressure of qualifying for a security clearance."
+pilot-5-blind,blind,AG ¶ 20(e),16515,16717,"The SOR allegations for these debts do not comply with the 
+specificity required by Directive ¶ E3.1.3, making it virtually impossible for Applicant to 
+verify the debts or take actions to resolve them.","The SOR allegations for these debts do not comply with the 
+specificity required by Directive ¶ E3.1.3, making it virtually impossible for Applicant to 
+verify the debts or take actions to resolve them."
+pilot-6-citation,citation,AG ¶ 19(a),11699,11848,"Applicant’s accumulation of delinquent medical and consumer accounts warrant the
+application of three of the disqualifying conditions (DC) of the AGs","Applicant’s accumulation of delinquent medical and consumer accounts warrant the
+application of three of the disqualifying conditions (DC) of the AGs: DC ¶ 19(a), “inability
+to satisfy debts,” and DC ¶ 19(c), “a history of not meeting financial obligations.”"
+pilot-6-citation,citation,AG ¶ 19(c),11544,11697,"Security concerns are raised over Applicant’s accumulating delinquent medical
+and consumer debts over a two-year period spanning July 2014 and June 2015.","Analysis  
+Security concerns are raised over Applicant’s accumulating delinquent medical
+and consumer debts over a two-year period spanning July 2014 and June 2015."
+pilot-6-citation,citation,AG ¶ 20(d),12957,13121,"Except
+for one small debt (creditor 1.g for $28), all of his listed creditors have either been paid
+or are being resolved through a repayment plan with the creditor","Except
+for one small debt (creditor 1.g for $28), all of his listed creditors have either been paid
+or are being resolved through a repayment plan with the creditor (i.e., creditor 1.a)
+From a whole-person standpoint, Applicant’s contributions to the defense
+industry are worthy of respect."
+pilot-6-blind,blind,AG ¶ 19(c),11544,11697,"Security concerns are raised over Applicant’s accumulating delinquent medical
+and consumer debts over a two-year period spanning July 2014 and June 2015.","Analysis  
+Security concerns are raised over Applicant’s accumulating delinquent medical
+and consumer debts over a two-year period spanning July 2014 and June 2015."
+pilot-6-blind,blind,AG ¶ 20(d),12957,13142,"Except
+for one small debt (creditor 1.g for $28), all of his listed creditors have either been paid
+or are being resolved through a repayment plan with the creditor (i.e., creditor 1.a)","Except
+for one small debt (creditor 1.g for $28), all of his listed creditors have either been paid
+or are being resolved through a repayment plan with the creditor (i.e., creditor 1.a)
+From a whole-person standpoint, Applicant’s contributions to the defense
+industry are worthy of respect."
+pilot-7-citation,citation,AG ¶ 19(f),10505,10616,"Applicant admitted that he 
+failed to file his federal and state income tax returns for tax years 2010 to 2012.","Applicant admitted that he 
+failed to file his federal and state income tax returns for tax years 2010 to 2012."
+pilot-7-citation,citation,AG ¶ 20(b),13670,13776,"The 
+downturn in real estate damaged his family finances and is a circumstance largely 
+beyond his control","The 
+downturn in real estate damaged his family finances and is a circumstance largely 
+beyond his control; however, he did not act responsibly under the circumstances in 
+regard to failing to file his state and federal tax returns for tax years 2010 to 2012 
+
+ 
+6 
+ 
+                                                                                                                                                                                        
+because he did not explain how the real estate downturn caused him not to file these six 
+tax returns."
+pilot-7-citation,citation,AG ¶ 20(c),15109,15191,"his problem is being resolved, is under control, 
+and will not recur in the future","There is insufficient evidence that he was unable to make greater 
+progress filing these six tax returns; and his problem is being resolved, is under control, 
+and will not recur in the future."
+pilot-7-citation,citation,AG ¶ 20(g),14307,14495,"Applicant did not provide any documents showing how he was collecting or 
+replacing the documents he lost or correspondence to or from the Internal Revenue 
+Service and state tax authority","Applicant did not provide any documents showing how he was collecting or 
+replacing the documents he lost or correspondence to or from the Internal Revenue 
+Service and state tax authority to establish maintenance of contact with the tax 
+authorities; or other evidence of progress or resolution of his tax issues for 2010 to 
+2012."
+pilot-7-blind,blind,AG ¶ 19(f),10505,10616,"Applicant admitted that he 
+failed to file his federal and state income tax returns for tax years 2010 to 2012.","Applicant admitted that he 
+failed to file his federal and state income tax returns for tax years 2010 to 2012."
+pilot-7-blind,blind,AG ¶ 20(a),15109,15191,"his problem is being resolved, is under control, 
+and will not recur in the future","There is insufficient evidence that he was unable to make greater 
+progress filing these six tax returns; and his problem is being resolved, is under control, 
+and will not recur in the future."
+pilot-7-blind,blind,AG ¶ 20(b),13670,13776,"The 
+downturn in real estate damaged his family finances and is a circumstance largely 
+beyond his control","The 
+downturn in real estate damaged his family finances and is a circumstance largely 
+beyond his control; however, he did not act responsibly under the circumstances in 
+regard to failing to file his state and federal tax returns for tax years 2010 to 2012 
+
+ 
+6 
+ 
+                                                                                                                                                                                        
+because he did not explain how the real estate downturn caused him not to file these six 
+tax returns."
+pilot-7-blind,blind,AG ¶ 20(c),15109,15191,"his problem is being resolved, is under control, 
+and will not recur in the future","There is insufficient evidence that he was unable to make greater 
+progress filing these six tax returns; and his problem is being resolved, is under control, 
+and will not recur in the future."
+pilot-7-blind,blind,AG ¶ 20(d),14825,14998,"His failure to prove that he has made significant steps to file his state 
+and federal tax returns for tax years 2010 to 2012 indicates lack of judgment and 
+responsibility.","His failure to prove that he has made significant steps to file his state 
+and federal tax returns for tax years 2010 to 2012 indicates lack of judgment and 
+responsibility."
+pilot-7-blind,blind,AG ¶ 20(g),14307,14495,"Applicant did not provide any documents showing how he was collecting or 
+replacing the documents he lost or correspondence to or from the Internal Revenue 
+Service and state tax authority","Applicant did not provide any documents showing how he was collecting or 
+replacing the documents he lost or correspondence to or from the Internal Revenue 
+Service and state tax authority to establish maintenance of contact with the tax 
+authorities; or other evidence of progress or resolution of his tax issues for 2010 to 
+2012."
+pilot-8-citation,citation,AG ¶ 19(a),18885,19013,"Applicant’s financial problems initially arose in 2010 when she had 
+insufficient money to maintain all of her monthly payments.","Applicant’s financial problems initially arose in 2010 when she had 
+insufficient money to maintain all of her monthly payments."
+pilot-8-citation,citation,AG ¶ 19(b),21979,22012,She did not ignore her creditors.,She did not ignore her creditors.
+pilot-8-citation,citation,AG ¶ 19(c),19276,19333,"Several of her 
+delinquent accounts are still unresolved.","Several of her 
+delinquent accounts are still unresolved."
+pilot-8-citation,citation,AG ¶ 19(e),21031,21162,"Applicant’s financial problems were not caused by her frivolous or irresponsible 
+spending, and she did not spend beyond her means.","Applicant’s financial problems were not caused by her frivolous or irresponsible 
+spending, and she did not spend beyond her means."
+pilot-8-citation,citation,AG ¶ 20(a),22619,22763,"Applicant’s actions, under the 
+circumstances confronting her, do not cast doubt on her current reliability, 
+trustworthiness, or good judgment.","Applicant’s actions, under the 
+circumstances confronting her, do not cast doubt on her current reliability, 
+trustworthiness, or good judgment.40 
+ 
+                                                          
+39 The Appeal Board has previously explained what constitutes a good-faith effort to repay overdue creditors 
+or otherwise resolve debts: 
+ 
+In order to qualify for application of [the “good-faith” mitigating condition], an applicant must present 
+evidence showing either a good-faith effort to repay overdue creditors or some other good-faith 
+action aimed at resolving the applicant’s debts."
+pilot-8-citation,citation,AG ¶ 20(b),21163,21230,"Instead, those financial problems 
+were largely beyond her control.","Instead, those financial problems 
+were largely beyond her control."
+pilot-8-citation,citation,AG ¶ 20(c),22491,22618,"While Applicant may not have enjoyed the benefit of financial counseling, 
+she appears to have acted prudently and responsibly.","While Applicant may not have enjoyed the benefit of financial counseling, 
+she appears to have acted prudently and responsibly."
+pilot-8-citation,citation,AG ¶ 20(d),22111,22213,"Over the ensuing 
+years, Applicant resolved a number of those accounts well before the SOR was issued.","Over the ensuing 
+years, Applicant resolved a number of those accounts well before the SOR was issued."
+pilot-8-citation,citation,AG ¶ 20(e),27745,27936,"While two medical accounts 
+remain unresolved because Applicant is unable to identify her creditors, her difficulties 
+of identifying the actual healthcare providers cannot be overemphasized.","While two medical accounts 
+remain unresolved because Applicant is unable to identify her creditors, her difficulties 
+of identifying the actual healthcare providers cannot be overemphasized."
+pilot-8-blind,blind,AG ¶ 19(a),21767,21840,"Applicant had insufficient money to maintain all 
+of her monthly payments","As a 
+result of a combination of those factors, Applicant had insufficient money to maintain all 
+of her monthly payments."
+pilot-8-blind,blind,AG ¶ 19(c),19059,19124,various accounts became delinquent and were placed for collection,"She was forced to prioritize 
+her bills, and various accounts became delinquent and were placed for collection."
+pilot-8-blind,blind,AG ¶ 19(e),21127,21161,she did not spend beyond her means,"Applicant’s financial problems were not caused by her frivolous or irresponsible 
+spending, and she did not spend beyond her means."
+pilot-8-blind,blind,AG ¶ 20(a),22619,22706,"Applicant’s actions, under the 
+circumstances confronting her, do not cast doubt on her","Applicant’s actions, under the 
+circumstances confronting her, do not cast doubt on her current reliability, 
+trustworthiness, or good judgment.40 
+ 
+                                                          
+39 The Appeal Board has previously explained what constitutes a good-faith effort to repay overdue creditors 
+or otherwise resolve debts: 
+ 
+In order to qualify for application of [the “good-faith” mitigating condition], an applicant must present 
+evidence showing either a good-faith effort to repay overdue creditors or some other good-faith 
+action aimed at resolving the applicant’s debts."
+pilot-8-blind,blind,AG ¶ 20(b),21172,21229,"those financial problems 
+were largely beyond her control","Instead, those financial problems 
+were largely beyond her control."
+pilot-8-blind,blind,AG ¶ 20(c),22491,22617,"While Applicant may not have enjoyed the benefit of financial counseling, 
+she appears to have acted prudently and responsibly","While Applicant may not have enjoyed the benefit of financial counseling, 
+she appears to have acted prudently and responsibly."
+pilot-8-blind,blind,AG ¶ 20(d),27252,27372,"she 
+reached out to a number of creditors in an effort to establish settlement agreements or 
+enter into repayment plans","Instead, she 
+reached out to a number of creditors in an effort to establish settlement agreements or 
+enter into repayment plans."
+pilot-9-citation,citation,AG ¶ 19(c),11235,11277,"Applicant’s tax delinquencies 
+are recent.","Applicant’s tax delinquencies 
+are recent."
+pilot-9-citation,citation,AG ¶ 19(f),11404,11443,fail to timely file his 2016 tax return,"He submitted no evidence of unusual circumstances or conditions beyond his 
+control that caused him to incur the tax debt and fail to timely file his 2016 tax return."
+pilot-9-citation,citation,AG ¶ 20(a),11235,11277,"Applicant’s tax delinquencies 
+are recent.","Applicant’s tax delinquencies 
+are recent."
+pilot-9-citation,citation,AG ¶ 20(b),11278,11399,"He submitted no evidence of unusual circumstances or conditions beyond his 
+control that caused him to incur the tax debt","He submitted no evidence of unusual circumstances or conditions beyond his 
+control that caused him to incur the tax debt and fail to timely file his 2016 tax return."
+pilot-9-citation,citation,AG ¶ 20(c),11445,11485,"He 
+submitted no evidence of counseling.","He 
+submitted no evidence of counseling."
+pilot-9-citation,citation,AG ¶ 20(d),11486,11535,"Although he asserted that he was making 
+payments","Although he asserted that he was making 
+payments, he submitted no documentary evidence of payments or a payment agreement, 
+despite being reminded by Department Counsel at least twice of the need for 
+documentation."
+pilot-9-citation,citation,AG ¶ 20(g),11537,11608,he submitted no documentary evidence of payments or a payment agreement,"Although he asserted that he was making 
+payments, he submitted no documentary evidence of payments or a payment agreement, 
+despite being reminded by Department Counsel at least twice of the need for 
+documentation."
+pilot-9-blind,blind,AG ¶ 19(f),11404,11443,fail to timely file his 2016 tax return,"He submitted no evidence of unusual circumstances or conditions beyond his 
+control that caused him to incur the tax debt and fail to timely file his 2016 tax return."
+pilot-9-blind,blind,AG ¶ 20(a),11235,11276,"Applicant’s tax delinquencies 
+are recent","Applicant’s tax delinquencies 
+are recent."
+pilot-9-blind,blind,AG ¶ 20(b),11278,11399,"He submitted no evidence of unusual circumstances or conditions beyond his 
+control that caused him to incur the tax debt","He submitted no evidence of unusual circumstances or conditions beyond his 
+control that caused him to incur the tax debt and fail to timely file his 2016 tax return."
+pilot-9-blind,blind,AG ¶ 20(c),11445,11484,"He 
+submitted no evidence of counseling","He 
+submitted no evidence of counseling."
+pilot-9-blind,blind,AG ¶ 20(d),11486,11608,"Although he asserted that he was making 
+payments, he submitted no documentary evidence of payments or a payment agreement","Although he asserted that he was making 
+payments, he submitted no documentary evidence of payments or a payment agreement, 
+despite being reminded by Department Counsel at least twice of the need for 
+documentation."
+pilot-9-blind,blind,AG ¶ 20(g),11537,11608,he submitted no documentary evidence of payments or a payment agreement,"Although he asserted that he was making 
+payments, he submitted no documentary evidence of payments or a payment agreement, 
+despite being reminded by Department Counsel at least twice of the need for 
+documentation."
+pilot-10-citation,citation,AG ¶ 19(c),32590,32728,"The SOR alleged eight delinquent accounts, including two car repossessions, a 
+consumer loan, and three delinquent child support accounts.","The SOR alleged eight delinquent accounts, including two car repossessions, a 
+consumer loan, and three delinquent child support accounts."
+pilot-10-citation,citation,AG ¶ 19(c),34952,35022,"He recently had another automobile loan charged 
+off in February 2023.","He recently had another automobile loan charged 
+off in February 2023."
+pilot-10-citation,citation,AG ¶ 19(f),34201,34244,He also had two unresolved state tax liens.,He also had two unresolved state tax liens.
+pilot-10-citation,citation,AG ¶ 20(a),33958,34013,"Applicant’s financial problems are ongoing 
+and recent.","AG ¶ 20(a) does not apply because Applicant’s financial problems are ongoing 
+and recent."
+pilot-10-citation,citation,AG ¶ 20(b),34378,34444,"Circumstances beyond his control 
+adversely affected his finances.","Circumstances beyond his control 
+adversely affected his finances."
+pilot-10-citation,citation,AG ¶ 20(c),35288,35367,"Applicant attended and completed several 
+on-line financial counseling courses.","AG ¶ 20(c) partially applies because Applicant attended and completed several 
+on-line financial counseling courses."
+pilot-10-citation,citation,AG ¶ 20(d),35889,35953,"There is 
+sufficient evidence to conclude this debt is resolved.","There is 
+sufficient evidence to conclude this debt is resolved."
+pilot-10-citation,citation,AG ¶ 20(g),36146,36224,"He also 
+entered into a repayment agreement for the unalleged state tax liens.","He also 
+entered into a repayment agreement for the unalleged state tax liens."
+pilot-10-blind,blind,AG ¶ 19(c),32590,32728,"The SOR alleged eight delinquent accounts, including two car repossessions, a 
+consumer loan, and three delinquent child support accounts.","The SOR alleged eight delinquent accounts, including two car repossessions, a 
+consumer loan, and three delinquent child support accounts."
+pilot-10-blind,blind,AG ¶ 19(f),34201,34244,He also had two unresolved state tax liens.,He also had two unresolved state tax liens.
+pilot-10-blind,blind,AG ¶ 20(a),33958,34013,"Applicant’s financial problems are ongoing 
+and recent.","AG ¶ 20(a) does not apply because Applicant’s financial problems are ongoing 
+and recent."
+pilot-10-blind,blind,AG ¶ 20(b),34378,34444,"Circumstances beyond his control 
+adversely affected his finances.","Circumstances beyond his control 
+adversely affected his finances."
+pilot-10-blind,blind,AG ¶ 20(c),35288,35367,"Applicant attended and completed several 
+on-line financial counseling courses.","AG ¶ 20(c) partially applies because Applicant attended and completed several 
+on-line financial counseling courses."
+pilot-10-blind,blind,AG ¶ 20(d),35023,35113,"While Applicant appears to be attempting to resolve his delinquent 
+child support accounts","While Applicant appears to be attempting to resolve his delinquent 
+child support accounts, he provided insufficient documentation to show his efforts to 
+resolve the delinquent child support for both his son and his daughter."
+pilot-10-blind,blind,AG ¶ 20(d),35889,35953,"There is 
+sufficient evidence to conclude this debt is resolved.","There is 
+sufficient evidence to conclude this debt is resolved."
+pilot-10-blind,blind,AG ¶ 20(g),36146,36224,"He also 
+entered into a repayment agreement for the unalleged state tax liens.","He also 
+entered into a repayment agreement for the unalleged state tax liens."
+pilot-11-citation,citation,AG ¶ 19(a),12992,13100,"At issue are two state tax liens and one
+19
+adverse judgment, originally representing approximately $60,000.","At issue are two state tax liens and one
+19
+adverse judgment, originally representing approximately $60,000."
+pilot-11-citation,citation,AG ¶ 19(c),13440,13482,The debts at issue are multiple in number.,The debts at issue are multiple in number.
+pilot-11-citation,citation,AG ¶ 19(e),18574,18626,"Today, Applicant continues to live within his means.","Today, Applicant continues to live within his means."
+pilot-11-citation,citation,AG ¶ 19(f),17384,17487,"He has always
+been timely with his own taxes, lives within his means, and is not financially frivolous.","He has always
+been timely with his own taxes, lives within his means, and is not financially frivolous."
+pilot-11-citation,citation,AG ¶ 20(a),13961,14034,"Consequently, it is highly unlikely this situation with ever be repeated.","Consequently, it is highly unlikely this situation with ever be repeated."
+pilot-11-citation,citation,AG ¶ 20(b),14331,14468,"The debts at issue arose as a direct result of a new business venture that began
+a downward spiral at the on-set of poor financial times.","The debts at issue arose as a direct result of a new business venture that began
+a downward spiral at the on-set of poor financial times."
+pilot-11-citation,citation,AG ¶ 20(c),15185,15318,"While Applicant did not utilize counseling to address the debts at
+issue, he did hire attorneys with expertise in the necessary areas","While Applicant did not utilize counseling to address the debts at
+issue, he did hire attorneys with expertise in the necessary areas to successfully
+address both the business’ downturn and the resolution of his related tax issues."
+pilot-11-citation,citation,AG ¶ 20(d),15719,15877,"Since the time the debts at issue arose, Applicant actively worked to properly
+dissolve his former business and partnership, and to satisfy any related debts.","Since the time the debts at issue arose, Applicant actively worked to properly
+dissolve his former business and partnership, and to satisfy any related debts."
+pilot-11-citation,citation,AG ¶ 20(e),18147,18257,"When inflated estimated taxes
+were assessed, he worked with the state until appropriate assessments were made.","When inflated estimated taxes
+were assessed, he worked with the state until appropriate assessments were made."
+pilot-11-blind,blind,AG ¶ 19(a),12992,13100,"At issue are two state tax liens and one
+19
+adverse judgment, originally representing approximately $60,000.","At issue are two state tax liens and one
+19
+adverse judgment, originally representing approximately $60,000."
+pilot-11-blind,blind,AG ¶ 19(c),15070,15184,"There
+is no evidence that he has ever had any other adverse financial issues in his personal
+or professional life.","There
+is no evidence that he has ever had any other adverse financial issues in his personal
+or professional life."
+pilot-11-blind,blind,AG ¶ 19(e),18574,18626,"Today, Applicant continues to live within his means.","Today, Applicant continues to live within his means."
+pilot-11-blind,blind,AG ¶ 19(f),17384,17487,"He has always
+been timely with his own taxes, lives within his means, and is not financially frivolous.","He has always
+been timely with his own taxes, lives within his means, and is not financially frivolous."
+pilot-11-blind,blind,AG ¶ 20(a),13961,14034,"Consequently, it is highly unlikely this situation with ever be repeated.","Consequently, it is highly unlikely this situation with ever be repeated."
+pilot-11-blind,blind,AG ¶ 20(b),17836,17984,"Unfortunately for the new entrepreneurs, their venture began shortly before the
+onset of financial bad times that adversely impacted their business.","Unfortunately for the new entrepreneurs, their venture began shortly before the
+onset of financial bad times that adversely impacted their business."
+pilot-11-blind,blind,AG ¶ 20(c),14909,14997,"There is no evidence that Applicant sought or received traditional financial
+counseling.","There is no evidence that Applicant sought or received traditional financial
+counseling."
+pilot-11-blind,blind,AG ¶ 20(d),13587,13664,"Applicant has
+actively worked to address these debts since they were imposed.","Applicant has
+actively worked to address these debts since they were imposed."
+pilot-11-blind,blind,AG ¶ 20(g),18147,18257,"When inflated estimated taxes
+were assessed, he worked with the state until appropriate assessments were made.","When inflated estimated taxes
+were assessed, he worked with the state until appropriate assessments were made."
+pilot-12-citation,citation,AG ¶ 19(a),12209,12270,Applicant’s multiple delinquencies trigger the application of,"Applicant’s multiple delinquencies trigger the application of AG ¶ 19(a),
+“inability or unwillingness to satisfy debts,” and AG ¶ 19(c), “a history of not meeting
+financial obligations.”"
+pilot-12-citation,citation,AG ¶ 19(c),12396,12485,"Although multiple tax liens have been entered against Applicant’s
+property over the years","Although multiple tax liens have been entered against Applicant’s
+property over the years, it is unclear from the record whether he actually failed to file
+any income tax returns."
+pilot-12-citation,citation,AG ¶ 19(f),12487,12574,"it is unclear from the record whether he actually failed to file
+any income tax returns","Although multiple tax liens have been entered against Applicant’s
+property over the years, it is unclear from the record whether he actually failed to file
+any income tax returns."
+pilot-12-citation,citation,AG ¶ 20(e),13090,13342,"Applicant submitted evidence that he disputed the debts
+listed in subparagraphs 2.a. through 2.s, and that a credit reporting agency considered
+his dispute, concluded that he was not responsible for these debts, and deleted them
+from his credit report.","Applicant submitted evidence that he disputed the debts
+listed in subparagraphs 2.a. through 2.s, and that a credit reporting agency considered
+his dispute, concluded that he was not responsible for these debts, and deleted them
+from his credit report."
+pilot-12-citation,citation,AG ¶ 20(e),13411,13503,"Applicant provided no documented proof supporting his denial of the other SOR
+delinquencies.","Applicant provided no documented proof supporting his denial of the other SOR
+delinquencies."
+pilot-12-blind,blind,AG ¶ 19(a),12209,12270,Applicant’s multiple delinquencies trigger the application of,"Applicant’s multiple delinquencies trigger the application of AG ¶ 19(a),
+“inability or unwillingness to satisfy debts,” and AG ¶ 19(c), “a history of not meeting
+financial obligations.”"
+pilot-12-blind,blind,AG ¶ 19(c),12209,12270,Applicant’s multiple delinquencies trigger the application of,"Applicant’s multiple delinquencies trigger the application of AG ¶ 19(a),
+“inability or unwillingness to satisfy debts,” and AG ¶ 19(c), “a history of not meeting
+financial obligations.”"
+pilot-12-blind,blind,AG ¶ 19(f),12396,12575,"Although multiple tax liens have been entered against Applicant’s
+property over the years, it is unclear from the record whether he actually failed to file
+any income tax returns.","Although multiple tax liens have been entered against Applicant’s
+property over the years, it is unclear from the record whether he actually failed to file
+any income tax returns."
+pilot-12-blind,blind,AG ¶ 20(e),13090,13342,"Applicant submitted evidence that he disputed the debts
+listed in subparagraphs 2.a. through 2.s, and that a credit reporting agency considered
+his dispute, concluded that he was not responsible for these debts, and deleted them
+from his credit report.","Applicant submitted evidence that he disputed the debts
+listed in subparagraphs 2.a. through 2.s, and that a credit reporting agency considered
+his dispute, concluded that he was not responsible for these debts, and deleted them
+from his credit report."
+pilot-13-citation,citation,AG ¶ 19(a),14489,14552,"Applicant’s SOR alleges five delinquent debts totaling $27,421.","Applicant’s SOR alleges five delinquent debts totaling $27,421."
+pilot-13-citation,citation,AG ¶ 19(c),14553,14659,"His two student 
+loans are in established payment plans, and he settled or paid the other three SOR debts.","His two student 
+loans are in established payment plans, and he settled or paid the other three SOR debts."
+pilot-13-citation,citation,AG ¶ 20(a),15721,15781,"his track 
+record of paying them, future new delinquent debt","Applicant admitted responsibility for and 
+took reasonable and responsible actions to resolve his debts, establishing some good 
+faith.5 Based on Applicant’s credible and sincere promise to pay his debts and his track 
+record of paying them, future new delinquent debt “is unlikely to recur and does not cast 
+doubt on [Applicant’s] current reliability, trustworthiness, or good judgment.”"
+pilot-13-citation,citation,AG ¶ 20(b),14277,14377,"Applicant’s finances were harmed by his spouse’s 
+death, which is a circumstance beyond his control.","Applicant’s finances were harmed by his spouse’s 
+death, which is a circumstance beyond his control."
+pilot-13-citation,citation,AG ¶ 20(c),15451,15511,"his financial 
+problem is being resolved or is under control","Although there is limited evidence 
+of record that he established and maintained contact with his creditors,4 his financial 
+problem is being resolved or is under control."
+pilot-13-citation,citation,AG ¶ 20(d),15513,15648,"Applicant admitted responsibility for and 
+took reasonable and responsible actions to resolve his debts, establishing some good 
+faith.","Applicant admitted responsibility for and 
+took reasonable and responsible actions to resolve his debts, establishing some good 
+faith.5 Based on Applicant’s credible and sincere promise to pay his debts and his track 
+record of paying them, future new delinquent debt “is unlikely to recur and does not cast 
+doubt on [Applicant’s] current reliability, trustworthiness, or good judgment.”"
+pilot-13-blind,blind,AG ¶ 19(a),15997,16054,"He has 
+sufficient income to resolve his remaining debts.","He has 
+sufficient income to resolve his remaining debts."
+pilot-13-blind,blind,AG ¶ 19(c),14489,14552,"Applicant’s SOR alleges five delinquent debts totaling $27,421.","Applicant’s SOR alleges five delinquent debts totaling $27,421."
+pilot-13-blind,blind,AG ¶ 20(a),15650,15753,"Based on Applicant’s credible and sincere promise to pay his debts and his track 
+record of paying them","Applicant admitted responsibility for and 
+took reasonable and responsible actions to resolve his debts, establishing some good 
+faith.5 Based on Applicant’s credible and sincere promise to pay his debts and his track 
+record of paying them, future new delinquent debt “is unlikely to recur and does not cast 
+doubt on [Applicant’s] current reliability, trustworthiness, or good judgment.”"
+pilot-13-blind,blind,AG ¶ 20(b),14277,14377,"Applicant’s finances were harmed by his spouse’s 
+death, which is a circumstance beyond his control.","Applicant’s finances were harmed by his spouse’s 
+death, which is a circumstance beyond his control."
+pilot-13-blind,blind,AG ¶ 20(d),14553,14659,"His two student 
+loans are in established payment plans, and he settled or paid the other three SOR debts.","His two student 
+loans are in established payment plans, and he settled or paid the other three SOR debts."
+pilot-14-citation,citation,AG ¶ 19(f),21811,21926,"applies because of his failure to timely file 
+federal and state income tax returns for tax years 2017 through 2019","AG ¶ 19(f), “failure to file or 
+fraudulently filing annual federal, state, or local income tax returns or failure to pay annual 
+federal, state, or local income tax as required,” applies because of his failure to timely file 
+federal and state income tax returns for tax years 2017 through 2019."
+pilot-14-citation,citation,AG ¶ 19(f),21224,21366,"The tax returns Applicant prepared in March 2022 reflect that his income 
+exceeded the threshold for filing for each of the tax years at issue","The tax returns Applicant prepared in March 2022 reflect that his income 
+exceeded the threshold for filing for each of the tax years at issue, and that he overpaid his 
+federal income taxes."
+pilot-14-citation,citation,AG ¶ 20(a),26391,26495,"Applicant’s very belated preparation of his income tax returns is not enough to 
+trigger full mitigation","Applicant’s very belated preparation of his income tax returns is not enough to 
+trigger full mitigation under AG ¶ 20(c) or AG ¶ 20(g)."
+pilot-14-citation,citation,AG ¶ 20(b),24734,24819,"Applicant testified 
+credibly about the care he provided his mother before her death.","Applicant testified 
+credibly about the care he provided his mother before her death."
+pilot-14-citation,citation,AG ¶ 20(b),26302,26389,"He failed to act 
+responsibly with regard to complying with his tax-filing obligations.","He failed to act 
+responsibly with regard to complying with his tax-filing obligations."
+pilot-14-citation,citation,AG ¶ 20(d),25737,25907,"He made no effort to 
+rectify his tax issues until 2022, despite being aware since his PSI that the unfiled returns 
+were an issue for his security clearance eligibility.","He made no effort to 
+rectify his tax issues until 2022, despite being aware since his PSI that the unfiled returns 
+were an issue for his security clearance eligibility."
+pilot-14-citation,citation,AG ¶ 20(g),24594,24732,"cannot reasonably apply, given Applicant’s ongoing failure to comply 
+with his income tax filing obligations for several consecutive years","AG ¶ 20(a) cannot reasonably apply, given Applicant’s ongoing failure to comply 
+with his income tax filing obligations for several consecutive years."
+pilot-14-blind,blind,AG ¶ 19(f),20763,20883,"As of April 15, 2022, Applicant had not filed his federal and state income tax returns 
+for tax years 2016 through 2020.","As of April 15, 2022, Applicant had not filed his federal and state income tax returns 
+for tax years 2016 through 2020."
+pilot-14-blind,blind,AG ¶ 19(f),25285,25503,"Applicant’s noncompliance with his tax-filing obligations appears to have been due in 
+significant part to his disorganization in maintaining the paperwork needed to prepare his 
+tax returns and to his procrastination.","Applicant’s noncompliance with his tax-filing obligations appears to have been due in 
+significant part to his disorganization in maintaining the paperwork needed to prepare his 
+tax returns and to his procrastination."
+pilot-14-blind,blind,AG ¶ 20(b),24734,24819,"Applicant testified 
+credibly about the care he provided his mother before her death.","Applicant testified 
+credibly about the care he provided his mother before her death."
+pilot-14-blind,blind,AG ¶ 20(b),25908,26021,"His mother’s passing accounts for some 
+of the delay, but it does not sufficiently mitigate the security concerns","His mother’s passing accounts for some 
+of the delay, but it does not sufficiently mitigate the security concerns in light of the other 
+factors that contributed to his failure to prepare and file his tax returns."
+pilot-14-blind,blind,AG ¶ 20(d),26122,26301,"Although he began 
+looking for tax paperwork in late January 2022, it was likely his impending security 
+clearance hearing that prompted him to prepare his delinquent tax returns.","Although he began 
+looking for tax paperwork in late January 2022, it was likely his impending security 
+clearance hearing that prompted him to prepare his delinquent tax returns."
+pilot-14-blind,blind,AG ¶ 20(a),26391,26495,"Applicant’s very belated preparation of his income tax returns is not enough to 
+trigger full mitigation","Applicant’s very belated preparation of his income tax returns is not enough to 
+trigger full mitigation under AG ¶ 20(c) or AG ¶ 20(g)."
+pilot-15-citation,citation,AG ¶ 19(a),15644,15726,"he had two past-due debts totaling 
+$29,157 owed on his first and second mortgages","As indicated in the SOR, he had two past-due debts totaling 
+$29,157 owed on his first and second mortgages."
+pilot-15-citation,citation,AG ¶ 19(c),15518,15617,"Applicant’s history of delinquent debt is established by his admissions and the 
+evidence presented","Applicant’s history of delinquent debt is established by his admissions and the 
+evidence presented."
+pilot-15-citation,citation,AG ¶ 20(a),17068,17150,there is more than one delinquent debt and his financial problems are not isolated,"Applicant’s conduct does not warrant full application of AG ¶ 20(a) because 
+there is more than one delinquent debt and his financial problems are not isolated."
+pilot-15-citation,citation,AG ¶ 20(b),17930,18022,"Both these events were beyond his control, and he acted responsibly 
+under the circumstances","Both these events were beyond his control, and he acted responsibly 
+under the circumstances."
+pilot-15-citation,citation,AG ¶ 20(c),18760,18870,"He sought 
+financial counseling well before his hearing and it is clear he has benefited from such 
+counseling","He sought 
+financial counseling well before his hearing and it is clear he has benefited from such 
+counseling."
+pilot-15-citation,citation,AG ¶ 20(d),19913,20102,"It 
+is clear that his efforts to avoid foreclosure were substantial and the way he conducted 
+himself throughout the process demonstrated a true sense of integrity and responsible 
+behavior","It 
+is clear that his efforts to avoid foreclosure were substantial and the way he conducted 
+himself throughout the process demonstrated a true sense of integrity and responsible 
+behavior."
+pilot-15-citation,citation,AG ¶ 20(e),20141,20202,"Applicant did not dispute the 
+legitimacy of any of his debts","AG ¶ 20(e) is not applicable because Applicant did not dispute the 
+legitimacy of any of his debts."
+pilot-15-blind,blind,AG ¶ 19(a),15644,15726,"he had two past-due debts totaling 
+$29,157 owed on his first and second mortgages","As indicated in the SOR, he had two past-due debts totaling 
+$29,157 owed on his first and second mortgages."
+pilot-15-blind,blind,AG ¶ 19(c),15518,15618,"Applicant’s history of delinquent debt is established by his admissions and the 
+evidence presented.","Applicant’s history of delinquent debt is established by his admissions and the 
+evidence presented."
+pilot-15-blind,blind,AG ¶ 20(a),17068,17150,there is more than one delinquent debt and his financial problems are not isolated,"Applicant’s conduct does not warrant full application of AG ¶ 20(a) because 
+there is more than one delinquent debt and his financial problems are not isolated."
+pilot-15-blind,blind,AG ¶ 20(b),17741,17795,The downturn in the economy led to his being laid off.,The downturn in the economy led to his being laid off.
+pilot-15-blind,blind,AG ¶ 20(c),18760,18871,"He sought 
+financial counseling well before his hearing and it is clear he has benefited from such 
+counseling.","He sought 
+financial counseling well before his hearing and it is clear he has benefited from such 
+counseling."
+pilot-15-blind,blind,AG ¶ 20(d),18039,18127,"when he realized that he could not meet his 
+mortgage payments, he contacted his lender.","In particular, when he realized that he could not meet his 
+mortgage payments, he contacted his lender.1
+ 
+ At the time he contacted his lender, he 
+was informed no help was available."
+pilot-15-blind,blind,AG ¶ 20(e),20141,20203,"Applicant did not dispute the 
+legitimacy of any of his debts.","AG ¶ 20(e) is not applicable because Applicant did not dispute the 
+legitimacy of any of his debts."
+pilot-16-citation,citation,AG ¶ 19(a),11552,11668,"She 
+developed financial problems in 2013 because she was terminated from her job and 
+was unemployed for some time.","She 
+developed financial problems in 2013 because she was terminated from her job and 
+was unemployed for some time."
+pilot-16-citation,citation,AG ¶ 19(c),11481,11551,Applicant’s history of financial problems is documented in the record.,Applicant’s history of financial problems is documented in the record.
+pilot-16-citation,citation,AG ¶ 19(f),11859,11969,"The state’s tax lien and judgment 
+for unauthorized unemployment benefits were paid through wage garnishments.","The state’s tax lien and judgment 
+for unauthorized unemployment benefits were paid through wage garnishments."
+pilot-16-citation,citation,AG ¶ 20(a),14863,15018,"her financial problems occurred under circumstances unlikely to recur 
+and they do not cast doubt on her current reliability, trustworthiness, or judgment.","However, her financial problems occurred under circumstances unlikely to recur 
+and they do not cast doubt on her current reliability, trustworthiness, or judgment."
+pilot-16-citation,citation,AG ¶ 20(b),16118,16308,"Applicant’s financial problems are attributed to, or were aggravated by, her 
+employment termination, child’s illness, period of unemployment, and being the sole 
+breadwinner for her family.","June 4, 2001)).   
+
+ 
+7 
+ 
+ 
+ 
+Applicant’s financial problems are attributed to, or were aggravated by, her 
+employment termination, child’s illness, period of unemployment, and being the sole 
+breadwinner for her family."
+pilot-16-citation,citation,AG ¶ 20(c),16972,17066,"there are clear indications that her financial problems are being resolved 
+and under control.","Her financial situation is 
+improving and there are clear indications that her financial problems are being resolved 
+and under control."
+pilot-16-citation,citation,AG ¶ 20(d),16508,16644,"she made an effort to 
+resolve her debts by contacting the creditors, negotiating payment agreements, and 
+making payments on the debts.","Applicant’s efforts to pay her debts are not ideal, but she made an effort to 
+resolve her debts by contacting the creditors, negotiating payment agreements, and 
+making payments on the debts."
+pilot-16-citation,citation,AG ¶ 20(g),11669,11787,"Applicant rehabilitated the debt alleged in SOR ¶ 1.a, 
+and established a payment arrangement for the debt in SOR 1.c.","Applicant rehabilitated the debt alleged in SOR ¶ 1.a, 
+and established a payment arrangement for the debt in SOR 1.c."
+pilot-16-blind,blind,AG ¶ 19(a),11552,11668,"She 
+developed financial problems in 2013 because she was terminated from her job and 
+was unemployed for some time.","She 
+developed financial problems in 2013 because she was terminated from her job and 
+was unemployed for some time."
+pilot-16-blind,blind,AG ¶ 19(c),11481,11551,Applicant’s history of financial problems is documented in the record.,Applicant’s history of financial problems is documented in the record.
+pilot-16-blind,blind,AG ¶ 19(f),11859,11969,"The state’s tax lien and judgment 
+for unauthorized unemployment benefits were paid through wage garnishments.","The state’s tax lien and judgment 
+for unauthorized unemployment benefits were paid through wage garnishments."
+pilot-16-blind,blind,AG ¶ 20(a),14863,14967,"her financial problems occurred under circumstances unlikely to recur 
+and they do not cast doubt on her","However, her financial problems occurred under circumstances unlikely to recur 
+and they do not cast doubt on her current reliability, trustworthiness, or judgment."
+pilot-16-blind,blind,AG ¶ 20(b),16309,16426,"These factors, all conditions beyond her control, prevented 
+her from paying her delinquent accounts more diligently.","These factors, all conditions beyond her control, prevented 
+her from paying her delinquent accounts more diligently."
+pilot-16-blind,blind,AG ¶ 20(d),16508,16643,"she made an effort to 
+resolve her debts by contacting the creditors, negotiating payment agreements, and 
+making payments on the debts","Applicant’s efforts to pay her debts are not ideal, but she made an effort to 
+resolve her debts by contacting the creditors, negotiating payment agreements, and 
+making payments on the debts."
+pilot-17-citation,citation,AG ¶ 19(a),19851,19899,Applicant still has significant unresolved debt.,Applicant still has significant unresolved debt.
+pilot-17-citation,citation,AG ¶ 19(c),18782,18881,"were numerous and 
+recent, but they were incurred under circumstances making them unlikely to recur","Applicant’s delinquent debts were numerous and 
+recent, but they were incurred under circumstances making them unlikely to recur."
+pilot-17-citation,citation,AG ¶ 19(f),17064,17188,"Applicant admitted that he and his wife did not pay over to the IRS the federal 
+income taxes withheld from their employees.","Applicant admitted that he and his wife did not pay over to the IRS the federal 
+income taxes withheld from their employees."
+pilot-17-citation,citation,AG ¶ 20(a),18782,18881,"were numerous and 
+recent, but they were incurred under circumstances making them unlikely to recur","Applicant’s delinquent debts were numerous and 
+recent, but they were incurred under circumstances making them unlikely to recur."
+pilot-17-citation,citation,AG ¶ 20(b),19218,19293,"The business failure and marital breakup 
+were circumstances largely beyond","The business failure and marital breakup 
+were circumstances largely beyond Applicant’s control."
+pilot-17-citation,citation,AG ¶ 20(c),19780,19844,"he hired a CPA in September 2015, who is currently assisting him","He contacted the IRS Taxpayer Advocate Service in July 2015, 
+and he hired a CPA in September 2015, who is currently assisting him."
+pilot-17-citation,citation,AG ¶ 20(d),19315,19466,"He has acted responsibly by 
+maintaining contact with his creditors, resolving seven of the debts alleged, and 
+negotiating in good faith with the IRS.","He has acted responsibly by 
+maintaining contact with his creditors, resolving seven of the debts alleged, and 
+negotiating in good faith with the IRS."
+pilot-17-citation,citation,AG ¶ 20(e),21007,21142,"Applicant made a mistake in computing his gains 
+and losses from stock trading, but he has not disputed the amounts claimed by the IRS.","Applicant made a mistake in computing his gains 
+and losses from stock trading, but he has not disputed the amounts claimed by the IRS."
+pilot-17-citation,citation,AG ¶ 20(g),19624,19713,"The tax transcripts reflect that he sought payment agreements in 
+2013 and again in 2014.","The tax transcripts reflect that he sought payment agreements in 
+2013 and again in 2014."
+pilot-17-blind,blind,AG ¶ 19(a),19851,19979,"Applicant still has significant unresolved debt. He owes $9,657 on a business-
+related credit card and about $61,000 to the IRS.","Applicant still has significant unresolved debt. He owes $9,657 on a business-
+related credit card and about $61,000 to the IRS."
+pilot-17-blind,blind,AG ¶ 19(c),18753,18882,"Applicant’s delinquent debts were numerous and 
+recent, but they were incurred under circumstances making them unlikely to recur.","Applicant’s delinquent debts were numerous and 
+recent, but they were incurred under circumstances making them unlikely to recur."
+pilot-17-blind,blind,AG ¶ 19(f),17064,17188,"Applicant admitted that he and his wife did not pay over to the IRS the federal 
+income taxes withheld from their employees.","Applicant admitted that he and his wife did not pay over to the IRS the federal 
+income taxes withheld from their employees."
+pilot-17-blind,blind,AG ¶ 20(a),18753,18882,"Applicant’s delinquent debts were numerous and 
+recent, but they were incurred under circumstances making them unlikely to recur.","Applicant’s delinquent debts were numerous and 
+recent, but they were incurred under circumstances making them unlikely to recur."
+pilot-17-blind,blind,AG ¶ 20(b),19218,19314,"The business failure and marital breakup 
+were circumstances largely beyond Applicant’s control.","The business failure and marital breakup 
+were circumstances largely beyond Applicant’s control."
+pilot-17-blind,blind,AG ¶ 20(c),19780,19845,"he hired a CPA in September 2015, who is currently assisting him.","He contacted the IRS Taxpayer Advocate Service in July 2015, 
+and he hired a CPA in September 2015, who is currently assisting him."
+pilot-17-blind,blind,AG ¶ 20(d),19315,19466,"He has acted responsibly by 
+maintaining contact with his creditors, resolving seven of the debts alleged, and 
+negotiating in good faith with the IRS.","He has acted responsibly by 
+maintaining contact with his creditors, resolving seven of the debts alleged, and 
+negotiating in good faith with the IRS."
+pilot-17-blind,blind,AG ¶ 20(e),21007,21142,"Applicant made a mistake in computing his gains 
+and losses from stock trading, but he has not disputed the amounts claimed by the IRS.","Applicant made a mistake in computing his gains 
+and losses from stock trading, but he has not disputed the amounts claimed by the IRS."
+pilot-17-blind,blind,AG ¶ 20(g),19624,19713,"The tax transcripts reflect that he sought payment agreements in 
+2013 and again in 2014.","The tax transcripts reflect that he sought payment agreements in 
+2013 and again in 2014."
+pilot-18-citation,citation,AG ¶ 19(a),9761,9827,some of which became delinquent when he could not afford to pay it,"Applicant accumulated about $41,000 in debt over the past decade or more, 
+some of which became delinquent when he could not afford to pay it."
+pilot-18-citation,citation,AG ¶ 19(c),9686,9758,"Applicant accumulated about $41,000 in debt over the past decade or more","Applicant accumulated about $41,000 in debt over the past decade or more, 
+some of which became delinquent when he could not afford to pay it."
+pilot-18-citation,citation,AG ¶ 20(a),11743,11895,"Thus, his former inability to meet 
+financial obligations is unlikely to recur and does not cast doubt on his current 
+trustworthiness or good judgment.","Thus, his former inability to meet 
+financial obligations is unlikely to recur and does not cast doubt on his current 
+trustworthiness or good judgment."
+pilot-18-citation,citation,AG ¶ 20(b),11896,12088,"He has acted responsibly with respect to his financial 
+problems, received and followed counseling for them, and is resolving them through 
+compliance with a court-approved wage earner’s plan.","He has acted responsibly with respect to his financial 
+problems, received and followed counseling for them, and is resolving them through 
+compliance with a court-approved wage earner’s plan."
+pilot-18-citation,citation,AG ¶ 20(c),11607,11742,"He chose this course of action, based on advice from his financial counselor and an 
+attorney, as the best method to resolve his debts.","He chose this course of action, based on advice from his financial counselor and an 
+attorney, as the best method to resolve his debts."
+pilot-18-citation,citation,AG ¶ 20(d),11403,11605,"These positions provide him 
+with sufficient income to meet all of his regular monthly expenses while paying $370 per 
+month into his court-approved Chapter 13 wage-earner’s plan to resolve those debts.","These positions provide him 
+with sufficient income to meet all of his regular monthly expenses while paying $370 per 
+month into his court-approved Chapter 13 wage-earner’s plan to resolve those debts."
+pilot-18-citation,citation,AG ¶ 20(e),12205,12251,He did not dispute the legitimacy of his debts,"He did not dispute the legitimacy of his debts, so AG ¶ 20(e) does not apply."
+pilot-18-blind,blind,AG ¶ 19(a),11178,11292,"Applicant’s debts arose during periods when his income was insufficient to meet 
+all of his financial obligations.","Applicant’s debts arose during periods when his income was insufficient to meet 
+all of his financial obligations."
+pilot-18-blind,blind,AG ¶ 19(c),9761,9827,some of which became delinquent when he could not afford to pay it,"Applicant accumulated about $41,000 in debt over the past decade or more, 
+some of which became delinquent when he could not afford to pay it."
+pilot-18-blind,blind,AG ¶ 19(e),9686,9758,"Applicant accumulated about $41,000 in debt over the past decade or more","Applicant accumulated about $41,000 in debt over the past decade or more, 
+some of which became delinquent when he could not afford to pay it."
+pilot-18-blind,blind,AG ¶ 20(a),14379,14427,"makes recurrence of 
+financial problems unlikely","Resolution of his debts through this court-approved plan 
+minimizes the potential for pressure, coercion, or duress, and makes recurrence of 
+financial problems unlikely."
+pilot-18-blind,blind,AG ¶ 20(b),11896,11960,"He has acted responsibly with respect to his financial 
+problems","He has acted responsibly with respect to his financial 
+problems, received and followed counseling for them, and is resolving them through 
+compliance with a court-approved wage earner’s plan."
+pilot-18-blind,blind,AG ¶ 20(c),11639,11741,"based on advice from his financial counselor and an 
+attorney, as the best method to resolve his debts","He chose this course of action, based on advice from his financial counselor and an 
+attorney, as the best method to resolve his debts."
+pilot-18-blind,blind,AG ¶ 20(d),11505,11604,"paying $370 per 
+month into his court-approved Chapter 13 wage-earner’s plan to resolve those debts","These positions provide him 
+with sufficient income to meet all of his regular monthly expenses while paying $370 per 
+month into his court-approved Chapter 13 wage-earner’s plan to resolve those debts."
+pilot-18-blind,blind,AG ¶ 20(e),12205,12251,He did not dispute the legitimacy of his debts,"He did not dispute the legitimacy of his debts, so AG ¶ 20(e) does not apply."
+pilot-19-citation,citation,AG ¶ 19(a),14628,14759,"Applicant, by his own admission, and supported by the documentary
+evidence, had four delinquent accounts that he could not resolve.","Applicant, by his own admission, and supported by the documentary
+evidence, had four delinquent accounts that he could not resolve."
+pilot-19-citation,citation,AG ¶ 19(c),14628,14759,"Applicant, by his own admission, and supported by the documentary
+evidence, had four delinquent accounts that he could not resolve.","Applicant, by his own admission, and supported by the documentary
+evidence, had four delinquent accounts that he could not resolve."
+pilot-19-citation,citation,AG ¶ 20(a),15613,15696,"The evidence shows that both of the above mitigating conditions apply to
+Applicant.","The evidence shows that both of the above mitigating conditions apply to
+Applicant."
+pilot-19-citation,citation,AG ¶ 20(b),15697,15984,"It appears that the vast majority of this debt was incurred as a result of his
+wife’s very severe illness, the depression that she suffered due to the diagnosis of an
+inoperable brain tumor, and her decision to hide from Applicant the true extent of the
+debt situation for several years.","It appears that the vast majority of this debt was incurred as a result of his
+wife’s very severe illness, the depression that she suffered due to the diagnosis of an
+inoperable brain tumor, and her decision to hide from Applicant the true extent of the
+debt situation for several years."
+pilot-19-citation,citation,AG ¶ 20(c),16584,16632,Applicant has not received financial counseling.,"May 21, 2008).
+7
+Applicant has not received financial counseling."
+pilot-19-citation,citation,AG ¶ 20(d),16042,16225,"Applicant and his wife have worked diligently over many years to resolve the
+debts, consistently paying the original creditors or the successor collection agencies on
+a regular basis.","Applicant and his wife have worked diligently over many years to resolve the
+debts, consistently paying the original creditors or the successor collection agencies on
+a regular basis."
+pilot-19-blind,blind,AG ¶ 19(a),14628,14759,"Applicant, by his own admission, and supported by the documentary
+evidence, had four delinquent accounts that he could not resolve.","Applicant, by his own admission, and supported by the documentary
+evidence, had four delinquent accounts that he could not resolve."
+pilot-19-blind,blind,AG ¶ 19(c),14628,14759,"Applicant, by his own admission, and supported by the documentary
+evidence, had four delinquent accounts that he could not resolve.","Applicant, by his own admission, and supported by the documentary
+evidence, had four delinquent accounts that he could not resolve."
+pilot-19-blind,blind,AG ¶ 20(a),18844,18941,"Based on the record, I find that there have been permanent behavioral changes under
+AG ¶ 2(a)(6).","Based on the record, I find that there have been permanent behavioral changes under
+AG ¶ 2(a)(6)."
+pilot-19-blind,blind,AG ¶ 20(b),15697,15802,"It appears that the vast majority of this debt was incurred as a result of his
+wife’s very severe illness","It appears that the vast majority of this debt was incurred as a result of his
+wife’s very severe illness, the depression that she suffered due to the diagnosis of an
+inoperable brain tumor, and her decision to hide from Applicant the true extent of the
+debt situation for several years."
+pilot-19-blind,blind,AG ¶ 20(b),15985,16041,"The loss of her job income also had a tremendous
+impact.","The loss of her job income also had a tremendous
+impact."
+pilot-19-blind,blind,AG ¶ 20(c),16584,16632,Applicant has not received financial counseling.,"May 21, 2008).
+7
+Applicant has not received financial counseling."
+pilot-19-blind,blind,AG ¶ 20(d),16042,16225,"Applicant and his wife have worked diligently over many years to resolve the
+debts, consistently paying the original creditors or the successor collection agencies on
+a regular basis.","Applicant and his wife have worked diligently over many years to resolve the
+debts, consistently paying the original creditors or the successor collection agencies on
+a regular basis."
+pilot-20-citation,citation,AG ¶ 19(a),10790,10896,"Applicant’s admissions and the credit report establish two disqualifying conditions 
+under this guideline.","May 1, 2012). 
+ 
+
+ 
+5 
+ 
+Applicant’s admissions and the credit report establish two disqualifying conditions 
+under this guideline.17 He has not provided evidence to support any of the potentially 
+applicable mitigating factors.18 Therefore, I conclude that Applicant has not mitigated the 
+security concerns raised by his failure to pay delinquent debts."
+pilot-20-citation,citation,AG ¶ 19(c),10790,10896,"Applicant’s admissions and the credit report establish two disqualifying conditions 
+under this guideline.","May 1, 2012). 
+ 
+
+ 
+5 
+ 
+Applicant’s admissions and the credit report establish two disqualifying conditions 
+under this guideline.17 He has not provided evidence to support any of the potentially 
+applicable mitigating factors.18 Therefore, I conclude that Applicant has not mitigated the 
+security concerns raised by his failure to pay delinquent debts."
+pilot-20-citation,citation,AG ¶ 20(a),10899,10993,"He has not provided evidence to support any of the potentially 
+applicable mitigating factors.","May 1, 2012). 
+ 
+
+ 
+5 
+ 
+Applicant’s admissions and the credit report establish two disqualifying conditions 
+under this guideline.17 He has not provided evidence to support any of the potentially 
+applicable mitigating factors.18 Therefore, I conclude that Applicant has not mitigated the 
+security concerns raised by his failure to pay delinquent debts."
+pilot-20-citation,citation,AG ¶ 20(b),10899,10993,"He has not provided evidence to support any of the potentially 
+applicable mitigating factors.","May 1, 2012). 
+ 
+
+ 
+5 
+ 
+Applicant’s admissions and the credit report establish two disqualifying conditions 
+under this guideline.17 He has not provided evidence to support any of the potentially 
+applicable mitigating factors.18 Therefore, I conclude that Applicant has not mitigated the 
+security concerns raised by his failure to pay delinquent debts."
+pilot-20-citation,citation,AG ¶ 20(c),10899,10993,"He has not provided evidence to support any of the potentially 
+applicable mitigating factors.","May 1, 2012). 
+ 
+
+ 
+5 
+ 
+Applicant’s admissions and the credit report establish two disqualifying conditions 
+under this guideline.17 He has not provided evidence to support any of the potentially 
+applicable mitigating factors.18 Therefore, I conclude that Applicant has not mitigated the 
+security concerns raised by his failure to pay delinquent debts."
+pilot-20-citation,citation,AG ¶ 20(d),10996,11120,"Therefore, I conclude that Applicant has not mitigated the 
+security concerns raised by his failure to pay delinquent debts.","May 1, 2012). 
+ 
+
+ 
+5 
+ 
+Applicant’s admissions and the credit report establish two disqualifying conditions 
+under this guideline.17 He has not provided evidence to support any of the potentially 
+applicable mitigating factors.18 Therefore, I conclude that Applicant has not mitigated the 
+security concerns raised by his failure to pay delinquent debts."
+pilot-20-blind,blind,AG ¶ 19(c),10996,11119,"Therefore, I conclude that Applicant has not mitigated the 
+security concerns raised by his failure to pay delinquent debts","May 1, 2012). 
+ 
+
+ 
+5 
+ 
+Applicant’s admissions and the credit report establish two disqualifying conditions 
+under this guideline.17 He has not provided evidence to support any of the potentially 
+applicable mitigating factors.18 Therefore, I conclude that Applicant has not mitigated the 
+security concerns raised by his failure to pay delinquent debts."
+pilot-21-citation,citation,AG ¶ 19(a),12984,13022,Applicant was unable to pay his debts.,Applicant was unable to pay his debts.
+pilot-21-citation,citation,AG ¶ 19(c),14197,14261,"Applicant petitioned for 
+Chapter 7 bankruptcy in December 2020.","Applicant petitioned for 
+Chapter 7 bankruptcy in December 2020."
+pilot-21-citation,citation,AG ¶ 20(a),15406,15494,"They do not cast doubt on his current reliability, 
+trustworthiness, and goopd judgment.","They do not cast doubt on his current reliability, 
+trustworthiness, and goopd judgment."
+pilot-21-citation,citation,AG ¶ 20(b),15196,15405,"I 
+find that Applicant’s financial difficulties were the result of conditions that were largely 
+beyond his control, and that he acted responsibly under the circumstances by resolving 
+them through bankruptcy.","I 
+find that Applicant’s financial difficulties were the result of conditions that were largely 
+beyond his control, and that he acted responsibly under the circumstances by resolving 
+them through bankruptcy."
+pilot-21-blind,blind,AG ¶ 19(a),12984,13022,Applicant was unable to pay his debts.,Applicant was unable to pay his debts.
+pilot-21-blind,blind,AG ¶ 20(b),13969,14072,"Conditions beyond Applicant’s control, as previously discussed, contributed to 
+his financial problems.","Conditions beyond Applicant’s control, as previously discussed, contributed to 
+his financial problems."
+pilot-21-blind,blind,AG ¶ 20(b),15196,15311,"I 
+find that Applicant’s financial difficulties were the result of conditions that were largely 
+beyond his control","I 
+find that Applicant’s financial difficulties were the result of conditions that were largely 
+beyond his control, and that he acted responsibly under the circumstances by resolving 
+them through bankruptcy."
+pilot-21-blind,blind,AG ¶ 20(d),14197,14261,"Applicant petitioned for 
+Chapter 7 bankruptcy in December 2020.","Applicant petitioned for 
+Chapter 7 bankruptcy in December 2020."
+pilot-22-citation,citation,AG ¶ 19(a),15490,15574,"Applicant’s has multiple delinquent 
+debts, and she did not provide documented proof","Applicant’s has multiple delinquent 
+debts, and she did not provide documented proof to substantiate the basis of any 
+disputed debts and evidence of actions to resolve the dispute."
+pilot-22-citation,citation,AG ¶ 19(c),12840,12935,"Several of Applicant’s 
+debts became delinquent more than ten years ago after her husband died.","Several of Applicant’s 
+debts became delinquent more than ten years ago after her husband died."
+pilot-22-citation,citation,AG ¶ 20(a),22405,22520,"These 
+circumstances largely beyond her control are unlikely to recur now that she has 
+employment in the mailroom.","These 
+circumstances largely beyond her control are unlikely to recur now that she has 
+employment in the mailroom."
+pilot-22-citation,citation,AG ¶ 20(b),18268,18395,"Applicant’s illness, the death of her husband, underemployment, and 
+unemployment are circumstances largely beyond her control.","Applicant’s illness, the death of her husband, underemployment, and 
+unemployment are circumstances largely beyond her control."
+pilot-22-citation,citation,AG ¶ 20(c),18125,18260,"Although she did not receive financial counseling, there are clear indications that 
+the problem is being resolved or is under control.","Although she did not receive financial counseling, there are clear indications that 
+the problem is being resolved or is under control."
+pilot-22-citation,citation,AG ¶ 20(d),17970,18043,"She paid about $600 to address her medical debts in the last six 
+months.","She paid about $600 to address her medical debts in the last six 
+months."
+pilot-22-citation,citation,AG ¶ 20(e),15538,15623,"she did not provide documented proof to substantiate the basis of any 
+disputed debts","Applicant’s has multiple delinquent 
+debts, and she did not provide documented proof to substantiate the basis of any 
+disputed debts and evidence of actions to resolve the dispute."
+pilot-22-blind,blind,AG ¶ 19(a),12936,13033,"Her SOR 
+alleges 13 delinquent debts, totaling $18,538, and foreclosure of her residence in 2009.","Her SOR 
+alleges 13 delinquent debts, totaling $18,538, and foreclosure of her residence in 2009."
+pilot-22-blind,blind,AG ¶ 19(c),12840,12935,"Several of Applicant’s 
+debts became delinquent more than ten years ago after her husband died.","Several of Applicant’s 
+debts became delinquent more than ten years ago after her husband died."
+pilot-22-blind,blind,AG ¶ 20(a),19253,19456,"Circumstances beyond her 
+control adversely affected her finances, and now that she is employed in the mailroom, 
+she is addressing her delinquent debts, and her financial problems are unlikely to recur.","Circumstances beyond her 
+control adversely affected her finances, and now that she is employed in the mailroom, 
+she is addressing her delinquent debts, and her financial problems are unlikely to recur."
+pilot-22-blind,blind,AG ¶ 20(b),18268,18395,"Applicant’s illness, the death of her husband, underemployment, and 
+unemployment are circumstances largely beyond her control.","Applicant’s illness, the death of her husband, underemployment, and 
+unemployment are circumstances largely beyond her control."
+pilot-22-blind,blind,AG ¶ 20(c),18125,18174,Although she did not receive financial counseling,"Although she did not receive financial counseling, there are clear indications that 
+the problem is being resolved or is under control."
+pilot-22-blind,blind,AG ¶ 20(d),17970,18043,"She paid about $600 to address her medical debts in the last six 
+months.","She paid about $600 to address her medical debts in the last six 
+months."
+pilot-22-blind,blind,AG ¶ 20(e),15490,15557,"Applicant’s has multiple delinquent 
+debts, and she did not provide","Applicant’s has multiple delinquent 
+debts, and she did not provide documented proof to substantiate the basis of any 
+disputed debts and evidence of actions to resolve the dispute."
+pilot-23-citation,citation,AG ¶ 19(b),10757,10880,"Applicant
+has been capable of repaying some or all of his original debt over the past six years, but
+has not tried to do so","But the total owed, in this case, is secondary to the fact that Applicant
+has been capable of repaying some or all of his original debt over the past six years, but
+has not tried to do so."
+pilot-23-citation,citation,AG ¶ 19(c),10332,10427,"Since 2008, Applicant has owed between $11,000, the total of the debts he
+disclosed in his EQIP","Since 2008, Applicant has owed between $11,000, the total of the debts he
+disclosed in his EQIP, and $31,491, the total of all of the delinquent debts attributed to
+him in the Government’s credit reports."
+pilot-23-citation,citation,AG ¶ 20(a),13009,13108,"Although his financial problems arose through unexpected circumstances that are not
+likely to recur","Although his financial problems arose through unexpected circumstances that are not
+likely to recur, his failure to act in response to his debts for the past six years, and
+decision that he will not pay debts because they have been charged off, preclude
+application of AG ¶ 20(b)."
+pilot-23-citation,citation,AG ¶ 20(d),13348,13437,"there has been no effort, in good faith or otherwise, to resolve his past-due obligations","For the same reasons, AG ¶¶ 20(c) and (d) do not apply as
+there has been no effort, in good faith or otherwise, to resolve his past-due obligations."
+pilot-23-citation,citation,AG ¶ 20(e),13551,13590,He cannot now dispute their legitimacy.,He cannot now dispute their legitimacy.
+pilot-23-citation,citation,AG ¶ 20(f),13625,13761,"Applicant claimed his finances are sound but gave no information
+explaining a large credit card balance on his most recent credit report","Finally, Applicant claimed his finances are sound but gave no information
+explaining a large credit card balance on his most recent credit report, or why he has
+only $500 remaining each month despite earning nearly $200,000 annually."
+pilot-23-blind,blind,AG ¶ 19(a),10757,10881,"Applicant
+has been capable of repaying some or all of his original debt over the past six years, but
+has not tried to do so.","But the total owed, in this case, is secondary to the fact that Applicant
+has been capable of repaying some or all of his original debt over the past six years, but
+has not tried to do so."
+pilot-23-blind,blind,AG ¶ 19(b),10968,11134,"Instead, he has taken the position that because a debt has been
+charged off, and unless someone is actively trying to collect from him, he will not repay
+such a debt.","Instead, he has taken the position that because a debt has been
+charged off, and unless someone is actively trying to collect from him, he will not repay
+such a debt."
+pilot-23-blind,blind,AG ¶ 19(c),10332,10536,"Since 2008, Applicant has owed between $11,000, the total of the debts he
+disclosed in his EQIP, and $31,491, the total of all of the delinquent debts attributed to
+him in the Government’s credit reports.","Since 2008, Applicant has owed between $11,000, the total of the debts he
+disclosed in his EQIP, and $31,491, the total of all of the delinquent debts attributed to
+him in the Government’s credit reports."
+pilot-23-blind,blind,AG ¶ 19(e),13625,13761,"Applicant claimed his finances are sound but gave no information
+explaining a large credit card balance on his most recent credit report","Finally, Applicant claimed his finances are sound but gave no information
+explaining a large credit card balance on his most recent credit report, or why he has
+only $500 remaining each month despite earning nearly $200,000 annually."
+pilot-23-blind,blind,AG ¶ 20(a),12902,13008,"Applicant’s financial
+problems are ongoing in view of his failure to take any action to resolve his debts.","As to AG ¶ 20(a), Applicant’s financial
+problems are ongoing in view of his failure to take any action to resolve his debts."
+pilot-23-blind,blind,AG ¶ 20(b),13009,13108,"Although his financial problems arose through unexpected circumstances that are not
+likely to recur","Although his financial problems arose through unexpected circumstances that are not
+likely to recur, his failure to act in response to his debts for the past six years, and
+decision that he will not pay debts because they have been charged off, preclude
+application of AG ¶ 20(b)."
+pilot-23-blind,blind,AG ¶ 20(d),13348,13437,"there has been no effort, in good faith or otherwise, to resolve his past-due obligations","For the same reasons, AG ¶¶ 20(c) and (d) do not apply as
+there has been no effort, in good faith or otherwise, to resolve his past-due obligations."
+pilot-23-blind,blind,AG ¶ 20(e),13445,13550,"Applicant has chosen not to inquire about his civil judgments or several other
+debts attributable to him.","Also, Applicant has chosen not to inquire about his civil judgments or several other
+debts attributable to him."
+pilot-24-citation,citation,AG ¶ 19(a),12076,12131,"Applicant owes 24 debts 
+totaling approximately $60,405","The SOR alleges and the evidence establishes that Applicant owes 24 debts 
+totaling approximately $60,405."
+pilot-24-citation,citation,AG ¶ 19(c),12133,12214,"These debts have been ongoing for several years and 
+remain unpaid or unresolved.","These debts have been ongoing for several years and 
+remain unpaid or unresolved."
+pilot-24-citation,citation,AG ¶ 20(a),13677,13815,"Her financial problems are ongoing, and her evidence fails to show 
+they occurred under such circumstances that they are unlikely to recur","Her financial problems are ongoing, and her evidence fails to show 
+they occurred under such circumstances that they are unlikely to recur and do not cast 
+doubt on Applicant's current reliability, trustworthiness, or good judgment."
+pilot-24-citation,citation,AG ¶ 20(b),13943,14142,"Applicant presented some evidence to establish circumstances beyond her 
+control contributing to her inability to pay her debts such as her divorce from her second 
+husband and various medical bills.","Applicant presented some evidence to establish circumstances beyond her 
+control contributing to her inability to pay her debts such as her divorce from her second 
+husband and various medical bills."
+pilot-24-citation,citation,AG ¶ 20(c),14608,14759,"Applicant did not receive financial counseling 
+and there are no clear indications that her financial problems are being resolved or are 
+under control","AG ¶ 20(c) does not apply because Applicant did not receive financial counseling 
+and there are no clear indications that her financial problems are being resolved or are 
+under control."
+pilot-24-citation,citation,AG ¶ 20(d),14417,14531,"that she made good-faith efforts to 
+resolve her debts, or that she has a track record of financial responsibility","Notwithstanding, Applicant’s presented little or no documentary evidence showing that 
+she acted responsibly in the acquisition of her debts, that she made good-faith efforts to 
+resolve her debts, or that she has a track record of financial responsibility."
+pilot-24-blind,blind,AG ¶ 19(a),14143,14273,"Applicant’s medical problems, lack of insurance, and 
+reduction in income no doubt contributed, in part, to her current situation.","Applicant’s medical problems, lack of insurance, and 
+reduction in income no doubt contributed, in part, to her current situation."
+pilot-24-blind,blind,AG ¶ 19(b),17059,17149,"Her failure to address 
+the remaining SOR debts indicates she is financially overextended.","Her failure to address 
+the remaining SOR debts indicates she is financially overextended."
+pilot-24-blind,blind,AG ¶ 19(c),12133,12214,"These debts have been ongoing for several years and 
+remain unpaid or unresolved.","These debts have been ongoing for several years and 
+remain unpaid or unresolved."
+pilot-24-blind,blind,AG ¶ 19(e),14761,14872,"Considering the number of delinquent debts, the date the debts were 
+acquired, the aggregate value of the debts","Considering the number of delinquent debts, the date the debts were 
+acquired, the aggregate value of the debts, and the limited evidence of efforts to resolve 
+her financial obligations, Applicant’s information is insufficient to establish that her 
+financial problems are unlikely to recur."
+pilot-24-blind,blind,AG ¶ 20(a),13677,13749,"Her financial problems are ongoing, and her evidence fails to show 
+they","Her financial problems are ongoing, and her evidence fails to show 
+they occurred under such circumstances that they are unlikely to recur and do not cast 
+doubt on Applicant's current reliability, trustworthiness, or good judgment."
+pilot-24-blind,blind,AG ¶ 20(b),13943,14142,"Applicant presented some evidence to establish circumstances beyond her 
+control contributing to her inability to pay her debts such as her divorce from her second 
+husband and various medical bills.","Applicant presented some evidence to establish circumstances beyond her 
+control contributing to her inability to pay her debts such as her divorce from her second 
+husband and various medical bills."
+pilot-24-blind,blind,AG ¶ 20(c),14608,14760,"Applicant did not receive financial counseling 
+and there are no clear indications that her financial problems are being resolved or are 
+under control.","AG ¶ 20(c) does not apply because Applicant did not receive financial counseling 
+and there are no clear indications that her financial problems are being resolved or are 
+under control."
+pilot-24-blind,blind,AG ¶ 20(d),14417,14471,"that she made good-faith efforts to 
+resolve her debts","Notwithstanding, Applicant’s presented little or no documentary evidence showing that 
+she acted responsibly in the acquisition of her debts, that she made good-faith efforts to 
+resolve her debts, or that she has a track record of financial responsibility."
+pilot-25-citation,citation,AG ¶ 19(a),9669,9741,"When the SOR was issued, many of those debts had not yet 
+been resolved.","When the SOR was issued, many of those debts had not yet 
+been resolved."
+pilot-25-citation,citation,AG ¶ 20(a),11868,11969,"Applicant’s finances 
+are currently sound and it appears unlikely such financial problems will recur.","Applicant’s finances 
+are currently sound and it appears unlikely such financial problems will recur."
+pilot-25-citation,citation,AG ¶ 20(b),11092,11194,"Applicant established 
+that his debts arose entirely from events and circumstances beyond his control.","By contrast, Applicant established 
+that his debts arose entirely from events and circumstances beyond his control."
+pilot-25-citation,citation,AG ¶ 20(b),11487,11567,"Applicant acted responsibly and promptly to 
+change his financial circumstances.","In response to his ex-wife’s actions, Applicant acted responsibly and promptly to 
+change his financial circumstances."
+pilot-25-citation,citation,AG ¶ 20(d),11752,11867,"Applicant has spent most of the past three 
+years resolving all of the debts in which he had no part in generating.","After gaining 
+steady employment in the defense industry, Applicant has spent most of the past three 
+years resolving all of the debts in which he had no part in generating."
+pilot-25-citation,citation,AG ¶ 20(e),11568,11626,"The couple separated and Applicant closed their 
+accounts.","The couple separated and Applicant closed their 
+accounts."
+pilot-25-blind,blind,AG ¶ 19(c),9564,9668,"The Government established that the delinquent debts alleged in the SOR were 
+attributable to Applicant.","The “clearly consistent with the national 
+interest” standard compels resolution of any reasonable doubt about an applicant’s 
+suitability for access in favor of the Government.7 
+ 
+Analysis 
+ 
+Financial Considerations  
+ 
+ 
+The Government established that the delinquent debts alleged in the SOR were 
+attributable to Applicant."
+pilot-25-blind,blind,AG ¶ 20(a),11868,11969,"Applicant’s finances 
+are currently sound and it appears unlikely such financial problems will recur.","Applicant’s finances 
+are currently sound and it appears unlikely such financial problems will recur."
+pilot-25-blind,blind,AG ¶ 20(b),11079,11194,"By contrast, Applicant established 
+that his debts arose entirely from events and circumstances beyond his control.","By contrast, Applicant established 
+that his debts arose entirely from events and circumstances beyond his control."
+pilot-25-blind,blind,AG ¶ 20(b),11449,11567,"In response to his ex-wife’s actions, Applicant acted responsibly and promptly to 
+change his financial circumstances.","In response to his ex-wife’s actions, Applicant acted responsibly and promptly to 
+change his financial circumstances."
+pilot-25-blind,blind,AG ¶ 20(d),11694,11867,"After gaining 
+steady employment in the defense industry, Applicant has spent most of the past three 
+years resolving all of the debts in which he had no part in generating.","After gaining 
+steady employment in the defense industry, Applicant has spent most of the past three 
+years resolving all of the debts in which he had no part in generating."
+pilot-26-citation,citation,AG ¶ 19(a),7695,7762,"The debts alleged in the other SOR delinquencies
+remain outstanding","The debts alleged in the other SOR delinquencies
+remain outstanding and trigger the application of AG ¶ 19(a), “inability or unwillingness
+to satisfy debts,” and AG ¶ 19(c), “a history of not meeting financial obligations.”"
+pilot-26-citation,citation,AG ¶ 19(c),7695,7762,"The debts alleged in the other SOR delinquencies
+remain outstanding","The debts alleged in the other SOR delinquencies
+remain outstanding and trigger the application of AG ¶ 19(a), “inability or unwillingness
+to satisfy debts,” and AG ¶ 19(c), “a history of not meeting financial obligations.”"
+pilot-26-citation,citation,AG ¶ 20(b),10651,10730,Applicant’s financial problems were caused by circumstances beyond his control.,Applicant’s financial problems were caused by circumstances beyond his control.
+pilot-26-citation,citation,AG ¶ 20(d),8915,9088,"Unable to satisfy his delinquent debt, Applicant
+decided to file for Chapter 7 bankruptcy and gradually saved money each month over a
+two-year period for the attorney’s fee.","Unable to satisfy his delinquent debt, Applicant
+decided to file for Chapter 7 bankruptcy and gradually saved money each month over a
+two-year period for the attorney’s fee."
+pilot-26-citation,citation,AG ¶ 20(c),9654,9733,"Under these circumstances, I cannot conclude that the problem is under
+control.","If a debt is not
+scheduled for discharge and the creditor lacks actual knowledge of the bankruptcy
+case, the bankruptcy court may decide not to discharge it. (11 U.S.C. § 523(a)(3) (1994
+& 1997 Supp)  Under these circumstances, I cannot conclude that the problem is under
+control."
+pilot-26-blind,blind,AG ¶ 19(a),7695,7762,"The debts alleged in the other SOR delinquencies
+remain outstanding","The debts alleged in the other SOR delinquencies
+remain outstanding and trigger the application of AG ¶ 19(a), “inability or unwillingness
+to satisfy debts,” and AG ¶ 19(c), “a history of not meeting financial obligations.”"
+pilot-26-blind,blind,AG ¶ 20(b),8543,8609,Applicant’s financial problems began when he lost his job in 2006.,Applicant’s financial problems began when he lost his job in 2006.
+pilot-26-blind,blind,AG ¶ 20(b),10651,10730,Applicant’s financial problems were caused by circumstances beyond his control.,Applicant’s financial problems were caused by circumstances beyond his control.
+pilot-26-blind,blind,AG ¶ 20(c),9654,9733,"Under these circumstances, I cannot conclude that the problem is under
+control.","If a debt is not
+scheduled for discharge and the creditor lacks actual knowledge of the bankruptcy
+case, the bankruptcy court may decide not to discharge it. (11 U.S.C. § 523(a)(3) (1994
+& 1997 Supp)  Under these circumstances, I cannot conclude that the problem is under
+control."
+pilot-26-blind,blind,AG ¶ 20(d),9118,9205,"Although Applicant’s attorney has drafted the bankruptcy petition, he has not filed
+it.","Although Applicant’s attorney has drafted the bankruptcy petition, he has not filed
+it."
+pilot-27-citation,citation,AG ¶ 19(a),14988,15058,Applicant’s history of financial problems is documented in the record.,Applicant’s history of financial problems is documented in the record.
+pilot-27-citation,citation,AG ¶ 19(c),14988,15058,Applicant’s history of financial problems is documented in the record.,Applicant’s history of financial problems is documented in the record.
+pilot-27-citation,citation,AG ¶ 19(e),19004,19054,purchased a timeshare beyond their financial means,"They fell prey to the high-
+pressure sales tactics and purchased a timeshare beyond their financial means."
+pilot-27-citation,citation,AG ¶ 20(a),17920,18085,"Applicant’s 
+financial problems occurred under circumstances unlikely to recur, and they do not cast 
+doubt on his current reliability, trustworthiness, or judgment.","Applicant’s 
+financial problems occurred under circumstances unlikely to recur, and they do not cast 
+doubt on his current reliability, trustworthiness, or judgment."
+pilot-27-citation,citation,AG ¶ 20(b),17654,17919,"Applicant developed 
+financial problems, partially, because of circumstances beyond his control in 2009, 
+which included periods of unemployment, providing financial support for his in-laws, 
+expensive vehicle repairs, and he being the sole provider for his family.","Applicant developed 
+financial problems, partially, because of circumstances beyond his control in 2009, 
+which included periods of unemployment, providing financial support for his in-laws, 
+expensive vehicle repairs, and he being the sole provider for his family."
+pilot-27-citation,citation,AG ¶ 20(c),19496,19572,"He is following a solid source of financial counseling and he has a 
+budget.","He is following a solid source of financial counseling and he has a 
+budget."
+pilot-27-citation,citation,AG ¶ 20(d),19210,19308,"Applicant’s efforts to resolve his debts are somewhat lacking, except for disputing 
+the accounts.","Applicant’s efforts to resolve his debts are somewhat lacking, except for disputing 
+the accounts."
+pilot-27-citation,citation,AG ¶ 20(e),18138,18283,"Applicant documented to the 
+investigator that the account was successfully disputed and removed from Applicants 
+credit report on July 12, 2017.","Concerning the judgment alleged in SOR ¶ 1.b, Applicant documented to the 
+investigator that the account was successfully disputed and removed from Applicants 
+credit report on July 12, 2017."
+pilot-27-blind,blind,AG ¶ 19(a),19773,19828,His earnings should be sufficient to pay for his family,"His earnings should be sufficient to pay for his family’s living 
+expenses and current debts."
+pilot-27-blind,blind,AG ¶ 19(c),15000,15057,history of financial problems is documented in the record,Applicant’s history of financial problems is documented in the record.
+pilot-27-blind,blind,AG ¶ 19(e),19004,19054,purchased a timeshare beyond their financial means,"They fell prey to the high-
+pressure sales tactics and purchased a timeshare beyond their financial means."
+pilot-27-blind,blind,AG ¶ 20(a),17933,17998,financial problems occurred under circumstances unlikely to recur,"Applicant’s 
+financial problems occurred under circumstances unlikely to recur, and they do not cast 
+doubt on his current reliability, trustworthiness, or judgment."
+pilot-27-blind,blind,AG ¶ 20(b),17664,17757,"developed 
+financial problems, partially, because of circumstances beyond his control in 2009","Applicant developed 
+financial problems, partially, because of circumstances beyond his control in 2009, 
+which included periods of unemployment, providing financial support for his in-laws, 
+expensive vehicle repairs, and he being the sole provider for his family."
+pilot-27-blind,blind,AG ¶ 20(c),19496,19550,He is following a solid source of financial counseling,"He is following a solid source of financial counseling and he has a 
+budget."
+pilot-27-blind,blind,AG ¶ 20(d),19222,19307,"efforts to resolve his debts are somewhat lacking, except for disputing 
+the accounts","Applicant’s efforts to resolve his debts are somewhat lacking, except for disputing 
+the accounts."
+pilot-27-blind,blind,AG ¶ 20(e),18185,18265,"the account was successfully disputed and removed from Applicants 
+credit report","Concerning the judgment alleged in SOR ¶ 1.b, Applicant documented to the 
+investigator that the account was successfully disputed and removed from Applicants 
+credit report on July 12, 2017."
+pilot-28-citation,citation,AG ¶ 19(a),12605,12669,"The total approximate balance of the delinquent debt is $25,035.","The total approximate balance of the delinquent debt is $25,035."
+pilot-28-citation,citation,AG ¶ 19(c),14535,14633,"Applicant 
+neglected his other debts although he may not have earned sufficient income to do both.","While Applicant is given credit for timely paying his alimony/child 
+support payments, this mitigating condition is given less weight because Applicant 
+neglected his other debts although he may not have earned sufficient income to do both."
+pilot-28-citation,citation,AG ¶ 20(b),14244,14347,"Applicant’s separation and divorce resulted 
+in a $3,000 monthly payment for alimony and child support.","AG ¶ 20(b) partially applies because Applicant’s separation and divorce resulted 
+in a $3,000 monthly payment for alimony and child support."
+pilot-28-citation,citation,AG ¶ 20(d),14951,15079,"An expressed 
+intention to resolve one’s accounts in the future does not demonstrate a good-faith basis 
+to resolve one’s debts.","An expressed 
+intention to resolve one’s accounts in the future does not demonstrate a good-faith basis 
+to resolve one’s debts."
+pilot-28-citation,citation,AG ¶ 20(e),14686,14790,"Applicant provided no 
+documentation about the status of any of the delinquent debts alleged in the SOR.","Applicant provided no 
+documentation about the status of any of the delinquent debts alleged in the SOR."
+pilot-28-blind,blind,AG ¶ 19(a),12605,12669,"The total approximate balance of the delinquent debt is $25,035.","The total approximate balance of the delinquent debt is $25,035."
+pilot-28-blind,blind,AG ¶ 19(c),14535,14633,"Applicant 
+neglected his other debts although he may not have earned sufficient income to do both.","While Applicant is given credit for timely paying his alimony/child 
+support payments, this mitigating condition is given less weight because Applicant 
+neglected his other debts although he may not have earned sufficient income to do both."
+pilot-28-blind,blind,AG ¶ 20(b),14244,14347,"Applicant’s separation and divorce resulted 
+in a $3,000 monthly payment for alimony and child support.","AG ¶ 20(b) partially applies because Applicant’s separation and divorce resulted 
+in a $3,000 monthly payment for alimony and child support."
+pilot-28-blind,blind,AG ¶ 20(d),15080,15158,"He provided no documentation pertaining to his attempts to 
+resolve the debts.","He provided no documentation pertaining to his attempts to 
+resolve the debts."
+pilot-28-blind,blind,AG ¶ 20(e),15159,15261,"No evidence was provided which would substantiate his assertions that 
+some of the debts were resolved","No evidence was provided which would substantiate his assertions that 
+some of the debts were resolved or evidence of his attempts to resolve the remaining 
+unresolved debts."
+pilot-29-citation,citation,AG ¶ 19(a),21337,21447,"Public trust concerns are raised over Applicant’s accumulation of four delinquent 
+accounts exceeding $19,000.","Analysis 
+Public trust concerns are raised over Applicant’s accumulation of four delinquent 
+accounts exceeding $19,000."
+pilot-29-citation,citation,AG ¶ 19(c),22138,22255,"Her admitted debt delinquencies are fully documented and raise  
+judgment issues over the management of her finances.","Her admitted debt delinquencies are fully documented and raise  
+judgment issues over the management of her finances."
+pilot-29-citation,citation,AG ¶ 20(b),24525,24688,"Applicant’s remaining two SOR-listed debts are relatively small 
+(collectively under $6,000) and are accompanied by both extenuating and mitigating 
+circumstances.","To be sure, Applicant’s remaining two SOR-listed debts are relatively small 
+(collectively under $6,000) and are accompanied by both extenuating and mitigating 
+circumstances."
+pilot-29-citation,citation,AG ¶ 20(d),23970,24111,"Applicant is making progress on one of her accrued delinquent 
+accounts (SOR ¶ 1.c) and has resolved a second debt with a payoff (SOR ¶ 1.d).","To her credit, Applicant is making progress on one of her accrued delinquent 
+accounts (SOR ¶ 1.c) and has resolved a second debt with a payoff (SOR ¶ 1.d)."
+pilot-29-blind,blind,AG ¶ 19(a),21549,21662,"two of them (covered by SOR ¶¶ 1.a and 
+1.b) have not and remain outstanding without any follow up from Applicant","While two of the SOR-listed accounts have either been 
+resolved or are being resolved with payments, two of them (covered by SOR ¶¶ 1.a and 
+1.b) have not and remain outstanding without any follow up from Applicant."
+pilot-29-blind,blind,AG ¶ 19(c),21375,21446,"Applicant’s accumulation of four delinquent 
+accounts exceeding $19,000","Analysis 
+Public trust concerns are raised over Applicant’s accumulation of four delinquent 
+accounts exceeding $19,000."
+pilot-29-blind,blind,AG ¶ 20(a),24525,24687,"Applicant’s remaining two SOR-listed debts are relatively small 
+(collectively under $6,000) and are accompanied by both extenuating and mitigating 
+circumstances","To be sure, Applicant’s remaining two SOR-listed debts are relatively small 
+(collectively under $6,000) and are accompanied by both extenuating and mitigating 
+circumstances."
+pilot-29-blind,blind,AG ¶ 20(d),23970,24110,"Applicant is making progress on one of her accrued delinquent 
+accounts (SOR ¶ 1.c) and has resolved a second debt with a payoff (SOR ¶ 1.d)","To her credit, Applicant is making progress on one of her accrued delinquent 
+accounts (SOR ¶ 1.c) and has resolved a second debt with a payoff (SOR ¶ 1.d)."
+pilot-30-citation,citation,AG ¶ 19(a),13904,13968,"His cable, credit card, and cell phone 
+debts remain unresolved.","His cable, credit card, and cell phone 
+debts remain unresolved."
+pilot-30-citation,citation,AG ¶ 19(c),13804,13903,"Applicant did not address his other accrued debts, 
+medical and otherwise, until after his hearing.","Applicant did not address his other accrued debts, 
+medical and otherwise, until after his hearing."
+pilot-30-citation,citation,AG ¶ 19(f),14244,14401,"Nonetheless, 
+it was incumbent on Applicant to file at least one tax return that would have informed the 
+IRS that his employer had not provided a Form 1099.","Nonetheless, 
+it was incumbent on Applicant to file at least one tax return that would have informed the 
+IRS that his employer had not provided a Form 1099."
+pilot-30-citation,citation,AG ¶ 20(b),14101,14243,"Applicant’s failure to file his returns was due, in part, to his 
+employer’s failure to provide him the necessary information for his returns.","As to his taxes, Applicant’s failure to file his returns was due, in part, to his 
+employer’s failure to provide him the necessary information for his returns."
+pilot-30-citation,citation,AG ¶ 20(d),14653,14828,"Applicant did not meet his burden of showing that he acted in good-faith to pay 
+any of his debts, or that he has taken any action to resolve his tax reporting 
+discrepancies.","Applicant did not meet his burden of showing that he acted in good-faith to pay 
+any of his debts, or that he has taken any action to resolve his tax reporting 
+discrepancies."
+pilot-30-citation,citation,AG ¶ 20(g),14402,14564,"A reasonable person in 
+Applicant’s position, after not paying taxes for seven years, would at least have 
+contacted the IRS to find out what he should have done.","A reasonable person in 
+Applicant’s position, after not paying taxes for seven years, would at least have 
+contacted the IRS to find out what he should have done."
+pilot-30-blind,blind,AG ¶ 19(b),13969,14079,"Available information shows he has had the means to pay at 
+least some of his debts over the past three years.","Available information shows he has had the means to pay at 
+least some of his debts over the past three years."
+pilot-30-blind,blind,AG ¶ 19(c),13904,13968,"His cable, credit card, and cell phone 
+debts remain unresolved.","His cable, credit card, and cell phone 
+debts remain unresolved."
+pilot-30-blind,blind,AG ¶ 19(f),14402,14564,"A reasonable person in 
+Applicant’s position, after not paying taxes for seven years, would at least have 
+contacted the IRS to find out what he should have done.","A reasonable person in 
+Applicant’s position, after not paying taxes for seven years, would at least have 
+contacted the IRS to find out what he should have done."
+pilot-30-blind,blind,AG ¶ 20(b),14101,14243,"Applicant’s failure to file his returns was due, in part, to his 
+employer’s failure to provide him the necessary information for his returns.","As to his taxes, Applicant’s failure to file his returns was due, in part, to his 
+employer’s failure to provide him the necessary information for his returns."
+pilot-30-blind,blind,AG ¶ 20(d),14653,14750,"Applicant did not meet his burden of showing that he acted in good-faith to pay 
+any of his debts","Applicant did not meet his burden of showing that he acted in good-faith to pay 
+any of his debts, or that he has taken any action to resolve his tax reporting 
+discrepancies."
+pilot-30-blind,blind,AG ¶ 20(g),14752,14828,"or that he has taken any action to resolve his tax reporting 
+discrepancies.","Applicant did not meet his burden of showing that he acted in good-faith to pay 
+any of his debts, or that he has taken any action to resolve his tax reporting 
+discrepancies."
+pilot-31-citation,citation,AG ¶ 19(c),12553,12622,Applicant has a history of problems with meeting his tax obligations.,Applicant has a history of problems with meeting his tax obligations.
+pilot-31-citation,citation,AG ¶ 19(f),12623,12732,"He failed to 
+timely file eight years of federal income tax returns, and he has delinquent federal tax 
+debt.","He failed to 
+timely file eight years of federal income tax returns, and he has delinquent federal tax 
+debt."
+pilot-31-citation,citation,AG ¶ 20(a),17634,17731,"He therefore has not shown reform and rehabilitation, or a track record of 
+voluntary compliance.","He therefore has not shown reform and rehabilitation, or a track record of 
+voluntary compliance."
+pilot-31-citation,citation,AG ¶ 20(b),15683,15795,"Accordingly, Applicant’s tax filing and payment 
+delinquencies were not due to circumstances beyond his control.","Accordingly, Applicant’s tax filing and payment 
+delinquencies were not due to circumstances beyond his control."
+pilot-31-citation,citation,AG ¶ 20(d),17059,17189,"The timing of these efforts undermines any claims that he was acting in good 
+faith or acting responsibly under the circumstances.","The timing of these efforts undermines any claims that he was acting in good 
+faith or acting responsibly under the circumstances."
+pilot-31-citation,citation,AG ¶ 20(g),17439,17498,"there is no 
+evidence of a payment arrangement with the IRS","However, he still has outstanding tax debts, and there is no 
+evidence of a payment arrangement with the IRS."
+pilot-31-blind,blind,AG ¶ 19(c),12553,12622,Applicant has a history of problems with meeting his tax obligations.,Applicant has a history of problems with meeting his tax obligations.
+pilot-31-blind,blind,AG ¶ 19(f),12623,12732,"He failed to 
+timely file eight years of federal income tax returns, and he has delinquent federal tax 
+debt.","He failed to 
+timely file eight years of federal income tax returns, and he has delinquent federal tax 
+debt."
+pilot-31-blind,blind,AG ¶ 20(a),17907,18000,"Applicant’s failures to comply with his federal tax obligations 
+continue to cast doubt on hi","Applicant’s failures to comply with his federal tax obligations 
+continue to cast doubt on his current reliability, trustworthiness, and good judgment."
+pilot-31-blind,blind,AG ¶ 20(b),15683,15795,"Accordingly, Applicant’s tax filing and payment 
+delinquencies were not due to circumstances beyond his control.","Accordingly, Applicant’s tax filing and payment 
+delinquencies were not due to circumstances beyond his control."
+pilot-31-blind,blind,AG ¶ 20(c),17817,17906,"I am unable to find that his financial problems are under control or 
+are being resolved.","For these reasons and his return to a reliance on his wife to 
+monitor his finances, I am unable to find that his financial problems are under control or 
+are being resolved."
+pilot-31-blind,blind,AG ¶ 20(d),16176,16317,"While Applicant has arguably remedied his late income tax return filings and has 
+made some sporadic payments on his delinquent federal taxes","While Applicant has arguably remedied his late income tax return filings and has 
+made some sporadic payments on his delinquent federal taxes, he began these efforts 
+after being put on notice that his failure on these fronts might interfere with his ability to 
+hold a security clearance."
+pilot-31-blind,blind,AG ¶ 20(g),17439,17498,"there is no 
+evidence of a payment arrangement with the IRS","However, he still has outstanding tax debts, and there is no 
+evidence of a payment arrangement with the IRS."
+pilot-32-citation,citation,AG ¶ 19(c),10499,10564,Applicant has delinquent debts that remain unpaid and unresolved.,Applicant has delinquent debts that remain unpaid and unresolved.
+pilot-32-citation,citation,AG ¶ 20(a),12134,12232,"He did not provide sufficient 
+evidence to show that his financial problems are unlikely to recur.","He did not provide sufficient 
+evidence to show that his financial problems are unlikely to recur."
+pilot-32-citation,citation,AG ¶ 20(b),12261,12356,"Applicant presented evidence that periods of unemployment contributed to his 
+delinquent debts.","Applicant presented evidence that periods of unemployment contributed to his 
+delinquent debts."
+pilot-32-citation,citation,AG ¶ 20(b),12357,12497,"He did not present sufficient evidence to show that his subsequent 
+actions to deal with his debts were responsible under the circumstances.","He did not present sufficient evidence to show that his subsequent 
+actions to deal with his debts were responsible under the circumstances."
+pilot-32-citation,citation,AG ¶ 20(c),12673,12817,"There is 
+some evidence of financial counseling, but there is insufficient evidence to show that the 
+debts are under control or being resolved.","There is 
+some evidence of financial counseling, but there is insufficient evidence to show that the 
+debts are under control or being resolved."
+pilot-32-citation,citation,AG ¶ 20(d),12848,12963,"His token 
+payments with no follow-on payments do not establish a good-faith effort to repay or 
+resolve his debts.","His token 
+payments with no follow-on payments do not establish a good-faith effort to repay or 
+resolve his debts."
+pilot-32-citation,citation,AG ¶ 20(e),12991,13051,"There was no evidence presented 
+disputing any of the debts.","There was no evidence presented 
+disputing any of the debts."
+pilot-32-blind,blind,AG ¶ 19(c),10499,10564,Applicant has delinquent debts that remain unpaid and unresolved.,Applicant has delinquent debts that remain unpaid and unresolved.
+pilot-32-blind,blind,AG ¶ 20(a),12134,12232,"He did not provide sufficient 
+evidence to show that his financial problems are unlikely to recur.","He did not provide sufficient 
+evidence to show that his financial problems are unlikely to recur."
+pilot-32-blind,blind,AG ¶ 20(b),12357,12497,"He did not present sufficient evidence to show that his subsequent 
+actions to deal with his debts were responsible under the circumstances.","He did not present sufficient evidence to show that his subsequent 
+actions to deal with his debts were responsible under the circumstances."
+pilot-32-blind,blind,AG ¶ 20(c),12673,12817,"There is 
+some evidence of financial counseling, but there is insufficient evidence to show that the 
+debts are under control or being resolved.","There is 
+some evidence of financial counseling, but there is insufficient evidence to show that the 
+debts are under control or being resolved."
+pilot-32-blind,blind,AG ¶ 20(d),12848,12963,"His token 
+payments with no follow-on payments do not establish a good-faith effort to repay or 
+resolve his debts.","His token 
+payments with no follow-on payments do not establish a good-faith effort to repay or 
+resolve his debts."
+pilot-32-blind,blind,AG ¶ 20(e),12991,13051,"There was no evidence presented 
+disputing any of the debts.","There was no evidence presented 
+disputing any of the debts."
+pilot-33-citation,citation,AG ¶ 19(a),13927,14027,"Applicant accumulated substantial delinquent debt and was unable 
+or unwilling to pay his creditors.","Applicant accumulated substantial delinquent debt and was unable 
+or unwilling to pay his creditors."
+pilot-33-citation,citation,AG ¶ 19(b),13927,14027,"Applicant accumulated substantial delinquent debt and was unable 
+or unwilling to pay his creditors.","Applicant accumulated substantial delinquent debt and was unable 
+or unwilling to pay his creditors."
+pilot-33-citation,citation,AG ¶ 19(c),15691,15797,"Applicant admitted a history of financial difficulties and inattention to his financial 
+responsibilities.","Applicant admitted a history of financial difficulties and inattention to his financial 
+responsibilities."
+pilot-33-citation,citation,AG ¶ 19(e),16321,16377,"unresolved delinquent debts total approximately $109,000","Applicant’s unresolved delinquent debts total approximately $109,000."
+pilot-33-citation,citation,AG ¶ 20(a),16476,16627,"The record reflects that the eight delinquencies alleged on the SOR remain unsatisfied 
+and have occurred under circumstances that are likely to recur.","The record reflects that the eight delinquencies alleged on the SOR remain unsatisfied 
+and have occurred under circumstances that are likely to recur."
+pilot-33-citation,citation,AG ¶ 20(b),16251,16302,"he did not act responsibly under the 
+circumstances","While Applicant’s financial problems may have been 
+a circumstance initially beyond his control, he did not act responsibly under the 
+circumstances."
+pilot-33-citation,citation,AG ¶ 20(c),18254,18381,"Moreover, Applicant has not had 
+financial counseling, and there is no evidence that his financial situation is under 
+control.","Moreover, Applicant has not had 
+financial counseling, and there is no evidence that his financial situation is under 
+control."
+pilot-33-citation,citation,AG ¶ 20(d),18138,18252,"he failed to address them and to demonstrate that he had 
+made good-faith efforts to satisfy his delinquent debts.","When his wife’s actions caused the couple 
+to have financial difficulties, he failed to address them and to demonstrate that he had 
+made good-faith efforts to satisfy his delinquent debts."
+pilot-33-blind,blind,AG ¶ 19(a),13927,14027,"Applicant accumulated substantial delinquent debt and was unable 
+or unwilling to pay his creditors.","Applicant accumulated substantial delinquent debt and was unable 
+or unwilling to pay his creditors."
+pilot-33-blind,blind,AG ¶ 19(c),15691,15797,"Applicant admitted a history of financial difficulties and inattention to his financial 
+responsibilities.","Applicant admitted a history of financial difficulties and inattention to his financial 
+responsibilities."
+pilot-33-blind,blind,AG ¶ 19(e),16309,16378,"Applicant’s unresolved delinquent debts total approximately $109,000.","Applicant’s unresolved delinquent debts total approximately $109,000."
+pilot-33-blind,blind,AG ¶ 20(a),16476,16627,"The record reflects that the eight delinquencies alleged on the SOR remain unsatisfied 
+and have occurred under circumstances that are likely to recur.","The record reflects that the eight delinquencies alleged on the SOR remain unsatisfied 
+and have occurred under circumstances that are likely to recur."
+pilot-33-blind,blind,AG ¶ 20(b),16154,16249,"While Applicant’s financial problems may have been 
+a circumstance initially beyond his control","While Applicant’s financial problems may have been 
+a circumstance initially beyond his control, he did not act responsibly under the 
+circumstances."
+pilot-33-blind,blind,AG ¶ 20(c),18254,18381,"Moreover, Applicant has not had 
+financial counseling, and there is no evidence that his financial situation is under 
+control.","Moreover, Applicant has not had 
+financial counseling, and there is no evidence that his financial situation is under 
+control."
+pilot-33-blind,blind,AG ¶ 20(d),18138,18252,"he failed to address them and to demonstrate that he had 
+made good-faith efforts to satisfy his delinquent debts.","When his wife’s actions caused the couple 
+to have financial difficulties, he failed to address them and to demonstrate that he had 
+made good-faith efforts to satisfy his delinquent debts."
+pilot-34-citation,citation,AG ¶ 19(c),15204,15304,"Since being steadily employed, he has resolved a child 
+support arrearage and several smaller debts.","Since being steadily employed, he has resolved a child 
+support arrearage and several smaller debts."
+pilot-34-citation,citation,AG ¶ 20(b),14954,15068,"Applicant’s debts are the result of being 
+unemployed for 25 of the 39 months between January 2017 and April 2020.","AG ¶¶ 20(a) and 20(b) apply because Applicant’s debts are the result of being 
+unemployed for 25 of the 39 months between January 2017 and April 2020."
+pilot-34-citation,citation,AG ¶ 20(d),15800,15946,"he has enrolled in an income-based rehabilitation 
+program and is expected to begin payments in October 2023, when the CARES Act 
+moratorium ends.","As to his student loans, he has enrolled in an income-based rehabilitation 
+program and is expected to begin payments in October 2023, when the CARES Act 
+moratorium ends."
+pilot-34-citation,citation,AG ¶ 20(e),15686,15774,"are plausible and likely valid given their absence from his most recent 
+credit reports.","His disputes of two of the debts alleged – 
+5 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+ 
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+                                             
+ 
+ 
+SOR 1.k and 1.l – are plausible and likely valid given their absence from his most recent 
+credit reports."
+pilot-34-blind,blind,AG ¶ 20(b),14954,15068,"Applicant’s debts are the result of being 
+unemployed for 25 of the 39 months between January 2017 and April 2020.","AG ¶¶ 20(a) and 20(b) apply because Applicant’s debts are the result of being 
+unemployed for 25 of the 39 months between January 2017 and April 2020."
+pilot-34-blind,blind,AG ¶ 20(d),15204,15304,"Since being steadily employed, he has resolved a child 
+support arrearage and several smaller debts.","Since being steadily employed, he has resolved a child 
+support arrearage and several smaller debts."
+pilot-34-blind,blind,AG ¶ 20(e),15686,15774,"are plausible and likely valid given their absence from his most recent 
+credit reports.","His disputes of two of the debts alleged – 
+5 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+ 
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+                                             
+ 
+ 
+SOR 1.k and 1.l – are plausible and likely valid given their absence from his most recent 
+credit reports."
+pilot-35-citation,citation,AG ¶ 19(a),11966,12110,"Applicant’s admissions, corroborated by his credit reports and bankruptcy 
+petition, establish two disqualifying conditions under this guideline","Applicant’s admissions, corroborated by his credit reports and bankruptcy 
+petition, establish two disqualifying conditions under this guideline: AG ¶ 19(a) (“inability 
+or unwillingness to satisfy debts”) and AG ¶ 19(c) (“a history of not meeting financial 
+obligations”)."
+pilot-35-citation,citation,AG ¶ 19(c),13391,13445,"Applicant’s delinquent debts are numerous 
+and ongoing","Applicant’s delinquent debts are numerous 
+and ongoing, but the domestic break-up that began his financial problems is unlikely to 
+recur."
+pilot-35-citation,citation,AG ¶ 19(f),13738,13842,"the delay in resolving his income tax debt 
+because of identity theft were conditions beyond his control","Applicant’s domestic break-up in 2007, a short 
+period of unemployment in 2009, the inability of his wife to work because of 
+complications during her pregnancy, and the delay in resolving his income tax debt 
+because of identity theft were conditions beyond his control."
+pilot-35-citation,citation,AG ¶ 19(g),13294,13346,"there are 
+no issues regarding unexplained affluence","Applicant has not disputed any of the debts, and there are 
+no issues regarding unexplained affluence."
+pilot-35-citation,citation,AG ¶ 20(a),13391,13529,"Applicant’s delinquent debts are numerous 
+and ongoing, but the domestic break-up that began his financial problems is unlikely to 
+recur.","Applicant’s delinquent debts are numerous 
+and ongoing, but the domestic break-up that began his financial problems is unlikely to 
+recur."
+pilot-35-citation,citation,AG ¶ 20(b),13572,13842,"Applicant’s domestic break-up in 2007, a short 
+period of unemployment in 2009, the inability of his wife to work because of 
+complications during her pregnancy, and the delay in resolving his income tax debt 
+because of identity theft were conditions beyond his control","Applicant’s domestic break-up in 2007, a short 
+period of unemployment in 2009, the inability of his wife to work because of 
+complications during her pregnancy, and the delay in resolving his income tax debt 
+because of identity theft were conditions beyond his control."
+pilot-35-citation,citation,AG ¶ 20(c),14237,14320,"Applicant has completed the financial counseling 
+required by the bankruptcy court.","Applicant has completed the financial counseling 
+required by the bankruptcy court."
+pilot-35-citation,citation,AG ¶ 20(d),14071,14202,"the payment agreement was initiated by the creditor, not 
+Applicant, and he made no further payments on the debt after January 2009","Even though he made payments on the debt in SOR ¶ 
+1.a for several months, the payment agreement was initiated by the creditor, not 
+Applicant, and he made no further payments on the debt after January 2009."
+pilot-35-citation,citation,AG ¶ 20(e),13245,13288,Applicant has not disputed any of the debts,"Applicant has not disputed any of the debts, and there are 
+no issues regarding unexplained affluence."
+pilot-35-citation,citation,AG ¶ 20(g),16893,16944,"he is 
+working with the IRS to resolve his tax debt","To his credit, he has kept his student loan payments current, and he is 
+working with the IRS to resolve his tax debt."
+pilot-35-blind,blind,AG ¶ 19(a),13391,13445,"Applicant’s delinquent debts are numerous 
+and ongoing","Applicant’s delinquent debts are numerous 
+and ongoing, but the domestic break-up that began his financial problems is unlikely to 
+recur."
+pilot-35-blind,blind,AG ¶ 19(b),16955,17099,"he did not take meaningful or 
+responsible steps to resolve any of the delinquent debts alleged in the SOR until he 
+needed a security clearance","However, he did not take meaningful or 
+responsible steps to resolve any of the delinquent debts alleged in the SOR until he 
+needed a security clearance."
+pilot-35-blind,blind,AG ¶ 19(c),13391,13445,"Applicant’s delinquent debts are numerous 
+and ongoing","Applicant’s delinquent debts are numerous 
+and ongoing, but the domestic break-up that began his financial problems is unlikely to 
+recur."
+pilot-35-blind,blind,AG ¶ 19(g),13294,13346,"there are 
+no issues regarding unexplained affluence","Applicant has not disputed any of the debts, and there are 
+no issues regarding unexplained affluence."
+pilot-35-blind,blind,AG ¶ 20(a),13451,13528,"the domestic break-up that began his financial problems is unlikely to 
+recur","Applicant’s delinquent debts are numerous 
+and ongoing, but the domestic break-up that began his financial problems is unlikely to 
+recur."
+pilot-35-blind,blind,AG ¶ 20(b),13572,13842,"Applicant’s domestic break-up in 2007, a short 
+period of unemployment in 2009, the inability of his wife to work because of 
+complications during her pregnancy, and the delay in resolving his income tax debt 
+because of identity theft were conditions beyond his control","Applicant’s domestic break-up in 2007, a short 
+period of unemployment in 2009, the inability of his wife to work because of 
+complications during her pregnancy, and the delay in resolving his income tax debt 
+because of identity theft were conditions beyond his control."
+pilot-35-blind,blind,AG ¶ 20(c),14237,14320,"Applicant has completed the financial counseling 
+required by the bankruptcy court.","Applicant has completed the financial counseling 
+required by the bankruptcy court."
+pilot-35-blind,blind,AG ¶ 20(d),14071,14202,"the payment agreement was initiated by the creditor, not 
+Applicant, and he made no further payments on the debt after January 2009","Even though he made payments on the debt in SOR ¶ 
+1.a for several months, the payment agreement was initiated by the creditor, not 
+Applicant, and he made no further payments on the debt after January 2009."
+pilot-35-blind,blind,AG ¶ 20(e),13245,13288,Applicant has not disputed any of the debts,"Applicant has not disputed any of the debts, and there are 
+no issues regarding unexplained affluence."
+pilot-35-blind,blind,AG ¶ 20(g),16893,16944,"he is 
+working with the IRS to resolve his tax debt","To his credit, he has kept his student loan payments current, and he is 
+working with the IRS to resolve his tax debt."
+pilot-36-citation,citation,AG ¶ 19(a),17348,17455,"Six months 
+later, she filed for Chapter 13 bankruptcy protection with liabilities totaling almost $70,000.","Six months 
+later, she filed for Chapter 13 bankruptcy protection with liabilities totaling almost $70,000."
+pilot-36-citation,citation,AG ¶ 19(c),17830,17958,"There is no documented history of her making systematic 
+monthly payments to the trustee in accordance with her bankruptcy plan.","There is no documented history of her making systematic 
+monthly payments to the trustee in accordance with her bankruptcy plan."
+pilot-36-citation,citation,AG ¶ 20(b),17457,17576,"I am unable to find that there were conditions beyond Applicant’s control which 
+contributed to her financial problems.","I am unable to find that there were conditions beyond Applicant’s control which 
+contributed to her financial problems."
+pilot-36-citation,citation,AG ¶ 20(d),18059,18142,"She did not provide any correspondence or payment arrangements with her 
+creditors.","She did not provide any correspondence or payment arrangements with her 
+creditors."
+pilot-36-citation,citation,AG ¶ 20(e),20027,20123,"Applicant did not provide documentation of communications with any of her 
+delinquent creditors.","Applicant did not provide documentation of communications with any of her 
+delinquent creditors."
+pilot-36-blind,blind,AG ¶ 19(a),17348,17455,"Six months 
+later, she filed for Chapter 13 bankruptcy protection with liabilities totaling almost $70,000.","Six months 
+later, she filed for Chapter 13 bankruptcy protection with liabilities totaling almost $70,000."
+pilot-36-blind,blind,AG ¶ 19(c),14678,14798,"The record evidence of Applicant’s delinquent debts and her admissions establish 
+the following disqualifying conditions","The record evidence of Applicant’s delinquent debts and her admissions establish 
+the following disqualifying conditions under AG ¶ 19: 
+(a) inability to satisfy debts; and 
+(c) a history of not meeting financial obligations."
+pilot-36-blind,blind,AG ¶ 20(a),17776,17829,"Applicant should have taken 
+this action much sooner.","Although her filing for bankruptcy protection is a step 
+in the right direction in getting her finances under control, Applicant should have taken 
+this action much sooner."
+pilot-36-blind,blind,AG ¶ 20(b),17457,17576,"I am unable to find that there were conditions beyond Applicant’s control which 
+contributed to her financial problems.","I am unable to find that there were conditions beyond Applicant’s control which 
+contributed to her financial problems."
+pilot-36-blind,blind,AG ¶ 20(d),17577,17656,"There is no evidence that she has made any 
+payments to the bankruptcy trustee.","There is no evidence that she has made any 
+payments to the bankruptcy trustee."
+pilot-36-blind,blind,AG ¶ 20(d),18059,18142,"She did not provide any correspondence or payment arrangements with her 
+creditors.","She did not provide any correspondence or payment arrangements with her 
+creditors."
+pilot-37-citation,citation,AG ¶ 19(c),10869,10948,"Applicant incurred $33,494 in debt, identified on his credit report since 2008.","Applicant incurred $33,494 in debt, identified on his credit report since 2008."
+pilot-37-citation,citation,AG ¶ 19(a),11085,11188,"His ongoing pattern and history of inability
+or unwillingness to pay his debts raises security concerns","His ongoing pattern and history of inability
+or unwillingness to pay his debts raises security concerns under DCs 19(a) and (c), and
+shift the burden to Applicant to rebut, extenuate, or mitigate those concerns."
+pilot-37-citation,citation,AG ¶ 20(a),12235,12392,"His recent track record of
+attending to his debts suggests Applicant has matured and that similar financial
+difficulties are unlikely to occur in the future.","His recent track record of
+attending to his debts suggests Applicant has matured and that similar financial
+difficulties are unlikely to occur in the future."
+pilot-37-citation,citation,AG ¶ 20(c),12160,12234,"There are clear
+indications that Applicant is resolving his delinquencies.","There are clear
+indications that Applicant is resolving his delinquencies."
+pilot-37-citation,citation,AG ¶ 20(d),11934,12013,Applicant has initiated a good-faith effort to resolve his delinquent accounts.,Applicant has initiated a good-faith effort to resolve his delinquent accounts.
+pilot-37-blind,blind,AG ¶ 19(a),11015,11084,"He remains indebted to
+three creditors in the total amount of $1,940.","He remains indebted to
+three creditors in the total amount of $1,940."
+pilot-37-blind,blind,AG ¶ 19(c),11085,11188,"His ongoing pattern and history of inability
+or unwillingness to pay his debts raises security concerns","His ongoing pattern and history of inability
+or unwillingness to pay his debts raises security concerns under DCs 19(a) and (c), and
+shift the burden to Applicant to rebut, extenuate, or mitigate those concerns."
+pilot-37-blind,blind,AG ¶ 20(a),12235,12392,"His recent track record of
+attending to his debts suggests Applicant has matured and that similar financial
+difficulties are unlikely to occur in the future.","His recent track record of
+attending to his debts suggests Applicant has matured and that similar financial
+difficulties are unlikely to occur in the future."
+pilot-37-blind,blind,AG ¶ 20(c),12160,12234,"There are clear
+indications that Applicant is resolving his delinquencies.","There are clear
+indications that Applicant is resolving his delinquencies."
+pilot-37-blind,blind,AG ¶ 20(d),11934,12013,Applicant has initiated a good-faith effort to resolve his delinquent accounts.,Applicant has initiated a good-faith effort to resolve his delinquent accounts.
+pilot-38-citation,citation,AG ¶ 19(a),14887,14930,"The
+approximate amount of debt is $440,000.","The
+approximate amount of debt is $440,000."
+pilot-38-citation,citation,AG ¶ 19(f),14931,15015,"He admitted that he did not file federal and
+state tax returns from 2001 until 2005.","He admitted that he did not file federal and
+state tax returns from 2001 until 2005."
+pilot-38-citation,citation,AG ¶ 20(a),19562,19618,He has been on notice since 2005 but has procrastinated.,He has been on notice since 2005 but has procrastinated.
+pilot-38-citation,citation,AG ¶ 20(b),16622,16691,"At the same time, he did not act responsibly under the
+circumstances.","At the same time, he did not act responsibly under the
+circumstances."
+pilot-38-citation,citation,AG ¶ 20(d),16692,16821,"He began to address the issues somewhat in 2005, but admitted that he
+put his time and energy in actions to further his business.","He began to address the issues somewhat in 2005, but admitted that he
+put his time and energy in actions to further his business."
+pilot-38-citation,citation,AG ¶ 20(g),16946,17031,"He has a levy of $400 a month but he still does not have a tax payment plan
+in place.","He has a levy of $400 a month but he still does not have a tax payment plan
+in place."
+pilot-38-blind,blind,AG ¶ 19(a),14887,14930,"The
+approximate amount of debt is $440,000.","The
+approximate amount of debt is $440,000."
+pilot-38-blind,blind,AG ¶ 19(b),16822,16864,"He did not make the tax
+issues a priority.","He did not make the tax
+issues a priority."
+pilot-38-blind,blind,AG ¶ 19(c),14931,15015,"He admitted that he did not file federal and
+state tax returns from 2001 until 2005.","He admitted that he did not file federal and
+state tax returns from 2001 until 2005."
+pilot-38-blind,blind,AG ¶ 19(f),16359,16478,"He has outstanding tax liability in the amount of $45,000 for the year
+1999, in addition to the allegations on the SOR.","He has outstanding tax liability in the amount of $45,000 for the year
+1999, in addition to the allegations on the SOR."
+pilot-38-blind,blind,AG ¶ 20(a),19562,19618,He has been on notice since 2005 but has procrastinated.,He has been on notice since 2005 but has procrastinated.
+pilot-38-blind,blind,AG ¶ 20(b),16558,16621,"He admits that he did not learn there was a
+problem until 2005.","He admits that he did not learn there was a
+problem until 2005."
+pilot-38-blind,blind,AG ¶ 20(d),16692,16821,"He began to address the issues somewhat in 2005, but admitted that he
+put his time and energy in actions to further his business.","He began to address the issues somewhat in 2005, but admitted that he
+put his time and energy in actions to further his business."
+pilot-38-blind,blind,AG ¶ 20(g),16946,17031,"He has a levy of $400 a month but he still does not have a tax payment plan
+in place.","He has a levy of $400 a month but he still does not have a tax payment plan
+in place."
+pilot-39-citation,citation,AG ¶ 19(a),15034,15088,"These events 
+prevented him from repaying these debts.","These events 
+prevented him from repaying these debts."
+pilot-39-citation,citation,AG ¶ 19(c),11471,11588,"Beginning in 2001, Applicant began accumulating some delinquent 
+debt that he was unable to pay for a period of time.","Beginning in 2001, Applicant began accumulating some delinquent 
+debt that he was unable to pay for a period of time."
+pilot-39-citation,citation,AG ¶ 20(b),12129,12275,"As noted above, the financial problems 
+arose from three periods of unemployment between 2001 and 2006, which were 
+conditions beyond his control.","Under AG & 20(b), it may be 
+mitigating where Athe conditions that resulted in the financial problem were largely 
+beyond the person=s control (e.g., loss of employment, a business downturn, 
+unexpected medical emergency, or a death, divorce or separation), and the individual 
+acted responsibly under the circumstances.@ As noted above, the financial problems 
+arose from three periods of unemployment between 2001 and 2006, which were 
+conditions beyond his control."
+pilot-39-citation,citation,AG ¶ 20(c),12906,13114,"Since March 2008, he has repaid 
+seven debts in full, is currently repaying three debts on installment repayment plans, 
+and has one unresolved debt because the creditor would not negotiate a repayment 
+plan.","Since March 2008, he has repaid 
+seven debts in full, is currently repaying three debts on installment repayment plans, 
+and has one unresolved debt because the creditor would not negotiate a repayment 
+plan."
+pilot-39-citation,citation,AG ¶ 20(d),13442,13531,"Applicant 
+resolved all but one of the delinquent debts, either by payment or settlement.","Third, AG & 20(d) applies where the evidence shows Athe individual initiated a 
+good-faith effort to repay overdue creditors or otherwise resolve debts.@ Applicant 
+resolved all but one of the delinquent debts, either by payment or settlement."
+pilot-39-blind,blind,AG ¶ 19(a),15034,15088,"These events 
+prevented him from repaying these debts.","These events 
+prevented him from repaying these debts."
+pilot-39-blind,blind,AG ¶ 19(c),11471,11587,"Beginning in 2001, Applicant began accumulating some delinquent 
+debt that he was unable to pay for a period of time","Beginning in 2001, Applicant began accumulating some delinquent 
+debt that he was unable to pay for a period of time."
+pilot-39-blind,blind,AG ¶ 20(b),12129,12275,"As noted above, the financial problems 
+arose from three periods of unemployment between 2001 and 2006, which were 
+conditions beyond his control.","Under AG & 20(b), it may be 
+mitigating where Athe conditions that resulted in the financial problem were largely 
+beyond the person=s control (e.g., loss of employment, a business downturn, 
+unexpected medical emergency, or a death, divorce or separation), and the individual 
+acted responsibly under the circumstances.@ As noted above, the financial problems 
+arose from three periods of unemployment between 2001 and 2006, which were 
+conditions beyond his control."
+pilot-39-blind,blind,AG ¶ 20(c),12906,13024,"Since March 2008, he has repaid 
+seven debts in full, is currently repaying three debts on installment repayment plans","Since March 2008, he has repaid 
+seven debts in full, is currently repaying three debts on installment repayment plans, 
+and has one unresolved debt because the creditor would not negotiate a repayment 
+plan."
+pilot-39-blind,blind,AG ¶ 20(d),13442,13531,"Applicant 
+resolved all but one of the delinquent debts, either by payment or settlement.","Third, AG & 20(d) applies where the evidence shows Athe individual initiated a 
+good-faith effort to repay overdue creditors or otherwise resolve debts.@ Applicant 
+resolved all but one of the delinquent debts, either by payment or settlement."
+pilot-40-citation,citation,AG ¶ 19(c),15861,15982,"Appellant developed significant financial problems after he lost his job in January
+2010 and did not work for six months.","Appellant developed significant financial problems after he lost his job in January
+2010 and did not work for six months."
+pilot-40-citation,citation,AG ¶ 20(b),18460,18529,"Applicant lost his job in 2010, which created financial difficulties.","Applicant lost his job in 2010, which created financial difficulties."
+pilot-40-citation,citation,AG ¶ 20(c),18988,19045,He has resolved the financial concerns of the Government.,He has resolved the financial concerns of the Government.
+pilot-40-citation,citation,AG ¶ 20(d),18799,18859,"Other
+than his mortgage debts, Applicant has paid his bills.","Other
+than his mortgage debts, Applicant has paid his bills."
+pilot-40-blind,blind,AG ¶ 19(a),18616,18713,"By December
+2010, he could no longer continue with his mortgage payments and pay his other bills.","By December
+2010, he could no longer continue with his mortgage payments and pay his other bills."
+pilot-40-blind,blind,AG ¶ 19(c),15983,16045,"He fell behind in his mortgage payments, which
+he did not pay.","He fell behind in his mortgage payments, which
+he did not pay."
+pilot-40-blind,blind,AG ¶ 20(b),18460,18529,"Applicant lost his job in 2010, which created financial difficulties.","Applicant lost his job in 2010, which created financial difficulties."
+pilot-40-blind,blind,AG ¶ 20(b),18530,18615,"He immediately
+put his house up for sale, but did not sell the house until June 2011.","He immediately
+put his house up for sale, but did not sell the house until June 2011."
+pilot-40-blind,blind,AG ¶ 20(d),18888,18987,"He sold
+his house through a short-sale, and the lenders have forgiven any balance due on his
+debts.","He sold
+his house through a short-sale, and the lenders have forgiven any balance due on his
+debts."
+pilot-41-citation,citation,AG ¶ 19(a),7626,7702,Applicant fell behind in his student loan obligations between 2011 and 2014.,"For reasons not entirely clear from this record,
+Applicant fell behind in his student loan obligations between 2011 and 2014."
+pilot-41-citation,citation,AG ¶ 19(c),7626,7702,Applicant fell behind in his student loan obligations between 2011 and 2014.,"For reasons not entirely clear from this record,
+Applicant fell behind in his student loan obligations between 2011 and 2014."
+pilot-41-citation,citation,AG ¶ 20(c),7950,8068,"Available information
+shows that Applicant has been making regular payments on his loan accounts for more
+than a year.","Available information
+shows that Applicant has been making regular payments on his loan accounts for more
+than a year."
+pilot-41-citation,citation,AG ¶ 20(d),7950,8068,"Available information
+shows that Applicant has been making regular payments on his loan accounts for more
+than a year.","Available information
+shows that Applicant has been making regular payments on his loan accounts for more
+than a year."
+pilot-41-blind,blind,AG ¶ 19(a),7626,7702,Applicant fell behind in his student loan obligations between 2011 and 2014.,"For reasons not entirely clear from this record,
+Applicant fell behind in his student loan obligations between 2011 and 2014."
+pilot-41-blind,blind,AG ¶ 19(c),7626,7702,Applicant fell behind in his student loan obligations between 2011 and 2014.,"For reasons not entirely clear from this record,
+Applicant fell behind in his student loan obligations between 2011 and 2014."
+pilot-41-blind,blind,AG ¶ 20(d),7950,8068,"Available information
+shows that Applicant has been making regular payments on his loan accounts for more
+than a year.","Available information
+shows that Applicant has been making regular payments on his loan accounts for more
+than a year."
+pilot-42-citation,citation,AG ¶ 19(a),22414,22529,"I also considered his limited resources, and that he 
+has made some efforts to resolve his largest delinquent debt.","I also considered his limited resources, and that he 
+has made some efforts to resolve his largest delinquent debt."
+pilot-42-citation,citation,AG ¶ 19(c),18574,18649,Applicant has a history of financial problems dating back to at least 2019.,Applicant has a history of financial problems dating back to at least 2019.
+pilot-42-citation,citation,AG ¶ 20(a),19000,19171,"He has not shown that his financial problems are unlikely to recur, and his financial 
+behavior casts doubt on his current reliability, trustworthiness, and good judgment.","He has not shown that his financial problems are unlikely to recur, and his financial 
+behavior casts doubt on his current reliability, trustworthiness, and good judgment."
+pilot-42-citation,citation,AG ¶ 20(b),19770,19941,"Applicant’s divorce, Covid 19, unemployment, 
+underemployment, and reduced income while recovering from injuries sustained in an 
+accident were largely beyond his control.","Applicant’s divorce, Covid 19, unemployment, 
+underemployment, and reduced income while recovering from injuries sustained in an 
+accident were largely beyond his control."
+pilot-42-citation,citation,AG ¶ 20(c),20076,20173,"Applicant has not sought or received financial 
+counseling from a legitimate and credible source.","Applicant has not sought or received financial 
+counseling from a legitimate and credible source."
+pilot-42-citation,citation,AG ¶ 20(d),20246,20414,"Except for 
+responding to the creditor’s efforts to resolve the debt alleged in SOR ¶ 1.a in August 
+2023, there is no evidence Applicant contacted the other creditors.","Except for 
+responding to the creditor’s efforts to resolve the debt alleged in SOR ¶ 1.a in August 
+2023, there is no evidence Applicant contacted the other creditors."
+pilot-42-blind,blind,AG ¶ 19(c),18574,18649,Applicant has a history of financial problems dating back to at least 2019.,Applicant has a history of financial problems dating back to at least 2019.
+pilot-42-blind,blind,AG ¶ 20(a),18853,18914,"Applicant’s financial problems are longstanding and 
+ongoing.","Applicant’s financial problems are longstanding and 
+ongoing."
+pilot-42-blind,blind,AG ¶ 20(b),19770,19941,"Applicant’s divorce, Covid 19, unemployment, 
+underemployment, and reduced income while recovering from injuries sustained in an 
+accident were largely beyond his control.","Applicant’s divorce, Covid 19, unemployment, 
+underemployment, and reduced income while recovering from injuries sustained in an 
+accident were largely beyond his control."
+pilot-42-blind,blind,AG ¶ 20(c),20076,20134,"Applicant has not sought or received financial 
+counseling","Applicant has not sought or received financial 
+counseling from a legitimate and credible source."
+pilot-42-blind,blind,AG ¶ 20(d),20246,20414,"Except for 
+responding to the creditor’s efforts to resolve the debt alleged in SOR ¶ 1.a in August 
+2023, there is no evidence Applicant contacted the other creditors.","Except for 
+responding to the creditor’s efforts to resolve the debt alleged in SOR ¶ 1.a in August 
+2023, there is no evidence Applicant contacted the other creditors."
+pilot-43-citation,citation,AG ¶ 19(a),27706,27788,"He said at his hearing that he 
+did not have the funds to pay any additional debts","He said at his hearing that he 
+did not have the funds to pay any additional debts, and he did not provide any 
+documentation showing payment of his federal income taxes for TYs 2023 and 2024."
+pilot-43-citation,citation,AG ¶ 19(c),25737,25811,"Applicant’s SOR alleges he has 20 delinquent debts totaling about $60,000.","Applicant’s SOR alleges he has 20 delinquent debts totaling about $60,000."
+pilot-43-citation,citation,AG ¶ 19(f),27563,27664,"Applicant failed to show that he timely paid in full his federal income taxes for TYs 
+2023 and 2024.","Applicant failed to show that he timely paid in full his federal income taxes for TYs 
+2023 and 2024."
+pilot-43-citation,citation,AG ¶ 20(a),27166,27293,"Of the 20 SOR debts, the only debts with payments in the previous 12 
+months are his child-support debts in SOR ¶¶ 1.d and 1.e.","Of the 20 SOR debts, the only debts with payments in the previous 12 
+months are his child-support debts in SOR ¶¶ 1.d and 1.e."
+pilot-43-citation,citation,AG ¶ 20(b),23925,24055,"Divorce, 
+underemployment, and medical debts are circumstances largely beyond his control, 
+which adversely affected his finances.","Divorce, 
+underemployment, and medical debts are circumstances largely beyond his control, 
+which adversely affected his finances."
+pilot-43-citation,citation,AG ¶ 20(d),30218,30343,"There is no documentation 
+establishing that Applicant is working to establish payment plans to address 15 of his 
+SOR debts.","There is no documentation 
+establishing that Applicant is working to establish payment plans to address 15 of his 
+SOR debts."
+pilot-43-citation,citation,AG ¶ 20(e),29562,29712,"he did not provide documented proof to 
+substantiate the existence, basis, or the result of any debt disputes related to the 15 
+unmitigated SOR debts","Applicant failed to 
+establish mitigation under AG ¶ 20(e) because he did not provide documented proof to 
+substantiate the existence, basis, or the result of any debt disputes related to the 15 
+unmitigated SOR debts."
+pilot-43-citation,citation,AG ¶ 20(g),27295,27504,"Applicant’s tax preparer provided copies of Applicant’s TYs 2023 and 2024 federal 
+and state income tax returns to Applicant on May 10, 2025, and I have credited Applicant 
+with filing them shortly thereafter.","Applicant’s tax preparer provided copies of Applicant’s TYs 2023 and 2024 federal 
+and state income tax returns to Applicant on May 10, 2025, and I have credited Applicant 
+with filing them shortly thereafter."
+pilot-43-blind,blind,AG ¶ 19(a),27706,27788,"He said at his hearing that he 
+did not have the funds to pay any additional debts","He said at his hearing that he 
+did not have the funds to pay any additional debts, and he did not provide any 
+documentation showing payment of his federal income taxes for TYs 2023 and 2024."
+pilot-43-blind,blind,AG ¶ 19(c),25737,25811,"Applicant’s SOR alleges he has 20 delinquent debts totaling about $60,000.","Applicant’s SOR alleges he has 20 delinquent debts totaling about $60,000."
+pilot-43-blind,blind,AG ¶ 19(f),27563,27664,"Applicant failed to show that he timely paid in full his federal income taxes for TYs 
+2023 and 2024.","Applicant failed to show that he timely paid in full his federal income taxes for TYs 
+2023 and 2024."
+pilot-43-blind,blind,AG ¶ 20(a),23455,23652,"It is also well established that an 
+applicant’s ongoing, unpaid debts demonstrate a continuing course of conduct and can 
+be viewed as recent for purposes of the Guideline F mitigating conditions.","“It is also well established that an 
+applicant’s ongoing, unpaid debts demonstrate a continuing course of conduct and can 
+be viewed as recent for purposes of the Guideline F mitigating conditions.”"
+pilot-43-blind,blind,AG ¶ 20(b),23925,24055,"Divorce, 
+underemployment, and medical debts are circumstances largely beyond his control, 
+which adversely affected his finances.","Divorce, 
+underemployment, and medical debts are circumstances largely beyond his control, 
+which adversely affected his finances."
+pilot-43-blind,blind,AG ¶ 20(d),27100,27165,"He paid $800 in 2021 and settled the debt in SOR ¶ 
+1.t ($8,913).","He paid $800 in 2021 and settled the debt in SOR ¶ 
+1.t ($8,913)."
+pilot-43-blind,blind,AG ¶ 20(e),26524,26643,"He disputed the debt in SOR ¶ 1.o ($170); however, he did not provide documentation 
+showing his basis for the dispute.","He disputed the debt in SOR ¶ 1.o ($170); however, he did not provide documentation 
+showing his basis for the dispute."
+pilot-44-citation,citation,AG ¶ 19(a),16917,17130,"Applicant’s financial problems arose in 2008 when her husband was 
+unable to continue making monthly business payments to vendors and creditors, and a 
+line of credit for which she had co-signed became delinquent.","Applicant’s financial problems arose in 2008 when her husband was 
+unable to continue making monthly business payments to vendors and creditors, and a 
+line of credit for which she had co-signed became delinquent."
+pilot-44-citation,citation,AG ¶ 19(c),17171,17306,"The creditor subsequently filed a law suit against Applicant and her 
+husband, and a default judgment was entered against them in 2011.","The creditor subsequently filed a law suit against Applicant and her 
+husband, and a default judgment was entered against them in 2011."
+pilot-44-citation,citation,AG ¶ 19(e),18541,18628,"Applicant’s financial problems were 
+not caused by frivolous or irresponsible spending.","Applicant’s financial problems were 
+not caused by frivolous or irresponsible spending."
+pilot-44-citation,citation,AG ¶ 20(a),18629,18875,"The nature, frequency, and recency 
+of Applicant’s financial difficulties were infrequent, if not actually isolated, and it 
+occurred under such unusual circumstances when the entire national economy was 
+devastated, that it is unlikely to recur.","The nature, frequency, and recency 
+of Applicant’s financial difficulties were infrequent, if not actually isolated, and it 
+occurred under such unusual circumstances when the entire national economy was 
+devastated, that it is unlikely to recur."
+pilot-44-citation,citation,AG ¶ 20(b),25444,25670,"Applicant’s husband operated a thriving 
+business, operating at a profit, when his sales plummeted approximately 50 percent 
+virtually overnight, in large measure because of the havoc caused by the faltering 
+national economy.","Applicant’s husband operated a thriving 
+business, operating at a profit, when his sales plummeted approximately 50 percent 
+virtually overnight, in large measure because of the havoc caused by the faltering 
+national economy."
+pilot-44-citation,citation,AG ¶ 20(c),23030,23144,"There 
+are clear indications that Applicant’s financial problems are under control, and in fact, no 
+longer exist.","There 
+are clear indications that Applicant’s financial problems are under control, and in fact, no 
+longer exist."
+pilot-44-citation,citation,AG ¶ 20(d),21003,21160,"Nevertheless, Applicant and her 
+husband set up a plan of action, and they started saving money to place in a fund with 
+the intent of paying off their debt.","Nevertheless, Applicant and her 
+husband set up a plan of action, and they started saving money to place in a fund with 
+the intent of paying off their debt."
+pilot-44-blind,blind,AG ¶ 19(a),24973,25143,"When they were unable to continue making 
+the normal monthly payments, the account was placed for placed for collection, charged 
+off, and eventually it went to judgment.","When they were unable to continue making 
+the normal monthly payments, the account was placed for placed for collection, charged 
+off, and eventually it went to judgment."
+pilot-44-blind,blind,AG ¶ 19(c),17131,17170,"The remaining balance 
+was charged off.","The remaining balance 
+was charged off."
+pilot-44-blind,blind,AG ¶ 20(a),18629,18875,"The nature, frequency, and recency 
+of Applicant’s financial difficulties were infrequent, if not actually isolated, and it 
+occurred under such unusual circumstances when the entire national economy was 
+devastated, that it is unlikely to recur.","The nature, frequency, and recency 
+of Applicant’s financial difficulties were infrequent, if not actually isolated, and it 
+occurred under such unusual circumstances when the entire national economy was 
+devastated, that it is unlikely to recur."
+pilot-44-blind,blind,AG ¶ 20(b),22670,22750,"Their refusal, 
+under these circumstances, was substantially beyond his control.","Their refusal, 
+under these circumstances, was substantially beyond his control."
+pilot-44-blind,blind,AG ¶ 20(d),21017,21160,"Applicant and her 
+husband set up a plan of action, and they started saving money to place in a fund with 
+the intent of paying off their debt.","Nevertheless, Applicant and her 
+husband set up a plan of action, and they started saving money to place in a fund with 
+the intent of paying off their debt."
+pilot-44-blind,blind,AG ¶ 20(d),27930,28030,"Applicant has demonstrated an extraordinary track record of debt reduction and 
+elimination efforts.","Likewise, there is no 
+requirement that the first debts actually paid in furtherance of a reasonable 
+debt plan be the ones listed in the SOR. 36 
+ 
+Applicant has demonstrated an extraordinary track record of debt reduction and 
+elimination efforts."
+pilot-45-citation,citation,AG ¶ 19(a),26060,26148,"To date, however, half of
+the debts at issue remain unknown, unaddressed, or unresolved.","To date, however, half of
+the debts at issue remain unknown, unaddressed, or unresolved."
+pilot-45-citation,citation,AG ¶ 19(b),26231,26362,"He declined to seek much-
+needed financial counseling once he learned that allegedly delinquent debts were
+raising security issues.","He declined to seek much-
+needed financial counseling once he learned that allegedly delinquent debts were
+raising security issues."
+pilot-45-citation,citation,AG ¶ 19(c),25616,25749,"Most appear to have arisen in the
+mid-2000s, either during Applicant’s protracted period of unemployment or his marital
+estrangement.","Most appear to have arisen in the
+mid-2000s, either during Applicant’s protracted period of unemployment or his marital
+estrangement."
+pilot-45-citation,citation,AG ¶ 20(a),26149,26230,"There is no evidence
+he has ever made even a cursory review of his credit report.","There is no evidence
+he has ever made even a cursory review of his credit report."
+pilot-45-citation,citation,AG ¶ 20(b),27067,27236,"Applicant’s credible testimony and circumstantial evidence indicate that a
+number of the debts at issue are attributable to Applicant’s year-long period of
+unemployment.","In light of these facts, Financial
+Considerations Mitigating Condition (FC MC) AG ¶ 20(a) (the behavior happened so
+long ago, was so infrequent, or occurred under such circumstances that it is unlikely to
+recur and does not cast doubt on the individual’s current reliability, trustworthiness, or
+good judgment) does not apply. 
+
+11
+Applicant’s credible testimony and circumstantial evidence indicate that a
+number of the debts at issue are attributable to Applicant’s year-long period of
+unemployment."
+pilot-45-citation,citation,AG ¶ 20(c),28028,28151,"More
+importantly, he concedes that he has not received financial counseling, a service from
+which he would greatly benefit.","More
+importantly, he concedes that he has not received financial counseling, a service from
+which he would greatly benefit."
+pilot-45-citation,citation,AG ¶ 20(d),28353,28496,"To his credit, there is evidence that Applicant mailed payments on the debts
+noted at ¶¶ 1.c, 1.g, 1.i, and 1.o, albeit after the hearing date.","To his credit, there is evidence that Applicant mailed payments on the debts
+noted at ¶¶ 1.c, 1.g, 1.i, and 1.o, albeit after the hearing date."
+pilot-45-citation,citation,AG ¶ 20(e),28609,28814,"Applicant provided sufficient evidence that the debt noted at SOR allegation ¶ 1.d, is
+related to a car retained by his ex-wife after their divorce and for which she was to have
+assumed all responsibility.","Applicant provided sufficient evidence that the debt noted at SOR allegation ¶ 1.d, is
+related to a car retained by his ex-wife after their divorce and for which she was to have
+assumed all responsibility."
+pilot-45-blind,blind,AG ¶ 19(a),25094,25224,"There is evidence of considerably more debt, including alleged
+accounts about which he has done little to investigate or validate.","There is evidence of considerably more debt, including alleged
+accounts about which he has done little to investigate or validate."
+pilot-45-blind,blind,AG ¶ 19(c),34818,34927,"In light of such factors, Applicant’s pattern of neglect sustains financial
+considerations security concerns.","In light of such factors, Applicant’s pattern of neglect sustains financial
+considerations security concerns."
+pilot-45-blind,blind,AG ¶ 19(e),33272,33379,"Applicant’s overall neglect of his finances and how they are
+represented has been unnecessarily protracted.","On the other hand, Applicant’s overall neglect of his finances and how they are
+represented has been unnecessarily protracted."
+pilot-45-blind,blind,AG ¶ 20(b),27067,27236,"Applicant’s credible testimony and circumstantial evidence indicate that a
+number of the debts at issue are attributable to Applicant’s year-long period of
+unemployment.","In light of these facts, Financial
+Considerations Mitigating Condition (FC MC) AG ¶ 20(a) (the behavior happened so
+long ago, was so infrequent, or occurred under such circumstances that it is unlikely to
+recur and does not cast doubt on the individual’s current reliability, trustworthiness, or
+good judgment) does not apply. 
+
+11
+Applicant’s credible testimony and circumstantial evidence indicate that a
+number of the debts at issue are attributable to Applicant’s year-long period of
+unemployment."
+pilot-45-blind,blind,AG ¶ 20(c),28028,28151,"More
+importantly, he concedes that he has not received financial counseling, a service from
+which he would greatly benefit.","More
+importantly, he concedes that he has not received financial counseling, a service from
+which he would greatly benefit."
+pilot-45-blind,blind,AG ¶ 20(d),28353,28496,"To his credit, there is evidence that Applicant mailed payments on the debts
+noted at ¶¶ 1.c, 1.g, 1.i, and 1.o, albeit after the hearing date.","To his credit, there is evidence that Applicant mailed payments on the debts
+noted at ¶¶ 1.c, 1.g, 1.i, and 1.o, albeit after the hearing date."
+pilot-45-blind,blind,AG ¶ 20(e),28609,28756,"Applicant provided sufficient evidence that the debt noted at SOR allegation ¶ 1.d, is
+related to a car retained by his ex-wife after their divorce","Applicant provided sufficient evidence that the debt noted at SOR allegation ¶ 1.d, is
+related to a car retained by his ex-wife after their divorce and for which she was to have
+assumed all responsibility."
+pilot-46-citation,citation,AG ¶ 19(a),24113,24170,I considered her limited disposable income after expenses,"I considered her limited disposable income after expenses, that she resolved 
+debts alleged in in SOR ¶¶ 1.b and 1.i totaling $804, that she has filed her TY 2018 state 
+income tax return, and that she owes no overdue federal income taxes for TY 2021 
+through TY 2024."
+pilot-46-citation,citation,AG ¶ 19(c),21314,21375,"Applicant’s financial problems are longstanding and 
+ongoing.","Applicant’s financial problems are longstanding and 
+ongoing."
+pilot-46-citation,citation,AG ¶ 19(f),22811,22959,"it is not established for her unfiled federal income tax return 
+for TY 2018, or for overdue federal income taxes for TY 2020 totaling about $11,920","However, it is not established for her unfiled federal income tax return 
+for TY 2018, or for overdue federal income taxes for TY 2020 totaling about $11,920."
+pilot-46-citation,citation,AG ¶ 20(a),21376,21443,She has not shown that her financial problems are unlikely to recur,"She has not shown that her financial problems are unlikely to recur, and her 
+7 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+financial behavior casts doubt on her current reliability, trustworthiness, and good 
+judgment."
+pilot-46-citation,citation,AG ¶ 20(b),21830,21995,"Applicant’s unexpected loss of commissions 
+during the COVID-19 pandemic and her spouse’s medical issues and unemployment 
+were conditions largely beyond her control","Applicant’s unexpected loss of commissions 
+during the COVID-19 pandemic and her spouse’s medical issues and unemployment 
+were conditions largely beyond her control."
+pilot-46-citation,citation,AG ¶ 20(c),22200,22247,Applicant has not received financial counseling,"Applicant has not received financial counseling and there is insufficient 
+evidence to conclude she initiated or adhered to a good-faith effort to resolve these debts."
+pilot-46-citation,citation,AG ¶ 20(d),22252,22366,"there is insufficient 
+evidence to conclude she initiated or adhered to a good-faith effort to resolve these debts","Applicant has not received financial counseling and there is insufficient 
+evidence to conclude she initiated or adhered to a good-faith effort to resolve these debts."
+pilot-46-citation,citation,AG ¶ 20(e),22559,22653,"Applicant has provided no documentary evidence to substantiate 
+a basis to dispute these debts","AG ¶ 20(e) is not established for the debts alleged in SOR ¶¶ 1.a, 1.c, 1.d, 1.g, 
+1.h, 1.i, or 1.j because Applicant has provided no documentary evidence to substantiate 
+a basis to dispute these debts or of actions taken to resolve any issue."
+pilot-46-citation,citation,AG ¶ 20(g),22727,22800,"Applicant’s past-due TY 2018 state income tax return 
+filed in March 2020","AG ¶ 20(g) is established for Applicant’s past-due TY 2018 state income tax return 
+filed in March 2020."
+pilot-46-blind,blind,AG ¶ 19(a),24113,24170,I considered her limited disposable income after expenses,"I considered her limited disposable income after expenses, that she resolved 
+debts alleged in in SOR ¶¶ 1.b and 1.i totaling $804, that she has filed her TY 2018 state 
+income tax return, and that she owes no overdue federal income taxes for TY 2021 
+through TY 2024."
+pilot-46-blind,blind,AG ¶ 19(c),21314,21374,"Applicant’s financial problems are longstanding and 
+ongoing","Applicant’s financial problems are longstanding and 
+ongoing."
+pilot-46-blind,blind,AG ¶ 19(f),24447,24598,"her 
+failure to timely file a federal income tax return for TY 2016 and failure to pay federal 
+income taxes when due for TY 2016, TY 2017, and TY 2019","I also considered her delinquent debt not alleged in the SOR and her 
+failure to timely file a federal income tax return for TY 2016 and failure to pay federal 
+income taxes when due for TY 2016, TY 2017, and TY 2019."
+pilot-46-blind,blind,AG ¶ 20(a),21376,21443,She has not shown that her financial problems are unlikely to recur,"She has not shown that her financial problems are unlikely to recur, and her 
+7 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+financial behavior casts doubt on her current reliability, trustworthiness, and good 
+judgment."
+pilot-46-blind,blind,AG ¶ 20(b),21953,21995,were conditions largely beyond her control,"Applicant’s unexpected loss of commissions 
+during the COVID-19 pandemic and her spouse’s medical issues and unemployment 
+were conditions largely beyond her control."
+pilot-46-blind,blind,AG ¶ 20(c),22200,22247,Applicant has not received financial counseling,"Applicant has not received financial counseling and there is insufficient 
+evidence to conclude she initiated or adhered to a good-faith effort to resolve these debts."
+pilot-46-blind,blind,AG ¶ 20(d),22261,22366,"insufficient 
+evidence to conclude she initiated or adhered to a good-faith effort to resolve these debts","Applicant has not received financial counseling and there is insufficient 
+evidence to conclude she initiated or adhered to a good-faith effort to resolve these debts."
+pilot-46-blind,blind,AG ¶ 20(e),22559,22653,"Applicant has provided no documentary evidence to substantiate 
+a basis to dispute these debts","AG ¶ 20(e) is not established for the debts alleged in SOR ¶¶ 1.a, 1.c, 1.d, 1.g, 
+1.h, 1.i, or 1.j because Applicant has provided no documentary evidence to substantiate 
+a basis to dispute these debts or of actions taken to resolve any issue."
+pilot-46-blind,blind,AG ¶ 20(g),22811,22887,"it is not established for her unfiled federal income tax return 
+for TY 2018","However, it is not established for her unfiled federal income tax return 
+for TY 2018, or for overdue federal income taxes for TY 2020 totaling about $11,920."
+pilot-47-citation,citation,AG ¶ 19(f),10980,11102,"such an error did not justify her failure to file her federal income tax returns for 
+2007 through 2011 in a timely manner","Even though the IRS may have committed an error in garnishing her 
+pay, such an error did not justify her failure to file her federal income tax returns for 
+2007 through 2011 in a timely manner."
+pilot-47-citation,citation,AG ¶ 19(c),11393,11446,"Her delinquent 
+debts remain ongoing and significant.","Her delinquent 
+debts remain ongoing and significant."
+pilot-47-citation,citation,AG ¶ 20(a),11447,11584,"Insufficient evidence was presented to conclude 
+her financial problems are being resolved, are under control, and are unlikely to recur.","Insufficient evidence was presented to conclude 
+her financial problems are being resolved, are under control, and are unlikely to recur."
+pilot-47-citation,citation,AG ¶ 20(b),10503,10561,"I find 
+the garnishment was a condition beyond her control","I find 
+the garnishment was a condition beyond her control under AG ¶ 20(b)."
+pilot-47-citation,citation,AG ¶ 20(b),10832,10907,"she failed to show that she has acted responsibly under the 
+circumstances.","Although Applicant has shown that conditions beyond her control contributed to 
+her financial problems, she failed to show that she has acted responsibly under the 
+circumstances."
+pilot-47-citation,citation,AG ¶ 20(c),11273,11392,"No evidence was presented that she received 
+financial counseling or that she has taken any steps to resolve the debts.","No evidence was presented that she received 
+financial counseling or that she has taken any steps to resolve the debts."
+pilot-47-citation,citation,AG ¶ 20(d),11153,11272,"Applicant has been employed since June 2012, but provided no proof that she made 
+payments toward the delinquent debts.","Applicant has been employed since June 2012, but provided no proof that she made 
+payments toward the delinquent debts."
+pilot-47-citation,citation,AG ¶ 20(e),11586,11676,"She provided no documentation showing she has a legitimate basis for disputing any 
+debts.","She provided no documentation showing she has a legitimate basis for disputing any 
+debts."
+pilot-47-blind,blind,AG ¶ 19(f),10980,11102,"such an error did not justify her failure to file her federal income tax returns for 
+2007 through 2011 in a timely manner","Even though the IRS may have committed an error in garnishing her 
+pay, such an error did not justify her failure to file her federal income tax returns for 
+2007 through 2011 in a timely manner."
+pilot-47-blind,blind,AG ¶ 19(c),11393,11446,"Her delinquent 
+debts remain ongoing and significant.","Her delinquent 
+debts remain ongoing and significant."
+pilot-47-blind,blind,AG ¶ 20(a),11447,11584,"Insufficient evidence was presented to conclude 
+her financial problems are being resolved, are under control, and are unlikely to recur.","Insufficient evidence was presented to conclude 
+her financial problems are being resolved, are under control, and are unlikely to recur."
+pilot-47-blind,blind,AG ¶ 20(b),10580,10721,"Likewise, her 
+unemployment as well as the need to provide support to her daughter and ill grandson 
+were also conditions beyond her control.","Likewise, her 
+unemployment as well as the need to provide support to her daughter and ill grandson 
+were also conditions beyond her control."
+pilot-47-blind,blind,AG ¶ 20(c),11273,11392,"No evidence was presented that she received 
+financial counseling or that she has taken any steps to resolve the debts.","No evidence was presented that she received 
+financial counseling or that she has taken any steps to resolve the debts."
+pilot-47-blind,blind,AG ¶ 20(d),11153,11272,"Applicant has been employed since June 2012, but provided no proof that she made 
+payments toward the delinquent debts.","Applicant has been employed since June 2012, but provided no proof that she made 
+payments toward the delinquent debts."
+pilot-47-blind,blind,AG ¶ 20(e),11586,11676,"She provided no documentation showing she has a legitimate basis for disputing any 
+debts.","She provided no documentation showing she has a legitimate basis for disputing any 
+debts."
+pilot-48-citation,citation,AG ¶ 19(a),9450,9572,"available information also shows his debt for unpaid taxes
+in 2001 and 2002 has been due and owing for more than ten years","However, available information also shows his debt for unpaid taxes
+in 2001 and 2002 has been due and owing for more than ten years."
+pilot-48-citation,citation,AG ¶ 19(b),10624,10730,"the debts generated from those tax returns,
+as alleged in SOR 1.a and 1.b, remained unaddressed until 2012","He did not follow through on an
+attempted offer in compromise in 2005, and the debts generated from those tax returns,
+as alleged in SOR 1.a and 1.b, remained unaddressed until 2012."
+pilot-48-citation,citation,AG ¶ 19(c),10624,10730,"the debts generated from those tax returns,
+as alleged in SOR 1.a and 1.b, remained unaddressed until 2012","He did not follow through on an
+attempted offer in compromise in 2005, and the debts generated from those tax returns,
+as alleged in SOR 1.a and 1.b, remained unaddressed until 2012."
+pilot-48-citation,citation,AG ¶ 19(f),10371,10547,"Applicant filed his taxes as required for
+2001 and 2002, but he did not support some of the deductions and credits claimed as
+part of his self-employment in sales and marketing","Applicant filed his taxes as required for
+2001 and 2002, but he did not support some of the deductions and credits claimed as
+part of his self-employment in sales and marketing."
+pilot-48-citation,citation,AG ¶ 20(b),11044,11211,"The reasons for that
+delay were a combination of Applicant’s own misconduct leading to loss of employment
+and income with which to pay, and erroneous advice from a CPA","The reasons for that
+delay were a combination of Applicant’s own misconduct leading to loss of employment
+and income with which to pay, and erroneous advice from a CPA."
+pilot-48-citation,citation,AG ¶ 20(d),10797,10918,"He is repaying the
+SOR 1.a and 1.b tax debts through an agreement with the IRS that will resolve the
+debts in three years","He is repaying the
+SOR 1.a and 1.b tax debts through an agreement with the IRS that will resolve the
+debts in three years."
+pilot-48-citation,citation,AG ¶ 20(g),11213,11384,"Applicant has
+corrected those circumstances by filing all of his past-due tax returns and establishing a
+repayment agreement for the tax debts addressed in SOR 1.a and 1.b","Applicant has
+corrected those circumstances by filing all of his past-due tax returns and establishing a
+repayment agreement for the tax debts addressed in SOR 1.a and 1.b."
+pilot-48-blind,blind,AG ¶ 19(a),9450,9572,"available information also shows his debt for unpaid taxes
+in 2001 and 2002 has been due and owing for more than ten years","However, available information also shows his debt for unpaid taxes
+in 2001 and 2002 has been due and owing for more than ten years."
+pilot-48-blind,blind,AG ¶ 19(b),11386,11518,"Applicant did not
+immediately address his tax debts after he was hired for his current job because he
+decided to resolve other debts","Applicant did not
+immediately address his tax debts after he was hired for his current job because he
+decided to resolve other debts."
+pilot-48-blind,blind,AG ¶ 19(c),10549,10730,"He did not follow through on an
+attempted offer in compromise in 2005, and the debts generated from those tax returns,
+as alleged in SOR 1.a and 1.b, remained unaddressed until 2012","He did not follow through on an
+attempted offer in compromise in 2005, and the debts generated from those tax returns,
+as alleged in SOR 1.a and 1.b, remained unaddressed until 2012."
+pilot-48-blind,blind,AG ¶ 19(f),10371,10547,"Applicant filed his taxes as required for
+2001 and 2002, but he did not support some of the deductions and credits claimed as
+part of his self-employment in sales and marketing","Applicant filed his taxes as required for
+2001 and 2002, but he did not support some of the deductions and credits claimed as
+part of his self-employment in sales and marketing."
+pilot-48-blind,blind,AG ¶ 20(a),10920,11042,"The Government is reasonably concerned about the seven years
+that passed between the IRS audit and his repayment agreement","The Government is reasonably concerned about the seven years
+that passed between the IRS audit and his repayment agreement."
+pilot-48-blind,blind,AG ¶ 20(b),11044,11211,"The reasons for that
+delay were a combination of Applicant’s own misconduct leading to loss of employment
+and income with which to pay, and erroneous advice from a CPA","The reasons for that
+delay were a combination of Applicant’s own misconduct leading to loss of employment
+and income with which to pay, and erroneous advice from a CPA."
+pilot-48-blind,blind,AG ¶ 20(d),10797,10918,"He is repaying the
+SOR 1.a and 1.b tax debts through an agreement with the IRS that will resolve the
+debts in three years","He is repaying the
+SOR 1.a and 1.b tax debts through an agreement with the IRS that will resolve the
+debts in three years."
+pilot-48-blind,blind,AG ¶ 20(g),11213,11384,"Applicant has
+corrected those circumstances by filing all of his past-due tax returns and establishing a
+repayment agreement for the tax debts addressed in SOR 1.a and 1.b","Applicant has
+corrected those circumstances by filing all of his past-due tax returns and establishing a
+repayment agreement for the tax debts addressed in SOR 1.a and 1.b."
+pilot-49-citation,citation,AG ¶ 19(f),12000,12154,"The Government alleges that Applicant failed to file City 2 tax returns for 2011 and 
+2012, and that the returns remain unfiled as of the date of the SOR.","The Government alleges that Applicant failed to file City 2 tax returns for 2011 and 
+2012, and that the returns remain unfiled as of the date of the SOR."
+pilot-49-citation,citation,AG ¶ 19(f),12424,12590,"Applicant admits the allegation and acknowledges that he 
+should have had City 2 taxes deducted from his pay beginning in 2005, when he began 
+to work in a new office","Applicant admits the allegation and acknowledges that he 
+should have had City 2 taxes deducted from his pay beginning in 2005, when he began 
+to work in a new office – an office located in City 2 (in a state where Applicant did not 
+live)."
+pilot-49-citation,citation,AG ¶ 20(a),13604,13767,"I conclude 
+that Applicant’s circumstances are unusual and unlikely to recur, and do not cast doubt 
+on his current reliability, trustworthiness, or good judgment.","I conclude 
+that Applicant’s circumstances are unusual and unlikely to recur, and do not cast doubt 
+on his current reliability, trustworthiness, or good judgment."
+pilot-49-citation,citation,AG ¶ 20(c),13768,13865,"Applicant pursued 
+appropriate counseling and acted on the advice he was given to cure the issue.","Applicant pursued 
+appropriate counseling and acted on the advice he was given to cure the issue."
+pilot-49-citation,citation,AG ¶ 20(d),13512,13573,"he has now 
+paid the past-due taxes owed for all prior years.","However, I note that Applicant disclosed the matter in 
+some detail on his SCA, and, after seeking appropriate tax and legal advice, he has now 
+paid the past-due taxes owed for all prior years."
+pilot-49-citation,citation,AG ¶ 20(g),15996,16062,"His local tax issues are resolved and are 
+not a security concern.","His local tax issues are resolved and are 
+not a security concern."
+pilot-49-blind,blind,AG ¶ 19(f),12000,12154,"The Government alleges that Applicant failed to file City 2 tax returns for 2011 and 
+2012, and that the returns remain unfiled as of the date of the SOR.","The Government alleges that Applicant failed to file City 2 tax returns for 2011 and 
+2012, and that the returns remain unfiled as of the date of the SOR."
+pilot-49-blind,blind,AG ¶ 20(a),13604,13680,"I conclude 
+that Applicant’s circumstances are unusual and unlikely to recur","I conclude 
+that Applicant’s circumstances are unusual and unlikely to recur, and do not cast doubt 
+on his current reliability, trustworthiness, or good judgment."
+pilot-49-blind,blind,AG ¶ 20(c),13768,13865,"Applicant pursued 
+appropriate counseling and acted on the advice he was given to cure the issue.","Applicant pursued 
+appropriate counseling and acted on the advice he was given to cure the issue."
+pilot-49-blind,blind,AG ¶ 20(g),13512,13572,"he has now 
+paid the past-due taxes owed for all prior years","However, I note that Applicant disclosed the matter in 
+some detail on his SCA, and, after seeking appropriate tax and legal advice, he has now 
+paid the past-due taxes owed for all prior years."

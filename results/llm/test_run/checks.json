@@ -1,0 +1,14 @@
+{
+  "input_within_15pct": true,
+  "input_ratio": 1.0,
+  "cost_100_requests_under_0.50": true,
+  "mean_cost_per_request": 0.000632615,
+  "all_requests_ok_no_refusal_or_max_tokens": true,
+  "quote_survival": 0.9841269841269841,
+  "quote_survival_ok": true,
+  "citation_precision": 0.9333333333333333,
+  "citation_recall": 0.717948717948718,
+  "citation_smoke_ok": true,
+  "manual_read_needed": "read every dropped quote and 10 kept quotes",
+  "measured_output_per_request": 1795.3
+}

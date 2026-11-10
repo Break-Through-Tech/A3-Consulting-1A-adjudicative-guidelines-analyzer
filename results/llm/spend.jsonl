@@ -1,0 +1,4 @@
+{"event": "submit", "stage": "test", "batch_id": "msgbatch_01SmyMN8Rm2mBwwcgkKYiWsn", "tier": "batch", "ceiling": 0.0218379}
+{"event": "actual", "stage": "test", "batch_id": "msgbatch_01SmyMN8Rm2mBwwcgkKYiWsn", "tier": "batch", "cost": 0.00632615, "input_tokens": 36758, "output_tokens": 17953}
+{"event": "submit", "stage": "pilot", "batch_id": "msgbatch_0138H43yMhDNz4DrhKYxmJV9", "tier": "batch", "ceiling": 0.22017765}
+{"event": "actual", "stage": "pilot", "batch_id": "msgbatch_0138H43yMhDNz4DrhKYxmJV9", "tier": "batch", "cost": 0.06244015, "input_tokens": 403553, "output_tokens": 169050}

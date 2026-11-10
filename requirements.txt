@@ -1,6 +1,7 @@
 # Python 3.14. Install with: python -m pip install -r requirements.txt
 # For the GPU, install the CUDA build of torch first; the pin below accepts it:
 #   python -m pip install torch==2.15.0 --index-url https://download.pytorch.org/whl/cu132
+anthropic==2.7.0
 matplotlib==3.11.2
 numpy==2.5.3
 pandas==3.0.5
