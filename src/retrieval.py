@@ -8,16 +8,28 @@ Task 13 (October milestone): Precedent search index v1.
 from __future__ import annotations
 
 import argparse
+import os
 import sys
 import time
 from pathlib import Path
 from typing import Any
+
+# Prevent OpenMP and threading conflicts on macOS Python 3.14
+os.environ.setdefault("KMP_DUPLICATE_LIB_OK", "TRUE")
+os.environ["OMP_NUM_THREADS"] = "1"
+os.environ.setdefault("TOKENIZERS_PARALLELISM", "false")
+
+import tqdm
+tqdm.tqdm.monitor_interval = 0
 
 import faiss
 import numpy as np
 import pandas as pd
 import pyarrow.dataset as ds
 import torch
+
+# Use safe intra-op threadpool
+torch.set_num_threads(4)
 from sentence_transformers import SentenceTransformer
 
 from src import config
@@ -28,16 +40,22 @@ from src.normalize import normalize_body
 INDEX_PATH = config.OUT_DIR / "precedents.faiss"
 METADATA_PATH = config.OUT_DIR / "precedents_metadata.parquet"
 CHECKPOINT_PATH = config.OUT_DIR / ".precedents_embeddings_checkpoint.npy"
+CHECKPOINT_META_PATH = config.OUT_DIR / ".precedents_embeddings_checkpoint_meta.json"
 DEFAULT_MODEL_NAME = "BAAI/bge-small-en-v1.5"
 VECTOR_DIM = 384
 
 
 def get_default_device() -> str:
-    """Detect fastest available acceleration hardware (CUDA, MPS, or CPU fallback)."""
+    """Detect fastest available acceleration hardware (CUDA, Metal MPS, or CPU fallback)."""
     if torch.cuda.is_available():
         return "cuda"
-    if torch.backends.mps.is_available():
-        return "mps"
+    if hasattr(torch.backends, "mps") and torch.backends.mps.is_available():
+        try:
+            # Verify Metal device is actually accessible in this process environment
+            _ = torch.zeros(1, device="mps")
+            return "mps"
+        except Exception:
+            pass
     return "cpu"
 
 
@@ -128,7 +146,7 @@ def get_precedent_corpus() -> tuple[pd.DataFrame, list[str], list[tuple[int, int
 
 def build_precedent_index(
     model_name: str = DEFAULT_MODEL_NAME,
-    batch_size: int = 128,
+    batch_size: int = 256,
     case_chunk_size: int = 1000,
     device: str | None = None,
     output_index_path: Path = INDEX_PATH,
@@ -158,25 +176,54 @@ def build_precedent_index(
 
     print(f"Loading embedding model: {model_name} on device '{device}'...")
     model = SentenceTransformer(model_name, device=device)
-    model.max_seq_length = 256
 
-    # Check for existing checkpoint to resume
+    import json
+    current_settings = {
+        "model_name": model_name,
+        "max_seq_length": int(model.max_seq_length),
+        "dim": int(VECTOR_DIM),
+        "n_cases": int(n_cases),
+        "case_chunk_size": int(case_chunk_size),
+    }
+
+    # Only resume a stopped build if none of the settings changed
     case_embeddings = np.zeros((n_cases, VECTOR_DIM), dtype=np.float32)
     start_chunk = 0
     if checkpoint_path.exists():
-        try:
-            saved = np.load(checkpoint_path)
-            if saved.shape == (n_cases, VECTOR_DIM):
-                non_zero_cases = np.where(np.linalg.norm(saved, axis=1) > 0)[0]
-                if len(non_zero_cases) > 0:
-                    start_case = int(non_zero_cases[-1]) + 1
-                    start_chunk = start_case // case_chunk_size
-                    case_embeddings = saved
-                    print(
-                        f"Found checkpoint at {checkpoint_path}: resuming from chunk {start_chunk} (case {start_chunk * case_chunk_size:,})"
-                    )
-        except Exception as e:
-            print(f"Could not load checkpoint: {e}. Starting fresh.")
+        settings_match = False
+        if CHECKPOINT_META_PATH.exists():
+            try:
+                with open(CHECKPOINT_META_PATH) as f:
+                    saved_settings = json.load(f)
+                if saved_settings == current_settings:
+                    settings_match = True
+            except Exception:
+                settings_match = False
+
+        if settings_match:
+            try:
+                saved = np.load(checkpoint_path)
+                if saved.shape == (n_cases, VECTOR_DIM):
+                    non_zero_cases = np.where(np.linalg.norm(saved, axis=1) > 0)[0]
+                    if len(non_zero_cases) > 0:
+                        start_case = int(non_zero_cases[-1]) + 1
+                        start_chunk = start_case // case_chunk_size
+                        case_embeddings = saved
+                        print(
+                            f"Found matching checkpoint at {checkpoint_path}: resuming from chunk {start_chunk} (case {start_chunk * case_chunk_size:,})"
+                        )
+            except Exception as e:
+                print(f"Could not load checkpoint: {e}. Starting fresh.")
+                start_chunk = 0
+        else:
+            print("Checkpoint settings mismatch or stale. Discarding checkpoint and starting fresh.")
+            try:
+                checkpoint_path.unlink()
+                if CHECKPOINT_META_PATH.exists():
+                    CHECKPOINT_META_PATH.unlink()
+            except Exception:
+                pass
+            start_chunk = 0
 
     n_chunks = (n_cases + case_chunk_size - 1) // case_chunk_size
     t_start_encoding = time.time()
@@ -229,8 +276,13 @@ def build_precedent_index(
             f"{len(chunk_paras):,} paras) encoded in {elapsed:.1f}s | ETA: {eta/60:.1f} min"
         )
 
-        # Save checkpoint after each chunk
+        # Save checkpoint and settings metadata after each chunk
         np.save(checkpoint_path, case_embeddings)
+        try:
+            with open(CHECKPOINT_META_PATH, "w") as f:
+                json.dump(current_settings, f, indent=2)
+        except Exception:
+            pass
 
     total_encode_time = time.time() - t_start_encoding
     print(
@@ -254,9 +306,11 @@ def build_precedent_index(
     meta_mb = output_metadata_path.stat().st_size / (1024 * 1024)
     print(f"Saved metadata to {output_metadata_path} ({meta_mb:.2f} MB)")
 
-    # Remove temporary checkpoint file upon successful completion
+    # Remove temporary checkpoint files upon successful completion
     if checkpoint_path.exists():
         checkpoint_path.unlink()
+    if CHECKPOINT_META_PATH.exists():
+        CHECKPOINT_META_PATH.unlink()
 
     return index, corpus
 
@@ -350,9 +404,9 @@ class PrecedentRetriever:
         q_emb = self.model.encode([query], normalize_embeddings=True)[0]
         q_vec = np.ascontiguousarray([q_emb], dtype=np.float32)
 
-        # Retrieve a broader candidate pool if filters are applied
+        # When a filter is set, search the whole index so qualified cases are never missed
         has_filter = bool(guideline or outcome or split)
-        candidate_k = min(top_k * 15 if has_filter else top_k, self.index.ntotal)
+        candidate_k = self.index.ntotal if has_filter else min(top_k, self.index.ntotal)
 
         scores, indices = self.index.search(q_vec, candidate_k)
         scores = scores[0]
@@ -568,8 +622,8 @@ def main():
     parser.add_argument(
         "--batch-size",
         type=int,
-        default=128,
-        help="Batch size for embedding generation (default: 128)",
+        default=256,
+        help="Batch size for embedding generation (default: 256)",
     )
     parser.add_argument(
         "--chunk-size",

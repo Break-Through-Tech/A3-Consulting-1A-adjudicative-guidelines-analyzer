@@ -4,8 +4,14 @@
 """
 from __future__ import annotations
 
+import os
 import sys
 from pathlib import Path
+
+# Prevent OpenMP runtime conflict on macOS
+os.environ.setdefault("KMP_DUPLICATE_LIB_OK", "TRUE")
+os.environ["OMP_NUM_THREADS"] = "1"
+os.environ.setdefault("TOKENIZERS_PARALLELISM", "false")
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -100,17 +106,26 @@ def test_retriever_search_and_highlighting():
 
 def test_retriever_filters():
     retriever = PrecedentRetriever()
-    query = "Foreign contacts and family members residing abroad."
+    query = "Foreign contacts and family members residing abroad, with delinquent debts."
 
     # Test guideline filter
     hits_b = retriever.search(query, top_k=3, guideline="B", highlight_paragraph=False)
+    assert len(hits_b) == 3, f"Expected 3 hits for Guideline B filter, got {len(hits_b)}"
     for h in hits_b:
         assert "B" in h["guidelines"], f"Guideline filter violated: {h['guidelines']}"
 
     # Test outcome filter
     hits_granted = retriever.search(query, top_k=3, outcome="GRANTED", highlight_paragraph=False)
+    assert len(hits_granted) == 3, f"Expected 3 hits for outcome GRANTED filter, got {len(hits_granted)}"
     for h in hits_granted:
         assert h["outcome"] == "GRANTED", f"Outcome filter violated: {h['outcome']}"
+
+    # Test guideline H filter across whole index on debts and foreign family query
+    # (H is not in top unfiltered semantic hits, so this asserts whole-index scan)
+    hits_h = retriever.search(query, top_k=3, guideline="H", highlight_paragraph=False)
+    assert len(hits_h) == 3, f"Expected 3 hits for Guideline H across whole index, got {len(hits_h)}"
+    for h in hits_h:
+        assert "H" in h["guidelines"], f"Guideline filter violated: {h['guidelines']}"
 
 
 if __name__ == "__main__":
