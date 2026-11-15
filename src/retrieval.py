@@ -14,22 +14,11 @@ import time
 from pathlib import Path
 from typing import Any
 
-# Prevent OpenMP and threading conflicts on macOS Python 3.14
-os.environ.setdefault("KMP_DUPLICATE_LIB_OK", "TRUE")
-os.environ["OMP_NUM_THREADS"] = "1"
-os.environ.setdefault("TOKENIZERS_PARALLELISM", "false")
-
-import tqdm
-tqdm.tqdm.monitor_interval = 0
-
 import faiss
 import numpy as np
 import pandas as pd
 import pyarrow.dataset as ds
 import torch
-
-# Use safe intra-op threadpool
-torch.set_num_threads(4)
 from sentence_transformers import SentenceTransformer
 
 from src import config
@@ -146,7 +135,7 @@ def get_precedent_corpus() -> tuple[pd.DataFrame, list[str], list[tuple[int, int
 
 def build_precedent_index(
     model_name: str = DEFAULT_MODEL_NAME,
-    batch_size: int = 256,
+    batch_size: int = 64,
     case_chunk_size: int = 1000,
     device: str | None = None,
     output_index_path: Path = INDEX_PATH,
@@ -622,8 +611,8 @@ def main():
     parser.add_argument(
         "--batch-size",
         type=int,
-        default=256,
-        help="Batch size for embedding generation (default: 256)",
+        default=64,
+        help="Batch size for embedding generation (default: 64)",
     )
     parser.add_argument(
         "--chunk-size",

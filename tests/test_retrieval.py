@@ -4,14 +4,8 @@
 """
 from __future__ import annotations
 
-import os
 import sys
 from pathlib import Path
-
-# Prevent OpenMP runtime conflict on macOS
-os.environ.setdefault("KMP_DUPLICATE_LIB_OK", "TRUE")
-os.environ["OMP_NUM_THREADS"] = "1"
-os.environ.setdefault("TOKENIZERS_PARALLELISM", "false")
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 sys.path.insert(0, str(Path(__file__).resolve().parent))
