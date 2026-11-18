@@ -58,7 +58,9 @@ DEMO_FIELDS = ["position", "source_url", "case_number", "outcome", "guidelines",
 
 _QUOTED = re.compile(r"[\"“]([^\"”]+)[\"”]")
 _NUMBER = re.compile(r"\d(?:[\d,.]*\d)?")
-_CONFIDENCE = re.compile(r"%|percent|probab|confiden|\bscor(?:e|ed|es|ing)\b|\bcertain", re.I)
+_CONFIDENCE = re.compile(r"%|percent|probab|confiden|\bscor(?:e|ed|es|ing)\b|\b(?:un)?certaint", re.I)
+_TOOL_REASONS = re.compile(r"\b(?:the\s+)?(?:tool|analyzer|model)\s+(?:also\s+)?(?:judged|concluded|determined|decided|"
+                           r"found\s+that|weighed|considered)\b", re.I)
 _CODES_IN_TEXT = re.compile(r"\bc\d+\b|\[c\d+\]|AG\s*¶|\b(?:19|20)\([a-g]\)", re.I)
 
 
@@ -389,6 +391,8 @@ def check_rationale(answer: dict | None, doc: dict, full_text: str) -> tuple[dic
         problems.append("states_confidence")
     if _CODES_IN_TEXT.search(_outside_quotes(text)):
         problems.append("names_ids_or_codes")
+    if _TOOL_REASONS.search(_outside_quotes(text)):
+        problems.append("credits_the_tool")
     if _unsupported_numbers(text, T.rationale_input(doc)):
         problems.append("unsupported_number")
 

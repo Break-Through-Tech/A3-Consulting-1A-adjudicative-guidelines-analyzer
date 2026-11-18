@@ -168,6 +168,24 @@ def test_ids_codes_and_guidelines_are_checked():
     assert "names_ids_or_codes" in problems
 
 
+def test_rationale_that_credits_the_tool_with_the_judges_reasoning_is_dropped():
+    for text in ("The tool judged that the repayment efforts were not sustained.",
+                 "The tool concluded the debts remain unpaid, so Guideline F is predicted against."):
+        assert "credits_the_tool" in N.check_rationale(_with(text=text, quotes=[]), _doc(), FULL)[1], text
+    ok = _with(text="The tool predicts Guideline F against. The judge concluded the plan was too recent.", quotes=[])
+    assert N.check_rationale(ok, _doc(), FULL)[1] == []
+
+
+def test_prompt_credits_the_judge():
+    assert "never say the tool judged" in T.RATIONALE_SYSTEM_PROMPT
+
+
+def test_certain_as_an_ordinary_word_is_allowed():
+    note = {"note": "Both applicants owe credit card debt, and an ex-spouse was ordered to pay certain debts."}
+    assert N.check_note(note, FACTS, PARAGRAPH)[1] == []
+    assert "states_score" in N.check_note({"note": "With some certainty, both owe card debt."}, FACTS, PARAGRAPH)[1]
+
+
 def test_long_rationale_is_dropped():
     _, problems = N.check_rationale(_with(text="word " * 200, quotes=[]), _doc(), FULL)
     assert "too_long" in problems

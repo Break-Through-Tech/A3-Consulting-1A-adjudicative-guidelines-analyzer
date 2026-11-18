@@ -1,0 +1,16 @@
+{
+  "requests": 6,
+  "succeeded": 6,
+  "end_turn": 6,
+  "rationale_kept": 1,
+  "note_dropped": 1,
+  "note_kept": 4,
+  "rationale_problems": {},
+  "note_problems": {
+    "states_score": 1
+  },
+  "input_tokens": 18990,
+  "output_tokens": 2479,
+  "cost": 0.0015692500000000001,
+  "spent_total": 0.1746485
+}
