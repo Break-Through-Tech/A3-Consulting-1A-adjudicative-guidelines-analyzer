@@ -1,0 +1,64 @@
+Composed vs Direct Outcome Prediction Results
+============================================
+
+Frozen test split
+-----------------
+Composed cases: 3,133
+Direct cases: 3,133
+
+Overall
+-------
+                         Composed    Direct
+Accuracy                 0.806       0.824
+Macro F1                 0.798       0.817
+DENIED precision         0.872       0.891
+DENIED recall            0.805       0.815
+DENIED F1                0.837       0.852
+DENIED support           1944        1944
+GRANTED precision        0.717       0.735
+GRANTED recall           0.807       0.838
+GRANTED F1               0.759       0.783
+GRANTED support          1189        1189
+
+By citation regime
+------------------
+
+SEAD-4 (2,496 cases)
+                         Composed    Direct
+Accuracy                 0.831       0.837
+Macro F1                 0.822       0.830
+
+Directive (373 cases)
+                         Composed    Direct
+Accuracy                 0.743       0.775
+Macro F1                 0.736       0.765
+
+Unknown (264 cases)
+                         Composed    Direct
+Accuracy                 0.652       0.773
+Macro F1                 0.650       0.772
+
+Confusion matrices
+------------------
+Composed (rows=true, columns=predicted)
+              DENIED  GRANTED
+DENIED          1565      379
+GRANTED          230      959
+
+Direct (rows=true, columns=predicted)
+              DENIED  GRANTED
+DENIED          1585      359
+GRANTED          193      996
+
+Conclusion
+----------
+The directly trained outcome head outperformed the composed guideline-head
+prediction overall and in every citation regime. The overall accuracy advantage
+was 1.8 percentage points.
+
+Reproduction
+------------
+python notebooks\05_composed_vs_direct_outcome.py
+
+Detailed metrics:
+composed_vs_direct_outcome_by_regime.csv
