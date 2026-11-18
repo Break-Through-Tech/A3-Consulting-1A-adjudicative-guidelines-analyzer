@@ -1,0 +1,10 @@
+custom_id,group,regime,mode,reason,code,quote,span
+run-3-citation,uncited,unknown,citation,restates_guideline,AG ¶ 20(c),there are clear indications that the problem is being resolved or is under control,
+run-50-citation,uncited,unknown,citation,restates_guideline,AG ¶ 20(e),Paragraph 20.e. (Applicant has a reasonable basis to dispute the legitimacy of the past-due debt which is the cause of the problem and provides documented proof to substantiate the basis of the dispute or provides evidence of actions to resolve the issue),
+run-61-citation,uncited,unknown,citation,near_miss,AG ¶ 20(g),he provided no evidence that he resolved the federal and state tax debts,"(12675, 12747)"
+run-75-blind,cited,sead4,blind,contains_mask,AG ¶ 19(g),"Nor does [CITE] pertain because there is no evidence of any affluence resulting from any source, legal or otherwise.",
+run-75-blind,cited,sead4,blind,contains_mask,AG ¶ 20(e),"Applicant did not dispute any debts, so [CITE] does not apply.",
+run-75-blind,cited,sead4,blind,contains_mask,AG ¶ 20(f),"Nor does [CITE] pertain because there is no evidence of any affluence resulting from any source, legal or otherwise.",
+run-85-blind,cited,sead4,blind,not_found,AG ¶ 19(e),His budget does not provide any money for additional debts or emergencies.,
+run-101-blind,cited,sead4,blind,restates_guideline,AG ¶ 20(e),for the dispute or provide,
+run-122-blind,cited,unknown,blind,not_found,AG ¶ 20(d),Applicant cannot demonstrate that he has made a good-faith effort to resolve his debts.,
