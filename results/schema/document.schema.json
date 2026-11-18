@@ -261,6 +261,19 @@
         "end": {
           "type": "integer"
         },
+        "context": {
+          "$ref": "#/$defs/Span"
+        },
+        "lead_in": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Span"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "section": {
           "anyOf": [
             {
@@ -292,8 +305,30 @@
         "quote",
         "start",
         "end",
+        "context",
+        "lead_in",
         "section",
         "cited_as"
+      ],
+      "additionalProperties": false
+    },
+    "Span": {
+      "type": "object",
+      "properties": {
+        "start": {
+          "type": "integer"
+        },
+        "end": {
+          "type": "integer"
+        },
+        "text": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "start",
+        "end",
+        "text"
       ],
       "additionalProperties": false
     },

@@ -25,7 +25,8 @@ from src.llm.verify import VerifiedQuote  # noqa: E402
 ROOT = Path(__file__).resolve().parents[1]
 
 ANALYSIS = (
-    "ANALYSIS \nApplicant has delinquent debts. AG ¶ 19(a) and AG ¶ 19(c) apply. "
+    "ANALYSIS \nApplicant has delinquent debts. Two are potentially applicable: "
+    "AG ¶ 19(a) and AG ¶ 19(c) apply. "
     "He said the debts arose from a layoff in 2018. "
     "Under Directive ¶ E2.A6.1.3.2 the layoff counts. E2.A6.1.3.9 is not a real code. "
 )
@@ -151,6 +152,21 @@ def test_conditions_quote_offsets_sections_and_sources():
     assert [item["start"] for item in doc["conditions"]] == sorted(item["start"] for item in doc["conditions"])
 
 
+def test_context_and_lead_in():
+    by_quote = {item["quote"]: item for item in _doc()["conditions"]}
+    first = by_quote["AG ¶ 19(a)"]
+    assert first["context"]["text"] == "AG ¶ 19(a) and AG ¶ 19(c) apply."
+    assert first["lead_in"]["text"] == "Two are potentially applicable:"
+    # a heading has no full stop, so it joins the sentence that follows it
+    assert by_quote["AG ¶ 20(b)"]["context"]["text"] == "CONCLUSIONS \nAG ¶ 20(b) applies in part."
+    assert by_quote["AG ¶ 20(b)"]["lead_in"] is None
+    assert by_quote[LAYOFF]["context"]["text"] == "He said the debts arose from a layoff in 2018."
+    for item in by_quote.values():
+        span = item["context"]
+        assert FULL_TEXT[span["start"]:span["end"]] == span["text"]
+        assert span["start"] <= item["start"] and item["end"] <= span["end"]
+
+
 def test_directive_hit_uses_its_sead4_code_and_unmapped_is_counted():
     doc = _doc()
     directive = [item for item in doc["conditions"] if item["cited_as"]]
@@ -210,6 +226,26 @@ def test_offset_past_the_text_fails():
     doc = _doc()
     doc["conditions"][-1]["end"] = len(FULL_TEXT) + 5
     _fails(doc, "fall outside full_text")
+
+
+def test_context_that_misses_the_quote_or_the_text_fails():
+    doc = _doc()
+    doc["conditions"][0]["context"]["start"] = doc["conditions"][0]["end"]
+    _fails(doc, "does not hold the quote")
+    doc = _doc()
+    doc["conditions"][0]["context"]["text"] += " extra"
+    _fails(doc, "context text is not full_text")
+
+
+def test_lead_in_after_the_context_or_with_wrong_text_fails():
+    doc = _doc()
+    item = next(c for c in doc["conditions"] if c["lead_in"])
+    item["lead_in"]["end"] = item["context"]["start"] + 5
+    _fails(doc, "must end before the context")
+    doc = _doc()
+    item = next(c for c in doc["conditions"] if c["lead_in"])
+    item["lead_in"]["text"] = "Something else:"
+    _fails(doc, "lead_in text is not full_text")
 
 
 def test_off_list_code_fails():
@@ -303,7 +339,7 @@ def test_json_schema_matches_the_typeddicts():
     schema = S.json_schema()
     assert schema["required"] == list(S.Document.__annotations__)
     assert schema["additionalProperties"] is False
-    for name in ("CaseInfo", "Guideline", "Recommendation", "Condition", "Precedent", "Rationale", "Provenance"):
+    for name in ("CaseInfo", "Guideline", "Recommendation", "Span", "Condition", "Precedent", "Rationale", "Provenance"):
         cls = getattr(S, name)
         assert schema["$defs"][name]["required"] == list(cls.__annotations__), name
     assert schema["$defs"]["Guideline"]["properties"]["status"]["enum"] == ["NOT_AT_ISSUE", "FOR", "AGAINST"]

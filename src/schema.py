@@ -12,7 +12,9 @@ One document holds everything the app shows for a case:
                     the guidelines that drove it; `direct` stays empty until the
                     direct outcome head is settled
     conditions      cited conditions with an exact quote and its offsets into
-                    `full_text`, from the rule extractor or from the LLM
+                    `full_text`, from the rule extractor or from the LLM, plus
+                    the sentence or list item around the quote and, inside a
+                    list, the lead-in sentence that opens it
     precedents      similar decisions from retrieval, with the best paragraph
     rationale       a short text and the ids of what it rests on, or null
     provenance      model names, calibration file, prompt hashes, run dates and
@@ -46,6 +48,7 @@ from functools import lru_cache
 from pathlib import Path
 from typing import Any, Literal, TypedDict, Union, get_args, get_origin, get_type_hints, is_typeddict
 
+from src import conditions as extractor
 from src import config
 from src import sead4_reference as ref
 
@@ -115,6 +118,12 @@ class Recommendation(TypedDict):
     direct: DirectOutcome | None
 
 
+class Span(TypedDict):
+    start: int
+    end: int
+    text: str                 # exactly full_text[start:end]
+
+
 class Condition(TypedDict):
     id: str                   # c1, c2, ...
     code: str                 # closed-list SEAD-4 code, e.g. AG ¶ 20(b)
@@ -126,6 +135,8 @@ class Condition(TypedDict):
                               # citation itself, e.g. "AG ¶ 20(b)" or "(b)" in a list
     start: int
     end: int
+    context: Span             # the sentence or list item holding the quote
+    lead_in: Span | None      # the sentence opening the list, when the quote is in one
     section: str | None       # the section the quote starts in
     cited_as: str | None      # the Directive-era code when the decision cites one
 
@@ -408,6 +419,16 @@ def problems(doc, full_text: str) -> list[str]:
             found.append(f"{where}: offsets {start}:{end} fall outside full_text of length {len(full_text)}")
         elif full_text[start:end] != item["quote"]:
             found.append(f"{where}: full_text[{start}:{end}] is not the quote")
+        context, lead_in = item["context"], item["lead_in"]
+        if not (context["start"] <= start and end <= context["end"]):
+            found.append(f"{where}: context {context['start']}:{context['end']} does not hold the quote")
+        if full_text[context["start"]:context["end"]] != context["text"] or context["start"] < 0:
+            found.append(f"{where}: context text is not full_text at its offsets")
+        if lead_in is not None:
+            if not 0 <= lead_in["start"] < lead_in["end"] <= context["start"]:
+                found.append(f"{where}: lead_in {lead_in['start']}:{lead_in['end']} must end before the context")
+            elif full_text[lead_in["start"]:lead_in["end"]] != lead_in["text"]:
+                found.append(f"{where}: lead_in text is not full_text at its offsets")
         if item["section"] is not None and item["section"] not in SECTIONS:
             found.append(f"{where}: unknown section {item['section']!r}")
 
@@ -523,6 +544,8 @@ def _conditions(full_text: str, row, hits: Iterable, source: str) -> tuple[list[
         if given is not None and given != quote:
             raise ValueError(f"{source} hit {code} at {start}:{end} does not quote full_text there")
         record = ref.CONDITIONS[code]
+        c_start, c_end = extractor.hit_context(full_text, start, end)
+        lead = extractor.list_lead_in(full_text, c_start)
         out.append({
             "id": "",
             "code": code,
@@ -533,6 +556,8 @@ def _conditions(full_text: str, row, hits: Iterable, source: str) -> tuple[list[
             "quote": quote,
             "start": start,
             "end": end,
+            "context": {"start": c_start, "end": c_end, "text": full_text[c_start:c_end]},
+            "lead_in": None if lead is None else {"start": lead[0], "end": lead[1], "text": full_text[lead[0]:lead[1]]},
             "section": _section_of(start, spans),
             "cited_as": cited_as,
         })
