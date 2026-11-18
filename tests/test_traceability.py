@@ -42,6 +42,22 @@ def test_quote_equals_full_text_slice():
         assert r["quote"].strip()
 
 
+def test_context_holds_the_quote_and_lead_in_comes_before_it():
+    sheet, key, _ = sample()
+    text = dict(zip(pool()["source_url"], pool()["full_text"]))
+    for r in sheet.to_dict("records"):
+        t = text[r["source_url"]]
+        c_start, c_end = B.hit_context(t, r["start"], r["end"])
+        assert t[c_start:c_end] == r["context"], r["finding"]
+        assert c_start <= r["start"] and r["end"] <= c_end
+        if r["lead_in"]:
+            assert r["lead_in"].endswith(":")
+            assert t.rfind(r["lead_in"], 0, c_start) >= 0, r["finding"]
+    rule = set(key.loc[key["source"] == "rule", "finding"])
+    rule_rows = sheet[sheet["finding"].isin(rule)]
+    assert rule_rows["context"].str.len().median() > 3 * rule_rows["quote"].str.len().median()
+
+
 def test_codes_are_on_the_closed_list():
     sheet, key, _ = sample()
     assert set(sheet["code"]) <= CODES

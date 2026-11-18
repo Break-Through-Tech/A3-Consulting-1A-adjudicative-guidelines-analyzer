@@ -46,6 +46,14 @@ Both sides
     next candidate. A case is used at most twice across the 100 findings. The
     rule side is drawn first, then the LLM side. The 100 rows are shuffled so the
     sources interleave, numbered 1 to 100, and handed out in blocks of 25.
+
+Context
+    A rule hit's span is usually a bare citation such as `(a)`, which a reviewer
+    can't judge alone. Every row therefore also shows `context`, the sentence or
+    list item around the span from `conditions.hit_context`, and `lead_in`, the
+    sentence that opens the list from `conditions.list_lead_in`, blank outside a
+    list. The lead-in shows whether the judge applied the listed conditions or
+    only recited them. Both sources get the same two columns.
 """
 from __future__ import annotations
 
@@ -59,7 +67,7 @@ import numpy as np
 import pandas as pd
 
 from src import config
-from src.conditions import _CASE_COLUMNS, extract_case
+from src.conditions import _CASE_COLUMNS, extract_case, hit_context, list_lead_in
 from src.dataset import load_cases
 from src.sead4_reference import CODES, condition
 
@@ -76,7 +84,8 @@ REGIME_FLOOR = 5
 MAX_PER_CASE = 2
 REVIEWERS = [("Rashed", 25), ("Sam", 25), ("Aryan", 25), ("Brian", 25)]
 SHEET_COLUMNS = ["finding", "reviewer", "case_number", "decision", "date", "regime", "code",
-                 "condition_text", "quote", "start", "end", "supports", "notes", "source_url"]
+                 "condition_text", "quote", "context", "lead_in", "start", "end", "supports", "notes",
+                 "source_url"]
 ANSWERS = ("yes", "no", "unsure")
 
 
@@ -226,6 +235,9 @@ def build_sample(seed: int = SEED, pool: pd.DataFrame | None = None) -> tuple[pd
     for number, f in enumerate(findings, start=1):
         case = info.loc[f["source_url"]]
         d = f["detail"]
+        text = full_text[f["source_url"]]
+        c_start, c_end = hit_context(text, f["start"], f["end"])
+        lead = list_lead_in(text, c_start)
         sheet_rows.append({
             "finding": number,
             "reviewer": reviewer_for(number),
@@ -236,6 +248,8 @@ def build_sample(seed: int = SEED, pool: pd.DataFrame | None = None) -> tuple[pd
             "code": f["code"],
             "condition_text": condition(f["code"])["text"],
             "quote": f["quote"],
+            "context": text[c_start:c_end],
+            "lead_in": "" if lead is None else text[lead[0]:lead[1]],
             "start": f["start"],
             "end": f["end"],
             "supports": "",
