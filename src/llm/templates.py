@@ -1,4 +1,7 @@
-"""Prompt, schema and input masks for the Guideline F quote extractor.
+"""Prompts, schemas and input masks for the three LLM tasks.
+
+The Guideline F quote extractor comes first. The rationale and the similarity
+note, which src/llm/notes.py runs, are at the end.
 
     from src.llm.templates import build_input, SYSTEM_PROMPT, SCHEMA
     text, region = build_input(row, "blind")
@@ -198,12 +201,156 @@ def build_input(row, mode: str, *, collapse: bool = True, fallback: bool = True)
     return text, region
 
 
-def request_params(text: str, *, model: str, max_tokens: int = 8000) -> dict:
-    """Messages API parameters for one case. No temperature, prefill or budget_tokens."""
+def _params(system: str, output_config: dict, text: str, model: str, max_tokens: int) -> dict:
     return {
         "model": model,
         "max_tokens": max_tokens,
-        "system": SYSTEM_PROMPT,
-        "output_config": OUTPUT_CONFIG,
+        "system": system,
+        "output_config": output_config,
         "messages": [{"role": "user", "content": text}],
     }
+
+
+def request_params(text: str, *, model: str, max_tokens: int = 8000) -> dict:
+    """Messages API parameters for one case. No temperature, prefill or budget_tokens."""
+    return _params(SYSTEM_PROMPT, OUTPUT_CONFIG, text, model, max_tokens)
+
+
+def prompt_hash(system: str) -> str:
+    import hashlib
+
+    return "sha256:" + hashlib.sha256(system.encode("utf-8")).hexdigest()[:12]
+
+
+# --- rationale ------------------------------------------------------------------
+#
+# The rationale explains one schema document in plain words. Its input is only
+# what the document already holds: the predicted status of each guideline at
+# issue, the composed recommendation and the verified conditions with their
+# quotes. No probabilities go in, so none can come out. Every passage it quotes
+# is checked against `full_text` by src/llm/notes.py before it is kept.
+
+RATIONALE_MAX_WORDS = 120
+NOTE_MAX_WORDS = 60
+
+RATIONALE_SYSTEM_PROMPT = (
+    "You explain the output of a tool that analyzes DOHA security clearance decisions "
+    "under the SEAD-4 adjudicative guidelines. You get the tool's predicted status for "
+    "each guideline at issue, the recommendation composed from those statuses, and the "
+    "conditions the tool found in the decision, each with its id, its SEAD-4 wording "
+    "and the decision's own words.\n\n"
+    "Write a short explanation of how the conditions found relate to the predicted "
+    "statuses and the recommendation. Rules:\n"
+    f"- Use three to five sentences and at most {RATIONALE_MAX_WORDS} words.\n"
+    "- Use only facts that appear in the evidence given. Add no outside facts.\n"
+    "- Present the statuses as the tool's prediction, not as the judge's ruling.\n"
+    "- Give no probabilities, percentages, scores or confidence, and do not say how "
+    "sure the prediction is.\n"
+    "- When you copy words from the decision, put them in double quotes and copy them "
+    "character for character from one Evidence or Sentence line, at least three words at "
+    "a time. List every such quote in `quotes` with the id of the condition it came from.\n"
+    "- Do not write condition ids or citation codes in the text.\n"
+    "- Put in `condition_ids` every condition the text relies on, and in "
+    "`guideline_codes` every guideline it discusses.\n\n"
+    "Answer only with JSON in the required shape."
+)
+
+
+def rationale_schema(condition_ids: list[str], guideline_codes: list[str]) -> dict:
+    """The answer shape for one document. Ids and codes are limited to that document's."""
+    ids = {"type": "string", "enum": list(condition_ids)}
+    return {
+        "type": "object",
+        "properties": {
+            "text": {"type": "string"},
+            "condition_ids": {"type": "array", "items": ids},
+            "guideline_codes": {"type": "array", "items": {"type": "string", "enum": list(guideline_codes)}},
+            "quotes": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {"condition_id": ids, "exact_quote": {"type": "string"}},
+                    "required": ["condition_id", "exact_quote"],
+                    "additionalProperties": False,
+                },
+            },
+        },
+        "required": ["text", "condition_ids", "guideline_codes", "quotes"],
+        "additionalProperties": False,
+    }
+
+
+def at_issue(doc: dict) -> list[dict]:
+    """The document's guidelines predicted FOR or AGAINST, in A to M order."""
+    return [g for g in doc["guidelines"] if g["status"] != "NOT_AT_ISSUE"]
+
+
+def _one_line(text: str) -> str:
+    return _WS.sub(" ", text).strip()
+
+
+def rationale_input(doc: dict) -> str:
+    """The user message for one document: statuses, recommendation, conditions. No numbers from the heads."""
+    rec = doc["recommendation"]
+    lines = ["Predicted status of each guideline at issue:"]
+    lines += [f"- Guideline {g['code']}, {g['name']}: {g['status']}" for g in at_issue(doc)]
+    driven = ", ".join(rec["driven_by"]) or "none"
+    lines += ["", f"Composed recommendation: {rec['composed']}. Guidelines predicted AGAINST: {driven}.", "",
+              "Conditions found in the decision:"]
+    for c in doc["conditions"]:
+        lines.append(f"[{c['id']}] {c['code']}, a Guideline {c['guideline']} {c['kind']}. "
+                     f"SEAD-4 wording: {_one_line(c['text'])}")
+        if c["source"] == "llm":
+            lines.append(f"Evidence: {_one_line(c['quote'])}")
+        if c["lead_in"] is not None:
+            lines.append(f"List lead-in: {_one_line(c['lead_in']['text'])}")
+        lines.append(f"Sentence: {_one_line(c['context']['text'])}")
+    return "\n".join(lines)
+
+
+def rationale_params(doc: dict, *, model: str, max_tokens: int = 4000) -> dict:
+    schema = rationale_schema([c["id"] for c in doc["conditions"]], [g["code"] for g in at_issue(doc)])
+    config = {"effort": "medium", "format": {"type": "json_schema", "schema": schema}}
+    return _params(RATIONALE_SYSTEM_PROMPT, config, rationale_input(doc), model, max_tokens)
+
+
+# --- similarity note ------------------------------------------------------------
+#
+# One note per precedent: what the facts of the case under review share with the
+# precedent's best paragraph from PrecedentRetriever.search. Both texts come from
+# findings of fact, so neither states an outcome. The note gives no score.
+
+NOTE_SYSTEM_PROMPT = (
+    "You compare the facts of two DOHA security clearance decisions. You get the "
+    "findings of fact of a case under review and one paragraph from the findings of "
+    "fact of an earlier decision, a precedent.\n\n"
+    "Write what the facts in the precedent paragraph share with the case under review. "
+    "Rules:\n"
+    f"- Use one or two sentences and at most {NOTE_MAX_WORDS} words.\n"
+    "- Use only facts that appear in the two texts. Add no outside facts.\n"
+    "- If they share little, say what little they share in one sentence.\n"
+    "- Do not rate how similar or relevant the precedent is, and give no score, "
+    "percentage or confidence.\n"
+    "- Do not mention outcomes, rulings, clearances or which side should win.\n\n"
+    "Answer only with JSON in the required shape."
+)
+
+NOTE_SCHEMA = {
+    "type": "object",
+    "properties": {"note": {"type": "string"}},
+    "required": ["note"],
+    "additionalProperties": False,
+}
+
+NOTE_OUTPUT_CONFIG = {"effort": "medium", "format": {"type": "json_schema", "schema": NOTE_SCHEMA}}
+
+
+def note_input(query_facts: str, precedent_case: str, paragraph: str) -> str:
+    return (f"Case under review, findings of fact:\n{_one_line(query_facts)}\n\n"
+            f"Precedent {precedent_case}, paragraph from its findings of fact:\n{_one_line(paragraph)}")
+
+
+def note_params(query_facts: str, precedent_case: str, paragraph: str, *, model: str,
+                max_tokens: int = 4000) -> dict:
+    return _params(NOTE_SYSTEM_PROMPT, NOTE_OUTPUT_CONFIG, note_input(query_facts, precedent_case, paragraph),
+                   model, max_tokens)
