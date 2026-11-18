@@ -122,5 +122,75 @@ def test_retriever_filters():
         assert "H" in h["guidelines"], f"Guideline filter violated: {h['guidelines']}"
 
 
+def test_bm25_index_and_docket_search():
+    from src.bm25 import BM25_INDEX_PATH, get_bm25_index
+
+    assert BM25_INDEX_PATH.exists(), f"Missing BM25 index at {BM25_INDEX_PATH}"
+    bm25 = get_bm25_index()
+    assert bm25.n_docs == 24238, f"Expected 24,238 documents in BM25, got {bm25.n_docs}"
+
+    # Exact docket search should return the exact case at rank 1 with high score
+    hits = bm25.search("ISCR Case No. 03-11614", top_k=5)
+    assert len(hits) > 0, "Expected BM25 hits for docket query"
+    top_doc_id, top_score = hits[0]
+    assert bm25.case_numbers[top_doc_id] == "03-11614", f"Expected case 03-11614 at rank 1, got {bm25.case_numbers[top_doc_id]}"
+    assert top_score > 30.0, f"Expected high BM25 score for exact docket, got {top_score}"
+
+
+def test_hybrid_reciprocal_rank_fusion():
+    retriever = PrecedentRetriever()
+
+    # 1. Exact docket search under hybrid mode must return the target case at rank 1
+    docket_hits = retriever.search("ISCR Case No. 03-11614", top_k=3, mode="hybrid", highlight_paragraph=False)
+    assert len(docket_hits) == 3, f"Expected 3 hits, got {len(docket_hits)}"
+    assert docket_hits[0]["case_number"] == "03-11614", f"Expected case 03-11614 at rank 1, got {docket_hits[0]['case_number']}"
+    assert docket_hits[0]["rrf_score"] is not None, "Expected rrf_score in hybrid results"
+    assert docket_hits[0]["bm25_score"] > 30.0, f"Expected strong BM25 component score, got {docket_hits[0]['bm25_score']}"
+
+    # 2. Semantic query under hybrid mode combines dense and BM25 signals
+    sem_hits = retriever.search("Applicant accumulated delinquent credit card debt and medical bills.", top_k=3, mode="hybrid", highlight_paragraph=True)
+    assert len(sem_hits) == 3, f"Expected 3 hits, got {len(sem_hits)}"
+    assert "F" in sem_hits[0]["guidelines"], f"Expected Guideline F in top hit, got {sem_hits[0]['guidelines']}"
+    assert sem_hits[0]["dense_score"] > 0.7, f"Expected high dense similarity, got {sem_hits[0]['dense_score']}"
+
+
+def test_50_query_test_set_structure():
+    import json
+    from src.query_set import QUERY_SET_PATH, STRATIFICATION_TARGETS
+
+    assert QUERY_SET_PATH.exists(), f"Missing 50-query test set at {QUERY_SET_PATH}"
+    with open(QUERY_SET_PATH, "r", encoding="utf-8") as f:
+        queries = json.load(f)
+
+    assert len(queries) == 50, f"Expected exactly 50 queries, got {len(queries)}"
+
+    expected_keys = {
+        "query_id",
+        "case_number",
+        "source_url",
+        "split",
+        "primary_guideline",
+        "guidelines",
+        "direction",
+        "outcome",
+        "query_text",
+        "exact_docket_citation",
+        "relevance_definition",
+    }
+    for q in queries:
+        assert expected_keys.issubset(set(q.keys())), f"Missing keys in query {q.get('query_id')}"
+        assert q["split"] == "test", f"All queries must be from held-out test split, got {q['split']}"
+        assert len(q["query_text"]) >= 50, f"Query text too short: {q['query_text']}"
+
+    # Check stratification counts
+    g_counts = {}
+    for q in queries:
+        g = q["primary_guideline"]
+        g_counts[g] = g_counts.get(g, 0) + 1
+
+    for g, (n_ag, n_for) in STRATIFICATION_TARGETS.items():
+        assert g_counts.get(g, 0) == (n_ag + n_for), f"Guideline {g} count mismatch: {g_counts.get(g, 0)} vs expected {n_ag + n_for}"
+
+
 if __name__ == "__main__":
     raise SystemExit(run_module(dict(globals()), "retrieval tests"))

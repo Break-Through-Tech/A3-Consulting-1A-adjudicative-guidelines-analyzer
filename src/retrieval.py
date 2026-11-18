@@ -28,6 +28,7 @@ from src.normalize import normalize_body
 # Precedent corpus artifact paths
 INDEX_PATH = config.OUT_DIR / "precedents.faiss"
 METADATA_PATH = config.OUT_DIR / "precedents_metadata.parquet"
+BM25_INDEX_PATH = config.OUT_DIR / "precedents_bm25.pkl.gz"
 CHECKPOINT_PATH = config.OUT_DIR / ".precedents_embeddings_checkpoint.npy"
 CHECKPOINT_META_PATH = config.OUT_DIR / ".precedents_embeddings_checkpoint_meta.json"
 DEFAULT_MODEL_NAME = "BAAI/bge-small-en-v1.5"
@@ -305,22 +306,25 @@ def build_precedent_index(
 
 
 class PrecedentRetriever:
-    """Precedent case retriever supporting dense semantic search and paragraph highlighting."""
+    """Precedent case retriever supporting dense semantic search, BM25 keyword search, and RRF hybrid search."""
 
     def __init__(
         self,
         index_path: Path = INDEX_PATH,
         metadata_path: Path = METADATA_PATH,
+        bm25_index_path: Path = BM25_INDEX_PATH,
         model_name: str = DEFAULT_MODEL_NAME,
         device: str | None = None,
     ):
         self.index_path = Path(index_path)
         self.metadata_path = Path(metadata_path)
+        self.bm25_index_path = Path(bm25_index_path)
         self.model_name = model_name
         self.device = device if device is not None else get_default_device()
 
         self._index: faiss.Index | None = None
         self._metadata: pd.DataFrame | None = None
+        self._bm25: Any | None = None
         self._model: SentenceTransformer | None = None
         self._dataset: ds.Dataset | None = None
 
@@ -347,6 +351,13 @@ class PrecedentRetriever:
         return self._metadata
 
     @property
+    def bm25(self) -> Any:
+        if self._bm25 is None:
+            from src.bm25 import get_bm25_index
+            self._bm25 = get_bm25_index(self.bm25_index_path)
+        return self._bm25
+
+    @property
     def model(self) -> SentenceTransformer:
         if self._model is None:
             self._model = SentenceTransformer(self.model_name, device=self.device)
@@ -369,6 +380,8 @@ class PrecedentRetriever:
         self,
         query: str,
         top_k: int = 5,
+        mode: str = "hybrid",
+        rrf_k: int = 60,
         guideline: str | None = None,
         outcome: str | None = None,
         split: str | None = None,
@@ -376,9 +389,16 @@ class PrecedentRetriever:
     ) -> list[dict[str, Any]]:
         """Retrieve most similar precedent cases for a fact pattern or query string.
 
+        Supports:
+            - mode='hybrid': Reciprocal Rank Fusion (RRF) combining dense and BM25 search.
+            - mode='dense': Dense embedding search (FAISS IndexFlatIP).
+            - mode='bm25': Keyword search (BM25 inverted index for citations & dockets).
+
         Args:
             query: Free-text fact pattern or case description.
             top_k: Number of precedent cases to return.
+            mode: Retrieval mode ('hybrid', 'dense', or 'bm25').
+            rrf_k: RRF smoothing constant (default: 60).
             guideline: Optional filter for specific guideline letter (e.g. 'F', 'B').
             outcome: Optional filter for outcome ('DENIED', 'GRANTED', 'REVOKED').
             split: Optional filter for split ('train', 'val', 'test').
@@ -390,22 +410,62 @@ class PrecedentRetriever:
         if not query or not query.strip():
             return []
 
-        q_emb = self.model.encode([query], normalize_embeddings=True)[0]
-        q_vec = np.ascontiguousarray([q_emb], dtype=np.float32)
-
-        # When a filter is set, search the whole index so qualified cases are never missed
         has_filter = bool(guideline or outcome or split)
-        candidate_k = self.index.ntotal if has_filter else min(top_k, self.index.ntotal)
+        candidate_k = self.index.ntotal if has_filter else max(top_k * 20, 100)
 
-        scores, indices = self.index.search(q_vec, candidate_k)
-        scores = scores[0]
-        indices = indices[0]
+        dense_ranks: dict[int, tuple[int, float]] = {}
+        bm25_ranks: dict[int, tuple[int, float]] = {}
+        q_emb: np.ndarray | None = None
+
+        # 1. Dense FAISS search
+        if mode in ("dense", "hybrid"):
+            q_emb = self.model.encode([query], normalize_embeddings=True)[0]
+            q_vec = np.ascontiguousarray([q_emb], dtype=np.float32)
+            scores, indices = self.index.search(q_vec, min(candidate_k, self.index.ntotal))
+            for rank, (sim, idx) in enumerate(zip(scores[0], indices[0]), 1):
+                if 0 <= idx < len(self.metadata):
+                    dense_ranks[int(idx)] = (rank, float(sim))
+
+        # 2. BM25 keyword search
+        if mode in ("bm25", "hybrid"):
+            bm25_hits = self.bm25.search(query, top_k=candidate_k)
+            for rank, (doc_id, b_score) in enumerate(bm25_hits, 1):
+                if 0 <= doc_id < len(self.metadata):
+                    bm25_ranks[int(doc_id)] = (rank, float(b_score))
+
+        # 3. Candidate scoring and ordering
+        if mode == "dense":
+            candidate_ids = sorted(dense_ranks.keys(), key=lambda i: dense_ranks[i][0])
+            def get_scores(idx: int) -> tuple[float, float, float, float | None]:
+                d_sim = dense_ranks[idx][1]
+                return d_sim, d_sim, 0.0, None
+        elif mode == "bm25":
+            candidate_ids = sorted(bm25_ranks.keys(), key=lambda i: bm25_ranks[i][0])
+            def get_scores(idx: int) -> tuple[float, float, float, float | None]:
+                b_sc = bm25_ranks[idx][1]
+                return b_sc, 0.0, b_sc, None
+        elif mode == "hybrid":
+            all_ids = set(dense_ranks.keys()) | set(bm25_ranks.keys())
+            rrf_scores: dict[int, float] = {}
+            for doc_id in all_ids:
+                r_score = 0.0
+                if doc_id in dense_ranks:
+                    r_score += 1.0 / (rrf_k + dense_ranks[doc_id][0])
+                if doc_id in bm25_ranks:
+                    r_score += 1.0 / (rrf_k + bm25_ranks[doc_id][0])
+                rrf_scores[doc_id] = r_score
+
+            candidate_ids = sorted(all_ids, key=lambda i: rrf_scores[i], reverse=True)
+            def get_scores(idx: int) -> tuple[float, float, float, float | None]:
+                d_sim = dense_ranks.get(idx, (0, 0.0))[1]
+                b_sc = bm25_ranks.get(idx, (0, 0.0))[1]
+                r_sc = rrf_scores[idx]
+                return r_sc, d_sim, b_sc, r_sc
+        else:
+            raise ValueError(f"Unknown retrieval mode '{mode}'. Choose 'hybrid', 'dense', or 'bm25'.")
 
         candidates = []
-        for sim, idx in zip(scores, indices):
-            if idx < 0 or idx >= len(self.metadata):
-                continue
-
+        for idx in candidate_ids:
             row = self.metadata.iloc[idx]
 
             # Apply optional filters
@@ -422,10 +482,15 @@ class PrecedentRetriever:
                 if str(row["split"]).lower() != split.lower():
                     continue
 
+            main_score, d_score, b_score, r_score = get_scores(idx)
+
             item = {
                 "rank": len(candidates) + 1,
                 "case_number": row["case_number"],
-                "score": round(float(sim), 4),
+                "score": round(float(main_score), 4),
+                "dense_score": round(float(d_score), 4),
+                "bm25_score": round(float(b_score), 4),
+                "rrf_score": round(float(r_score), 6) if r_score is not None else None,
                 "outcome": row["outcome"],
                 "guidelines": list(row["guidelines"]) if row["guidelines"] is not None else [],
                 "label_source": row["label_source"],
@@ -439,7 +504,7 @@ class PrecedentRetriever:
                 "best_paragraph": "",
                 "best_paragraph_start": 0,
                 "best_paragraph_end": 0,
-                "best_paragraph_score": round(float(sim), 4),
+                "best_paragraph_score": round(float(d_score), 4),
             }
             candidates.append(item)
             if len(candidates) >= top_k:
@@ -449,6 +514,9 @@ class PrecedentRetriever:
         if highlight_paragraph and candidates:
             urls = [c["source_url"] for c in candidates]
             full_texts = self._fetch_full_texts(urls)
+
+            if q_emb is None:
+                q_emb = self.model.encode([query], normalize_embeddings=True)[0]
 
             for c in candidates:
                 ft = full_texts.get(c["source_url"], "")
@@ -485,11 +553,16 @@ class PrecedentRetriever:
 
         return candidates
 
-    def format_results(self, results: list[dict[str, Any]], query: str | None = None) -> str:
+    def format_results(
+        self,
+        results: list[dict[str, Any]],
+        query: str | None = None,
+        mode: str = "hybrid",
+    ) -> str:
         """Format retrieval results as a readable markdown summary."""
         lines = []
         if query:
-            lines.append(f"### Precedent Search Results for Fact Pattern\n> *\"{query}\"*\n")
+            lines.append(f"### Precedent Search Results for Fact Pattern ({mode.upper()})\n> *\"{query}\"*\n")
         lines.append(f"Found **{len(results)}** precedent cases:\n")
 
         for r in results:
@@ -499,7 +572,12 @@ class PrecedentRetriever:
                 " ⚠️ *(candidate-only labels)*" if r["label_source"] == "regex_fallback" else ""
             )
 
-            lines.append(f"#### #{r['rank']} Case {r['case_number']} — Similarity: `{r['score']:.4f}`")
+            if r.get("rrf_score") is not None:
+                score_str = f"RRF: `{r['score']:.4f}` (dense: `{r['dense_score']:.4f}`, bm25: `{r['bm25_score']:.2f}`)"
+            else:
+                score_str = f"Similarity: `{r['score']:.4f}`"
+
+            lines.append(f"#### #{r['rank']} Case {r['case_number']} — {score_str}")
             lines.append(
                 f"- **Outcome:** {outcome_badge} | **Guidelines:** [{g_str}] | **Regime:** `{r['guideline_regime']}`"
             )
@@ -605,6 +683,12 @@ def main():
         "--smoke-test", action="store_true", help="Run validation smoke tests on index"
     )
     parser.add_argument("--query", type=str, help="Search for precedent cases matching a query")
+    parser.add_argument(
+        "--mode",
+        choices=["hybrid", "dense", "bm25"],
+        default="hybrid",
+        help="Retrieval mode: hybrid (default, RRF), dense, or bm25",
+    )
     parser.add_argument("--guideline", type=str, help="Optional guideline filter (e.g. F, B)")
     parser.add_argument("--outcome", type=str, help="Optional outcome filter (DENIED, GRANTED)")
     parser.add_argument("--top-k", type=int, default=5, help="Number of precedent cases to return")
@@ -636,10 +720,11 @@ def main():
         results = retriever.search(
             query=args.query,
             top_k=args.top_k,
+            mode=args.mode,
             guideline=args.guideline,
             outcome=args.outcome,
         )
-        print(retriever.format_results(results, query=args.query))
+        print(retriever.format_results(results, query=args.query, mode=args.mode))
         return
 
     parser.print_help()

@@ -1,0 +1,29 @@
+{
+  "dense": {
+    "queries": 50.0,
+    "precision@1": 0.4,
+    "precision@3": 0.46,
+    "precision@5": 0.452,
+    "mrr": 0.543,
+    "exact_docket_hit@1": 0.0,
+    "exact_docket_hit@5": 0.0
+  },
+  "bm25": {
+    "queries": 50.0,
+    "precision@1": 0.48,
+    "precision@3": 0.4867,
+    "precision@5": 0.444,
+    "mrr": 0.6057,
+    "exact_docket_hit@1": 0.94,
+    "exact_docket_hit@5": 0.94
+  },
+  "hybrid": {
+    "queries": 50.0,
+    "precision@1": 0.54,
+    "precision@3": 0.48,
+    "precision@5": 0.492,
+    "mrr": 0.6397,
+    "exact_docket_hit@1": 0.5,
+    "exact_docket_hit@5": 0.92
+  }
+}

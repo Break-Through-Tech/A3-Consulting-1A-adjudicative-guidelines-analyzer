@@ -9,3 +9,8 @@ Proj-Summary.md
 
 # Transformer head runs: checkpoints, logits, logs
 runs/
+
+# IDE / workspace
+*.code-workspace
+.DS_Store
+
