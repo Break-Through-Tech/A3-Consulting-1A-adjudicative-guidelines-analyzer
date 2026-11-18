@@ -6,9 +6,9 @@
     python -m src.llm.pilot score test|pilot    # free: verify quotes, score against src/conditions.py
     python -m src.llm.pilot report              # free: results/llm/REPORT.md
 
-    python -m src.llm.pilot run-predict         # free: count tokens for the 218 test-split requests
+    python -m src.llm.pilot run-predict         # free: count tokens for the 174 test-split requests
     python -m src.llm.pilot run-test            # paid: 10-case batch, 5 uncited and 5 cited
-    python -m src.llm.pilot run-full            # paid: the other 208 cases
+    python -m src.llm.pilot run-full            # paid: the other 164 cases
     python -m src.llm.pilot run-score           # free: results/llm/run/*.csv from both batches
     python -m src.llm.pilot run-report          # free: "Test split run" section of REPORT.md
 
@@ -51,13 +51,13 @@ CHECK_VALUES = {                   # measured Nov 9, before whitespace is collap
 
 # --- cohort ---------------------------------------------------------------------
 
-def truth_codes(row) -> set[str] | None:
+def truth_codes(row, fallback: bool = True) -> set[str] | None:
     """Closed-list codes the judge cited, or None if any hit is off the list."""
     from src.conditions import extract_case
 
     closed = set(T.codes())
     codes = set()
-    for hit in extract_case(row):
+    for hit in extract_case(row, fallback):
         code = hit.get("sead4") or hit["code"]
         if code not in closed:
             return None
@@ -75,9 +75,9 @@ def cohort() -> dict:
     df = df[has_f & (df["split"] == "train") & (df["guideline_regime"] == "sead4")]
     keep, truths = [], []
     for i, row in enumerate(df.to_dict("records")):
-        if not T.sections(row):
+        if not T.sections(row, fallback=False):
             continue
-        codes = truth_codes(row)
+        codes = truth_codes(row, fallback=False)
         if not codes:
             continue
         keep.append(i)
@@ -103,7 +103,7 @@ def build_requests(stage: str, cases) -> tuple[list[dict], list[dict]]:
     requests, table = [], []
     for pos, row in enumerate(cases.to_dict("records")):
         for mode in T.MODES:
-            text, region = T.build_input(row, mode)
+            text, region = T.build_input(row, mode, fallback=False)
             cid = custom_id(stage, pos, mode)
             requests.append({"custom_id": cid, "params": T.request_params(text, model=C.MODEL)})
             table.append({"custom_id": cid, "stage": stage, "position": pos, "mode": mode,
@@ -190,8 +190,8 @@ def predict() -> dict:
             "counts": counts,
         }
     pilot_cases, test_cases = co["pilot"], co["test"]
-    cit_pilot = [T.build_input(r, "citation", collapse=False)[0] for r in pilot_cases.to_dict("records")]
-    cit_test = [T.build_input(r, "citation", collapse=False)[0] for r in test_cases.to_dict("records")]
+    cit_pilot = [T.build_input(r, "citation", collapse=False, fallback=False)[0] for r in pilot_cases.to_dict("records")]
+    cit_test = [T.build_input(r, "citation", collapse=False, fallback=False)[0] for r in test_cases.to_dict("records")]
     checks = {
         "eligible": co["eligible"],
         "pilot_chars": sum(map(len, cit_pilot)),
@@ -436,7 +436,7 @@ def score(stage: str) -> dict:
             disagreements.append({"custom_id": cid, "mode": mode, "type": "false_positive",
                                   "code": code, "text": " || ".join(quotes_by_code[code])})
         for code in sorted(truth - pred):
-            cited = [case["full_text"][h["start"]:h["end"]] for h in _hits(case)
+            cited = [case["full_text"][h["start"]:h["end"]] for h in _hits(case, fallback=False)
                      if (h.get("sead4") or h["code"]) == code]
             disagreements.append({"custom_id": cid, "mode": mode, "type": "false_negative",
                                   "code": code, "text": " || ".join(cited[:3])})
@@ -482,9 +482,9 @@ def score(stage: str) -> dict:
     return {"scores": scores, "cost": cost, "pairs": pairs, "pairs_before": pairs_before}
 
 
-def _hits(case) -> list[dict]:
+def _hits(case, fallback: bool = True) -> list[dict]:
     from src.conditions import extract_case
-    return extract_case(case)
+    return extract_case(case, fallback)
 
 
 # --- test-run checks ----------------------------------------------------------------------
@@ -588,10 +588,10 @@ def report() -> str:
 
 # --- test split run --------------------------------------------------------------------------
 #
-# 118 uncited test F cases (citation mode) and a 100-case validation sample of the 1,624
+# 74 uncited test F cases (citation mode) and a 100-case validation sample of the 1,668
 # cited test F cases whose hits all map to the closed list (blind mode). One request per
 # case. A 10-case test batch (5 + 5 from the front of each shuffled list) goes first, then a
-# full batch of the other 208, so no request is paid for twice.
+# full batch of the other 164, so no request is paid for twice.
 
 RUN = OUT / "run"
 RUN_SAMPLE = 100

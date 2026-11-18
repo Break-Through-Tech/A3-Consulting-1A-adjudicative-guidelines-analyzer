@@ -1,0 +1,37 @@
+{
+  "requests": 10,
+  "tier": "batch",
+  "input_tokens": 34504,
+  "output_tokens": 12091,
+  "cost": 0.00474795,
+  "stop_reasons": {
+    "uncited:end_turn": 5,
+    "cited:end_turn": 5
+  },
+  "parse_failures": {},
+  "kept": {
+    "uncited": 10,
+    "cited": 33
+  },
+  "drops": {},
+  "uncited": {
+    "cases": 5,
+    "cases_with_kept_quote": 2,
+    "kept_quotes": 10,
+    "by_regime": {
+      "sead4": {
+        "cases": 3,
+        "with_kept_quote": 0
+      },
+      "directive": {
+        "cases": 0,
+        "with_kept_quote": 0
+      },
+      "unknown": {
+        "cases": 2,
+        "with_kept_quote": 2
+      }
+    }
+  },
+  "scored_requests": 10
+}

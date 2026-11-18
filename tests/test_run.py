@@ -28,13 +28,13 @@ def co() -> dict:
 
 def test_uncited_cohort_counts():
     unc = co()["uncited"]
-    assert len(unc) == 118, len(unc)
-    assert dict(Counter(unc["guideline_regime"])) == {"sead4": 76, "unknown": 34, "directive": 8}
+    assert len(unc) == 74, len(unc)
+    assert dict(Counter(unc["guideline_regime"])) == {"sead4": 32, "unknown": 34, "directive": 8}
     assert co()["no_sections"] == {}
 
 
 def test_cited_pool_count_and_sample_size():
-    assert len(co()["cited_pool"]) == 1624
+    assert len(co()["cited_pool"]) == 1668
     assert len(co()["cited"]) == 100
     assert all(len(t) > 0 for t in co()["cited"]["truth"])
 
@@ -52,7 +52,7 @@ def test_sample_is_fixed_by_the_seed_and_the_sort():
 def test_groups_do_not_overlap_and_are_sorted_free_of_duplicates():
     unc, cit = set(co()["uncited"]["source_url"]), set(co()["cited_pool"]["source_url"])
     assert not unc & cit
-    assert len(unc) == 118 and len(cit) == 1624
+    assert len(unc) == 74 and len(cit) == 1668
 
 
 def test_modes_by_group():
@@ -63,10 +63,10 @@ def _table() -> list[dict]:
     return P.read_csv(P.RUN / "cases.csv")
 
 
-def test_218_unique_ids_that_do_not_overlap_the_pilot():
+def test_174_unique_ids_that_do_not_overlap_the_pilot():
     table = _table()
     ids = [t["custom_id"] for t in table]
-    assert len(ids) == 218 and len(set(ids)) == 218
+    assert len(ids) == 174 and len(set(ids)) == 174
     old = set()
     for p in (P.OUT / "pilot" / "cases.csv", P.OUT / "test_run" / "cases.csv"):
         old |= {r["custom_id"] for r in P.read_csv(p)}
@@ -75,19 +75,19 @@ def test_218_unique_ids_that_do_not_overlap_the_pilot():
     for t in table:
         assert t["mode"] == P.RUN_MODE[t["group"]]
         assert t["custom_id"] == P.run_custom_id(int(t["position"]), t["mode"])
-    assert Counter(t["group"] for t in table) == {"uncited": 118, "cited": 100}
+    assert Counter(t["group"] for t in table) == {"uncited": 74, "cited": 100}
 
 
 def test_ten_case_batch_and_the_rest_do_not_overlap():
     table = _table()
     test = [t for t in table if t["batch"] == "test"]
     full = [t for t in table if t["batch"] == "full"]
-    assert (len(test), len(full)) == (10, 208)
+    assert (len(test), len(full)) == (10, 164)
     assert not {t["custom_id"] for t in test} & {t["custom_id"] for t in full}
     assert Counter(t["group"] for t in test) == {"uncited": 5, "cited": 5}
-    assert [int(t["position"]) for t in test] == [0, 1, 2, 3, 4, 118, 119, 120, 121, 122]
-    assert P.run_batch_of(4, 118) == "test" and P.run_batch_of(5, 118) == "full"
-    assert P.run_batch_of(122, 118) == "test" and P.run_batch_of(123, 118) == "full"
+    assert [int(t["position"]) for t in test] == [0, 1, 2, 3, 4, 74, 75, 76, 77, 78]
+    assert P.run_batch_of(4, 74) == "test" and P.run_batch_of(5, 74) == "full"
+    assert P.run_batch_of(78, 74) == "test" and P.run_batch_of(79, 74) == "full"
 
 
 def test_case_table_matches_the_cohort():
@@ -150,8 +150,8 @@ def test_guard_refuses_a_run_ceiling_that_passes_the_cap():
 
 def test_prediction_file_is_consistent():
     pred = json.loads((P.RUN / "cost_prediction.json").read_text(encoding="utf-8"))
-    assert pred["stages"]["run-test"]["requests"] == 10 and pred["stages"]["run-full"]["requests"] == 208
-    assert len(pred["stages"]["run-test"]["counts"]) + len(pred["stages"]["run-full"]["counts"]) == 218
+    assert pred["stages"]["run-test"]["requests"] == 10 and pred["stages"]["run-full"]["requests"] == 164
+    assert len(pred["stages"]["run-test"]["counts"]) + len(pred["stages"]["run-full"]["counts"]) == 174
     assert pred["total"]["ceiling"] == sum(s["ceiling"] for s in pred["stages"].values())
 
 
