@@ -1,0 +1,448 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "SEAD-4 Adjudication Analyzer document",
+  "description": "Schema version 1.0. Generated from src/schema.py.",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "type": "string"
+    },
+    "case": {
+      "$ref": "#/$defs/CaseInfo"
+    },
+    "guidelines": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/Guideline"
+      }
+    },
+    "recommendation": {
+      "$ref": "#/$defs/Recommendation"
+    },
+    "conditions": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/Condition"
+      }
+    },
+    "precedents": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/Precedent"
+      }
+    },
+    "rationale": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/Rationale"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "provenance": {
+      "$ref": "#/$defs/Provenance"
+    }
+  },
+  "required": [
+    "schema_version",
+    "case",
+    "guidelines",
+    "recommendation",
+    "conditions",
+    "precedents",
+    "rationale",
+    "provenance"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "CaseInfo": {
+      "type": "object",
+      "properties": {
+        "source_url": {
+          "type": "string"
+        },
+        "case_number": {
+          "type": "string"
+        },
+        "date": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "regime": {
+          "type": "string",
+          "enum": [
+            "sead4",
+            "directive",
+            "unknown"
+          ]
+        },
+        "split": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "text_length": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "source_url",
+        "case_number",
+        "date",
+        "regime",
+        "split",
+        "text_length"
+      ],
+      "additionalProperties": false
+    },
+    "Guideline": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "tier": {
+          "type": "string",
+          "enum": [
+            "defensible",
+            "caveat"
+          ]
+        },
+        "p_not_at_issue": {
+          "type": "number"
+        },
+        "p_for": {
+          "type": "number"
+        },
+        "p_against": {
+          "type": "number"
+        },
+        "at_issue_threshold": {
+          "type": "number"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "NOT_AT_ISSUE",
+            "FOR",
+            "AGAINST"
+          ]
+        },
+        "model": {
+          "type": "string"
+        },
+        "calibration": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "code",
+        "name",
+        "tier",
+        "p_not_at_issue",
+        "p_for",
+        "p_against",
+        "at_issue_threshold",
+        "status",
+        "model",
+        "calibration"
+      ],
+      "additionalProperties": false
+    },
+    "Recommendation": {
+      "type": "object",
+      "properties": {
+        "composed": {
+          "type": "string",
+          "enum": [
+            "DENIED",
+            "GRANTED"
+          ]
+        },
+        "driven_by": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "rule": {
+          "type": "string"
+        },
+        "direct": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/DirectOutcome"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "composed",
+        "driven_by",
+        "rule",
+        "direct"
+      ],
+      "additionalProperties": false
+    },
+    "DirectOutcome": {
+      "type": "object",
+      "properties": {
+        "outcome": {
+          "type": "string",
+          "enum": [
+            "DENIED",
+            "GRANTED"
+          ]
+        },
+        "model": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "outcome",
+        "model"
+      ],
+      "additionalProperties": false
+    },
+    "Condition": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "code": {
+          "type": "string"
+        },
+        "guideline": {
+          "type": "string"
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "disqualifier",
+            "mitigator"
+          ]
+        },
+        "text": {
+          "type": "string"
+        },
+        "source": {
+          "type": "string",
+          "enum": [
+            "rule",
+            "llm"
+          ]
+        },
+        "quote": {
+          "type": "string"
+        },
+        "start": {
+          "type": "integer"
+        },
+        "end": {
+          "type": "integer"
+        },
+        "section": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "cited_as": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "code",
+        "guideline",
+        "kind",
+        "text",
+        "source",
+        "quote",
+        "start",
+        "end",
+        "section",
+        "cited_as"
+      ],
+      "additionalProperties": false
+    },
+    "Precedent": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "case_number": {
+          "type": "string"
+        },
+        "source_url": {
+          "type": "string"
+        },
+        "score": {
+          "type": "number"
+        },
+        "outcome": {
+          "type": "string"
+        },
+        "guidelines": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "label_source": {
+          "type": "string"
+        },
+        "start": {
+          "type": "integer"
+        },
+        "end": {
+          "type": "integer"
+        },
+        "note": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "case_number",
+        "source_url",
+        "score",
+        "outcome",
+        "guidelines",
+        "label_source",
+        "start",
+        "end",
+        "note"
+      ],
+      "additionalProperties": false
+    },
+    "Rationale": {
+      "type": "object",
+      "properties": {
+        "text": {
+          "type": "string"
+        },
+        "condition_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "guideline_codes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "text",
+        "condition_ids",
+        "guideline_codes"
+      ],
+      "additionalProperties": false
+    },
+    "Provenance": {
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "type": "string"
+        },
+        "heads_model": {
+          "type": "string"
+        },
+        "calibration": {
+          "type": "string"
+        },
+        "extractor": {
+          "type": "string"
+        },
+        "llm_model": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "prompt_hashes": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "run_dates": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "verify_counts": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer"
+          }
+        },
+        "unmapped_hits": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer"
+          }
+        }
+      },
+      "required": [
+        "schema_version",
+        "heads_model",
+        "calibration",
+        "extractor",
+        "llm_model",
+        "prompt_hashes",
+        "run_dates",
+        "verify_counts",
+        "unmapped_hits"
+      ],
+      "additionalProperties": false
+    }
+  }
+}
