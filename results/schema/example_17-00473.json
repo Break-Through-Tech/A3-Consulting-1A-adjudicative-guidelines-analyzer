@@ -185,6 +185,16 @@
       "quote": "(a)",
       "start": 15079,
       "end": 15082,
+      "context": {
+        "start": 15079,
+        "end": 15110,
+        "text": "(a) inability to satisfy debts;"
+      },
+      "lead_in": {
+        "start": 15028,
+        "end": 15073,
+        "text": "Four are potentially applicable in this case:"
+      },
       "section": "analysis",
       "cited_as": null
     },
@@ -198,6 +208,16 @@
       "quote": "(b)",
       "start": 15114,
       "end": 15117,
+      "context": {
+        "start": 15114,
+        "end": 15184,
+        "text": "(b) unwillingness to satisfy debts regardless of the ability to do so;"
+      },
+      "lead_in": {
+        "start": 15028,
+        "end": 15073,
+        "text": "Four are potentially applicable in this case:"
+      },
       "section": "analysis",
       "cited_as": null
     },
@@ -211,6 +231,16 @@
       "quote": "(c)",
       "start": 15196,
       "end": 15199,
+      "context": {
+        "start": 15189,
+        "end": 15247,
+        "text": "7 \n \n \n(c) a history of not meeting financial obligations;"
+      },
+      "lead_in": {
+        "start": 15028,
+        "end": 15073,
+        "text": "Four are potentially applicable in this case:"
+      },
       "section": "analysis",
       "cited_as": null
     },
@@ -224,6 +254,16 @@
       "quote": "(f)",
       "start": 15255,
       "end": 15258,
+      "context": {
+        "start": 15248,
+        "end": 15424,
+        "text": "and \n \n(f) failure to file or fraudulently filing annual Federal, state, or local income \ntax returns or failure to pay annual Federal, state, or local income tax as \nrequired."
+      },
+      "lead_in": {
+        "start": 15028,
+        "end": 15073,
+        "text": "Four are potentially applicable in this case:"
+      },
       "section": "analysis",
       "cited_as": null
     },
@@ -237,6 +277,16 @@
       "quote": "(a)",
       "start": 15697,
       "end": 15700,
+      "context": {
+        "start": 15697,
+        "end": 15923,
+        "text": "(a) the behavior happened so long ago, was so infrequent, or occurred \nunder such circumstances that it is unlikely to recur and does not cast \ndoubt on the individual's current reliability, trustworthiness, or good \njudgment;"
+      },
+      "lead_in": {
+        "start": 15622,
+        "end": 15693,
+        "text": "I considered \nall of the mitigating conditions under AG ¶ 20 including:"
+      },
       "section": "analysis",
       "cited_as": null
     },
@@ -250,6 +300,16 @@
       "quote": "(b)",
       "start": 15927,
       "end": 15930,
+      "context": {
+        "start": 15927,
+        "end": 16273,
+        "text": "(b) the conditions that resulted in the financial problem were largely \nbeyond the person's control (e.g., loss of employment, a business \ndownturn, unexpected medical emergency, a death, divorce or separation, \nclear victimization by predatory lending practices, or identity theft), and the \nindividual acted responsibly under the circumstances;"
+      },
+      "lead_in": {
+        "start": 15622,
+        "end": 15693,
+        "text": "I considered \nall of the mitigating conditions under AG ¶ 20 including:"
+      },
       "section": "analysis",
       "cited_as": null
     },
@@ -263,6 +323,16 @@
       "quote": "(c)",
       "start": 16277,
       "end": 16280,
+      "context": {
+        "start": 16277,
+        "end": 16539,
+        "text": "(c) the individual has received or is receiving financial counseling for the \nproblem from a legitimate and credible source, such as a non-profit credit \ncounseling service, and there are clear indications that the problem is \nbeing resolved or is under control;"
+      },
+      "lead_in": {
+        "start": 15622,
+        "end": 15693,
+        "text": "I considered \nall of the mitigating conditions under AG ¶ 20 including:"
+      },
       "section": "analysis",
       "cited_as": null
     },
@@ -276,6 +346,16 @@
       "quote": "(d)",
       "start": 16543,
       "end": 16546,
+      "context": {
+        "start": 16543,
+        "end": 16666,
+        "text": "(d) the individual initiated and is adhering to a good-faith effort to repay \noverdue creditors or otherwise resolve debts;"
+      },
+      "lead_in": {
+        "start": 15622,
+        "end": 15693,
+        "text": "I considered \nall of the mitigating conditions under AG ¶ 20 including:"
+      },
       "section": "analysis",
       "cited_as": null
     },
@@ -289,6 +369,16 @@
       "quote": "(e)",
       "start": 16670,
       "end": 16673,
+      "context": {
+        "start": 16670,
+        "end": 16920,
+        "text": "(e) the individual has a reasonable basis to dispute the legitimacy of the \npast-due debt which is the cause of the problem and provides \ndocumented proof to substantiate the basis of the dispute or provides \nevidence of actions to resolve the issue;"
+      },
+      "lead_in": {
+        "start": 15622,
+        "end": 15693,
+        "text": "I considered \nall of the mitigating conditions under AG ¶ 20 including:"
+      },
       "section": "analysis",
       "cited_as": null
     },
@@ -302,6 +392,16 @@
       "quote": "(f)",
       "start": 16924,
       "end": 16927,
+      "context": {
+        "start": 16924,
+        "end": 16981,
+        "text": "(f) the affluence resulted from a legal source of income;"
+      },
+      "lead_in": {
+        "start": 15622,
+        "end": 15693,
+        "text": "I considered \nall of the mitigating conditions under AG ¶ 20 including:"
+      },
       "section": "analysis",
       "cited_as": null
     },
@@ -315,6 +415,16 @@
       "quote": "(g)",
       "start": 16989,
       "end": 16992,
+      "context": {
+        "start": 16982,
+        "end": 17143,
+        "text": "and \n \n(g) the individual has made arrangements with the appropriate tax \nauthority to file or pay the amount owed and is in compliance with those \narrangements."
+      },
+      "lead_in": {
+        "start": 15622,
+        "end": 15693,
+        "text": "I considered \nall of the mitigating conditions under AG ¶ 20 including:"
+      },
       "section": "analysis",
       "cited_as": null
     }
