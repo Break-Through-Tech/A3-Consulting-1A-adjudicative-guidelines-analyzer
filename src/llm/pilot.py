@@ -6,6 +6,12 @@
     python -m src.llm.pilot score test|pilot    # free: verify quotes, score against src/conditions.py
     python -m src.llm.pilot report              # free: results/llm/REPORT.md
 
+    python -m src.llm.pilot run-predict         # free: count tokens for the 218 test-split requests
+    python -m src.llm.pilot run-test            # paid: 10-case batch, 5 uncited and 5 cited
+    python -m src.llm.pilot run-full            # paid: the other 208 cases
+    python -m src.llm.pilot run-score           # free: results/llm/run/*.csv from both batches
+    python -m src.llm.pilot run-report          # free: "Test split run" section of REPORT.md
+
 Spend is capped at $1.00 in results/llm/spend.jsonl. A stage with a saved batch id
 is resumed, never resubmitted, unless --resubmit is given.
 """
@@ -580,14 +586,455 @@ def report() -> str:
     return text
 
 
+# --- test split run --------------------------------------------------------------------------
+#
+# 118 uncited test F cases (citation mode) and a 100-case validation sample of the 1,624
+# cited test F cases whose hits all map to the closed list (blind mode). One request per
+# case. A 10-case test batch (5 + 5 from the front of each shuffled list) goes first, then a
+# full batch of the other 208, so no request is paid for twice.
+
+RUN = OUT / "run"
+RUN_SAMPLE = 100
+RUN_TEST_PER_GROUP = 5
+RUN_MODE = {"uncited": "citation", "cited": "blind"}
+RUN_BATCHES = ("test", "full")
+RUN_FIELDS = ["custom_id", "stage", "position", "mode", "source_url", "case_number", "region_start",
+              "region_end", "input_chars", "truth", "regime", "group", "batch"]
+
+
+def run_cohort(df=None) -> dict:
+    """The test-split cases for the run. `df` is the test-split Guideline F frame (tests pass a fake).
+
+    uncited      extract_case finds no condition at all, any regime
+    cited_pool   at least one hit, and every hit maps to the closed list
+    cited        the first RUN_SAMPLE of the shuffled pool
+    Both lists are sorted by source_url, then permuted by default_rng(SEED), as cohort() does.
+    """
+    if df is None:
+        from src.conditions import _CASE_COLUMNS
+        from src.dataset import load_cases
+
+        df = load_cases(columns=_CASE_COLUMNS + ["split"])
+        has_f = df["guidelines"].map(lambda g: g is not None and "F" in list(g))
+        df = df[has_f & (df["split"] == "test")]
+    unc_idx, cit_idx, truths, no_sections = [], [], {}, Counter()
+    for i, row in enumerate(df.to_dict("records")):
+        hits = _hits(row)
+        group = None
+        if not hits:
+            group = "uncited"
+        else:
+            codes = truth_codes(row)
+            if codes:
+                group, truths[i] = "cited", sorted(codes)
+        if group is None:
+            continue
+        if not T.sections(row):
+            no_sections[group] += 1
+            continue
+        (unc_idx if group == "uncited" else cit_idx).append(i)
+
+    def shuffled(idx, group):
+        part = df.iloc[idx].copy()
+        part["truth"] = [truths.get(i, []) for i in idx]
+        part["group"] = group
+        part = part.sort_values("source_url").reset_index(drop=True)
+        order = np.random.default_rng(SEED).permutation(len(part))
+        return part.iloc[order].reset_index(drop=True)
+
+    uncited, pool = shuffled(unc_idx, "uncited"), shuffled(cit_idx, "cited")
+    return {"uncited": uncited, "cited_pool": pool, "cited": pool.iloc[:RUN_SAMPLE].reset_index(drop=True),
+            "no_sections": dict(no_sections)}
+
+
+def run_case_list(co: dict) -> list[dict]:
+    """Uncited cases then the cited sample, as records. Position is the index in this list."""
+    return co["uncited"].to_dict("records") + co["cited"].to_dict("records")
+
+
+def run_batch_of(position: int, n_uncited: int) -> str:
+    """'test' for the first RUN_TEST_PER_GROUP cases of each group, else 'full'."""
+    first = position if position < n_uncited else position - n_uncited
+    return "test" if first < RUN_TEST_PER_GROUP else "full"
+
+
+def run_custom_id(position: int, mode: str) -> str:
+    return f"run-{position}-{mode}"
+
+
+def build_run_requests(co: dict) -> tuple[list[dict], list[dict]]:
+    """(requests, table rows) for all cases. One request each, in the group's mode."""
+    cases = run_case_list(co)
+    n_unc = len(co["uncited"])
+    requests, table = [], []
+    for pos, row in enumerate(cases):
+        mode = RUN_MODE[row["group"]]
+        text, region = T.build_input(row, mode)
+        cid = run_custom_id(pos, mode)
+        requests.append({"custom_id": cid, "params": T.request_params(text, model=C.MODEL)})
+        table.append({"custom_id": cid, "stage": "run", "position": pos, "mode": mode,
+                      "source_url": row["source_url"], "case_number": row["case_number"],
+                      "region_start": region[0], "region_end": region[1], "input_chars": len(text),
+                      "truth": "|".join(row["truth"]), "regime": row["guideline_regime"],
+                      "group": row["group"], "batch": run_batch_of(pos, n_unc)})
+    return requests, table
+
+
+def _run_state(name: str) -> Path:
+    return RUN / f"{name}_batch.json"
+
+
+def _run_ledger_stage(name: str) -> str:
+    return f"run-{name}"
+
+
+def measured_output_per_request() -> tuple[float, str]:
+    """Output tokens per request from the pilot's actual cost file."""
+    c = json.loads((OUT / "pilot" / "cost.json").read_text(encoding="utf-8"))
+    return c["output_tokens"] / c["requests"], "results/llm/pilot/cost.json, 100 requests"
+
+
+def run_predict(log=print) -> dict:
+    """Free. Count tokens for the run's requests and write results/llm/run/cost_prediction.json."""
+    co = run_cohort()
+    requests, table = build_run_requests(co)
+    batch_of = {t["custom_id"]: t["batch"] for t in table}
+    cl = C.make_client()
+    counts = {r["custom_id"]: C.count_tokens(cl, r["params"]) for r in requests}
+    out_per, source = measured_output_per_request()
+    stages = {}
+    running = spent()
+    for name in RUN_BATCHES:
+        ids = [c for c in counts if batch_of[c] == name]
+        n, tin = len(ids), sum(counts[c] for c in ids)
+        out_tokens = round(n * out_per)
+        ceiling = ceiling_for(tin, n)
+        stages[_run_ledger_stage(name)] = {
+            "requests": n, "counted_input_tokens": tin,
+            "output_tokens_per_request": out_per, "output_tokens": out_tokens,
+            "central_cost": C.cost(tin, out_tokens), "ceiling": ceiling,
+            "guard_allows": running + ceiling <= C.BUDGET + 1e-12,
+            "counts": {c: counts[c] for c in ids}}
+        running += ceiling
+    total = {"requests": sum(s["requests"] for s in stages.values()),
+             "counted_input_tokens": sum(s["counted_input_tokens"] for s in stages.values()),
+             "central_cost": sum(s["central_cost"] for s in stages.values()),
+             "ceiling": sum(s["ceiling"] for s in stages.values())}
+    result = {"model": C.MODEL, "rates": C.RATES["batch"], "output_tokens_per_request_source": source,
+              "cohort": {"uncited": len(co["uncited"]), "cited_pool": len(co["cited_pool"]),
+                         "cited_sample": len(co["cited"]), "no_sections": co["no_sections"]},
+              "stages": stages, "total": total, "spent_so_far": spent(), "cap": C.BUDGET,
+              "ceiling_fits_under_cap": spent() + total["ceiling"] <= C.BUDGET + 1e-12,
+              "proceed": total["central_cost"] <= CENTRAL_LIMIT
+              and spent() + total["ceiling"] <= C.BUDGET + 1e-12}
+    RUN.mkdir(parents=True, exist_ok=True)
+    write_csv(RUN / "cases.csv", table, RUN_FIELDS)
+    (RUN / "cost_prediction.json").write_text(json.dumps(result, indent=2), encoding="utf-8")
+    return result
+
+
+def load_run_prediction() -> dict:
+    path = RUN / "cost_prediction.json"
+    if not path.exists():
+        raise SystemExit("run `run-predict` first")
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
+def run_batch(name: str, resubmit: bool = False, log=print) -> None:
+    """Paid. Submit one of the run's two batches, or resume its saved batch id."""
+    if name not in RUN_BATCHES:
+        raise SystemExit(f"unknown run batch {name!r}")
+    if name == "full" and not _run_state("test").exists():
+        raise SystemExit("run the 10-case test batch first")
+    pred = load_run_prediction()
+    if not pred["proceed"]:
+        raise SystemExit("prediction is over its limits; not running")
+    stage = _run_ledger_stage(name)
+    state_path = _run_state(name)
+    co = run_cohort()
+    all_requests, table = build_run_requests(co)
+    write_csv(RUN / "cases.csv", table, RUN_FIELDS)
+    wanted = {t["custom_id"] for t in table if t["batch"] == name}
+    requests = [r for r in all_requests if r["custom_id"] in wanted]
+    cl = C.make_client()
+    state = json.loads(state_path.read_text(encoding="utf-8")) if state_path.exists() else {}
+
+    if state.get("batch_id") and not resubmit:
+        log(f"resuming saved batch {state['batch_id']}")
+    else:
+        sp = pred["stages"][stage]
+        ceiling = ceiling_for(sp["counted_input_tokens"], len(requests))
+        guard(ceiling)
+        batch_id = C.submit_batch(cl, requests)
+        state = {"batch_id": batch_id, "tier": "batch"}
+        state_path.write_text(json.dumps(state), encoding="utf-8")       # saved before polling
+        ledger_append({"event": "submit", "stage": stage, "batch_id": batch_id, "tier": "batch",
+                       "ceiling": ceiling})
+        log(f"submitted batch {batch_id}, ceiling ${ceiling:.4f}")
+
+    batch_id, tier = state["batch_id"], state.get("tier", "batch")
+    results = state.get("results")
+    if results is None:
+        if tier == "batch" and C.wait_for_batch(cl, batch_id, log=log):
+            results = C.collect_batch(cl, batch_id)
+        else:
+            if tier == "batch":
+                _record_actual(stage, batch_id, C.collect_batch(cl, batch_id), "batch")
+            results = _fallback_standard(cl, stage, requests, pred, log)
+            tier = "standard"
+            state["tier"] = tier
+        state["results"] = results
+        state_path.write_text(json.dumps(state), encoding="utf-8")
+
+    primary_key = batch_id if tier == "batch" else f"{stage}-standard"
+    _record_actual(stage, primary_key, results, tier)
+
+    bad = [r for r in requests if results.get(r["custom_id"], {}).get("status") != "succeeded"
+           and not state.get("retried")]
+    if bad:
+        ceiling = ceiling_for(sum(pred["stages"][stage]["counts"][r["custom_id"]] for r in bad), len(bad), tier)
+        guard(ceiling)
+        log(f"retrying {len(bad)} requests once")
+        if tier == "batch":
+            rid = C.submit_batch(cl, bad)
+            ledger_append({"event": "submit", "stage": stage, "batch_id": rid, "tier": "batch",
+                           "ceiling": ceiling, "retry": True})
+            retried = C.collect_batch(cl, rid) if C.wait_for_batch(cl, rid, log=log) else {}
+            _record_actual(stage, rid, retried, "batch")
+        else:
+            retried = C.run_standard(cl, bad)
+            _record_actual(stage, f"{stage}-standard-retry", retried, "standard")
+        results.update({k: v for k, v in retried.items() if v["status"] == "succeeded"})
+        state["retried"] = True
+    state["results"] = results
+    state_path.write_text(json.dumps(state), encoding="utf-8")
+    log(f"{stage}: saved {len(results)} results in {state_path}")
+
+
+def _bootstrap_or_none(pairs):
+    return bootstrap(pairs) if len(pairs) >= 2 else {k: [None, None] for k in ("precision", "recall", "f1")}
+
+
+def score_run(d: Path | None = None, cases: list[dict] | None = None) -> dict:
+    """Free. Verify the saved responses of both batches and score the cited sample.
+
+    `d` is the run folder (default results/llm/run); `cases` are the case records in
+    position order (default from run_cohort(), which loads the dataset).
+    """
+    d = d or RUN
+    table = read_csv(d / "cases.csv")
+    cases = cases if cases is not None else run_case_list(run_cohort())
+    results = {}
+    for name in RUN_BATCHES:
+        p = d / f"{name}_batch.json"
+        if p.exists():
+            results.update(json.loads(p.read_text(encoding="utf-8")).get("results") or {})
+    closed = set(T.codes())
+
+    raw_rows, kept_rows, dropped_rows, found_rows = [], [], [], []
+    results_by_group = {"uncited": [], "cited": []}
+    parse_fail, stops = Counter(), Counter()
+    cited = []          # (regime, truth, pred, before)
+    code_cases = defaultdict(set)
+    code_quotes = Counter()
+    scored_ids = []
+    for t in table:
+        cid, group = t["custom_id"], t["group"]
+        if cid not in results:
+            continue                                   # its batch has not been run yet
+        scored_ids.append(cid)
+        case = cases[int(t["position"])]
+        assert case["source_url"] == t["source_url"]
+        r = results[cid]
+        raw_rows.append({"custom_id": cid, **r})
+        stops[(group, r.get("stop_reason") or r["status"])] += 1
+        items = parse_items(r.get("text"))
+        if items is None:
+            parse_fail[group] += 1
+            items = []
+        region = (int(t["region_start"]), int(t["region_end"]))
+        res = verify_guideline_quotes(case["full_text"], items, "F", region=region, mask_token=T.MASK_TOKEN)
+        results_by_group[group].append(res)
+        pred = {k.condition_code for k in res.kept}
+        for k in res.kept:
+            kept_rows.append({"custom_id": cid, "group": group, "regime": t["regime"], "mode": t["mode"],
+                              "code": k.condition_code, "start": k.start, "end": k.end,
+                              "quote": k.text, "context": k.context})
+            if group == "uncited":
+                code_quotes[k.condition_code] += 1
+        for code in pred:
+            if group == "uncited":
+                code_cases[code].add(cid)
+        for q in res.dropped:
+            item = q.item if isinstance(q.item, dict) else {}
+            dropped_rows.append({"custom_id": cid, "group": group, "regime": t["regime"],
+                                 "mode": t["mode"], "reason": q.reason, "code": item.get("condition_code"),
+                                 "quote": item.get("exact_quote"), "span": q.span})
+        if group == "uncited":
+            found_rows.append({"custom_id": cid, "source_url": t["source_url"], "regime": t["regime"],
+                               "kept_quotes": len(res.kept), "codes": "|".join(sorted(pred)),
+                               "dropped_quotes": len(res.dropped)})
+        else:
+            before = {i["condition_code"] for i in items
+                      if isinstance(i, dict) and i.get("condition_code") in closed}
+            cited.append((t["regime"], set(t["truth"].split("|")) if t["truth"] else set(), pred, before))
+
+    scores = []
+    for scope in ("overall", "sead4", "directive", "unknown"):
+        sel = [c for c in cited if scope == "overall" or c[0] == scope]
+        for label, idx in (("after_verify", 2), ("before_verify", 3)):
+            pp = [(c[1], c[idx]) for c in sel]
+            m = micro(pp)
+            ci = _bootstrap_or_none(pp)
+            scores.append({"scope": scope, "stage": label, "cases": len(pp), **m,
+                           "precision_ci": ci["precision"], "recall_ci": ci["recall"], "f1_ci": ci["f1"],
+                           "disq_f1": micro(pp, "disqualifier")["f1"], "mit_f1": micro(pp, "mitigator")["f1"]})
+    cited_pairs = [(c[1], c[2]) for c in cited]
+    per_code_rows = [{"group": "cited", "kept_quotes": "", "cases_found": "", **r} for r in per_code(cited_pairs)]
+    for code in T.codes():
+        per_code_rows.append({"group": "uncited", "code": code, "support": "", "tp": "", "fp": "", "fn": "",
+                              "precision": "", "recall": "", "f1": "", "kept_quotes": code_quotes[code],
+                              "cases_found": len(code_cases[code])})
+
+    drops = Counter((q["group"], q["reason"]) for q in dropped_rows)
+    kept_by_group = {g: total_counts(results_by_group[g]).get("kept", 0) for g in results_by_group}
+    d.mkdir(parents=True, exist_ok=True)
+    with (d / "raw.jsonl").open("w", encoding="utf-8") as f:
+        for r in raw_rows:
+            f.write(json.dumps(r) + "\n")
+    write_csv(d / "kept.csv", kept_rows, ["custom_id", "group", "regime", "mode", "code", "start", "end",
+                                          "quote", "context"])
+    write_csv(d / "dropped.csv", dropped_rows, ["custom_id", "group", "regime", "mode", "reason", "code",
+                                                "quote", "span"])
+    write_csv(d / "scores.csv", [{k: (json.dumps(v) if isinstance(v, list) else v) for k, v in s.items()}
+                                 for s in scores],
+              ["scope", "stage", "cases", "tp", "fp", "fn", "precision", "recall", "f1", "precision_ci",
+               "recall_ci", "f1_ci", "disq_f1", "mit_f1"])
+    write_csv(d / "per_code.csv", per_code_rows,
+              ["group", "code", "support", "tp", "fp", "fn", "precision", "recall", "f1", "kept_quotes",
+               "cases_found"])
+    write_csv(d / "found_uncited.csv", found_rows,
+              ["custom_id", "source_url", "regime", "kept_quotes", "codes", "dropped_quotes"])
+    usage = [r["usage"] for r in raw_rows if r.get("usage")]
+    tier = "batch"
+    for name in RUN_BATCHES:
+        p = d / f"{name}_batch.json"
+        if p.exists() and json.loads(p.read_text(encoding="utf-8")).get("tier") == "standard":
+            tier = "standard"
+    unc_rows = [r for r in found_rows]
+    summary = {
+        "requests": len(raw_rows), "tier": tier,
+        "input_tokens": sum(u["input_tokens"] for u in usage),
+        "output_tokens": sum(u["output_tokens"] for u in usage),
+        "cost": sum(C.usage_cost(u, tier) for u in usage),
+        "stop_reasons": {f"{g}:{s}": n for (g, s), n in stops.items()},
+        "parse_failures": dict(parse_fail),
+        "kept": kept_by_group,
+        "drops": {f"{g}:{s}": n for (g, s), n in drops.items()},
+        "uncited": {"cases": len(unc_rows),
+                    "cases_with_kept_quote": sum(r["kept_quotes"] > 0 for r in unc_rows),
+                    "kept_quotes": kept_by_group["uncited"],
+                    "by_regime": {rg: {"cases": sum(r["regime"] == rg for r in unc_rows),
+                                       "with_kept_quote": sum(r["regime"] == rg and r["kept_quotes"] > 0
+                                                              for r in unc_rows)}
+                                  for rg in ("sead4", "directive", "unknown")}},
+        "scored_requests": len(scored_ids),
+    }
+    (d / "summary.json").write_text(json.dumps(summary, indent=2), encoding="utf-8")
+    return {"scores": scores, "summary": summary}
+
+
+RUN_HEADING = "## Test split run"
+
+
+def run_report(d: Path | None = None, report_path: Path | None = None) -> str:
+    """Free. Put a 'Test split run' section in REPORT.md, replacing an older one."""
+    d = d or RUN
+    report_path = report_path or OUT / "REPORT.md"
+    pred = json.loads((d / "cost_prediction.json").read_text(encoding="utf-8"))
+    summ = json.loads((d / "summary.json").read_text(encoding="utf-8"))
+    coh = pred["cohort"]
+    lines = [RUN_HEADING, "",
+             f"The run covers the test split Guideline F cases. {coh['uncited']} cases have no citation "
+             f"that the extractor can read. They go to the model in citation mode, and the report counts "
+             f"what it finds. {coh['cited_sample']} cases come from the {coh['cited_pool']:,} test cases "
+             "whose citations all map to the closed list. A fixed seed draws them from a list sorted by "
+             "source URL. They go in blind mode, so the model cannot copy the answer, and the extractor's "
+             "citations are the truth for scoring.", "",
+             "### Limitations", "",
+             "- The closed list holds SEAD-4 `AG ¶` codes. Directive cases cite Directive codes. For them, "
+             "the truth is the `sead4` mapping that `src/conditions.py` returns, so a directive case is "
+             "scored on a translated truth.",
+             "- The truth is what the judge cited, not what the judge discussed. A correct quote under a "
+             "code the judge did not cite counts as a false positive.",
+             "- The uncited cases have no truth. The numbers below say what the model found, not how "
+             "often it is right.", "",
+             "### Cost", "",
+             "| Item | Requests | Input tokens | Output tokens | Cost |", "|---|---|---|---|---|"]
+    for name in ("run-test", "run-full"):
+        s = pred["stages"][name]
+        lines.append(f"| {name} predicted | {s['requests']} | {s['counted_input_tokens']:,} "
+                     f"| {s['output_tokens']:,} | ${s['central_cost']:.4f} |")
+    lines.append(f"| actual | {summ['requests']} | {summ['input_tokens']:,} | {summ['output_tokens']:,} "
+                 f"| ${summ['cost']:.4f} |")
+    lines += ["", f"Ledger total: ${spent():.4f} of ${C.BUDGET:.2f}.", "",
+              "### Scores on the cited sample", "",
+              "| Scope | Stage | Cases | P | R | F1 | F1 interval | Disq F1 | Mit F1 |",
+              "|---|---|---|---|---|---|---|---|---|"]
+    for s in read_csv(d / "scores.csv"):
+        lo, hi = json.loads(s["f1_ci"])
+        interval = "too few cases" if lo is None else f"{_pct(lo)} to {_pct(hi)}"
+        lines.append(f"| {s['scope']} | {s['stage']} | {s['cases']} | {_pct(float(s['precision']))} "
+                     f"| {_pct(float(s['recall']))} | {_pct(float(s['f1']))} | {interval} "
+                     f"| {_pct(float(s['disq_f1']))} | {_pct(float(s['mit_f1']))} |")
+    u = summ["uncited"]
+    lines += ["", "### Found on the uncited cases", "",
+              f"The model returned at least one kept quote for {u['cases_with_kept_quote']} of "
+              f"{u['cases']} cases, {u['kept_quotes']} quotes in all.", "",
+              "| Regime | Cases | With a kept quote |", "|---|---|---|"]
+    for rg, v in u["by_regime"].items():
+        lines.append(f"| {rg} | {v['cases']} | {v['with_kept_quote']} |")
+    lines += ["", "| Code | Cases | Kept quotes |", "|---|---|---|"]
+    for r in read_csv(d / "per_code.csv"):
+        if r["group"] == "uncited" and int(r["kept_quotes"] or 0):
+            lines.append(f"| {r['code']} | {r['cases_found']} | {r['kept_quotes']} |")
+    lines += ["", "### Drops by reason", "", "| Group and reason | Count |", "|---|---|"]
+    lines += [f"| {k} | {v} |" for k, v in sorted(summ["drops"].items())]
+    lines += ["", f"Kept quotes: {summ['kept'].get('cited', 0)} on the cited sample and "
+              f"{summ['kept'].get('uncited', 0)} on the uncited cases. Every kept quote passed "
+              "`src/llm/verify.py`.", ""]
+    section = "\n".join(lines)
+    old = report_path.read_text(encoding="utf-8") if report_path.exists() else ""
+    import re
+    pattern = re.compile(r"\n?" + re.escape(RUN_HEADING) + r"\n.*?(?=\n## |\Z)", re.S)
+    if pattern.search(old):
+        text = pattern.sub(lambda _: "\n" + section, old, count=1)
+    else:
+        text = old.rstrip("\n") + "\n\n" + section
+    report_path.write_text(text.rstrip("\n") + "\n", encoding="utf-8")
+    return section
+
+
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("stage", choices=["predict", "test", "pilot", "score", "report"])
+    ap.add_argument("stage", choices=["predict", "test", "pilot", "score", "report",
+                                      "run-predict", "run-test", "run-full", "run-score", "run-report"])
     ap.add_argument("which", nargs="?", choices=["test", "pilot"])
     ap.add_argument("--resubmit", action="store_true", help="submit again even if a batch id is saved")
     args = ap.parse_args(argv)
     sys.stdout.reconfigure(encoding="utf-8")
-    if args.stage == "predict":
+    if args.stage == "run-predict":
+        r = run_predict()
+        print(json.dumps({k: v for k, v in r.items() if k != "stages"}, indent=2))
+        for n, s in r["stages"].items():
+            print(n, {k: v for k, v in s.items() if k != "counts"})
+    elif args.stage in ("run-test", "run-full"):
+        run_batch(args.stage.split("-")[1], resubmit=args.resubmit)
+    elif args.stage == "run-score":
+        score_run()
+    elif args.stage == "run-report":
+        run_report()
+    elif args.stage == "predict":
         r = predict()
         print(json.dumps({k: v for k, v in r.items() if k != "stages"}, indent=2))
         for n, s in r["stages"].items():
