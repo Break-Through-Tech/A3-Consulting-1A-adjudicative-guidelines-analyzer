@@ -72,7 +72,10 @@ def run_tables() -> tuple[list[dict], dict[str, list[dict]], dict[str, Counter]]
     counts: dict[str, Counter] = defaultdict(Counter)
     for k in read_csv(RUN / "kept.csv"):
         url = url_of[k["custom_id"]]
-        kept[url].append({"code": k["code"], "start": int(k["start"]), "end": int(k["end"]), "quote": k["quote"]})
+        # A checkout with core.autocrlf turns the line breaks inside quoted CSV fields into
+        # \r\n, while full_text has \n. build_document still checks the quote at its offsets.
+        quote = k["quote"].replace("\r\n", "\n")
+        kept[url].append({"code": k["code"], "start": int(k["start"]), "end": int(k["end"]), "quote": quote})
         counts[url]["kept"] += 1
     for d in read_csv(RUN / "dropped.csv"):
         counts[url_of[d["custom_id"]]][d["reason"]] += 1
