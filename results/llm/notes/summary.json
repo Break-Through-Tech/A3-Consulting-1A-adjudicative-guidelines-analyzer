@@ -1,13 +1,20 @@
 {
-  "requests": 6,
-  "succeeded": 6,
-  "end_turn": 6,
-  "rationale_kept": 1,
-  "note_kept": 5,
-  "rationale_problems": {},
-  "note_problems": {},
-  "input_tokens": 19063,
-  "output_tokens": 993,
-  "cost": 0.0012014,
-  "spent_total": 0.1758499
+  "requests": 60,
+  "succeeded": 60,
+  "end_turn": 60,
+  "rationale_kept": 6,
+  "note_kept": 49,
+  "rationale_dropped": 4,
+  "note_dropped": 1,
+  "rationale_problems": {
+    "names_ids_or_codes": 2,
+    "credits_the_tool": 2
+  },
+  "note_problems": {
+    "too_long": 1
+  },
+  "input_tokens": 191222,
+  "output_tokens": 19190,
+  "cost": 0.014358600000000001,
+  "spent_total": 0.1890071
 }

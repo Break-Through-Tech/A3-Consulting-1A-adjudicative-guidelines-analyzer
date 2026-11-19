@@ -3,6 +3,7 @@
     python -m src.llm.notes predict     # free: demo set, retrieval, documents, token counts
     python -m src.llm.notes test        # paid: the first demo case, 1 rationale and 5 notes
     python -m src.llm.notes full        # paid: the other 9 demo cases
+    python -m src.llm.notes rationales  # paid: all 10 rationales again, after a rationale prompt change
     python -m src.llm.notes score       # free: check every answer, write the documents
 
 The demo set is 10 test cases from the Guideline F test-split run, 5 DENIED and
@@ -48,7 +49,7 @@ TOP_K = 5                          # precedents, so notes, per case
 FACTS_CHARS = (2_000, 9_000)       # findings of fact length, so inputs stay pilot-sized
 MIN_KEPT = 4                       # verified LLM quotes the case needs
 MAX_TOKENS = 4000
-BATCHES = ("test", "full")
+BATCHES = ("test", "full", "rationales")   # the last re-asks every rationale with the current prompt
 RUN_DATE = "2026-11-17"            # the test-split run's full batch, results/llm/run
 CENTRAL_LIMIT = 0.10
 QUOTE_MIN_CHARS = 10               # a rationale may quote shorter passages than an extraction
@@ -59,8 +60,11 @@ DEMO_FIELDS = ["position", "source_url", "case_number", "outcome", "guidelines",
 _QUOTED = re.compile(r"[\"“]([^\"”]+)[\"”]")
 _NUMBER = re.compile(r"\d(?:[\d,.]*\d)?")
 _CONFIDENCE = re.compile(r"%|percent|probab|confiden|\bscor(?:e|ed|es|ing)\b|\b(?:un)?certaint", re.I)
-_TOOL_REASONS = re.compile(r"\b(?:the\s+)?(?:tool|analyzer|model)\s+(?:also\s+)?(?:judged|concluded|determined|decided|"
-                           r"found\s+that|weighed|considered)\b", re.I)
+_TOOL_REASONS = re.compile(
+    r"\b(?:tool|analyzer|model)(?:'s|’s)?\s+(?:(?:guideline\s+\w+\s+)?(?:prediction|predictions|status|statuses)\s+)?"
+    r"(?:also\s+)?(?:judge[sd]?|conclude[sd]?|determine[sd]?|decide[sd]?|found\s+that|finds\s+that|"
+    r"weigh(?:s|ed)?|consider(?:s|ed)?|reflects?|rests?\s+on|is\s+based\s+on|draws?\s+on|uses?|relies\s+on)\b",
+    re.I)
 _CODES_IN_TEXT = re.compile(r"\bc\d+\b|\[c\d+\]|AG\s*¶|\b(?:19|20)\([a-g]\)", re.I)
 
 
@@ -123,6 +127,13 @@ def select_demo(rows: list[dict], kept: dict[str, list[dict]]) -> list[dict]:
 
 def batch_of(position: int) -> str:
     return "test" if position == 0 else "full"
+
+
+def members(name: str, requests: list[dict]) -> list[dict]:
+    """The saved requests one batch sends. `rationales` is every rationale again; it overrides earlier answers."""
+    if name == "rationales":
+        return [r for r in requests if r["custom_id"].startswith("rat-")]
+    return [r for r in requests if r["batch"] == name]
 
 
 def load_rows(urls: set[str]) -> list[dict]:
@@ -232,7 +243,7 @@ def predict(log=print) -> dict:
     out_per, source = measured_output_per_request()
     stages, running = {}, spent()
     for name in BATCHES:
-        ids = [r["custom_id"] for r in requests if r["batch"] == name]
+        ids = [r["custom_id"] for r in members(name, requests)]
         n, tin = len(ids), sum(counted[i] for i in ids)
         ceiling = ceiling_for(tin, n, max_tokens=MAX_TOKENS)
         stages[name] = {"requests": n, "counted_input_tokens": tin, "output_tokens_per_request": out_per,
@@ -273,7 +284,7 @@ def run_batch(name: str, resubmit: bool = False, log=print) -> None:
     """Paid. Submit one batch of the saved requests, or resume its saved batch id."""
     if name not in BATCHES:
         raise SystemExit(f"unknown batch {name!r}")
-    if name == "full" and not _state("test").exists():
+    if name != "test" and not _state("test").exists():
         raise SystemExit("run the test batch first")
     pred_path = NOTES / "cost_prediction.json"
     if not pred_path.exists():
@@ -282,7 +293,7 @@ def run_batch(name: str, resubmit: bool = False, log=print) -> None:
     if not pred["proceed"]:
         raise SystemExit("prediction is over its limits; not running")
     requests = [{"custom_id": r["custom_id"], "params": r["params"]}
-                for r in _read_jsonl(NOTES / "requests.jsonl") if r["batch"] == name]
+                for r in members(name, _read_jsonl(NOTES / "requests.jsonl"))]
     stage = f"notes-{name}"
     state_path = _state(name)
     state = json.loads(state_path.read_text(encoding="utf-8")) if state_path.exists() else {}
@@ -364,8 +375,13 @@ def _unsupported_numbers(text: str, source: str) -> list[str]:
     return [n for n in _NUMBER.findall(_outside_quotes(text)) if n not in known]
 
 
-def _same(a: str, b: str) -> bool:
-    return _key(a)[0].strip(" .,;:").casefold() == _key(b)[0].strip(" .,;:").casefold()
+def _within(inline: str, listed: str) -> bool:
+    """True when a quote in the text is a listed quote or a piece of one, ignoring layout and case.
+
+    A piece of a verified quote is in the decision too, so the text may shorten one.
+    """
+    a = _key(inline)[0].strip(" .,;:").casefold()
+    return bool(a) and a in _key(listed)[0].casefold()
 
 
 def check_rationale(answer: dict | None, doc: dict, full_text: str) -> tuple[dict | None, list[str]]:
@@ -411,7 +427,7 @@ def check_rationale(answer: dict | None, doc: dict, full_text: str) -> tuple[dic
             problems.append(f"quote_{res.dropped[0].reason}")
         listed.append(quote)
     for inline in _QUOTED.findall(text):
-        if not any(_same(inline, q) for q in listed):
+        if not any(_within(inline, q) for q in listed):
             problems.append("unlisted_quote")
             break
     if problems:

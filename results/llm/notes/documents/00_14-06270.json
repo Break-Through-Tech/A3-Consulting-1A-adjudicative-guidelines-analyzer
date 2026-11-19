@@ -589,7 +589,7 @@
     "llm_model": "claude-haiku-5-5",
     "prompt_hashes": {
       "extract": "sha256:36a767286780",
-      "rationale": "sha256:de5855405f5b",
+      "rationale": "sha256:8ec9fa67760d",
       "note": "sha256:7fdad65a3b1c"
     },
     "run_dates": {

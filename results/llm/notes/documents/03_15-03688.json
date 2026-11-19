@@ -1,0 +1,400 @@
+{
+  "schema_version": "1.0",
+  "case": {
+    "source_url": "https://doha.ogc.osd.mil/Industrial-Security-Program/Industrial-Security-Clearance-Decisions/ISCR-Hearing-Decisions/Archived-ISCR-Hearing-Decisions/2017-ISCR-Hearing-Decisions/FileId/92931/",
+    "case_number": "15-03688",
+    "date": "2017-03-24",
+    "regime": "sead4",
+    "split": "test",
+    "text_length": 9888
+  },
+  "guidelines": [
+    {
+      "code": "A",
+      "name": "Allegiance to the United States",
+      "tier": "caveat",
+      "p_not_at_issue": 0.9999999999994451,
+      "p_for": 4.681332908334078e-13,
+      "p_against": 8.676460058619189e-14,
+      "at_issue_threshold": 1.01,
+      "status": "NOT_AT_ISSUE",
+      "model": "modernbert-4096",
+      "calibration": "results/heads/modernbert-4096/calibration.json sha256:7c3e19ce6314"
+    },
+    {
+      "code": "B",
+      "name": "Foreign Influence",
+      "tier": "defensible",
+      "p_not_at_issue": 0.9995094866472812,
+      "p_for": 0.0003204128242246571,
+      "p_against": 0.0001701005284942232,
+      "at_issue_threshold": 0.2708350157832362,
+      "status": "NOT_AT_ISSUE",
+      "model": "modernbert-4096",
+      "calibration": "results/heads/modernbert-4096/calibration.json sha256:7c3e19ce6314"
+    },
+    {
+      "code": "C",
+      "name": "Foreign Preference",
+      "tier": "defensible",
+      "p_not_at_issue": 0.9997013934024364,
+      "p_for": 0.00018813078334619098,
+      "p_against": 0.000110475814217477,
+      "at_issue_threshold": 0.4344678951148843,
+      "status": "NOT_AT_ISSUE",
+      "model": "modernbert-4096",
+      "calibration": "results/heads/modernbert-4096/calibration.json sha256:7c3e19ce6314"
+    },
+    {
+      "code": "D",
+      "name": "Sexual Behavior",
+      "tier": "defensible",
+      "p_not_at_issue": 0.9999237271043926,
+      "p_for": 4.497517741471204e-05,
+      "p_against": 3.129771819259489e-05,
+      "at_issue_threshold": 0.2243578427714344,
+      "status": "NOT_AT_ISSUE",
+      "model": "modernbert-4096",
+      "calibration": "results/heads/modernbert-4096/calibration.json sha256:7c3e19ce6314"
+    },
+    {
+      "code": "E",
+      "name": "Personal Conduct",
+      "tier": "defensible",
+      "p_not_at_issue": 0.9718223919254059,
+      "p_for": 0.008706314669648394,
+      "p_against": 0.0194712934049458,
+      "at_issue_threshold": 0.38284409814864107,
+      "status": "NOT_AT_ISSUE",
+      "model": "modernbert-4096",
+      "calibration": "results/heads/modernbert-4096/calibration.json sha256:7c3e19ce6314"
+    },
+    {
+      "code": "F",
+      "name": "Financial Considerations",
+      "tier": "defensible",
+      "p_not_at_issue": 0.0011608528437222687,
+      "p_for": 0.002145284336481203,
+      "p_against": 0.9966938628197965,
+      "at_issue_threshold": 0.39001645419889885,
+      "status": "AGAINST",
+      "model": "modernbert-4096",
+      "calibration": "results/heads/modernbert-4096/calibration.json sha256:7c3e19ce6314"
+    },
+    {
+      "code": "G",
+      "name": "Alcohol Consumption",
+      "tier": "defensible",
+      "p_not_at_issue": 0.9971008016980809,
+      "p_for": 0.0006515646766982212,
+      "p_against": 0.002247633625220729,
+      "at_issue_threshold": 0.08784649685824163,
+      "status": "NOT_AT_ISSUE",
+      "model": "modernbert-4096",
+      "calibration": "results/heads/modernbert-4096/calibration.json sha256:7c3e19ce6314"
+    },
+    {
+      "code": "H",
+      "name": "Drug Involvement",
+      "tier": "defensible",
+      "p_not_at_issue": 0.9985447357665478,
+      "p_for": 0.0007456533049559108,
+      "p_against": 0.0007096109284963831,
+      "at_issue_threshold": 0.3212893676387018,
+      "status": "NOT_AT_ISSUE",
+      "model": "modernbert-4096",
+      "calibration": "results/heads/modernbert-4096/calibration.json sha256:7c3e19ce6314"
+    },
+    {
+      "code": "I",
+      "name": "Psychological Conditions",
+      "tier": "caveat",
+      "p_not_at_issue": 0.9999830971762359,
+      "p_for": 6.664826192290896e-06,
+      "p_against": 1.0237997571815411e-05,
+      "at_issue_threshold": 0.1817011706800583,
+      "status": "NOT_AT_ISSUE",
+      "model": "modernbert-4096",
+      "calibration": "results/heads/modernbert-4096/calibration.json sha256:7c3e19ce6314"
+    },
+    {
+      "code": "J",
+      "name": "Criminal Conduct",
+      "tier": "defensible",
+      "p_not_at_issue": 0.9952692898036578,
+      "p_for": 0.002076107628068181,
+      "p_against": 0.0026546025682739715,
+      "at_issue_threshold": 0.335743971105018,
+      "status": "NOT_AT_ISSUE",
+      "model": "modernbert-4096",
+      "calibration": "results/heads/modernbert-4096/calibration.json sha256:7c3e19ce6314"
+    },
+    {
+      "code": "K",
+      "name": "Handling Protected Information",
+      "tier": "caveat",
+      "p_not_at_issue": 0.9996156539765769,
+      "p_for": 0.00023344349636678717,
+      "p_against": 0.0001509025270562271,
+      "at_issue_threshold": 0.4703825191272647,
+      "status": "NOT_AT_ISSUE",
+      "model": "modernbert-4096",
+      "calibration": "results/heads/modernbert-4096/calibration.json sha256:7c3e19ce6314"
+    },
+    {
+      "code": "L",
+      "name": "Outside Activities",
+      "tier": "caveat",
+      "p_not_at_issue": 0.9998376718155523,
+      "p_for": 8.741982640278337e-05,
+      "p_against": 7.490835804499005e-05,
+      "at_issue_threshold": 0.011664012290079098,
+      "status": "NOT_AT_ISSUE",
+      "model": "modernbert-4096",
+      "calibration": "results/heads/modernbert-4096/calibration.json sha256:7c3e19ce6314"
+    },
+    {
+      "code": "M",
+      "name": "Use of Information Technology",
+      "tier": "caveat",
+      "p_not_at_issue": 0.9999015707961596,
+      "p_for": 6.587227592134858e-05,
+      "p_against": 3.255692791897739e-05,
+      "at_issue_threshold": 0.1595426970557416,
+      "status": "NOT_AT_ISSUE",
+      "model": "modernbert-4096",
+      "calibration": "results/heads/modernbert-4096/calibration.json sha256:7c3e19ce6314"
+    }
+  ],
+  "recommendation": {
+    "composed": "DENIED",
+    "driven_by": [
+      "F"
+    ],
+    "rule": "DENIED when any guideline is predicted AGAINST, otherwise GRANTED",
+    "direct": null
+  },
+  "conditions": [
+    {
+      "id": "c1",
+      "code": "AG ¶ 19(f)",
+      "guideline": "F",
+      "kind": "disqualifier",
+      "text": "failure to file or fraudulently filing annual Federal, state, or local income tax returns or failure to pay annual Federal, state, or local income tax as required",
+      "source": "llm",
+      "quote": "Applicant failed to document that he",
+      "start": 7338,
+      "end": 7374,
+      "context": {
+        "start": 7338,
+        "end": 7405,
+        "text": "Applicant failed to document that he\nSee, Department of the Navy v."
+      },
+      "lead_in": null,
+      "section": "analysis",
+      "cited_as": null
+    },
+    {
+      "id": "c2",
+      "code": "AG ¶ 19(c)",
+      "guideline": "F",
+      "kind": "disqualifier",
+      "text": "a history of not meeting financial obligations",
+      "source": "llm",
+      "quote": "has deliberately failed to address the\ndeficiency amount on an automobile repossessed in May 2010",
+      "start": 7487,
+      "end": 7584,
+      "context": {
+        "start": 7406,
+        "end": 7672,
+        "text": "Egan, 484 U.S. 518 (1988).\n4\n3\n \n\nfiled his 2006 Federal income tax returns, and has deliberately failed to address the\ndeficiency amount on an automobile repossessed in May 2010.5\nThe mitigating factors for financial considerations provide little help to Applicant."
+      },
+      "lead_in": null,
+      "section": "analysis",
+      "cited_as": null
+    },
+    {
+      "id": "c3",
+      "code": "AG ¶ 20(a)",
+      "guideline": "F",
+      "kind": "mitigator",
+      "text": "the behavior happened so long ago, was so infrequent, or occurred under such circumstances that it is unlikely to recur and does not cast doubt on the individual's current reliability, trustworthiness, or good judgment",
+      "source": "llm",
+      "quote": "His financial difficulties are recent and not infrequent",
+      "start": 7673,
+      "end": 7729,
+      "context": {
+        "start": 7673,
+        "end": 7877,
+        "text": "His financial difficulties are recent and not infrequent, and the stated cause cannot be\nconsidered unlikely to recur because the automobile deficiency remains unresolved due\nto Applicant’s intransigence."
+      },
+      "lead_in": null,
+      "section": "analysis",
+      "cited_as": null
+    },
+    {
+      "id": "c4",
+      "code": "AG ¶ 20(b)",
+      "guideline": "F",
+      "kind": "mitigator",
+      "text": "the conditions that resulted in the financial problem were largely beyond the person's control (e.g., loss of employment, a business downturn, unexpected medical emergency, a death, divorce or separation, clear victimization by predatory lending practices, or identity theft), and the individual acted responsibly under the circumstances",
+      "source": "llm",
+      "quote": "Applicant has\nnot been responsible in dealing with his debts.",
+      "start": 8005,
+      "end": 8066,
+      "context": {
+        "start": 7879,
+        "end": 8115,
+        "text": "Applicant’s previous low income may be considered a\n6\ncircumstance beyond his control, but even if it could be so considered, Applicant has\nnot been responsible in dealing with his debts. He has simply ignored the automobile\ndeficiency."
+      },
+      "lead_in": null,
+      "section": "analysis",
+      "cited_as": null
+    },
+    {
+      "id": "c5",
+      "code": "AG ¶ 20(d)",
+      "guideline": "F",
+      "kind": "mitigator",
+      "text": "the individual initiated and is adhering to a good-faith effort to repay overdue creditors or otherwise resolve debts",
+      "source": "llm",
+      "quote": "He has taken\n7\nno action to address this debt.",
+      "start": 8183,
+      "end": 8229,
+      "context": {
+        "start": 8183,
+        "end": 8301,
+        "text": "He has taken\n7\nno action to address this debt.8\nIn addition, Applicant has received no credit or financial counseling."
+      },
+      "lead_in": null,
+      "section": "analysis",
+      "cited_as": null
+    },
+    {
+      "id": "c6",
+      "code": "AG ¶ 20(c)",
+      "guideline": "F",
+      "kind": "mitigator",
+      "text": "the individual has received or is receiving financial counseling for the problem from a legitimate and credible source, such as a non-profit credit counseling service, and there are clear indications that the problem is being resolved or is under control",
+      "source": "llm",
+      "quote": "Applicant has received no credit or financial counseling.",
+      "start": 8244,
+      "end": 8301,
+      "context": {
+        "start": 8183,
+        "end": 8319,
+        "text": "He has taken\n7\nno action to address this debt.8\nIn addition, Applicant has received no credit or financial counseling. He has no\nbudget."
+      },
+      "lead_in": null,
+      "section": "analysis",
+      "cited_as": null
+    }
+  ],
+  "precedents": [
+    {
+      "id": "p1",
+      "case_number": "22-02588",
+      "source_url": "https://doha.ogc.osd.mil/Industrial-Security-Program/Industrial-Security-Clearance-Decisions/ISCR-Hearing-Decisions/2024-ISCR-Hearing/FileId/220508/",
+      "score": 0.9425,
+      "outcome": "DENIED",
+      "guidelines": [
+        "F"
+      ],
+      "label_source": "formal_ruling",
+      "start": 2786,
+      "end": 5103,
+      "note": "Both cases involve an applicant with delinquent federal tax filings and multiple unresolved or delinquent debts, and both applicants admitted most SOR allegations. The case under review concerns an unfiled 2006 federal return and a deficiency balance on a repossessed vehicle, while the precedent concerns unfiled 2020 and 2021 returns and eight delinquent debts."
+    },
+    {
+      "id": "p2",
+      "case_number": "23-02225",
+      "source_url": "https://doha.ogc.osd.mil/Industrial-Security-Program/Industrial-Security-Clearance-Decisions/ISCR-Hearing-Decisions/2025-ISCR-Hearing-Decisions/FileId/230668/",
+      "score": 0.9416,
+      "outcome": "DENIED",
+      "guidelines": [
+        "F"
+      ],
+      "label_source": "formal_ruling",
+      "start": 3337,
+      "end": 5297,
+      "note": "Both involve an applicant with delinquent debts and unresolved financial issues, including a vehicle deficiency balance and tax-related problems in the case under review, while the precedent describes unfavorable military discharge history and sporadic self-employment income with unemployment periods; both applicants have had periods of unemployment or inconsistent earnings and ties to family-related disruptions."
+    },
+    {
+      "id": "p3",
+      "case_number": "19-02528",
+      "source_url": "https://doha.ogc.osd.mil/Industrial-Security-Program/Industrial-Security-Clearance-Decisions/ISCR-Hearing-Decisions/2021-ISCR-Hearing-Decisions/FileId/88362/",
+      "score": 0.9401,
+      "outcome": "DENIED",
+      "guidelines": [
+        "F"
+      ],
+      "label_source": "formal_ruling",
+      "start": 5332,
+      "end": 8277,
+      "note": "Both cases involve an applicant who admitted most SOR allegations, including an unfiled federal income tax return, and who offered unsupported claims of payment or dispute resolution. Both also tie financial difficulties to income problems, with the precedent's food-truck business problems paralleling the case's statement that he was not making enough money in his job."
+    },
+    {
+      "id": "p4",
+      "case_number": "19-02932",
+      "source_url": "https://doha.ogc.osd.mil/Industrial-Security-Program/Industrial-Security-Clearance-Decisions/ISCR-Hearing-Decisions/2022-ISCR-Hearing-Decisions/FileId/170576/",
+      "score": 0.9397,
+      "outcome": "DENIED",
+      "guidelines": [
+        "F"
+      ],
+      "label_source": "formal_ruling",
+      "start": 10701,
+      "end": 14194,
+      "note": "Both cases involve an applicant with delinquent debts and unresolved financial problems, including a student loan, a vehicle-related debt, and a failure to file federal income tax returns for an early year. Each applicant also gave explanations for delinquent debts, such as a claimed unawareness or a claimed dispute, that were not supported by documentation."
+    },
+    {
+      "id": "p5",
+      "case_number": "23-00270",
+      "source_url": "https://doha.ogc.osd.mil/Industrial-Security-Program/Industrial-Security-Clearance-Decisions/ISCR-Hearing-Decisions/2024-ISCR-Hearing/FileId/229577/",
+      "score": 0.9383,
+      "outcome": "DENIED",
+      "guidelines": [
+        "E",
+        "F"
+      ],
+      "label_source": "formal_ruling",
+      "start": 5284,
+      "end": 8394,
+      "note": "Both applicants have delinquent debts, including charged-off or collection accounts, and both have failed to file federal income tax returns. Both also offer explanations for their financial problems, such as income shortfalls in the case under review and underemployment in the precedent, that are largely uncorroborated by documentation."
+    }
+  ],
+  "rationale": {
+    "text": "The tool predicts that Guideline F is AGAINST the Applicant, which supports the composed recommendation of DENIED. The conditions it matched are the judge's words, including that the Applicant \"has deliberately failed to address the deficiency amount on an automobile repossessed in May 2010\" and that \"Applicant has not been responsible in dealing with his debts.\" The decision also states that \"Applicant has received no credit or financial counseling,\" which the tool matched to a mitigating condition that was not met.",
+    "condition_ids": [
+      "c2",
+      "c4",
+      "c6"
+    ],
+    "guideline_codes": [
+      "F"
+    ]
+  },
+  "provenance": {
+    "schema_version": "1.0",
+    "heads_model": "modernbert-4096",
+    "calibration": "results/heads/modernbert-4096/calibration.json sha256:7c3e19ce6314",
+    "extractor": "src.conditions.extract_case",
+    "llm_model": "claude-haiku-5-5",
+    "prompt_hashes": {
+      "extract": "sha256:36a767286780",
+      "rationale": "sha256:8ec9fa67760d",
+      "note": "sha256:7fdad65a3b1c"
+    },
+    "run_dates": {
+      "extract": "2026-11-17",
+      "notes": "2026-11-18"
+    },
+    "verify_counts": {
+      "kept": 6
+    },
+    "unmapped_hits": {
+      "rule": 0,
+      "llm": 0
+    }
+  }
+}

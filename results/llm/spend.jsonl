@@ -12,3 +12,5 @@
 {"event": "actual", "stage": "notes-test", "batch_id": "msgbatch_01ViD23nLGyUBcp2832jkLFV", "tier": "batch", "cost": 0.0015692500000000001, "input_tokens": 18990, "output_tokens": 2479}
 {"event": "submit", "stage": "notes-test", "batch_id": "msgbatch_01EAtMEqSiL5RSLUGcD5vic9", "tier": "batch", "ceiling": 0.00695315}
 {"event": "actual", "stage": "notes-test", "batch_id": "msgbatch_01EAtMEqSiL5RSLUGcD5vic9", "tier": "batch", "cost": 0.0012014, "input_tokens": 19063, "output_tokens": 993}
+{"event": "submit", "stage": "notes-full", "batch_id": "msgbatch_01NZJxTF35QDAFDfqwUxWMxk", "tier": "batch", "ceiling": 0.06260795}
+{"event": "actual", "stage": "notes-full", "batch_id": "msgbatch_01NZJxTF35QDAFDfqwUxWMxk", "tier": "batch", "cost": 0.0131572, "input_tokens": 172159, "output_tokens": 18197}

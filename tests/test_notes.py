@@ -176,8 +176,32 @@ def test_rationale_that_credits_the_tool_with_the_judges_reasoning_is_dropped():
     assert N.check_rationale(ok, _doc(), FULL)[1] == []
 
 
-def test_prompt_credits_the_judge():
-    assert "never say the tool judged" in T.RATIONALE_SYSTEM_PROMPT
+def test_prompt_credits_the_judge_and_denies_the_tool_reads_conditions():
+    assert "never to the tool" in T.RATIONALE_SYSTEM_PROMPT
+    assert "It does not read these conditions" in T.RATIONALE_SYSTEM_PROMPT
+    assert "points the same way as the prediction or the other way" in T.RATIONALE_SYSTEM_PROMPT
+
+
+def test_rationale_that_says_the_prediction_uses_the_conditions_is_dropped():
+    for text in ("The tool's prediction weighs these mitigators against the disqualifiers.",
+                 "The tool's predictions reflect where these discussions appear.",
+                 "The tool's Guideline F prediction rests on the debts."):
+        assert "credits_the_tool" in N.check_rationale(_with(text=text, quotes=[]), _doc(), FULL)[1], text
+    ok = _with(text="The tool predicts Guideline F against, and the judge's discussion points the same way.",
+               quotes=[])
+    assert N.check_rationale(ok, _doc(), FULL)[1] == []
+
+
+def test_a_piece_of_a_listed_quote_may_appear_in_the_text():
+    answer = _with(text="The tool predicts Guideline F against. The decision says he \"owes $20,000 on six credit cards\".")
+    assert N.check_rationale(answer, _doc(), FULL)[1] == []
+
+
+def test_rationales_batch_resends_only_rationales():
+    reqs = [{"custom_id": "rat-0", "batch": "test"}, {"custom_id": "note-0-1", "batch": "test"},
+            {"custom_id": "rat-1", "batch": "full"}, {"custom_id": "note-1-1", "batch": "full"}]
+    assert [r["custom_id"] for r in N.members("rationales", reqs)] == ["rat-0", "rat-1"]
+    assert [r["custom_id"] for r in N.members("full", reqs)] == ["rat-1", "note-1-1"]
 
 
 def test_certain_as_an_ordinary_word_is_allowed():

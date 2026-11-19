@@ -1,0 +1,536 @@
+{
+  "schema_version": "1.0",
+  "case": {
+    "source_url": "https://doha.ogc.osd.mil/Industrial-Security-Program/Industrial-Security-Clearance-Decisions/ISCR-Hearing-Decisions/Archived-ISCR-Hearing-Decisions/2016-and-Prior-ISCR-Hearing-Decisions-12/FileId/139815/",
+    "case_number": "14-05003",
+    "date": "2015-01-14",
+    "regime": "sead4",
+    "split": "test",
+    "text_length": 15420
+  },
+  "guidelines": [
+    {
+      "code": "A",
+      "name": "Allegiance to the United States",
+      "tier": "caveat",
+      "p_not_at_issue": 0.9999999999893188,
+      "p_for": 9.474041209374838e-12,
+      "p_against": 1.2073568712135717e-12,
+      "at_issue_threshold": 1.01,
+      "status": "NOT_AT_ISSUE",
+      "model": "modernbert-4096",
+      "calibration": "results/heads/modernbert-4096/calibration.json sha256:7c3e19ce6314"
+    },
+    {
+      "code": "B",
+      "name": "Foreign Influence",
+      "tier": "defensible",
+      "p_not_at_issue": 0.9995393118373577,
+      "p_for": 0.0003343207756651014,
+      "p_against": 0.0001263673869773859,
+      "at_issue_threshold": 0.2708350157832362,
+      "status": "NOT_AT_ISSUE",
+      "model": "modernbert-4096",
+      "calibration": "results/heads/modernbert-4096/calibration.json sha256:7c3e19ce6314"
+    },
+    {
+      "code": "C",
+      "name": "Foreign Preference",
+      "tier": "defensible",
+      "p_not_at_issue": 0.9995090885586354,
+      "p_for": 0.00033079254304802826,
+      "p_against": 0.00016011889831678617,
+      "at_issue_threshold": 0.4344678951148843,
+      "status": "NOT_AT_ISSUE",
+      "model": "modernbert-4096",
+      "calibration": "results/heads/modernbert-4096/calibration.json sha256:7c3e19ce6314"
+    },
+    {
+      "code": "D",
+      "name": "Sexual Behavior",
+      "tier": "defensible",
+      "p_not_at_issue": 0.9998553730164272,
+      "p_for": 0.00012558239470462725,
+      "p_against": 1.9044588868019508e-05,
+      "at_issue_threshold": 0.2243578427714344,
+      "status": "NOT_AT_ISSUE",
+      "model": "modernbert-4096",
+      "calibration": "results/heads/modernbert-4096/calibration.json sha256:7c3e19ce6314"
+    },
+    {
+      "code": "E",
+      "name": "Personal Conduct",
+      "tier": "defensible",
+      "p_not_at_issue": 0.9978672431103502,
+      "p_for": 0.001818995672440372,
+      "p_against": 0.00031376121720929885,
+      "at_issue_threshold": 0.38284409814864107,
+      "status": "NOT_AT_ISSUE",
+      "model": "modernbert-4096",
+      "calibration": "results/heads/modernbert-4096/calibration.json sha256:7c3e19ce6314"
+    },
+    {
+      "code": "F",
+      "name": "Financial Considerations",
+      "tier": "defensible",
+      "p_not_at_issue": 0.0011687643336009733,
+      "p_for": 0.9757845757740752,
+      "p_against": 0.023046659892323903,
+      "at_issue_threshold": 0.39001645419889885,
+      "status": "FOR",
+      "model": "modernbert-4096",
+      "calibration": "results/heads/modernbert-4096/calibration.json sha256:7c3e19ce6314"
+    },
+    {
+      "code": "G",
+      "name": "Alcohol Consumption",
+      "tier": "defensible",
+      "p_not_at_issue": 0.9987813226790463,
+      "p_for": 0.0008505727723373792,
+      "p_against": 0.0003681045486164421,
+      "at_issue_threshold": 0.08784649685824163,
+      "status": "NOT_AT_ISSUE",
+      "model": "modernbert-4096",
+      "calibration": "results/heads/modernbert-4096/calibration.json sha256:7c3e19ce6314"
+    },
+    {
+      "code": "H",
+      "name": "Drug Involvement",
+      "tier": "defensible",
+      "p_not_at_issue": 0.998612683792327,
+      "p_for": 0.0012282023397624925,
+      "p_against": 0.00015911386791039541,
+      "at_issue_threshold": 0.3212893676387018,
+      "status": "NOT_AT_ISSUE",
+      "model": "modernbert-4096",
+      "calibration": "results/heads/modernbert-4096/calibration.json sha256:7c3e19ce6314"
+    },
+    {
+      "code": "I",
+      "name": "Psychological Conditions",
+      "tier": "caveat",
+      "p_not_at_issue": 0.9999930247710098,
+      "p_for": 4.33877316849884e-06,
+      "p_against": 2.636455821819972e-06,
+      "at_issue_threshold": 0.1817011706800583,
+      "status": "NOT_AT_ISSUE",
+      "model": "modernbert-4096",
+      "calibration": "results/heads/modernbert-4096/calibration.json sha256:7c3e19ce6314"
+    },
+    {
+      "code": "J",
+      "name": "Criminal Conduct",
+      "tier": "defensible",
+      "p_not_at_issue": 0.9990580904567965,
+      "p_for": 0.0006348598066309181,
+      "p_against": 0.00030704973657252275,
+      "at_issue_threshold": 0.335743971105018,
+      "status": "NOT_AT_ISSUE",
+      "model": "modernbert-4096",
+      "calibration": "results/heads/modernbert-4096/calibration.json sha256:7c3e19ce6314"
+    },
+    {
+      "code": "K",
+      "name": "Handling Protected Information",
+      "tier": "caveat",
+      "p_not_at_issue": 0.9996792252645788,
+      "p_for": 0.00022261509295986483,
+      "p_against": 9.815964246132472e-05,
+      "at_issue_threshold": 0.4703825191272647,
+      "status": "NOT_AT_ISSUE",
+      "model": "modernbert-4096",
+      "calibration": "results/heads/modernbert-4096/calibration.json sha256:7c3e19ce6314"
+    },
+    {
+      "code": "L",
+      "name": "Outside Activities",
+      "tier": "caveat",
+      "p_not_at_issue": 0.9995016137476315,
+      "p_for": 0.00022370115606081158,
+      "p_against": 0.00027468509630783057,
+      "at_issue_threshold": 0.011664012290079098,
+      "status": "NOT_AT_ISSUE",
+      "model": "modernbert-4096",
+      "calibration": "results/heads/modernbert-4096/calibration.json sha256:7c3e19ce6314"
+    },
+    {
+      "code": "M",
+      "name": "Use of Information Technology",
+      "tier": "caveat",
+      "p_not_at_issue": 0.9998566571471599,
+      "p_for": 0.00011466341930645042,
+      "p_against": 2.8679433533708063e-05,
+      "at_issue_threshold": 0.1595426970557416,
+      "status": "NOT_AT_ISSUE",
+      "model": "modernbert-4096",
+      "calibration": "results/heads/modernbert-4096/calibration.json sha256:7c3e19ce6314"
+    }
+  ],
+  "recommendation": {
+    "composed": "GRANTED",
+    "driven_by": [],
+    "rule": "DENIED when any guideline is predicted AGAINST, otherwise GRANTED",
+    "direct": null
+  },
+  "conditions": [
+    {
+      "id": "c1",
+      "code": "AG ¶ 19(a)",
+      "guideline": "F",
+      "kind": "disqualifier",
+      "text": "inability to satisfy debts",
+      "source": "rule",
+      "quote": "(a)",
+      "start": 10853,
+      "end": 10856,
+      "context": {
+        "start": 10853,
+        "end": 10901,
+        "text": "(a) inability or unwillingness to satisfy debts;"
+      },
+      "lead_in": {
+        "start": 10716,
+        "end": 10851,
+        "text": "Department Counsel asserted, and the record evidence established, security\nconcerns under two Guideline F DCs, as set forth in AG ¶ 19:"
+      },
+      "section": "analysis",
+      "cited_as": null
+    },
+    {
+      "id": "c2",
+      "code": "AG ¶ 19(c)",
+      "guideline": "F",
+      "kind": "disqualifier",
+      "text": "a history of not meeting financial obligations",
+      "source": "rule",
+      "quote": "(c)",
+      "start": 10907,
+      "end": 10910,
+      "context": {
+        "start": 10902,
+        "end": 10958,
+        "text": "and \n(c) a history of not meeting financial obligations."
+      },
+      "lead_in": {
+        "start": 10716,
+        "end": 10851,
+        "text": "Department Counsel asserted, and the record evidence established, security\nconcerns under two Guideline F DCs, as set forth in AG ¶ 19:"
+      },
+      "section": "analysis",
+      "cited_as": null
+    },
+    {
+      "id": "c3",
+      "code": "AG ¶ 19(c)",
+      "guideline": "F",
+      "kind": "disqualifier",
+      "text": "a history of not meeting financial obligations",
+      "source": "llm",
+      "quote": "Applicant has a history of delinquent debt.",
+      "start": 10959,
+      "end": 11002,
+      "context": {
+        "start": 10959,
+        "end": 11075,
+        "text": "Applicant has a history of delinquent debt. From 2009 to 2015, he failed to\naddress his multiple student loan debts."
+      },
+      "lead_in": null,
+      "section": "analysis",
+      "cited_as": null
+    },
+    {
+      "id": "c4",
+      "code": "AG ¶ 19(a)",
+      "guideline": "F",
+      "kind": "disqualifier",
+      "text": "inability to satisfy debts",
+      "source": "llm",
+      "quote": "history of inability or\nunwillingness to pay his lawful debts from 2009 to 2015",
+      "start": 11183,
+      "end": 11262,
+      "context": {
+        "start": 11139,
+        "end": 11396,
+        "text": "His ongoing pattern of delinquent debt, and history of inability or\nunwillingness to pay his lawful debts from 2009 to 2015, raise security concerns under\nDCs 19(a) and (c), and shifts the burden to Applicant to rebut, extenuate, or mitigate\nthose concerns."
+      },
+      "lead_in": null,
+      "section": "analysis",
+      "cited_as": null
+    },
+    {
+      "id": "c5",
+      "code": "AG ¶ 19(a)",
+      "guideline": "F",
+      "kind": "disqualifier",
+      "text": "inability to satisfy debts",
+      "source": "rule",
+      "quote": "DCs 19(a)",
+      "start": 11294,
+      "end": 11303,
+      "context": {
+        "start": 11139,
+        "end": 11396,
+        "text": "His ongoing pattern of delinquent debt, and history of inability or\nunwillingness to pay his lawful debts from 2009 to 2015, raise security concerns under\nDCs 19(a) and (c), and shifts the burden to Applicant to rebut, extenuate, or mitigate\nthose concerns."
+      },
+      "lead_in": null,
+      "section": "analysis",
+      "cited_as": null
+    },
+    {
+      "id": "c6",
+      "code": "AG ¶ 19(c)",
+      "guideline": "F",
+      "kind": "disqualifier",
+      "text": "a history of not meeting financial obligations",
+      "source": "rule",
+      "quote": " and (c)",
+      "start": 11303,
+      "end": 11311,
+      "context": {
+        "start": 11139,
+        "end": 11396,
+        "text": "His ongoing pattern of delinquent debt, and history of inability or\nunwillingness to pay his lawful debts from 2009 to 2015, raise security concerns under\nDCs 19(a) and (c), and shifts the burden to Applicant to rebut, extenuate, or mitigate\nthose concerns."
+      },
+      "lead_in": null,
+      "section": "analysis",
+      "cited_as": null
+    },
+    {
+      "id": "c7",
+      "code": "AG ¶ 20(c)",
+      "guideline": "F",
+      "kind": "mitigator",
+      "text": "the individual has received or is receiving financial counseling for the problem from a legitimate and credible source, such as a non-profit credit counseling service, and there are clear indications that the problem is being resolved or is under control",
+      "source": "rule",
+      "quote": "(c)",
+      "start": 11539,
+      "end": 11542,
+      "context": {
+        "start": 11539,
+        "end": 11700,
+        "text": "(c) the person has received or is receiving counseling for the problem\nand/or there are clear indications that the problem is being resolved or is\nunder control;"
+      },
+      "lead_in": {
+        "start": 11139,
+        "end": 11538,
+        "text": "His ongoing pattern of delinquent debt, and history of inability or\nunwillingness to pay his lawful debts from 2009 to 2015, raise security concerns under\nDCs 19(a) and (c), and shifts the burden to Applicant to rebut, extenuate, or mitigate\nthose concerns. \n\n6\nThe guideline includes three conditions in AG ¶ 20 that could mitigate security\nconcerns arising from Applicant’s financial difficulties:"
+      },
+      "section": "analysis",
+      "cited_as": null
+    },
+    {
+      "id": "c8",
+      "code": "AG ¶ 20(d)",
+      "guideline": "F",
+      "kind": "mitigator",
+      "text": "the individual initiated and is adhering to a good-faith effort to repay overdue creditors or otherwise resolve debts",
+      "source": "rule",
+      "quote": "(d)",
+      "start": 11702,
+      "end": 11705,
+      "context": {
+        "start": 11702,
+        "end": 11805,
+        "text": "(d) the individual initiated a good-faith effort to repay overdue creditors or\notherwise resolve debts."
+      },
+      "lead_in": {
+        "start": 11139,
+        "end": 11538,
+        "text": "His ongoing pattern of delinquent debt, and history of inability or\nunwillingness to pay his lawful debts from 2009 to 2015, raise security concerns under\nDCs 19(a) and (c), and shifts the burden to Applicant to rebut, extenuate, or mitigate\nthose concerns. \n\n6\nThe guideline includes three conditions in AG ¶ 20 that could mitigate security\nconcerns arising from Applicant’s financial difficulties:"
+      },
+      "section": "analysis",
+      "cited_as": null
+    },
+    {
+      "id": "c9",
+      "code": "AG ¶ 20(d)",
+      "guideline": "F",
+      "kind": "mitigator",
+      "text": "the individual initiated and is adhering to a good-faith effort to repay overdue creditors or otherwise resolve debts",
+      "source": "llm",
+      "quote": "he has made a good-faith\neffort to repay and/or resolve his debts",
+      "start": 11861,
+      "end": 11926,
+      "context": {
+        "start": 11806,
+        "end": 11977,
+        "text": "Applicant presented evidence to support a finding that he has made a good-faith\neffort to repay and/or resolve his debts, and they are being resolved or are under\ncontrol."
+      },
+      "lead_in": null,
+      "section": "analysis",
+      "cited_as": null
+    },
+    {
+      "id": "c10",
+      "code": "AG ¶ 20(c)",
+      "guideline": "F",
+      "kind": "mitigator",
+      "text": "the individual has received or is receiving financial counseling for the problem from a legitimate and credible source, such as a non-profit credit counseling service, and there are clear indications that the problem is being resolved or is under control",
+      "source": "llm",
+      "quote": "and they are being resolved or are under\ncontrol",
+      "start": 11928,
+      "end": 11976,
+      "context": {
+        "start": 11806,
+        "end": 11977,
+        "text": "Applicant presented evidence to support a finding that he has made a good-faith\neffort to repay and/or resolve his debts, and they are being resolved or are under\ncontrol."
+      },
+      "lead_in": null,
+      "section": "analysis",
+      "cited_as": null
+    },
+    {
+      "id": "c11",
+      "code": "AG ¶ 20(c)",
+      "guideline": "F",
+      "kind": "mitigator",
+      "text": "the individual has received or is receiving financial counseling for the problem from a legitimate and credible source, such as a non-profit credit counseling service, and there are clear indications that the problem is being resolved or is under control",
+      "source": "rule",
+      "quote": "AG ¶¶ 20 (c)",
+      "start": 12010,
+      "end": 12022,
+      "context": {
+        "start": 11978,
+        "end": 12034,
+        "text": "He established mitigation under AG ¶¶ 20 (c) and 20 (d)."
+      },
+      "lead_in": null,
+      "section": "analysis",
+      "cited_as": null
+    },
+    {
+      "id": "c12",
+      "code": "AG ¶ 20(d)",
+      "guideline": "F",
+      "kind": "mitigator",
+      "text": "the individual initiated and is adhering to a good-faith effort to repay overdue creditors or otherwise resolve debts",
+      "source": "rule",
+      "quote": " 20 (d)",
+      "start": 12026,
+      "end": 12033,
+      "context": {
+        "start": 11978,
+        "end": 12034,
+        "text": "He established mitigation under AG ¶¶ 20 (c) and 20 (d)."
+      },
+      "lead_in": null,
+      "section": "analysis",
+      "cited_as": null
+    },
+    {
+      "id": "c13",
+      "code": "AG ¶ 20(e)",
+      "guideline": "F",
+      "kind": "mitigator",
+      "text": "the individual has a reasonable basis to dispute the legitimacy of the past-due debt which is the cause of the problem and provides documented proof to substantiate the basis of the dispute or provides evidence of actions to resolve the issue",
+      "source": "llm",
+      "quote": "He credibly indicated that he\nfiled a dispute with the larger of his remaining two debts after researching it and\ndiscovering it was not his account.",
+      "start": 12299,
+      "end": 12448,
+      "context": {
+        "start": 12299,
+        "end": 12621,
+        "text": "He credibly indicated that he\nfiled a dispute with the larger of his remaining two debts after researching it and\ndiscovering it was not his account. His final unresolved debt of $61 remains so only\nbecause he has been unable to ascertain who the creditor is, despite his attempts to do\nso and willingness to pay the debt."
+      },
+      "lead_in": null,
+      "section": "analysis",
+      "cited_as": null
+    }
+  ],
+  "precedents": [
+    {
+      "id": "p1",
+      "case_number": "15-02847",
+      "source_url": "https://doha.ogc.osd.mil/Industrial-Security-Program/Industrial-Security-Clearance-Decisions/ISCR-Hearing-Decisions/Archived-ISCR-Hearing-Decisions/2016-and-Prior-ISCR-Hearing-Decisions-12/FileId/140733/",
+      "score": 0.968,
+      "outcome": "GRANTED",
+      "guidelines": [
+        "F"
+      ],
+      "label_source": "formal_ruling",
+      "start": 3084,
+      "end": 4139,
+      "note": "Both applicants are single defense contractor employees whose security clearance cases rest on the same Government concern about financial decisions and reliability, and both have delinquent debts appearing on credit reports and admitted in the SOR responses. The precedent's applicant admitted three delinquent debts, while the case under review involves 23 alleged debts with student loans among them."
+    },
+    {
+      "id": "p2",
+      "case_number": "20-02891",
+      "source_url": "https://doha.ogc.osd.mil/Industrial-Security-Program/Industrial-Security-Clearance-Decisions/ISCR-Hearing-Decisions/2021-ISCR-Hearing-Decisions/FileId/156796/",
+      "score": 0.9635,
+      "outcome": "DENIED",
+      "guidelines": [
+        "F"
+      ],
+      "label_source": "formal_ruling",
+      "start": 2344,
+      "end": 5125,
+      "note": "Both applicants work for a defense contractor and have delinquent student loans, with one applicant unable to identify which institution holds them and the other unsure who holds his loans. Both also have unpaid medical debts, and each could not verify or locate the creditor for at least one of them."
+    },
+    {
+      "id": "p3",
+      "case_number": "12-05163",
+      "source_url": "https://doha.ogc.osd.mil/Industrial-Security-Program/Industrial-Security-Clearance-Decisions/ISCR-Hearing-Decisions/Archived-ISCR-Hearing-Decisions/2016-and-Prior-ISCR-Hearing-Decisions-10/FileId/136974/",
+      "score": 0.9586,
+      "outcome": "DENIED",
+      "guidelines": [
+        "F"
+      ],
+      "label_source": "formal_ruling",
+      "start": 3126,
+      "end": 4636,
+      "note": "Both applicants are single, hold bachelor's degrees from 2009, and are alleged under the same financial-decision concern about poor self-control, judgment, and rule compliance, with the government alleging delinquent student loans in each case. Both involve delinquent student loan debt as a central part of the alleged indebtedness."
+    },
+    {
+      "id": "p4",
+      "case_number": "12-05626",
+      "source_url": "https://doha.ogc.osd.mil/Industrial-Security-Program/Industrial-Security-Clearance-Decisions/ISCR-Hearing-Decisions/Archived-ISCR-Hearing-Decisions/2016-and-Prior-ISCR-Hearing-Decisions-10/FileId/137013/",
+      "score": 0.9546,
+      "outcome": "DENIED",
+      "guidelines": [
+        "F"
+      ],
+      "label_source": "formal_ruling",
+      "start": 2377,
+      "end": 4319,
+      "note": "Both applicants hold security clearance cases with the same Government concern about financial decisions and reliability, and both report delinquent debts that appeared on credit reports and periods of unemployment that contributed to financial problems. Both also describe repayment or dispute efforts on some of the debts."
+    },
+    {
+      "id": "p5",
+      "case_number": "15-00825",
+      "source_url": "https://doha.ogc.osd.mil/Industrial-Security-Program/Industrial-Security-Clearance-Decisions/ISCR-Hearing-Decisions/Archived-ISCR-Hearing-Decisions/2016-and-Prior-ISCR-Hearing-Decisions-12/FileId/140510/",
+      "score": 0.9536,
+      "outcome": "DENIED",
+      "guidelines": [
+        "F"
+      ],
+      "label_source": "formal_ruling",
+      "start": 2272,
+      "end": 4116,
+      "note": "Both applicants are unmarried with no children, have worked for a defense contractor, and were alleged to have financial problems that raised questions about reliability and trustworthiness, with delinquent debts appearing on credit reports and the Government citing poor self-control and judgment. Both attributed their financial difficulties in part to periods of unemployment."
+    }
+  ],
+  "rationale": null,
+  "provenance": {
+    "schema_version": "1.0",
+    "heads_model": "modernbert-4096",
+    "calibration": "results/heads/modernbert-4096/calibration.json sha256:7c3e19ce6314",
+    "extractor": "src.conditions.extract_case",
+    "llm_model": "claude-haiku-5-5",
+    "prompt_hashes": {
+      "extract": "sha256:36a767286780",
+      "rationale": "sha256:8ec9fa67760d",
+      "note": "sha256:7fdad65a3b1c"
+    },
+    "run_dates": {
+      "extract": "2026-11-17",
+      "notes": "2026-11-18"
+    },
+    "verify_counts": {
+      "kept": 5
+    },
+    "unmapped_hits": {
+      "rule": 0,
+      "llm": 0
+    }
+  }
+}
