@@ -538,7 +538,7 @@ def score(log=print) -> dict:
 
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("stage", choices=["predict", "test", "full", "score"])
+    ap.add_argument("stage", choices=["predict", *BATCHES, "score"])
     ap.add_argument("--resubmit", action="store_true", help="submit again even if a batch id is saved")
     args = ap.parse_args(argv)
     sys.stdout.reconfigure(encoding="utf-8")
