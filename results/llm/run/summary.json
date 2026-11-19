@@ -1,0 +1,43 @@
+{
+  "requests": 174,
+  "tier": "batch",
+  "input_tokens": 702045,
+  "output_tokens": 257851,
+  "cost": 0.099565,
+  "stop_reasons": {
+    "uncited:end_turn": 74,
+    "cited:end_turn": 100
+  },
+  "parse_failures": {},
+  "kept": {
+    "uncited": 340,
+    "cited": 661
+  },
+  "drops": {
+    "uncited:restates_guideline": 2,
+    "uncited:near_miss": 1,
+    "cited:contains_mask": 3,
+    "cited:not_found": 2,
+    "cited:restates_guideline": 1
+  },
+  "uncited": {
+    "cases": 74,
+    "cases_with_kept_quote": 56,
+    "kept_quotes": 340,
+    "by_regime": {
+      "sead4": {
+        "cases": 32,
+        "with_kept_quote": 15
+      },
+      "directive": {
+        "cases": 8,
+        "with_kept_quote": 8
+      },
+      "unknown": {
+        "cases": 34,
+        "with_kept_quote": 33
+      }
+    }
+  },
+  "scored_requests": 174
+}

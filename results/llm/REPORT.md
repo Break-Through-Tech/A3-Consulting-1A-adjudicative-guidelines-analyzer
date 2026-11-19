@@ -102,3 +102,73 @@ For the November run on the 1,848 test cases in one mode, the same rates give ab
 - `TIMELINE.md` and `notes/handoff.md`: replace the Gemini direction with Haiku 5.5; the $10 Gemini credit note is wrong.
 - `requirements.txt` pins `anthropic==2.7.0` and will conflict with PRs 24 and 26 at merge.
 
+## Test split run
+
+The run covers the test split Guideline F cases. 74 cases have no citation that the extractor can read. They go to the model in citation mode, and the report counts what it finds. 100 cases come from the 1,668 test cases whose citations all map to the closed list. A fixed seed draws them from a list sorted by source URL. They go in blind mode, so the model cannot copy the answer, and the extractor's citations are the truth for scoring.
+
+### Limitations
+
+- The closed list holds SEAD-4 `AG ¶` codes. Directive cases cite Directive codes. For them, the truth is the `sead4` mapping that `src/conditions.py` returns, so a directive case is scored on a translated truth.
+- The truth is what the judge cited, not what the judge discussed. A correct quote under a code the judge did not cite counts as a false positive.
+- The uncited cases have no truth. The numbers below say what the model found, not how often it is right.
+
+### Cost
+
+| Item | Requests | Input tokens | Output tokens | Cost |
+|---|---|---|---|---|
+| run-test predicted | 10 | 42,026 | 16,905 | $0.0063 |
+| run-full predicted | 164 | 660,019 | 277,242 | $0.1023 |
+| actual | 174 | 702,045 | 257,851 | $0.0996 |
+
+Ledger total: $0.1731 of $1.00.
+
+### Scores on the cited sample
+
+| Scope | Stage | Cases | P | R | F1 | F1 interval | Disq F1 | Mit F1 |
+|---|---|---|---|---|---|---|---|---|
+| overall | after_verify | 100 | 78.5% | 83.1% | 80.8% | 78.2% to 83.2% | 72.1% | 86.2% |
+| overall | before_verify | 100 | 78.4% | 83.8% | 81.0% | 78.4% to 83.5% | 71.8% | 86.8% |
+| sead4 | after_verify | 94 | 79.8% | 83.4% | 81.6% | 78.8% to 84.2% | 73.5% | 86.6% |
+| sead4 | before_verify | 94 | 79.6% | 83.9% | 81.7% | 79.0% to 84.3% | 73.1% | 87.0% |
+| directive | after_verify | 3 | 37.5% | 75.0% | 50.0% | 33.3% to 60.0% | 30.8% | 72.7% |
+| directive | before_verify | 3 | 37.5% | 75.0% | 50.0% | 33.3% to 60.0% | 30.8% | 72.7% |
+| unknown | after_verify | 3 | 71.4% | 76.9% | 74.1% | 66.7% to 100.0% | 66.7% | 80.0% |
+| unknown | before_verify | 3 | 73.3% | 84.6% | 78.6% | 66.7% to 100.0% | 66.7% | 87.5% |
+
+### Found on the uncited cases
+
+The model returned at least one kept quote for 56 of 74 cases, 340 quotes in all.
+
+| Regime | Cases | With a kept quote |
+|---|---|---|
+| sead4 | 32 | 15 |
+| directive | 8 | 8 |
+| unknown | 34 | 33 |
+
+| Code | Cases | Kept quotes |
+|---|---|---|
+| AG ¶ 19(a) | 39 | 39 |
+| AG ¶ 19(b) | 18 | 18 |
+| AG ¶ 19(c) | 54 | 55 |
+| AG ¶ 19(d) | 2 | 2 |
+| AG ¶ 19(e) | 27 | 28 |
+| AG ¶ 19(f) | 10 | 10 |
+| AG ¶ 19(g) | 1 | 1 |
+| AG ¶ 20(a) | 34 | 36 |
+| AG ¶ 20(b) | 45 | 46 |
+| AG ¶ 20(c) | 29 | 31 |
+| AG ¶ 20(d) | 54 | 57 |
+| AG ¶ 20(e) | 10 | 10 |
+| AG ¶ 20(g) | 7 | 7 |
+
+### Drops by reason
+
+| Group and reason | Count |
+|---|---|
+| cited:contains_mask | 3 |
+| cited:not_found | 2 |
+| cited:restates_guideline | 1 |
+| uncited:near_miss | 1 |
+| uncited:restates_guideline | 2 |
+
+Kept quotes: 661 on the cited sample and 340 on the uncited cases. Every kept quote passed `src/llm/verify.py`.

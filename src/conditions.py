@@ -127,6 +127,10 @@ _CASE_COLUMNS = [
     "sec_conclusions_end",
     "sec_policies_start",
     "sec_policies_end",
+    "sec_findings_of_fact_start",
+    "sec_findings_of_fact_end",
+    "sec_formal_findings_start",
+    "sec_formal_findings_end",
 ]
 
 
@@ -593,19 +597,59 @@ def _as_guidelines(value) -> list[str] | None:
         return None
 
 
-def extract_case(row) -> list[dict]:
+_FALLBACK_COLUMNS = (
+    "sec_policies_end",
+    "sec_findings_of_fact_end",
+    "sec_formal_findings_start",
+    "sec_conclusions_start",
+)
+
+
+def _has(row, name: str) -> bool:
+    if isinstance(row, dict):
+        return name in row
+    try:
+        return name in row.index
+    except AttributeError:
+        return hasattr(row, name)
+
+
+def analysis_span(row, fallback: bool = True) -> tuple[int, int] | None:
+    """(start, end) of the judge's analysis in `full_text`, or None.
+
+    The segmenter finds the analysis only under an ANALYSIS heading. Many
+    decisions title it "Discussion" or give it no heading, and then the row has
+    no analysis section although the text is there. With `fallback`, that text is
+    taken from the end of POLICIES, or of FINDINGS OF FACT when POLICIES is
+    missing, to the start of FORMAL FINDINGS, or of CONCLUSIONS when there are
+    no formal findings. POLICIES is left out, so its recital of the guideline
+    is not searched. `fallback=False` is the Nov 9 behaviour the pilot pins.
+    """
+    pair = _pair(row, "analysis")
+    if pair is not None or not fallback:
+        return pair
+    if not _has(row, "sec_analysis_start"):
+        return None                       # no segmentation at all, such as pasted text
+    for name in _FALLBACK_COLUMNS:
+        if not _has(row, name):
+            raise KeyError(f"analysis_span needs {name}; load it, e.g. with conditions._CASE_COLUMNS")
+    after = _pair(row, "policies") or _pair(row, "findings_of_fact")
+    before = _pair(row, "formal_findings") or _pair(row, "conclusions")
+    if after is None or before is None or before[0] <= after[1]:
+        return None
+    return after[1], before[0]
+
+
+def extract_case(row, fallback: bool = True) -> list[dict]:
     """Conditions cited in one `load_cases()` row.
 
-    The search is the analysis and conclusions. POLICIES is passed so a
+    The search is the analysis and conclusions, with `analysis_span` finding
+    an analysis the segmenter missed unless `fallback` is False. POLICIES is passed so a
     recital of the guideline is not treated as a citation. The row's
     guidelines, date and regime decide what a numbered `DC n` / `MC n` means.
     """
     text = _cell(row, "full_text") or ""
-    spans = []
-    for name in ("analysis", "conclusions"):
-        pair = _pair(row, name)
-        if pair is not None:
-            spans.append(pair)
+    spans = [p for p in (analysis_span(row, fallback), _pair(row, "conclusions")) if p is not None]
     policies = _pair(row, "policies")
     decided = _as_date(_cell(row, "date"))
     regime = _cell(row, "guideline_regime")
