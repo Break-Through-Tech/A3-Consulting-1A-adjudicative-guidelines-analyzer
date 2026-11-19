@@ -398,7 +398,19 @@
       "note": "Both applicants carried significant credit card and consumer debts that led to a Chapter 13 bankruptcy filing, and both reported ongoing financial difficulties tied to income changes; the precedent also describes an income increase from overtime earlier in employment, similar to the case under review."
     }
   ],
-  "rationale": null,
+  "rationale": {
+    "text": "The tool predicts FOR on Guideline E (Personal Conduct) and FOR on Guideline F (Financial Considerations), which composes to a GRANTED recommendation with no guideline predicted AGAINST. The decision notes that the Chapter 13 bankruptcy was dismissed and that the applicant was unable to repay debts in a timely manner, but it also states that \"Since 2006, Applicant has been repaying the debts herself.\" The judge further wrote that \"There is clear evidence her financial problems are under control\" and \"There is no likelihood of recurrence or continuation in her current pattern of debt repayment.\" On balance, the judge's discussion points the same way as the prediction, toward a favorable outcome.",
+    "condition_ids": [
+      "c3",
+      "c4",
+      "c6",
+      "c8"
+    ],
+    "guideline_codes": [
+      "E",
+      "F"
+    ]
+  },
   "provenance": {
     "schema_version": "1.0",
     "heads_model": "modernbert-4096",

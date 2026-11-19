@@ -364,10 +364,13 @@
     }
   ],
   "rationale": {
-    "text": "The tool predicts that Guideline F is AGAINST the Applicant, which supports the composed recommendation of DENIED. The conditions it matched are the judge's words, including that the Applicant \"has deliberately failed to address the deficiency amount on an automobile repossessed in May 2010\" and that \"Applicant has not been responsible in dealing with his debts.\" The decision also states that \"Applicant has received no credit or financial counseling,\" which the tool matched to a mitigating condition that was not met.",
+    "text": "The tool predicts AGAINST for Guideline F, which yields a recommendation of DENIED. The decision says the applicant failed to document filing tax returns and has deliberately failed to address a repossessed automobile deficiency. The judge also states that the financial difficulties are recent and not infrequent, that the applicant has been irresponsible with debts, and that he has taken no action on the debt and received no counseling. The judge's discussion therefore points the same way as the prediction.",
     "condition_ids": [
+      "c1",
       "c2",
+      "c3",
       "c4",
+      "c5",
       "c6"
     ],
     "guideline_codes": [

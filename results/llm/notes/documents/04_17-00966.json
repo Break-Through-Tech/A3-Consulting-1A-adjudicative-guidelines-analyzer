@@ -616,26 +616,14 @@
     }
   ],
   "rationale": {
-    "text": "The tool predicts AGAINST for Guideline F and FOR for Guideline E, and the composed recommendation is DENIED because Guideline F is predicted AGAINST. The conditions tied to Guideline F include the judge's statements that the applicant's 14 delinquent debts total approximately $110,000 and that the debts became delinquent between June 2011 and October 2014 and remain delinquent. The judge also concluded that the mitigating conditions for the applicant's delinquent debts do not apply, citing that he has not addressed most of the debts and has not provided a monthly budget. No conditions were tied to Guideline E.",
+    "text": "The tool predicts a FOR status for Guideline E and an AGAINST status for Guideline F, which it composes into a DENIED recommendation. The judge's discussion points the same way: the decision says \"AG ¶¶ 19(a) and 19(c) apply\" and that \"AG ¶ 20(a) does not apply,\" \"AG ¶ 20(b) does not apply,\" and \"AG ¶ 20(c) does not apply.\" The judge also states that \"Applicant's delinquent debts remain, and he has not yet addressed most of these debts.\"",
     "condition_ids": [
-      "c1",
-      "c2",
-      "c3",
       "c4",
       "c5",
-      "c6",
-      "c7",
-      "c8",
-      "c9",
-      "c10",
       "c11",
       "c12",
-      "c13",
       "c14",
-      "c15",
-      "c16",
-      "c17",
-      "c18"
+      "c16"
     ],
     "guideline_codes": [
       "E",

@@ -430,11 +430,8 @@
     }
   ],
   "rationale": {
-    "text": "The tool predicts FOR on both Guideline E and Guideline F, and the composed recommendation is GRANTED with no guidelines predicted AGAINST. The conditions it found show the decision discussing disqualifying conditions for delinquent debts, and the judge wrote that \"Nearly all of Applicant’s debts became delinquent during a six-month unemployment period in 2011.\" The decision also addresses mitigation, with the judge stating \"Given Applicant’s ample discretionary income and his adherence to the payment plans, thus far, I am confident that his financial problems will not recur.\" These passages are the judge's own words, not the tool's findings.",
+    "text": "The tool predicts FOR on both Guideline E, Personal Conduct, and Guideline F, Financial Considerations, which yields a predicted recommendation of GRANTED with no guidelines predicted AGAINST. The decision's own discussion points the same way: the judge found the applicant's debts became delinquent during a six-month unemployment period and that he has since satisfied them or set up payment plans. The judge wrote, \"Given Applicant's ample discretionary income and his adherence to the payment plans, thus far, I am confident that his financial problems will not recur.\" The judge also concluded that all of the mitigating conditions apply, so the decision agrees with the prediction.",
     "condition_ids": [
-      "c1",
-      "c2",
-      "c3",
       "c7",
       "c8",
       "c9"

@@ -579,7 +579,17 @@
       "note": "Both applicants are married or were married and face Guideline F financial concerns, including tax or delinquent debts, and both give explanations tied to a spouse or business. The case under review involves a divorced applicant with bankruptcies and a tax lien, while the precedent involves a married applicant with six delinquent debts tied to a small business he owns with his wife."
     }
   ],
-  "rationale": null,
+  "rationale": {
+    "text": "The tool predicts AGAINST for Guideline F, which yields a DENIED recommendation. The judge's discussion points the other way on mitigation: the decision states \"Applicant has shown a good-faith effort to resolve his delinquent marital debt.\" It also says \"Under the circumstances, he has acted reasonably and responsibly with respect to his debts.\" The judge further finds \"There are clear indications that his financial problems are being resolved.\" These are the judge's words, and they run opposite to the tool's prediction.",
+    "condition_ids": [
+      "c13",
+      "c14",
+      "c15"
+    ],
+    "guideline_codes": [
+      "F"
+    ]
+  },
   "provenance": {
     "schema_version": "1.0",
     "heads_model": "modernbert-4096",

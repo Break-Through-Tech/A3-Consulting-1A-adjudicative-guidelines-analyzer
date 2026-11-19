@@ -2,19 +2,18 @@
   "requests": 60,
   "succeeded": 60,
   "end_turn": 60,
-  "rationale_kept": 6,
+  "rationale_kept": 9,
   "note_kept": 49,
-  "rationale_dropped": 4,
+  "rationale_dropped": 1,
   "note_dropped": 1,
   "rationale_problems": {
-    "names_ids_or_codes": 2,
-    "credits_the_tool": 2
+    "names_ids_or_codes": 1
   },
   "note_problems": {
     "too_long": 1
   },
-  "input_tokens": 191222,
-  "output_tokens": 19190,
-  "cost": 0.014358600000000001,
-  "spent_total": 0.1890071
+  "input_tokens": 191642,
+  "output_tokens": 20269,
+  "cost": 0.01464935,
+  "spent_total": 0.19241740000000002
 }

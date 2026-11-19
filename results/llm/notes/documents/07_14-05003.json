@@ -509,7 +509,17 @@
       "note": "Both applicants are unmarried with no children, have worked for a defense contractor, and were alleged to have financial problems that raised questions about reliability and trustworthiness, with delinquent debts appearing on credit reports and the Government citing poor self-control and judgment. Both attributed their financial difficulties in part to periods of unemployment."
     }
   ],
-  "rationale": null,
+  "rationale": {
+    "text": "The tool predicts Guideline F as FOR, which yields a recommendation of GRANTED with no guidelines predicted against. The decision says the applicant's \"ongoing pattern of delinquent debt\" raised security concerns under two Guideline F disqualifiers. The judge then concluded that \"He established mitigation under AG ¶¶ 20 (c) and 20 (d).\" The judge also noted that \"He credibly indicated that he filed a dispute\" over the larger remaining debt, so the judge's discussion points the same way as the prediction.",
+    "condition_ids": [
+      "c5",
+      "c11",
+      "c13"
+    ],
+    "guideline_codes": [
+      "F"
+    ]
+  },
   "provenance": {
     "schema_version": "1.0",
     "heads_model": "modernbert-4096",

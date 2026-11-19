@@ -381,7 +381,7 @@
     }
   ],
   "rationale": {
-    "text": "The tool predicts Guideline F as FOR, which yields a GRANTED recommendation with no guidelines predicted AGAINST. The conditions it located are the judge's words: the judge wrote that the financial difficulties were recent and numerous but arose from unique circumstances unlikely to recur, that the applicant was not living an extravagant lifestyle, and that she had resolved all debts except a education loan she pays regularly. The judge also noted that her actions constitute a good-faith effort to satisfy her debts, though she has not sought credit counseling.",
+    "text": "The tool predicts Guideline F as FOR, which gives a recommendation of GRANTED with no guidelines predicted AGAINST. The judge's discussion points the same way: the decision says the financial difficulties, though recent and numerous, arose under unique circumstances unlikely to recur, and that the applicant was not living an extravagant lifestyle. The judge also says the applicant has clearly resolved all debts except a education loan being paid regularly, and that her actions constitute a good-faith effort to satisfy her debts. The judge notes she has not sought credit counseling.",
     "condition_ids": [
       "c1",
       "c2",

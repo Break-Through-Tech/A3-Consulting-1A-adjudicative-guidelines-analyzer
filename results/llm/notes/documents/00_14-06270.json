@@ -566,15 +566,17 @@
     }
   ],
   "rationale": {
-    "text": "The tool predicts AGAINST for Guideline F, which yields a recommendation of DENIED. The conditions it found are the judge's words: the judge cites the disqualifiers for inability to satisfy debts and a history of not meeting financial obligations, and notes a mortgage delinquency caused by divorce and partial mitigation under beyond-control and good-faith repayment factors. The judge states that the debt payment plan payments were not shown to relate to the listed debts and that the good-faith efforts were not sustained long enough to show the problem is under control. The judge concludes the applicant has not shown enough concrete evidence of financial reform.",
+    "text": "The tool predicts AGAINST for Guideline F, so the composed recommendation is DENIED. The decision's own discussion points the same way: it finds the disqualifying history of financial problems applies, says the divorce-related mortgage delinquency was beyond his control, and notes the 2013 counseling and $5,200 in repayments. However, the judge concludes the good-faith efforts were not sustained and the problem is not shown to be under control.",
     "condition_ids": [
       "c1",
       "c2",
       "c6",
+      "c8",
       "c9",
       "c12",
       "c13",
       "c14",
+      "c15",
       "c16"
     ],
     "guideline_codes": [

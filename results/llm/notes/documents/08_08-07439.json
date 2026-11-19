@@ -428,7 +428,7 @@
     }
   ],
   "rationale": {
-    "text": "The tool predicted AGAINST for Guideline D and FOR for Guidelines E, F and J, and its DENIED recommendation rests on the Guideline D prediction alone. No conditions were found tied to Guideline D, so the conditions reported here concern Guideline F. The judge wrote that the applicant had \"approximately $15,000 in past-due debts\" which were \"due and owing for several years.\" Mitigating points the judge noted include that the financial difficulties arose from \"the failure of a family owned small business\" and that \"He has paid, or is paying, all of the three past due debts and his current financial situation is stable.\" The tool's Guideline F prediction is FOR, so these are the judge's words, not a ruling.",
+    "text": "The tool predicts AGAINST for Guideline D (Sexual Behavior) and FOR for Guidelines E, F and J, which yields a recommendation of DENIED. The decision itself says the applicant had about $15,000 in past-due debts that had been owing for several years, and that the debts arose around 2006 in relation to his criminal case and a failed family business. The judge also notes that he has paid, or is paying, all three past-due debts and that his current financial situation is stable, which points toward the favorable Guideline F outcome the tool predicts.",
     "condition_ids": [
       "c3",
       "c4",
