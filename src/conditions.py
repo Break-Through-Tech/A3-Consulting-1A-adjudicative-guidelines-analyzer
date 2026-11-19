@@ -621,6 +621,81 @@ def extract_case(row) -> list[dict]:
     )
 
 
+CONTEXT_LIMIT = 400
+LEAD_IN_LIMIT = 3000
+_SENTENCE_START = re.compile(r"[.!?][\"'’”)\]]*\s+(?=[\"'‘“(\[]?[A-Z])")
+_CLAUSE_START = re.compile(r"[;:]\s+")
+_CONTEXT_END = re.compile(r"(?<!i\.e)(?<!e\.g)[.;!?][\"'’”)\]]*(?=\s|$)")
+
+
+def _last_boundary(text: str, pattern: re.Pattern, floor: int, position: int) -> int | None:
+    found = None
+    for match in pattern.finditer(text, floor, position + 1):
+        if match.end() <= position:
+            found = match.end()
+    return found
+
+
+def hit_context(text: str, start: int, end: int, limit: int = CONTEXT_LIMIT) -> tuple[int, int]:
+    """Offsets of the sentence or list item that holds `text[start:end]`.
+
+    For display and review: a hit is often a bare `(b)` in a list such as
+    "Four are potentially applicable in this case: (a) inability to satisfy
+    debts; (b) unwillingness to satisfy debts ...;". The context starts after
+    the nearest sentence break, `;` or `:` before the span and ends at the
+    first `.`, `;`, `!` or `?` after it, so it is that one item or sentence.
+    `list_lead_in` gives the sentence that introduces the list. Each side
+    stops after `limit` characters, at a word break.
+    """
+    if not 0 <= start <= end <= len(text):
+        raise ValueError(f"span {start}:{end} is outside a text of length {len(text)}")
+    floor = max(0, start - limit)
+    starts = [
+        found
+        for found in (
+            _last_boundary(text, _SENTENCE_START, floor, start),
+            _last_boundary(text, _CLAUSE_START, floor, start),
+        )
+        if found is not None
+    ]
+    if starts:
+        c_start = max(starts)
+    elif floor > 0:
+        space = text.find(" ", floor, start)
+        c_start = space + 1 if space >= 0 else start
+    else:
+        c_start = 0
+    ceiling = min(len(text), end + limit)
+    match = _CONTEXT_END.search(text, end, ceiling)
+    if match:
+        c_end = match.end()
+    elif ceiling < len(text):
+        space = text.rfind(" ", end, ceiling)
+        c_end = space if space >= 0 else end
+    else:
+        c_end = ceiling
+    return c_start, max(c_end, end)
+
+
+def list_lead_in(text: str, start: int, limit: int = LEAD_IN_LIMIT) -> tuple[int, int] | None:
+    """Offsets of the sentence, ending at a colon, that introduces the list `start` is in.
+
+    None when no colon comes before `start` within `limit` characters, or when
+    a new sentence begins between that colon and `start`. The lead-in is what
+    tells a reader whether the judge applied the listed conditions, as in
+    "Four are potentially applicable in this case:", or only recited them.
+    """
+    colon = text.rfind(":", max(0, start - limit), start)
+    if colon < 0 or _last_boundary(text, _SENTENCE_START, colon, start) is not None:
+        return None
+    floor = max(0, colon - CONTEXT_LIMIT)
+    found = _last_boundary(text, _SENTENCE_START, floor, colon)
+    if found is None:
+        space = text.find(" ", floor, colon) if floor > 0 else -1
+        found = space + 1 if space >= 0 else floor
+    return found, colon + 1
+
+
 def _f_cases():
     """Pool cases that put Guideline F in issue. `full_text` is loaded on purpose."""
     from src.dataset import load_cases
