@@ -292,6 +292,15 @@ def cached_document(full_text: str, source_url: str = "") -> dict | None:
 
 # --- analyze ------------------------------------------------------------------------------
 
+class NoFeaturesError(ValueError):
+    """The decision has no leak-free section for the heads to read.
+
+    About 9% of DOHA hearings, and most decisions from other agencies, whose
+    headings the segmenter doesn't know. Empty input would decode to every
+    guideline NOT_AT_ISSUE and a GRANTED recommendation, which says nothing.
+    """
+
+
 def analyze_with_text(source, *, source_url: str = "", case_number: str | None = None, split: str | None = None,
                       heads_backend: str = "auto", retrieve: bool = True, use_cache: bool = True) -> tuple[dict, str]:
     """(document, full_text). The document passes schema.validate against full_text."""
@@ -302,6 +311,10 @@ def analyze_with_text(source, *, source_url: str = "", case_number: str | None =
             return doc, full_text
 
     row = prepare(full_text, case_number=case_number, source_url=source_url, split=split)
+    if not row["text_features"]:
+        raise NoFeaturesError(
+            "No findings of fact or other pre-verdict section was found, so the heads would read nothing and "
+            "report every guideline as not at issue. Refusing to return a recommendation from empty input.")
     head_probs = heads(row, heads_backend)
     if row["split"] is None and head_probs["model"] != FALLBACK_MODEL and source_url:
         row["split"] = published_split(source_url)

@@ -158,6 +158,30 @@ def test_reading_text_returns_it_and_bad_input_is_refused():
     raise AssertionError("an int was accepted")
 
 
+def test_text_with_no_fact_sections_is_refused():
+    try:
+        pipeline.analyze("A decision with no section headings at all. Clearance is granted.", use_cache=False)
+    except pipeline.NoFeaturesError:
+        return
+    raise AssertionError("empty model input produced a recommendation")
+
+
+def test_pdf_pages_are_read_and_joined_as_doha_did():
+    import fitz
+
+    doc = fitz.open()
+    for words in ("FINDINGS OF FACT first page", "second page text"):
+        doc.new_page().insert_text((72, 72), words)
+    data = doc.tobytes()
+    doc.close()
+    expected_doc = fitz.open(stream=data, filetype="pdf")
+    expected = "\n".join(page.get_text() for page in expected_doc)
+    expected_doc.close()
+    text = pipeline.read(data)
+    assert text == expected and "first page" in text and "second page" in text
+    assert text.index("first page") < text.index("second page")
+
+
 def test_live_modernbert_is_a_stub():
     try:
         pipeline.heads({"source_url": "", "text_features": "x"}, backend="modernbert")
