@@ -72,6 +72,46 @@ def test_fifty_rule_and_fifty_llm():
     assert sorted(key["finding"]) == list(range(1, 101))
 
 
+def test_llm_rows_come_from_the_test_split_run():
+    _, key, _ = sample()
+    assert B.KEPT_PATH.parts[-3:] == ("llm", "run", "kept.csv")
+    assert B.CASES_PATH.parts[-3:] == ("llm", "run", "cases.csv")
+    kept = pd.read_csv(B.KEPT_PATH, keep_default_na=False)
+    cases = pd.read_csv(B.CASES_PATH, keep_default_na=False)
+    llm = key[key["source"] == "llm"]
+    assert set(llm["custom_id"].str.split("|").explode()) <= set(kept["custom_id"])
+    assert set(llm["source_url"]) <= set(cases["source_url"])
+    assert set(llm["split"]) == {"test"}
+    # each run case is sent in one mode, so a row has exactly one mode
+    assert set(llm["mode"]) <= {"blind", "citation"}
+
+
+def test_llm_rows_cover_all_three_regimes():
+    _, key, _ = sample()
+    by_regime = key[key["source"] == "llm"]["regime"].value_counts().to_dict()
+    assert sum(by_regime.values()) == 50
+    assert set(by_regime) == {"sead4", "unknown", "directive"}
+    assert min(by_regime.values()) >= B.REGIME_FLOOR
+
+
+def test_modes_merge_when_two_modes_keep_the_same_span():
+    kept = pd.DataFrame({
+        "custom_id": ["a-blind", "a-citation"], "mode": ["blind", "citation"],
+        "code": ["AG ¶ 19(a)"] * 2, "start": [5, 5], "end": [9, 9], "quote": ["abcd", "abcd"],
+    })
+    cases = pd.DataFrame({"custom_id": ["a-blind", "a-citation"], "source_url": ["u", "u"]})
+    real = B.pd.read_csv
+    frames = iter([kept, cases])
+    B.pd.read_csv = lambda *a, **k: next(frames)
+    try:
+        out = B.llm_candidates()
+    finally:
+        B.pd.read_csv = real
+    assert len(out) == 1
+    assert out[0]["detail"]["modes"] == ["blind", "citation"]
+    assert out[0]["detail"]["custom_ids"] == ["a-blind", "a-citation"]
+
+
 def test_no_case_used_more_than_twice():
     _, key, _ = sample()
     assert key["source_url"].value_counts().max() <= B.MAX_PER_CASE

@@ -33,12 +33,13 @@ Rule side, 50 findings
        until the quota is met. No single code can dominate.
 
 LLM side, 50 findings
-    The kept quotes of the pilot in results/llm/pilot/kept.csv, joined to
-    results/llm/pilot/cases.csv for the case. The pilot cases are all SEAD-4
-    cases, so the quota is 50 in that regime. The citation and blind modes often
-    keep the same span, so rows are merged on case, code and offsets, and the
-    key lists both modes. The same round-robin runs over the codes. When the
-    task 4 run on the test split finishes, point KEPT_PATH and CASES_PATH at it.
+    The kept quotes of the task 4 run on the test split in results/llm/run/kept.csv,
+    joined to results/llm/run/cases.csv for the case. The run covers three regimes,
+    sead4, unknown and directive, and sends each case in one mode only. Rows are
+    merged on case, code and offsets, and the key lists the modes that kept the
+    span. The quotas by regime come from the same `quotas` helper as the rule
+    side, over the regimes of the kept quotes, and the same round-robin runs over
+    the codes.
 
 Both sides
     Every candidate is re-checked against the case's full_text: the quote must
@@ -73,8 +74,8 @@ from src.sead4_reference import CODES, condition
 
 SHEET_PATH = config.OUT_DIR / "traceability.csv"
 KEY_PATH = config.OUT_DIR / "traceability_key.csv"
-KEPT_PATH = config.REPO_ROOT / "results" / "llm" / "pilot" / "kept.csv"
-CASES_PATH = config.REPO_ROOT / "results" / "llm" / "pilot" / "cases.csv"
+KEPT_PATH = config.REPO_ROOT / "results" / "llm" / "run" / "kept.csv"
+CASES_PATH = config.REPO_ROOT / "results" / "llm" / "run" / "cases.csv"
 
 SEED = 42
 N_RULE = 50
@@ -125,7 +126,7 @@ def rule_candidates(pool: pd.DataFrame, n_cases: int = RULE_CASES, seed: int = S
 
 
 def llm_candidates() -> list[dict]:
-    """Kept pilot quotes, one per case, code and span, with the modes that kept it."""
+    """Kept run quotes, one per case, code and span, with the modes that kept it."""
     kept = pd.read_csv(KEPT_PATH, keep_default_na=False)
     cases = pd.read_csv(CASES_PATH, keep_default_na=False)
     # The committed file has LF line breaks inside quotes. A Windows checkout with
