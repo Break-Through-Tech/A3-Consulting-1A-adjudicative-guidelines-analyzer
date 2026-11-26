@@ -1,0 +1,26 @@
+{
+  "by_url": {
+    "https://doha.ogc.osd.mil/Industrial-Security-Program/Industrial-Security-Clearance-Decisions/ISCR-Hearing-Decisions/Archived-ISCR-Hearing-Decisions/2016-and-Prior-ISCR-Hearing-Decisions-12/FileId/140158/": "00_14-06270.json",
+    "https://doha.ogc.osd.mil/Industrial-Security-Program/Industrial-Security-Clearance-Decisions/ISCR-Hearing-Decisions/Archived-ISCR-Hearing-Decisions/2016-and-Prior-ISCR-Hearing-Decisions-11/FileId/138537/": "01_14-01234.json",
+    "https://doha.ogc.osd.mil/Industrial-Security-Program/Industrial-Security-Clearance-Decisions/ISCR-Hearing-Decisions/Archived-ISCR-Hearing-Decisions/2016-and-Prior-ISCR-Hearing-Decisions-9/FileId/136497/": "02_12-00809.json",
+    "https://doha.ogc.osd.mil/Industrial-Security-Program/Industrial-Security-Clearance-Decisions/ISCR-Hearing-Decisions/Archived-ISCR-Hearing-Decisions/2017-ISCR-Hearing-Decisions/FileId/92931/": "03_15-03688.json",
+    "https://doha.ogc.osd.mil/Industrial-Security-Program/Industrial-Security-Clearance-Decisions/ISCR-Hearing-Decisions/Archived-ISCR-Hearing-Decisions/2018-ISCR-Hearing-Decisions/FileId/114276/": "04_17-00966.json",
+    "https://doha.ogc.osd.mil/Industrial-Security-Program/Industrial-Security-Clearance-Decisions/ISCR-Hearing-Decisions/Archived-ISCR-Hearing-Decisions/2016-and-Prior-ISCR-Hearing-Decisions-8/FileId/135153/": "05_11-03217.json",
+    "https://doha.ogc.osd.mil/Industrial-Security-Program/Industrial-Security-Clearance-Decisions/ISCR-Hearing-Decisions/Archived-ISCR-Hearing-Decisions/2016-and-Prior-ISCR-Hearing-Decisions-2/FileId/128070/": "06_06-25867.json",
+    "https://doha.ogc.osd.mil/Industrial-Security-Program/Industrial-Security-Clearance-Decisions/ISCR-Hearing-Decisions/Archived-ISCR-Hearing-Decisions/2016-and-Prior-ISCR-Hearing-Decisions-12/FileId/139815/": "07_14-05003.json",
+    "https://doha.ogc.osd.mil/Industrial-Security-Program/Industrial-Security-Clearance-Decisions/ISCR-Hearing-Decisions/Archived-ISCR-Hearing-Decisions/2016-and-Prior-ISCR-Hearing-Decisions-4/FileId/130839/": "08_08-07439.json",
+    "https://doha.ogc.osd.mil/Industrial-Security-Program/Industrial-Security-Clearance-Decisions/ISCR-Hearing-Decisions/2019-ISCR-Hearing-Decisions/FileId/112674/": "09_18-01739.json"
+  },
+  "by_hash": {
+    "sha256:245dc222cfde3385889d31ac443822b5c6a5e5d51d94319ac622035708bb6983": "00_14-06270.json",
+    "sha256:263924a5791dad8d3d3bbf4ecca18dbe4d200ef849bbcff09b6f4ace160f1ce8": "01_14-01234.json",
+    "sha256:da3ec5e50df6ee81d76a0cd1025d409278993307fcd56c9cbfdf8c81fcae6a5b": "02_12-00809.json",
+    "sha256:152368321abdc8dcf6eccfd4d44229377a3c49076ee1b1a2e2b3b13dc1df2540": "03_15-03688.json",
+    "sha256:c947d04e1fd42c76b492446c3f6ee49d8f4f475a154658c215d36b70e24d2de4": "04_17-00966.json",
+    "sha256:dd09f71c06a7c5d6f507859cd4cc5712070cdc6412b570869a76c7821fe6917b": "05_11-03217.json",
+    "sha256:0ae4e7f9bb726ee86d5c7d69fa65ca7ff4ec759d3ad413e858b4cd86eddf7187": "06_06-25867.json",
+    "sha256:aa58a196f50e3d3f408ad5c3b6dcefa7f6b1ca03694827e2debfd426b378178a": "07_14-05003.json",
+    "sha256:0e6f2b8bea7b632b44b5ef30d85df42fea45f04b0349b68f8f305e6f49241beb": "08_08-07439.json",
+    "sha256:8b24a7e7feb3f505f41805d9bb611b316ec4e984b34f0ac444c9db92dd3e436e": "09_18-01739.json"
+  }
+}

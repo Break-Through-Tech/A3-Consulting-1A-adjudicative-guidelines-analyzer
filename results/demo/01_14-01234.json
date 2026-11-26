@@ -1,0 +1,467 @@
+{
+  "schema_version": "1.0",
+  "case": {
+    "source_url": "https://doha.ogc.osd.mil/Industrial-Security-Program/Industrial-Security-Clearance-Decisions/ISCR-Hearing-Decisions/Archived-ISCR-Hearing-Decisions/2016-and-Prior-ISCR-Hearing-Decisions-11/FileId/138537/",
+    "case_number": "14-01234",
+    "date": "2014-10-27",
+    "regime": "sead4",
+    "split": "test",
+    "text_length": 14910
+  },
+  "guidelines": [
+    {
+      "code": "A",
+      "name": "Allegiance to the United States",
+      "tier": "caveat",
+      "p_not_at_issue": 0.9999999999475184,
+      "p_for": 3.1654606090017424e-11,
+      "p_against": 2.0826979872143748e-11,
+      "at_issue_threshold": 1.01,
+      "status": "NOT_AT_ISSUE",
+      "model": "modernbert-4096",
+      "calibration": "results/heads/modernbert-4096/calibration.json sha256:7c3e19ce6314"
+    },
+    {
+      "code": "B",
+      "name": "Foreign Influence",
+      "tier": "defensible",
+      "p_not_at_issue": 0.9987863395685743,
+      "p_for": 0.0007348323733069672,
+      "p_against": 0.0004788280581187699,
+      "at_issue_threshold": 0.2708350157832362,
+      "status": "NOT_AT_ISSUE",
+      "model": "modernbert-4096",
+      "calibration": "results/heads/modernbert-4096/calibration.json sha256:7c3e19ce6314"
+    },
+    {
+      "code": "C",
+      "name": "Foreign Preference",
+      "tier": "defensible",
+      "p_not_at_issue": 0.9993858766669631,
+      "p_for": 0.00022558319368961308,
+      "p_against": 0.00038854013934718705,
+      "at_issue_threshold": 0.4344678951148843,
+      "status": "NOT_AT_ISSUE",
+      "model": "modernbert-4096",
+      "calibration": "results/heads/modernbert-4096/calibration.json sha256:7c3e19ce6314"
+    },
+    {
+      "code": "D",
+      "name": "Sexual Behavior",
+      "tier": "defensible",
+      "p_not_at_issue": 0.9998463465290799,
+      "p_for": 0.00011332514492312586,
+      "p_against": 4.032832599684906e-05,
+      "at_issue_threshold": 0.2243578427714344,
+      "status": "NOT_AT_ISSUE",
+      "model": "modernbert-4096",
+      "calibration": "results/heads/modernbert-4096/calibration.json sha256:7c3e19ce6314"
+    },
+    {
+      "code": "E",
+      "name": "Personal Conduct",
+      "tier": "defensible",
+      "p_not_at_issue": 0.014515264024410652,
+      "p_for": 0.630553121983976,
+      "p_against": 0.3549316139916133,
+      "at_issue_threshold": 0.38284409814864107,
+      "status": "FOR",
+      "model": "modernbert-4096",
+      "calibration": "results/heads/modernbert-4096/calibration.json sha256:7c3e19ce6314"
+    },
+    {
+      "code": "F",
+      "name": "Financial Considerations",
+      "tier": "defensible",
+      "p_not_at_issue": 0.005135283974497127,
+      "p_for": 0.8336254229983412,
+      "p_against": 0.16123929302716172,
+      "at_issue_threshold": 0.39001645419889885,
+      "status": "FOR",
+      "model": "modernbert-4096",
+      "calibration": "results/heads/modernbert-4096/calibration.json sha256:7c3e19ce6314"
+    },
+    {
+      "code": "G",
+      "name": "Alcohol Consumption",
+      "tier": "defensible",
+      "p_not_at_issue": 0.9957761155055349,
+      "p_for": 0.002768662117417324,
+      "p_against": 0.0014552223770476947,
+      "at_issue_threshold": 0.08784649685824163,
+      "status": "NOT_AT_ISSUE",
+      "model": "modernbert-4096",
+      "calibration": "results/heads/modernbert-4096/calibration.json sha256:7c3e19ce6314"
+    },
+    {
+      "code": "H",
+      "name": "Drug Involvement",
+      "tier": "defensible",
+      "p_not_at_issue": 0.9924818337582836,
+      "p_for": 0.005932081882014162,
+      "p_against": 0.001586084359702301,
+      "at_issue_threshold": 0.3212893676387018,
+      "status": "NOT_AT_ISSUE",
+      "model": "modernbert-4096",
+      "calibration": "results/heads/modernbert-4096/calibration.json sha256:7c3e19ce6314"
+    },
+    {
+      "code": "I",
+      "name": "Psychological Conditions",
+      "tier": "caveat",
+      "p_not_at_issue": 0.9999973330551336,
+      "p_for": 1.1232373582798526e-06,
+      "p_against": 1.5437075082226395e-06,
+      "at_issue_threshold": 0.1817011706800583,
+      "status": "NOT_AT_ISSUE",
+      "model": "modernbert-4096",
+      "calibration": "results/heads/modernbert-4096/calibration.json sha256:7c3e19ce6314"
+    },
+    {
+      "code": "J",
+      "name": "Criminal Conduct",
+      "tier": "defensible",
+      "p_not_at_issue": 0.9958652022507769,
+      "p_for": 0.0022602434472689765,
+      "p_against": 0.00187455430195436,
+      "at_issue_threshold": 0.335743971105018,
+      "status": "NOT_AT_ISSUE",
+      "model": "modernbert-4096",
+      "calibration": "results/heads/modernbert-4096/calibration.json sha256:7c3e19ce6314"
+    },
+    {
+      "code": "K",
+      "name": "Handling Protected Information",
+      "tier": "caveat",
+      "p_not_at_issue": 0.9994973719101264,
+      "p_for": 0.0002692122163027926,
+      "p_against": 0.00023341587357092572,
+      "at_issue_threshold": 0.4703825191272647,
+      "status": "NOT_AT_ISSUE",
+      "model": "modernbert-4096",
+      "calibration": "results/heads/modernbert-4096/calibration.json sha256:7c3e19ce6314"
+    },
+    {
+      "code": "L",
+      "name": "Outside Activities",
+      "tier": "caveat",
+      "p_not_at_issue": 0.9998383729017649,
+      "p_for": 6.169812729735205e-05,
+      "p_against": 9.992897093784772e-05,
+      "at_issue_threshold": 0.011664012290079098,
+      "status": "NOT_AT_ISSUE",
+      "model": "modernbert-4096",
+      "calibration": "results/heads/modernbert-4096/calibration.json sha256:7c3e19ce6314"
+    },
+    {
+      "code": "M",
+      "name": "Use of Information Technology",
+      "tier": "caveat",
+      "p_not_at_issue": 0.9998671680749442,
+      "p_for": 6.24252139324769e-05,
+      "p_against": 7.040671112333092e-05,
+      "at_issue_threshold": 0.1595426970557416,
+      "status": "NOT_AT_ISSUE",
+      "model": "modernbert-4096",
+      "calibration": "results/heads/modernbert-4096/calibration.json sha256:7c3e19ce6314"
+    }
+  ],
+  "recommendation": {
+    "composed": "GRANTED",
+    "driven_by": [],
+    "rule": "DENIED when any guideline is predicted AGAINST, otherwise GRANTED",
+    "direct": null
+  },
+  "conditions": [
+    {
+      "id": "c1",
+      "code": "AG ¶ 19(c)",
+      "guideline": "F",
+      "kind": "disqualifier",
+      "text": "a history of not meeting financial obligations",
+      "source": "llm",
+      "quote": "Applicant’s delinquencies trigger the application of",
+      "start": 9979,
+      "end": 10031,
+      "context": {
+        "start": 9969,
+        "end": 10156,
+        "text": "(AG ¶ 18) Applicant’s delinquencies trigger the application of AG ¶ 19(a), “inability or\nunwillingness to satisfy debts,” and AG ¶ 19(c), “a history of not meeting financial\nobligations.”"
+      },
+      "lead_in": null,
+      "section": "analysis",
+      "cited_as": null
+    },
+    {
+      "id": "c2",
+      "code": "AG ¶ 19(a)",
+      "guideline": "F",
+      "kind": "disqualifier",
+      "text": "inability to satisfy debts",
+      "source": "rule",
+      "quote": "AG ¶ 19(a)",
+      "start": 10032,
+      "end": 10042,
+      "context": {
+        "start": 9969,
+        "end": 10156,
+        "text": "(AG ¶ 18) Applicant’s delinquencies trigger the application of AG ¶ 19(a), “inability or\nunwillingness to satisfy debts,” and AG ¶ 19(c), “a history of not meeting financial\nobligations.”"
+      },
+      "lead_in": null,
+      "section": "analysis",
+      "cited_as": null
+    },
+    {
+      "id": "c3",
+      "code": "AG ¶ 19(c)",
+      "guideline": "F",
+      "kind": "disqualifier",
+      "text": "a history of not meeting financial obligations",
+      "source": "rule",
+      "quote": "AG ¶ 19(c)",
+      "start": 10095,
+      "end": 10105,
+      "context": {
+        "start": 9969,
+        "end": 10156,
+        "text": "(AG ¶ 18) Applicant’s delinquencies trigger the application of AG ¶ 19(a), “inability or\nunwillingness to satisfy debts,” and AG ¶ 19(c), “a history of not meeting financial\nobligations.”"
+      },
+      "lead_in": null,
+      "section": "analysis",
+      "cited_as": null
+    },
+    {
+      "id": "c4",
+      "code": "AG ¶ 20(b)",
+      "guideline": "F",
+      "kind": "mitigator",
+      "text": "the conditions that resulted in the financial problem were largely beyond the person's control (e.g., loss of employment, a business downturn, unexpected medical emergency, a death, divorce or separation, clear victimization by predatory lending practices, or identity theft), and the individual acted responsibly under the circumstances",
+      "source": "rule",
+      "quote": "(b)",
+      "start": 10235,
+      "end": 10238,
+      "context": {
+        "start": 10235,
+        "end": 10509,
+        "text": "(b) the conditions that resulted in the financial problem were largely\nbeyond the person’s control (e.g., loss of employment, a business\ndownturn, unexpected medical emergency, or a death, divorce or\nseparation), and the individual acted responsibly under the circumstances;"
+      },
+      "lead_in": {
+        "start": 10157,
+        "end": 10234,
+        "text": "The following mitigating conditions under AG ¶ 20 are potentially applicable:"
+      },
+      "section": "analysis",
+      "cited_as": null
+    },
+    {
+      "id": "c5",
+      "code": "AG ¶ 20(c)",
+      "guideline": "F",
+      "kind": "mitigator",
+      "text": "the individual has received or is receiving financial counseling for the problem from a legitimate and credible source, such as a non-profit credit counseling service, and there are clear indications that the problem is being resolved or is under control",
+      "source": "rule",
+      "quote": "(c)",
+      "start": 10510,
+      "end": 10513,
+      "context": {
+        "start": 10510,
+        "end": 10671,
+        "text": "(c) the person has received or is receiving counseling for the problem\nand/or there are clear indications that the problem is being resolved or is\nunder control;"
+      },
+      "lead_in": {
+        "start": 10157,
+        "end": 10234,
+        "text": "The following mitigating conditions under AG ¶ 20 are potentially applicable:"
+      },
+      "section": "analysis",
+      "cited_as": null
+    },
+    {
+      "id": "c6",
+      "code": "AG ¶ 20(d)",
+      "guideline": "F",
+      "kind": "mitigator",
+      "text": "the individual initiated and is adhering to a good-faith effort to repay overdue creditors or otherwise resolve debts",
+      "source": "rule",
+      "quote": "(d)",
+      "start": 10678,
+      "end": 10681,
+      "context": {
+        "start": 10672,
+        "end": 10781,
+        "text": "and  \n(d) the individual initiated a good-faith effort to repay overdue creditors or\notherwise resolve debts."
+      },
+      "lead_in": {
+        "start": 10157,
+        "end": 10234,
+        "text": "The following mitigating conditions under AG ¶ 20 are potentially applicable:"
+      },
+      "section": "analysis",
+      "cited_as": null
+    },
+    {
+      "id": "c7",
+      "code": "AG ¶ 20(b)",
+      "guideline": "F",
+      "kind": "mitigator",
+      "text": "the conditions that resulted in the financial problem were largely beyond the person's control (e.g., loss of employment, a business downturn, unexpected medical emergency, a death, divorce or separation, clear victimization by predatory lending practices, or identity theft), and the individual acted responsibly under the circumstances",
+      "source": "llm",
+      "quote": "Nearly all of Applicant’s debts became delinquent during a six-month\nunemployment period in 2011.",
+      "start": 10783,
+      "end": 10880,
+      "context": {
+        "start": 10783,
+        "end": 10989,
+        "text": "Nearly all of Applicant’s debts became delinquent during a six-month\nunemployment period in 2011. Since then, he has either satisfied his debts in their\nentirety, or developed payment plans to satisfy them."
+      },
+      "lead_in": null,
+      "section": "analysis",
+      "cited_as": null
+    },
+    {
+      "id": "c8",
+      "code": "AG ¶ 20(d)",
+      "guideline": "F",
+      "kind": "mitigator",
+      "text": "the individual initiated and is adhering to a good-faith effort to repay overdue creditors or otherwise resolve debts",
+      "source": "llm",
+      "quote": "Since then, he has either satisfied his debts in their\nentirety, or developed payment plans to satisfy them.",
+      "start": 10881,
+      "end": 10989,
+      "context": {
+        "start": 10881,
+        "end": 11143,
+        "text": "Since then, he has either satisfied his debts in their\nentirety, or developed payment plans to satisfy them. Given Applicant’s ample\ndiscretionary income and his adherence to the payment plans, thus far, I am confident\nthat his financial problems will not recur."
+      },
+      "lead_in": null,
+      "section": "analysis",
+      "cited_as": null
+    },
+    {
+      "id": "c9",
+      "code": "AG ¶ 20(a)",
+      "guideline": "F",
+      "kind": "mitigator",
+      "text": "the behavior happened so long ago, was so infrequent, or occurred under such circumstances that it is unlikely to recur and does not cast doubt on the individual's current reliability, trustworthiness, or good judgment",
+      "source": "llm",
+      "quote": "Given Applicant’s ample\ndiscretionary income and his adherence to the payment plans, thus far, I am confident\nthat his financial problems will not recur.",
+      "start": 10990,
+      "end": 11143,
+      "context": {
+        "start": 10990,
+        "end": 11216,
+        "text": "Given Applicant’s ample\ndiscretionary income and his adherence to the payment plans, thus far, I am confident\nthat his financial problems will not recur. I conclude that all of the mitigating conditions\napply, as listed above."
+      },
+      "lead_in": null,
+      "section": "analysis",
+      "cited_as": null
+    }
+  ],
+  "precedents": [
+    {
+      "id": "p1",
+      "case_number": "22-00436",
+      "source_url": "https://doha.ogc.osd.mil/Industrial-Security-Program/Industrial-Security-Clearance-Decisions/ISCR-Hearing-Decisions/2023-ISCR-Hearing-Decisions/FileId/185764/",
+      "score": 0.9295,
+      "outcome": "DENIED",
+      "guidelines": [
+        "F"
+      ],
+      "label_source": "formal_ruling",
+      "start": 2396,
+      "end": 5437,
+      "note": "Both applicants are 33-year-old men who work for a defense contractor and have delinquent debts that followed periods of unemployment. Both also have a child and a fiancée or engaged partner, and both describe arranging payment plans on their delinquent debts."
+    },
+    {
+      "id": "p2",
+      "case_number": "09-00837",
+      "source_url": "https://doha.ogc.osd.mil/Industrial-Security-Program/Industrial-Security-Clearance-Decisions/ISCR-Hearing-Decisions/Archived-ISCR-Hearing-Decisions/2016-and-Prior-ISCR-Hearing-Decisions-5/FileId/131875/",
+      "score": 0.9267,
+      "outcome": "DENIED",
+      "guidelines": [
+        "F"
+      ],
+      "label_source": "formal_ruling",
+      "start": 1803,
+      "end": 3622,
+      "note": "Both involve applicants with delinquent debts that grew delinquent after periods of unemployment, and both include debts from a lease or utility-type accounts alongside bank or credit card debts. Both also describe applicants who are single men with no clear record of a spouse, and the precedent's applicant likewise has a security-related job."
+    },
+    {
+      "id": "p3",
+      "case_number": "22-01009",
+      "source_url": "https://doha.ogc.osd.mil/Industrial-Security-Program/Industrial-Security-Clearance-Decisions/ISCR-Hearing-Decisions/2023-ISCR-Hearing-Decisions/FileId/188543/",
+      "score": 0.9263,
+      "outcome": "DENIED",
+      "guidelines": [
+        "F"
+      ],
+      "label_source": "formal_ruling",
+      "start": 2253,
+      "end": 4622,
+      "note": "Both applicants work for defense contractors, and both had periods of unemployment that led to multiple delinquent debts, including student loans and a delinquent credit card. Both are in their early thirties and have young children."
+    },
+    {
+      "id": "p4",
+      "case_number": "20-01470",
+      "source_url": "https://doha.ogc.osd.mil/Industrial-Security-Program/Industrial-Security-Clearance-Decisions/ISCR-Hearing-Decisions/2022-ISCR-Hearing-Decisions/FileId/184507/",
+      "score": 0.9247,
+      "outcome": "DENIED",
+      "guidelines": [
+        "F"
+      ],
+      "label_source": "formal_ruling",
+      "start": 1980,
+      "end": 4103,
+      "note": "Both applicants are adults with an infant child and have delinquent consumer debts, including credit card accounts, that the precedent describes as unpaid since 2016 and the case under review describes as largely arising from a period of unemployment. Both paragraphs also describe the applicant's current employment with a defense contractor and the applicant's finances having improved since the debts became delinquent."
+    },
+    {
+      "id": "p5",
+      "case_number": "07-06498",
+      "source_url": "https://doha.ogc.osd.mil/Industrial-Security-Program/Industrial-Security-Clearance-Decisions/ISCR-Hearing-Decisions/Archived-ISCR-Hearing-Decisions/2016-and-Prior-ISCR-Hearing-Decisions-2/FileId/128719/",
+      "score": 0.9246,
+      "outcome": "DENIED",
+      "guidelines": [
+        "F"
+      ],
+      "label_source": "formal_ruling",
+      "start": 1535,
+      "end": 3405,
+      "note": "Both applicants are men with bachelor of science degrees who have delinquent debts, including student loans, and who have made arrangements to repay some of them. Both precedent and case under review also involve an applicant who is working in a steady job, though the specific jobs differ."
+    }
+  ],
+  "rationale": {
+    "text": "The tool predicts FOR on both Guideline E, Personal Conduct, and Guideline F, Financial Considerations, which yields a predicted recommendation of GRANTED with no guidelines predicted AGAINST. The decision's own discussion points the same way: the judge found the applicant's debts became delinquent during a six-month unemployment period and that he has since satisfied them or set up payment plans. The judge wrote, \"Given Applicant's ample discretionary income and his adherence to the payment plans, thus far, I am confident that his financial problems will not recur.\" The judge also concluded that all of the mitigating conditions apply, so the decision agrees with the prediction.",
+    "condition_ids": [
+      "c7",
+      "c8",
+      "c9"
+    ],
+    "guideline_codes": [
+      "E",
+      "F"
+    ]
+  },
+  "provenance": {
+    "schema_version": "1.0",
+    "heads_model": "modernbert-4096",
+    "calibration": "results/heads/modernbert-4096/calibration.json sha256:7c3e19ce6314",
+    "extractor": "src.conditions.extract_case",
+    "llm_model": "claude-haiku-5-5",
+    "prompt_hashes": {
+      "extract": "sha256:36a767286780",
+      "rationale": "sha256:8ec9fa67760d",
+      "note": "sha256:7fdad65a3b1c"
+    },
+    "run_dates": {
+      "extract": "2026-11-17",
+      "notes": "2026-11-18"
+    },
+    "verify_counts": {
+      "kept": 4
+    },
+    "unmapped_hits": {
+      "rule": 0,
+      "llm": 0
+    }
+  }
+}
