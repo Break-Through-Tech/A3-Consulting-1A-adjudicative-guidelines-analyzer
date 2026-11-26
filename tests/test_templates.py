@@ -30,7 +30,9 @@ def _row() -> dict:
     return {"full_text": full, "guidelines": ["F"], "date": None, "guideline_regime": "sead4",
             "sec_analysis_start": a0, "sec_analysis_end": a0 + len(ANALYSIS),
             "sec_conclusions_start": c0, "sec_conclusions_end": c0 + len(CONCLUSIONS),
-            "sec_policies_start": None, "sec_policies_end": None}
+            "sec_policies_start": None, "sec_policies_end": None,
+            "sec_findings_of_fact_start": None, "sec_findings_of_fact_end": None,
+            "sec_formal_findings_start": None, "sec_formal_findings_end": None}
 
 
 def test_list_citation_is_one_mask():

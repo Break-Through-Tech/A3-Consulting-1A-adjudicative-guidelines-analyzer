@@ -254,6 +254,69 @@ def test_search_can_be_limited_to_the_analysis():
     assert hits[0]["start"] == text.index("AG ¶ 20(b)")
 
 
+
+# --- analysis_span: the analysis the segmenter missed --------------------------------
+
+from src.conditions import analysis_span, extract_case  # noqa: E402
+
+FOF = "FINDINGS OF FACT \nApplicant owes $20,000. "
+POL = "POLICIES \nAG ¶ 19(a) is one of the conditions that could raise a concern. "
+DISC = "Discussion \nI considered AG ¶ 19(a) and AG ¶ 20(b) as most pertinent. "
+FORMAL = "FORMAL FINDINGS \nParagraph 1, Guideline F: AGAINST APPLICANT "
+CONC = "CONCLUSION \nEligibility is denied. "
+
+
+def _row(with_policies: bool = True, with_analysis: bool = False) -> dict:
+    parts = [FOF] + ([POL] if with_policies else []) + [DISC, FORMAL, CONC]
+    text = "".join(parts)
+    def span(piece):
+        start = text.index(piece)
+        return start, start + len(piece)
+    row = {"full_text": text, "guidelines": ["F"], "date": None, "guideline_regime": "sead4"}
+    for name, piece in (("findings_of_fact", FOF), ("formal_findings", FORMAL), ("conclusions", CONC)):
+        row[f"sec_{name}_start"], row[f"sec_{name}_end"] = span(piece)
+    row["sec_policies_start"], row["sec_policies_end"] = span(POL) if with_policies else (None, None)
+    row["sec_analysis_start"], row["sec_analysis_end"] = span(DISC) if with_analysis else (None, None)
+    return row
+
+
+def test_fallback_finds_an_analysis_under_another_heading():
+    row = _row()
+    start, end = analysis_span(row)
+    assert row["full_text"][start:end] == DISC
+    codes = [h["code"] for h in extract_case(row)]
+    assert codes == ["AG ¶ 19(a)", "AG ¶ 20(b)"]
+
+
+def test_without_fallback_the_nov_9_behaviour_is_kept():
+    row = _row()
+    assert analysis_span(row, fallback=False) is None
+    assert extract_case(row, fallback=False) == []
+
+
+def test_fallback_skips_policies_and_starts_after_findings_when_policies_is_missing():
+    row = _row()
+    start, _ = analysis_span(row)
+    assert start == row["sec_policies_end"]
+    bare = _row(with_policies=False)
+    start, end = analysis_span(bare)
+    assert start == bare["sec_findings_of_fact_end"] and bare["full_text"][start:end] == DISC
+
+
+def test_a_segmented_analysis_is_used_as_it_is():
+    row = _row(with_analysis=True)
+    assert analysis_span(row) == (row["sec_analysis_start"], row["sec_analysis_end"])
+
+
+def test_fallback_refuses_a_row_without_the_section_columns():
+    row = _row()
+    del row["sec_formal_findings_start"]
+    try:
+        analysis_span(row)
+    except KeyError:
+        return
+    raise AssertionError("a row without the fallback columns was searched silently")
+
 LISTED = (
     "The debts are listed in the SOR. Four are potentially applicable in this case: \n \n"
     "(a) inability to satisfy debts; \n \n(b) unwillingness to satisfy debts regardless of "

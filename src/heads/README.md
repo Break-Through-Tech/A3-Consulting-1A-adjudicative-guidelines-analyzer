@@ -46,6 +46,28 @@ python -m src.heads.evaluate --run runs/legalbert-512
 
 It writes `results/heads/<run>.csv`, `<run>_summary.csv` and `<run>_calibration.csv`, and adds the run to `results/heads/comparison.csv`. It also writes `runs/<run>/test_probabilities.parquet` and `runs/<run>/calibration.json` for integration and the app. Smoke runs can keep their tables out of git with `--results-dir runs/<run>/results`.
 
+## Published head outputs
+
+The run folders are gitignored, so the probabilities that other work needs live in `results/heads/modernbert-4096/`. They come from the ModernBERT 4,096 heads, with temperature and threshold fit on val.
+
+| File | Content |
+|---|---|
+| `val_probabilities.parquet` | 3,137 val cases, one row each |
+| `test_probabilities.parquet` | 3,137 test cases, one row each |
+| `calibration.json` | Per head `temperature` and `at_issue_threshold`, plus the val NLL and test ECE before and after scaling |
+
+Both parquet files have the same 42 columns. `case_number`, `source_url` and `split` come first. Then each guideline code G from A to M has `p_not_at_issue_G`, `p_for_G` and `p_against_G`, which sum to 1 for each head. Rows keep the order of `cases_val.csv` and `cases_test.csv`. Several cases share a `case_number`, so join on `source_url`.
+
+The probabilities are `softmax(logits / temperature)`. Each head's temperature is fit on val by minimising the NLL, so the probabilities are calibrated on val and not on test. The at-issue threshold is the value `choose_at_issue_threshold` picks on calibrated val probabilities. A case counts as at issue when `p_for + p_against` reaches the threshold. FOR wins when `p_for` is at least `p_against`, and AGAINST wins otherwise. Guideline A has a threshold of 1.01, so it never predicts at issue.
+
+To rebuild the files, run the command below. It needs the gitignored run folder.
+
+```bash
+python -m src.heads.publish --run runs/modernbert-4096
+```
+
+It recomputes the temperatures and thresholds from `logits_val.npy` and stops if they differ from the stored ones. It does not call `evaluate_run`, so it leaves the run folder and the other tables alone. It then scores the published test file with `baseline_tables` and compares the result with `modernbert-4096.csv`, `modernbert-4096_summary.csv` and the `modernbert-4096` rows of `comparison.csv`. `--check-only` repeats that check from the published files and needs no run folder.
+
 ## What a run writes
 
 Everything goes to `runs/<run-name>/`, which git ignores:
