@@ -1,0 +1,19 @@
+{
+  "requests": 60,
+  "succeeded": 60,
+  "end_turn": 60,
+  "rationale_kept": 9,
+  "note_kept": 49,
+  "rationale_dropped": 1,
+  "note_dropped": 1,
+  "rationale_problems": {
+    "names_ids_or_codes": 1
+  },
+  "note_problems": {
+    "too_long": 1
+  },
+  "input_tokens": 191642,
+  "output_tokens": 20269,
+  "cost": 0.01464935,
+  "spent_total": 0.19241740000000002
+}
