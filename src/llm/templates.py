@@ -23,7 +23,7 @@ from __future__ import annotations
 
 import re
 
-from src.conditions import _pair, _scan, extract_case
+from src.conditions import _pair, _scan, analysis_span, extract_case
 from src.llm.verify import _key, guideline_conditions
 
 MASK_TOKEN = "[CITE]"
@@ -165,24 +165,28 @@ def mask_section(text: str, mode: str, extra: list[tuple[int, int]] | None = Non
 
 # --- model input --------------------------------------------------------------
 
-def sections(row) -> list[tuple[int, int]]:
-    """(start, end) of the analysis then the conclusions, whichever exist."""
-    return [p for p in (_pair(row, "analysis"), _pair(row, "conclusions")) if p is not None]
+def sections(row, fallback: bool = True) -> list[tuple[int, int]]:
+    """(start, end) of the analysis then the conclusions, whichever exist.
+
+    With `fallback`, an analysis the segmenter missed is found by
+    `conditions.analysis_span`. The pilot passes False to keep its Nov 9 inputs.
+    """
+    return [p for p in (analysis_span(row, fallback), _pair(row, "conclusions")) if p is not None]
 
 
-def build_input(row, mode: str, *, collapse: bool = True) -> tuple[str, tuple[int, int]]:
+def build_input(row, mode: str, *, collapse: bool = True, fallback: bool = True) -> tuple[str, tuple[int, int]]:
     """The text to send and the region of `full_text` it came from.
 
     The text is the masked analysis, a blank line, then the masked conclusions.
     The region runs from the first section's start to the last section's end, so
     it spans the formal findings between them; those are never in the text.
     """
-    spans = sections(row)
+    spans = sections(row, fallback)
     if not spans:
         raise ValueError("case has neither an analysis nor a conclusions section")
     full = row["full_text"]
     # Numbered forms (DC 1, MC 3) are only found by extract_case, so mask its hits too.
-    hits = extract_case(row)
+    hits = extract_case(row, fallback)
     parts = []
     for start, end in spans:
         extra = [(h["start"] - start, h["end"] - start) for h in hits
