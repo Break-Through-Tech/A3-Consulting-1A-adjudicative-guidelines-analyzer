@@ -12,6 +12,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from _harness import parametrize, run_module  # noqa: E402
+from src import conditions as context_tools  # noqa: E402
 from src.conditions import extract  # noqa: E402
 
 
@@ -315,6 +316,69 @@ def test_fallback_refuses_a_row_without_the_section_columns():
     except KeyError:
         return
     raise AssertionError("a row without the fallback columns was searched silently")
+
+LISTED = (
+    "The debts are listed in the SOR. Four are potentially applicable in this case: \n \n"
+    "(a) inability to satisfy debts; \n \n(b) unwillingness to satisfy debts regardless of "
+    "the ability to do so; \n\n 7 \n\n(c) a history of not meeting financial obligations, "
+    "e.g., credit cards. Applicant paid one debt."
+)
+
+
+def _span(text: str, needle: str) -> tuple[int, int]:
+    start = text.index(needle)
+    return start, start + len(needle)
+
+
+def _context(text: str, needle: str) -> str:
+    start, end = _span(text, needle)
+    c_start, c_end = context_tools.hit_context(text, start, end)
+    assert c_start <= start and end <= c_end
+    return text[c_start:c_end]
+
+
+def test_context_of_a_list_item_is_that_item():
+    assert _context(LISTED, "(b)") == "(b) unwillingness to satisfy debts regardless of the ability to do so;"
+    assert _context(LISTED, "(a)") == "(a) inability to satisfy debts;"
+
+
+def test_context_does_not_stop_at_e_g():
+    assert _context(LISTED, "(c)").endswith("e.g., credit cards.")
+
+
+def test_context_of_an_inline_citation_is_its_sentence():
+    text = "He has debts. Under AG ¶ 20(b), the layoff was beyond his control. He paid none."
+    assert _context(text, "AG ¶ 20(b)") == "Under AG ¶ 20(b), the layoff was beyond his control."
+
+
+def test_context_is_capped_at_a_word_break():
+    text = "x " * 600 + "AG ¶ 19(a)" + " y" * 600
+    start, end = _span(text, "AG ¶ 19(a)")
+    c_start, c_end = context_tools.hit_context(text, start, end, limit=50)
+    assert start - 50 <= c_start <= start and end <= c_end <= end + 50
+    assert text[c_start] != " " and text[c_end - 1] != " "
+
+
+def test_lead_in_is_the_sentence_that_opens_the_list():
+    for needle in ("(a)", "(b)", "(c)"):
+        start, _ = _span(LISTED, needle)
+        lead = context_tools.list_lead_in(LISTED, start)
+        assert LISTED[lead[0]:lead[1]] == "Four are potentially applicable in this case:", needle
+
+
+def test_no_lead_in_outside_a_list():
+    start, _ = _span(LISTED, "Applicant paid")
+    assert context_tools.list_lead_in(LISTED, start) is None
+    text = "He has debts. AG ¶ 19(a) applies."
+    assert context_tools.list_lead_in(text, text.index("AG")) is None
+
+
+def test_context_refuses_a_span_outside_the_text():
+    try:
+        context_tools.hit_context("short", 2, 10)
+    except ValueError:
+        return
+    raise AssertionError("a span past the end was accepted")
 
 
 if __name__ == "__main__":

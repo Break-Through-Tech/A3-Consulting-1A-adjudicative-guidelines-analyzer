@@ -1,0 +1,119 @@
+{
+  "A": {
+    "temperature": 0.35457548354100676,
+    "at_issue_threshold": 1.01,
+    "val_nll_before": 0.0004351701620505553,
+    "val_nll_after": 4.622473611485732e-09,
+    "test_ece_before": 0.00042061738950749383,
+    "test_ece_after": 2.836138768280705e-09,
+    "test_known_pairs": 3137
+  },
+  "B": {
+    "temperature": 1.0579596420935498,
+    "at_issue_threshold": 0.2708350157832362,
+    "val_nll_before": 0.1035905888115308,
+    "val_nll_after": 0.10338557934654513,
+    "test_ece_before": 0.006441564215477324,
+    "test_ece_after": 0.006767972964324595,
+    "test_known_pairs": 3075
+  },
+  "C": {
+    "temperature": 1.0309714574494877,
+    "at_issue_threshold": 0.4344678951148843,
+    "val_nll_before": 0.04692301250612165,
+    "val_nll_after": 0.0468823166249527,
+    "test_ece_before": 0.0050673347786595845,
+    "test_ece_after": 0.005386939026567133,
+    "test_known_pairs": 3105
+  },
+  "D": {
+    "temperature": 0.9319435970202321,
+    "at_issue_threshold": 0.2243578427714344,
+    "val_nll_before": 0.022180798704176916,
+    "val_nll_after": 0.022060559997702504,
+    "test_ece_before": 0.003795232366971622,
+    "test_ece_after": 0.00305036784211757,
+    "test_known_pairs": 3131
+  },
+  "E": {
+    "temperature": 1.1113671337069368,
+    "at_issue_threshold": 0.38284409814864107,
+    "val_nll_before": 0.24474838616257194,
+    "val_nll_after": 0.24321509670663743,
+    "test_ece_before": 0.018858233518745274,
+    "test_ece_after": 0.01707024521613029,
+    "test_known_pairs": 3036
+  },
+  "F": {
+    "temperature": 1.1163128532733444,
+    "at_issue_threshold": 0.39001645419889885,
+    "val_nll_before": 0.19575198860050533,
+    "val_nll_after": 0.1937909693414302,
+    "test_ece_before": 0.02002883054679165,
+    "test_ece_after": 0.01292671019902099,
+    "test_known_pairs": 3052
+  },
+  "G": {
+    "temperature": 1.1356693367983073,
+    "at_issue_threshold": 0.08784649685824163,
+    "val_nll_before": 0.0748385147398378,
+    "val_nll_after": 0.07375727323453887,
+    "test_ece_before": 0.0066617976734211475,
+    "test_ece_after": 0.004768158369339299,
+    "test_known_pairs": 3117
+  },
+  "H": {
+    "temperature": 1.1038185535119915,
+    "at_issue_threshold": 0.3212893676387018,
+    "val_nll_before": 0.09527021404071957,
+    "val_nll_after": 0.09457029307524152,
+    "test_ece_before": 0.007757570651043234,
+    "test_ece_after": 0.006724866275569866,
+    "test_known_pairs": 3110
+  },
+  "I": {
+    "temperature": 0.7370932456792884,
+    "at_issue_threshold": 0.1817011706800583,
+    "val_nll_before": 0.007071644614999607,
+    "val_nll_after": 0.006342883536847748,
+    "test_ece_before": 0.0025402161212877655,
+    "test_ece_after": 0.0015927858936566263,
+    "test_known_pairs": 3136
+  },
+  "J": {
+    "temperature": 1.0647623959418204,
+    "at_issue_threshold": 0.335743971105018,
+    "val_nll_before": 0.13076127379369656,
+    "val_nll_after": 0.130361920128496,
+    "test_ece_before": 0.010689183061649376,
+    "test_ece_after": 0.009591219048379972,
+    "test_known_pairs": 3080
+  },
+  "K": {
+    "temperature": 0.9445421841116826,
+    "at_issue_threshold": 0.4703825191272647,
+    "val_nll_before": 0.0226655004457959,
+    "val_nll_after": 0.022538739089211512,
+    "test_ece_before": 0.002347529891947582,
+    "test_ece_after": 0.002622722274356261,
+    "test_known_pairs": 3134
+  },
+  "L": {
+    "temperature": 1.0369011031450734,
+    "at_issue_threshold": 0.011664012290079098,
+    "val_nll_before": 0.010632739582453062,
+    "val_nll_after": 0.010595030688257595,
+    "test_ece_before": 0.00033535529624661997,
+    "test_ece_after": 1.9426704681357876e-05,
+    "test_known_pairs": 3136
+  },
+  "M": {
+    "temperature": 0.9090393501930811,
+    "at_issue_threshold": 0.1595426970557416,
+    "val_nll_before": 0.0167688165223812,
+    "val_nll_after": 0.016556318311784238,
+    "test_ece_before": 0.0033294637526003544,
+    "test_ece_after": 0.002998101691069643,
+    "test_known_pairs": 3134
+  }
+}

@@ -84,6 +84,16 @@
       "name": "every guideline appears in train, val and test at close to its pool rate (Guideline A exempt: all 4 cases in train)",
       "passed": true,
       "detail": "max deviation 1.02pp (Guideline E)"
+    },
+    {
+      "name": "precedents.faiss covers exactly 24,238 cases at dim 384",
+      "passed": true,
+      "detail": "ntotal=24238, d=384"
+    },
+    {
+      "name": "precedents_metadata.parquet covers exactly 24,238 cases",
+      "passed": true,
+      "detail": "24,238 rows found"
     }
   ],
   "stats": {
