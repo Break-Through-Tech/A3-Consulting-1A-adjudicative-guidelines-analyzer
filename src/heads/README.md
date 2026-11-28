@@ -78,7 +78,7 @@ It recomputes the temperatures and thresholds from `logits_val.npy` and stops if
 python -m src.heads.embed --out runs/mitigator/mitigator_embeddings.npz
 ```
 
-The file holds `source_url`, `split` and `embedding` (float16, n by 768). The full run takes about an hour on a laptop GPU.
+The file holds `source_url`, `split` and `embedding` (float16, n by 768). The full run, 13,119 cases, took about 12 minutes on an RTX 5060 laptop GPU.
 
 ## What a run writes
 
