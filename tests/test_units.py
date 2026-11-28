@@ -19,6 +19,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import pandas as pd  # noqa: E402
 from _harness import parametrize, run_module  # noqa: E402
 from src import fields, labels, normalize, segment  # noqa: E402
+from src.outcome_comparison import compose_outcome, compose_outcomes  # noqa: E402
 
 
 # --- the two bugs that shipped ----------------------------------------------
@@ -259,6 +260,21 @@ def test_regime_detection():
     assert fields.extract_regime("cited under AG \u00b6 19(a)") == "sead4"
     assert fields.extract_regime("under E2.A2.1.2.1 of the Directive") == "directive"
     assert fields.extract_regime("no citation scheme present") == "unknown"
+
+
+# --- composed outcome --------------------------------------------------------
+
+def test_composed_outcome_is_denied_if_any_head_is_against():
+    assert compose_outcome({"F": "FOR", "E": "AGAINST"}) == "DENIED"
+    assert compose_outcome({"F": "FOR", "E": "NOT_AT_ISSUE"}) == "GRANTED"
+
+
+def test_compose_outcomes_handles_parallel_head_arrays():
+    predictions = compose_outcomes({
+        "F": ["FOR", "AGAINST", "NOT_AT_ISSUE"],
+        "E": ["NOT_AT_ISSUE", "FOR", "FOR"],
+    })
+    assert predictions.tolist() == ["GRANTED", "DENIED", "GRANTED"]
 
 
 if __name__ == "__main__":
