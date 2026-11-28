@@ -197,6 +197,41 @@ def test_a_piece_of_a_listed_quote_may_appear_in_the_text():
     assert N.check_rationale(answer, _doc(), FULL)[1] == []
 
 
+def test_rationale_for_a_guideline_without_conditions_is_dropped():
+    # Guideline E is predicted FOR in the test document but has no condition.
+    _, problems = N.check_rationale(_with(guideline_codes=["E", "F"]), _doc(), FULL)
+    assert "guideline_without_conditions" in problems, problems
+    for text in ("The tool predicts Guideline E and Guideline F. The judge discussed the payment plan.",
+                 "The tool predicts Guidelines E and F. The judge discussed the payment plan.",
+                 "The tool predicts Name E and Guideline F. The judge discussed the payment plan."):
+        _, problems = N.check_rationale(_with(text=text, quotes=[]), _doc(), FULL)
+        assert "guideline_without_conditions" in problems, (text, problems)
+
+
+def test_rationale_for_guidelines_with_conditions_still_passes():
+    ok = _with(text="The tool predicts Guideline F, Name F, against the applicant. The judge discussed a "
+                    "payment plan.", quotes=[])
+    assert N.check_rationale(ok, _doc(), FULL)[1] == []
+
+
+def test_a_guideline_named_only_inside_a_quote_is_not_flagged():
+    answer = _with(text="The tool predicts Guideline F against. The decision says \"Applicant owes $20,000 on "
+                        "six credit cards\". Quoted aside: \"Guideline E, Name E\".")
+    _, problems = N.check_rationale(answer, _doc(), FULL)
+    assert "guideline_without_conditions" not in problems, problems
+
+
+def test_demo_rationale_citing_only_f_conditions_for_e_and_f_is_dropped():
+    import json
+    demo = json.loads((Path(__file__).resolve().parents[1] / "results" / "demo" / "01_14-01234.json")
+                      .read_text(encoding="utf-8"))
+    row = N.load_rows({demo["case"]["source_url"]})[0]
+    answer = dict(demo["rationale"], quotes=[])
+    assert answer["guideline_codes"] == ["E", "F"] and {c["guideline"] for c in demo["conditions"]} == {"F"}
+    rationale, problems = N.check_rationale(answer, demo, row["full_text"])
+    assert rationale is None and "guideline_without_conditions" in problems, problems
+
+
 def test_rationales_batch_resends_only_rationales():
     reqs = [{"custom_id": "rat-0", "batch": "test"}, {"custom_id": "note-0-1", "batch": "test"},
             {"custom_id": "rat-1", "batch": "full"}, {"custom_id": "note-1-1", "batch": "full"}]

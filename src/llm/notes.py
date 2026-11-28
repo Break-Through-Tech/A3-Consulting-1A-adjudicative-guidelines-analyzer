@@ -65,6 +65,7 @@ _TOOL_REASONS = re.compile(
     r"(?:also\s+)?(?:judge[sd]?|conclude[sd]?|determine[sd]?|decide[sd]?|found\s+that|finds\s+that|"
     r"weigh(?:s|ed)?|consider(?:s|ed)?|reflects?|rests?\s+on|is\s+based\s+on|draws?\s+on|uses?|relies\s+on)\b",
     re.I)
+_GUIDELINE_LETTERS = re.compile(r"\bGuidelines?\s+([A-M](?:\s*(?:,|and|or|&)\s*(?:(?:and|or)\s+)?[A-M]\b)*)")
 _CODES_IN_TEXT = re.compile(r"\bc\d+\b|\[c\d+\]|AG\s*¶|\b(?:19|20)\([a-g]\)", re.I)
 
 
@@ -384,6 +385,15 @@ def _within(inline: str, listed: str) -> bool:
     return bool(a) and a in _key(listed)[0].casefold()
 
 
+def _names_other_guidelines(text: str, doc: dict, covered: set[str]) -> bool:
+    """True when `text` names a guideline outside `covered`, by "Guideline X" or by its name."""
+    for m in _GUIDELINE_LETTERS.finditer(text):
+        if any(c not in covered for c in re.findall(r"\b[A-M]\b", m.group(1))):
+            return True
+    low = text.casefold()
+    return any(g["name"].casefold() in low for g in doc["guidelines"] if g["code"] not in covered)
+
+
 def check_rationale(answer: dict | None, doc: dict, full_text: str) -> tuple[dict | None, list[str]]:
     """(rationale for the document, []) when every check passes, else (None, problems)."""
     if answer is None or not isinstance(answer.get("text"), str):
@@ -403,6 +413,9 @@ def check_rationale(answer: dict | None, doc: dict, full_text: str) -> tuple[dic
         problems.append("bad_condition_ids")
     if not codes or any(g not in issue for g in codes):
         problems.append("bad_guideline_codes")
+    covered = {by_id[i]["guideline"] for i in ids if i in by_id}
+    if any(g not in covered for g in codes) or _names_other_guidelines(_outside_quotes(text), doc, covered):
+        problems.append("guideline_without_conditions")
     if _CONFIDENCE.search(_outside_quotes(text)):
         problems.append("states_confidence")
     if _CODES_IN_TEXT.search(_outside_quotes(text)):
