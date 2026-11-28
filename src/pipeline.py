@@ -16,15 +16,21 @@ The steps, each a function below:
                 segment, labels, regime, date, the section columns and the
                 leak-free text_features
     heads       the published ModernBERT-4096 outputs when the case is a val or
-                test pool case, otherwise the TF-IDF baseline heads. Live
-                ModernBERT needs the 600 MB checkpoint in runs/ and a GPU, so it is
-                a stub until Rashed decides how to ship it
+                test pool case; otherwise live ModernBERT-4096 when the 600 MB
+                checkpoint is in runs/modernbert-4096/ (GPU if there is one, else
+                CPU, slow); otherwise the TF-IDF baseline heads. The model that
+                ran is named in guidelines[].model and provenance.heads_model:
+                modernbert-4096, modernbert-4096-live or tfidf-baseline
     conditions  src.conditions.extract_case
     llm         verified quotes from the cached test-split run; never a live call
     precedents  PrecedentRetriever.search over train cases with the findings of
                 fact, index v1. Hybrid search plugs in here when it lands
     notes       rationale and similarity notes from the task 6 cache, demo cases only
     validate    schema.validate against full_text
+
+A paste with no decision headings at all is read whole as the facts, and the
+document carries a warning in provenance.warnings. A paste with headings but no
+fact section raises NoFeaturesError.
 
 The demo cache in results/demo/ holds the finished documents for the 10 task 6
 demo cases, keyed by source_url and by the sha256 of full_text, so the demo runs
@@ -52,6 +58,9 @@ NOTES_DOCS = PROJECT_ROOT / "results" / "llm" / "notes" / "documents"
 FALLBACK_PATH = PROJECT_ROOT / "runs" / "pipeline" / "tfidf_heads.joblib"
 FALLBACK_MODEL = "tfidf-baseline"
 TOP_K = 5
+NO_HEADINGS_WARNING = (
+    "No decision headings were found, so the whole text was read as the facts. If it includes the judge's "
+    "analysis or ruling, the prediction can lean on the verdict.")
 
 _CASE_NUMBER = re.compile(r"\b(?:ISCR|ADP)?\s*Case\s+No\.?\s*:?\s*(\d{2}-\d{4,5})", re.I)
 _DOCKET = re.compile(r"\b(\d{2}-\d{5})\b")
@@ -102,8 +111,14 @@ def prepare(full_text: str, *, case_number: str | None = None, source_url: str =
     case_number = case_number or case_number_of(body)
     codes, findings, _, label_source = labels.label_row(body, spans.get("POLICIES"))
     date, _ = fields.extract_date(body, case_number)
+    warnings = []
+    features = normalize.build_features(body, segment.feature_spans(spans))
+    if not spans and body.strip():
+        features = normalize.build_features(body, [(0, len(body))])
+        warnings.append(NO_HEADINGS_WARNING)
     row = {
         "full_text": full_text,
+        "warnings": warnings,
         "case_number": case_number,
         "source_url": source_url,
         "split": split,
@@ -112,7 +127,8 @@ def prepare(full_text: str, *, case_number: str | None = None, source_url: str =
         "guidelines": codes,
         "guideline_findings": findings,
         "label_source": label_source,
-        "text_features": normalize.build_features(body, segment.feature_spans(spans)),
+        "text_features": features,
+        "sections_found": sorted(spans),
     }
     shifted = segment.shift(spans, prefix)
     for name in config.EXPORTED_SECTIONS:
@@ -144,16 +160,25 @@ def heads(row: dict, backend: str = "auto") -> dict:
     auto       published ModernBERT for a val or test pool case, else TF-IDF
     published  published ModernBERT only
     tfidf      the TF-IDF baseline heads
-    modernbert live inference, not built yet
+    modernbert live inference; raises FileNotFoundError when the checkpoint is missing
+
+    auto order: published, live ModernBERT if the checkpoint exists, TF-IDF.
     """
+    from src.heads import infer
+
     if backend == "modernbert":
-        raise NotImplementedError("live ModernBERT needs the runs/modernbert-4096 checkpoint; not shipped yet")
+        if not infer.available():
+            raise FileNotFoundError(f"live ModernBERT needs the checkpoint at {infer.checkpoint_path()} "
+                                    f"(set {infer.CHECKPOINT_ENV} to move it)")
+        return infer.predict(row["text_features"])
     if backend in ("auto", "published") and row.get("source_url"):
         split = published_split(row["source_url"])
         if split:
             return schema.load_head_outputs(row["source_url"], split)
     if backend == "published":
         raise KeyError(f"no published head outputs for {row.get('source_url')!r}")
+    if backend == "auto" and infer.available():
+        return infer.predict(row["text_features"])
     return tfidf_heads(row["text_features"])
 
 
@@ -312,11 +337,14 @@ def analyze_with_text(source, *, source_url: str = "", case_number: str | None =
 
     row = prepare(full_text, case_number=case_number, source_url=source_url, split=split)
     if not row["text_features"]:
-        raise NoFeaturesError(
-            "No findings of fact or other pre-verdict section was found, so the heads would read nothing and "
-            "report every guideline as not at issue. Refusing to return a recommendation from empty input.")
+        if row["sections_found"]:
+            raise NoFeaturesError(
+                f"The text has decision headings ({', '.join(row['sections_found'])}) but no "
+                f"{' or '.join(config.FEATURE_SECTIONS)} section, so the heads would read nothing and report every "
+                "guideline as not at issue. Refusing to return a recommendation from empty input.")
+        raise NoFeaturesError("The text is empty, so there is nothing for the heads to read.")
     head_probs = heads(row, heads_backend)
-    if row["split"] is None and head_probs["model"] != FALLBACK_MODEL and source_url:
+    if row["split"] is None and head_probs["model"] == schema.HEADS_RUN and source_url:
         row["split"] = published_split(source_url)
     rule = conditions.extract_case(row)
     llm, verify_counts = llm_hits(source_url)
@@ -334,6 +362,8 @@ def analyze_with_text(source, *, source_url: str = "", case_number: str | None =
             meta.update({"llm_model": client.MODEL,
                          "prompt_hashes": {"extract": templates.prompt_hash(templates.SYSTEM_PROMPT)},
                          "run_dates": {"extract": llm_notes.RUN_DATE}})
+    if row["warnings"]:
+        meta["warnings"] = list(row["warnings"])
     doc = schema.build_document(row, head_probs, rule, llm, found, rationale, provenance=meta)
     schema.validate(doc, full_text)
     return doc, full_text

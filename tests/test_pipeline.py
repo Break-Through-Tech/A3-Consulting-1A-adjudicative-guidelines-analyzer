@@ -10,6 +10,7 @@ test needs runs/pipeline/tfidf_heads.joblib from `python -m src.pipeline --fit-f
 """
 from __future__ import annotations
 
+import contextlib
 import json
 import os
 import sys
@@ -22,7 +23,24 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from _harness import run_module  # noqa: E402
 from src import config, pipeline, schema  # noqa: E402
+from src.heads import infer  # noqa: E402
 from src.llm import notes  # noqa: E402
+
+MISSING_CHECKPOINT = str(Path(__file__).resolve().parent / "no_such_checkpoint.pt")
+
+
+@contextlib.contextmanager
+def _checkpoint(path: str):
+    """Point MODERNBERT_CHECKPOINT at `path` for the block."""
+    old = os.environ.get(infer.CHECKPOINT_ENV)
+    os.environ[infer.CHECKPOINT_ENV] = path
+    try:
+        yield
+    finally:
+        if old is None:
+            os.environ.pop(infer.CHECKPOINT_ENV, None)
+        else:
+            os.environ[infer.CHECKPOINT_ENV] = old
 
 
 @lru_cache(maxsize=1)
@@ -120,9 +138,11 @@ def test_new_text_falls_back_to_the_tfidf_heads():
     if not pipeline.FALLBACK_PATH.exists():
         raise AssertionError("run `python -m src.pipeline --fit-fallback` first")
     row = _case()
-    doc, text = pipeline.analyze_with_text(row["full_text"], retrieve=False, use_cache=False)
+    with _checkpoint(MISSING_CHECKPOINT):
+        doc, text = pipeline.analyze_with_text(row["full_text"], retrieve=False, use_cache=False)
     schema.validate(doc, text)
     assert {g["model"] for g in doc["guidelines"]} == {pipeline.FALLBACK_MODEL}
+    assert doc["provenance"]["heads_model"] == pipeline.FALLBACK_MODEL and "warnings" not in doc["provenance"]
     assert doc["case"]["source_url"] == "" and doc["case"]["split"] is None
     assert not any(c["source"] == "llm" for c in doc["conditions"]) and doc["precedents"] == []
     assert doc["case"]["case_number"] == row["case_number"]
@@ -158,12 +178,55 @@ def test_reading_text_returns_it_and_bad_input_is_refused():
     raise AssertionError("an int was accepted")
 
 
-def test_text_with_no_fact_sections_is_refused():
+def test_headings_without_facts_are_refused_and_the_message_names_the_section():
+    text = "DISCUSSION\nThe applicant mitigated the concern.\n\nDECISION\nClearance is granted.\n"
     try:
-        pipeline.analyze("A decision with no section headings at all. Clearance is granted.", use_cache=False)
-    except pipeline.NoFeaturesError:
+        pipeline.analyze(text, use_cache=False)
+    except pipeline.NoFeaturesError as exc:
+        assert "FINDINGS OF FACT" in str(exc) and "DISCUSSION" in str(exc), str(exc)
         return
     raise AssertionError("empty model input produced a recommendation")
+
+
+def test_empty_text_is_refused():
+    for text in ("", "   \n\n"):
+        try:
+            pipeline.analyze(text, use_cache=False)
+        except pipeline.NoFeaturesError:
+            continue
+        raise AssertionError("empty text produced a recommendation")
+
+
+def test_a_paste_with_no_headings_is_read_as_the_facts_with_a_warning():
+    text = ("Applicant is 41 years old. He owes about $23,000 in delinquent credit card debt and has not made "
+            "payments since 2021. He disclosed the debts on his security clearance application.")
+    with _checkpoint(MISSING_CHECKPOINT):
+        doc, full_text = pipeline.analyze_with_text(text, retrieve=False, use_cache=False)
+    schema.validate(doc, full_text)
+    assert doc["provenance"]["warnings"] == [pipeline.NO_HEADINGS_WARNING]
+    assert "no decision headings" in doc["provenance"]["warnings"][0].lower()
+    row = pipeline.prepare(text)
+    assert row["text_features"] == pipeline.normalize.build_features(text, [(0, len(text))])
+    assert "delinquent credit card debt" in row["text_features"]
+
+
+def test_a_full_decision_carries_no_warning():
+    doc, _ = _analyzed()
+    assert "warnings" not in doc["provenance"]
+    assert pipeline.prepare(_case()["full_text"])["warnings"] == []
+
+
+def test_the_schema_accepts_warnings_and_does_not_require_them():
+    provenance = schema.json_schema()["$defs"]["Provenance"]
+    assert provenance["properties"]["warnings"]["items"] == {"type": "string"}
+    assert "warnings" not in provenance["required"]
+    doc, text = _analyzed()
+    schema.validate(doc, text)
+    with_warning = json.loads(json.dumps(doc))
+    with_warning["provenance"]["warnings"] = ["a caution"]
+    schema.validate(with_warning, text)
+    with_warning["provenance"]["warnings"] = "a caution"
+    assert any("warnings" in p for p in schema.problems(with_warning, text))
 
 
 def test_pdf_pages_are_read_and_joined_as_doha_did():
@@ -182,12 +245,80 @@ def test_pdf_pages_are_read_and_joined_as_doha_did():
     assert text.index("first page") < text.index("second page")
 
 
-def test_live_modernbert_is_a_stub():
-    try:
-        pipeline.heads({"source_url": "", "text_features": "x"}, backend="modernbert")
-    except NotImplementedError:
+def test_live_modernbert_with_a_missing_checkpoint_raises():
+    with _checkpoint(MISSING_CHECKPOINT):
+        try:
+            pipeline.heads({"source_url": "", "text_features": "x"}, backend="modernbert")
+        except FileNotFoundError as exc:
+            assert "checkpoint" in str(exc)
+            return
+    raise AssertionError("live ModernBERT ran without a checkpoint")
+
+
+def test_backend_order_is_published_then_live_then_tfidf():
+    row = _case()
+    assert pipeline.heads(row)["model"] == schema.HEADS_RUN            # a published test case
+    new = {"source_url": "", "text_features": row["text_features"]}
+    with _checkpoint(MISSING_CHECKPOINT):
+        assert not infer.available()
+        assert pipeline.heads(new)["model"] == pipeline.FALLBACK_MODEL
+        try:
+            pipeline.heads(new, backend="published")
+        except KeyError:
+            pass
+        else:
+            raise AssertionError("published backend answered for an unpublished case")
+    if not infer.available():
+        print("  (live half skipped: no ModernBERT checkpoint)")
         return
-    raise AssertionError("live ModernBERT should not run yet")
+    assert pipeline.heads(row)["model"] == schema.HEADS_RUN            # published still wins with the checkpoint
+    live = pipeline.heads(new)
+    assert live["model"] == infer.LIVE_MODEL
+
+
+def test_live_probabilities_match_the_published_val_outputs():
+    if not infer.available():
+        print(f"  (skipped: no ModernBERT checkpoint at {infer.checkpoint_path()})")
+        return
+    import numpy as np
+
+    from src.dataset import load_cases
+
+    published = pd_read_val()
+    df = load_cases(columns=["source_url", "split", "text_features"])
+    df = df[df["split"].eq("val") & df["source_url"].isin(published.index) & df["text_features"].ne("")]
+    df = df.assign(n=df["text_features"].str.len()).sort_values("n").iloc[[0, len(df) // 2, len(df) - 1]]
+    worst = 0.0
+    for row in df.to_dict("records"):
+        live = pipeline.heads({"source_url": "", "text_features": row["text_features"]}, backend="modernbert")
+        assert live["model"] == infer.LIVE_MODEL
+        want = schema.load_head_outputs(row["source_url"], "val")["guidelines"]
+        for code in config.GUIDELINE_CODES:
+            got = live["guidelines"][code]
+            assert abs(got["at_issue_threshold"] - want[code]["at_issue_threshold"]) < 1e-12
+            assert abs(got["p_not_at_issue"] + got["p_for"] + got["p_against"] - 1) < 1e-9
+            for key in ("p_not_at_issue", "p_for", "p_against"):
+                worst = max(worst, abs(got[key] - want[code][key]))
+    print(f"  (live versus published, max probability difference {worst:.4f} over {len(df)} val cases)")
+    assert worst < 0.02, worst
+
+
+def pd_read_val():
+    import pandas as pd
+
+    frame = pd.read_parquet(schema.HEADS_DIR / "val_probabilities.parquet")
+    return frame.set_index("source_url")
+
+
+def test_a_live_document_names_the_live_model():
+    if not infer.available():
+        print("  (skipped: no ModernBERT checkpoint)")
+        return
+    text = _case()["full_text"]
+    doc, full_text = pipeline.analyze_with_text(text, retrieve=False, use_cache=False)   # no source_url: not published
+    schema.validate(doc, full_text)
+    assert {g["model"] for g in doc["guidelines"]} == {infer.LIVE_MODEL}
+    assert doc["provenance"]["heads_model"] == infer.LIVE_MODEL
 
 
 if __name__ == "__main__":

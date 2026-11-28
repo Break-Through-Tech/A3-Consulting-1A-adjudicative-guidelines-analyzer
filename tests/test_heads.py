@@ -229,5 +229,33 @@ def test_decode_prefers_for_on_ties_like_baseline():
     assert baseline().decode_predictions(tie, 0.9).tolist() == ["NOT_AT_ISSUE"]
 
 
+def test_embed_writes_the_documented_arrays_for_guideline_f_cases():
+    from src.heads import embed, infer
+
+    if not infer.available():
+        print(f"  (skipped: no ModernBERT checkpoint at {infer.checkpoint_path()})")
+        return
+    import tempfile
+
+    with tempfile.TemporaryDirectory() as tmp:
+        out = Path(tmp) / "nested" / "embeddings.npz"
+        n = embed.write(out, limit=3, log=lambda *_: None)
+        assert n == 3 and out.exists()
+        with np.load(out) as z:
+            assert sorted(z.files) == ["embedding", "source_url", "split"]
+            assert z["embedding"].dtype == np.float16 and z["embedding"].shape == (3, 768)
+            assert z["source_url"].dtype.kind == "U" and z["split"].dtype.kind == "U"
+            assert len(set(z["source_url"])) == 3 and set(z["split"]) <= set(heads_data.SPLITS)
+            assert np.isfinite(z["embedding"].astype(np.float32)).all() and np.abs(z["embedding"]).sum() > 0
+
+
+def test_embed_selects_only_guideline_f_cases():
+    from src.heads import embed
+
+    df = embed.f_cases(limit=5)
+    assert len(df) == 5 and all("F" in list(g) for g in df["guidelines"])
+    assert df["source_url"].is_unique
+
+
 if __name__ == "__main__":
     raise SystemExit(run_module(globals(), "test_heads"))

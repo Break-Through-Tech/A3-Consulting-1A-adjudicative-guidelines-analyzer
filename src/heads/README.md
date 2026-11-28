@@ -68,6 +68,18 @@ python -m src.heads.publish --run runs/modernbert-4096
 
 It recomputes the temperatures and thresholds from `logits_val.npy` and stops if they differ from the stored ones. It does not call `evaluate_run`, so it leaves the run folder and the other tables alone. It then scores the published test file with `baseline_tables` and compares the result with `modernbert-4096.csv`, `modernbert-4096_summary.csv` and the `modernbert-4096` rows of `comparison.csv`. `--check-only` repeats that check from the published files and needs no run folder.
 
+## Live inference and embeddings
+
+`src/heads/infer.py` runs the checkpoint on new text. The pipeline uses it for any case that is not a published val or test case, when `runs/modernbert-4096/best_model.pt` exists. Set `MODERNBERT_CHECKPOINT` to use another path. It uses the GPU if there is one and the CPU otherwise. It applies the temperatures and thresholds in `calibration.json`, and its output names the model `modernbert-4096-live`. On val cases it matches the published probabilities within 0.001.
+
+`src/heads/embed.py` writes the mean-pooled encoder vector, before dropout and the classifier, for every Guideline F pool case:
+
+```bash
+python -m src.heads.embed --out runs/mitigator/mitigator_embeddings.npz
+```
+
+The file holds `source_url`, `split` and `embedding` (float16, n by 768). The full run, 13,119 cases, took about 12 minutes on an RTX 5060 laptop GPU.
+
 ## What a run writes
 
 Everything goes to `runs/<run-name>/`, which git ignores:
