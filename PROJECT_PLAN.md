@@ -195,13 +195,15 @@ Four in the dataset, four in the EDA script. All measured; each has a short fix.
 
 ### In `Challenge_Data/`
 
-**`guideline_findings` struct keys differ across shards.** pyarrow inferred the struct schema per output
-shard, so `cases_clean_1–3` carry 12 keys (B–M) and `cases_clean_4` carries 13 (A–M). After
-`pd.concat`, 22,890 rows have no `A` key at all and 7,627 do — so `d.get("A")` means "key absent" or
+**`guideline_findings` struct keys differed across shards. Fixed on Nov 27 in PR #58.** pyarrow inferred the struct schema per output
+shard, so `cases_clean_1–3` carried 12 keys (B–M) and `cases_clean_4` carried 13 (A–M). After
+`pd.concat`, 22,890 rows had no `A` key at all and 7,627 did — so `d.get("A")` means "key absent" or
 "value null" depending only on which file a row came from. Most likely no findings were lost, since
-Guideline A has ~3 corpus-wide and they land in shard 4, but the schema is not self-consistent. Fix in
+Guideline A has ~3 corpus-wide and they land in shard 4, but the schema was not self-consistent. Fix in
 the writer in `src/build_dataset.py` with an explicit A–M schema, then rebuild (~2 min); a loader-side
-patch would leave the files wrong. Until that rebuild, `load_cases()` normalizes every row to A–M on load.
+patch would leave the files wrong. PR #58 did this. `write()` now pins the column to a struct of keys A to M.
+All four shards were rebuilt and carry A–M, with the same 30,517 rows. `load_cases()` returns an identical
+frame before and after. It still normalizes every row to A–M on load, as a guard.
 
 **Missing values are empty strings, not nulls.** `text_features` has **0 nulls and 4,199 empty
 strings**. Any filter written as `.notna()` therefore excludes nothing. Use `.str.len() > 0`.
@@ -287,11 +289,11 @@ those outputs from his cached runs.
 | Sat Nov 28 (in review, PR #44) | Brian | Dashboard | Loader |
 | Rows Sat Nov 28, pass rate Sun Nov 29 (sheet built, PR #48 merged) | Everyone | Traceability check: ~25 findings each (§7) | Extractor, pilot |
 | Sun Nov 29 | Everyone | Retrieval relevance labels: ~13 queries each (§7) | Query set |
-| Sun Nov 29 (built and merged, PR #52; rationale rule Sat Nov 28; hybrid re-run Sun Nov 29) | Rashed | LLM layer, part two: similarity notes and narrative rationale | Retrieval, classifier |
+| Sun Nov 29 (built and merged, PR #52; rationale rule done, PR #57; hybrid re-run Sun Nov 29) | Rashed | LLM layer, part two: similarity notes and narrative rationale | Retrieval, classifier |
 | Sun Nov 29 | Sam | Mitigator head; metrics against the judge-ruled labels by regime, with the label check's accuracy | Extractor, classifier, label check |
 | Sun Nov 29 | Aryan | precision@5 and MRR | Relevance labels |
 | Sat Nov 28 | Brian | Analyzer app shell running on cached outputs | `schema.py` |
-| Sun Nov 29 (skeleton merged, PR #53; live ModernBERT and pasted text Sat Nov 28; final demo cache Sun Nov 29) | Rashed | Pipeline integration, plus cached outputs for the demo | Classifier, extraction, retrieval, LLM layer |
+| Sun Nov 29 (skeleton merged, PR #53; live ModernBERT and pasted text done, PR #59; final demo cache Sun Nov 29) | Rashed | Pipeline integration, plus cached outputs for the demo | Classifier, extraction, retrieval, LLM layer |
 | Sun Nov 29 | Brian | Analyzer wired to the pipeline, end to end from a raw PDF | Integration |
 | Sun Nov 29 | Sam | Evaluation write-up, model card, README draft | All metrics |
 | Sat Nov 28 | Aryan | CI: `pytest`, pre-commit and GitHub Actions running the tests and `src.validate` | — |
@@ -623,7 +625,7 @@ cols = ["case_number", "case_type", "label_source", "guidelines",
         "guideline_regime", "use_for_training", "split_group"]
 df = pd.concat([pd.read_parquet(f, columns=cols) for f in files], ignore_index=True)
 
-# guideline_findings struct keys differ per shard (see section 5) - normalize first.
+# Every shard carries keys A to M since PR #58 (see section 5). This only uppercases the directions.
 def directions(d):
     if d is None:
         return {}
@@ -668,7 +670,9 @@ Anything that would invalidate a result, checked as a test rather than by eye:
 7. LLM extraction scored against the rule-based channel on the cases where the judge cited, before being
    applied to those where they did not. Dropped quotes counted and reported, not silently discarded.
 8. Retrieval precision@5 and MRR on the 50-query set, relevance criterion fixed beforehand.
-9. Every span the app displays resolves exactly in `full_text`; report the pass rate.
+9. Every span the app displays resolves exactly in `full_text`; report the pass rate. Done in PR #56 with
+   `python -m src.span_check`. 1,339 of 1,339 spans resolve, 338 in the 10 demo documents and 1,001 kept
+   LLM quotes.
 10. End to end: feed a held-out case never seen in training, download the JSON, and confirm each offset
     quotes the text it claims to.
 

@@ -7,10 +7,11 @@
 The committed shards have four quirks, each of which has already caused a bug
 in a script that handled them by hand. They are fixed here once:
 
-1. Schema drift. pyarrow inferred the `guideline_findings` struct per output
-   shard, so cases_clean_1-3 carry keys B-M and cases_clean_4 carries A-M.
-   Every row is normalised to the full A-M set -- the same repair
-   load._reconcile_formal_findings makes for the raw source.
+1. Schema drift. pyarrow once inferred the `guideline_findings` struct per
+   output shard, so cases_clean_1-3 carried keys B-M and cases_clean_4 carried
+   A-M. The writer has pinned keys A-M since PR #58, so the rebuilt shards are
+   consistent. Every row is still normalised to the full A-M set as a guard,
+   the same repair load._reconcile_formal_findings makes for the raw source.
 2. Direction casing. `guideline_findings` says FOR/AGAINST while
    `guideline_subparagraphs[i]["finding"]` says For/Against. Both are uppercased.
 3. Missing text is '' rather than null, so `.notna()` keeps everything. The
