@@ -17,8 +17,10 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 import pandas as pd  # noqa: E402
+import pyarrow as pa  # noqa: E402
+import pyarrow.parquet as pq  # noqa: E402
 from _harness import parametrize, run_module  # noqa: E402
-from src import fields, labels, normalize, segment  # noqa: E402
+from src import config, fields, labels, normalize, segment  # noqa: E402
 
 
 # --- the two bugs that shipped ----------------------------------------------
@@ -259,6 +261,27 @@ def test_regime_detection():
     assert fields.extract_regime("cited under AG \u00b6 19(a)") == "sead4"
     assert fields.extract_regime("under E2.A2.1.2.1 of the Directive") == "directive"
     assert fields.extract_regime("no citation scheme present") == "unknown"
+
+
+# --- shard schema ------------------------------------------------------------
+
+def _findings_keys_ok(schema: pa.Schema) -> bool:
+    keys = [field.name for field in schema.field("guideline_findings").type]
+    return keys == config.GUIDELINE_CODES
+
+
+def test_every_shard_has_all_thirteen_findings_keys():
+    paths = sorted(config.OUT_DIR.glob("cases_clean_*.parquet"))
+    assert len(paths) == config.N_SHARDS
+    for path in paths:
+        assert _findings_keys_ok(pq.read_schema(path)), f"{path.name} drops a guideline_findings key"
+
+
+def test_findings_key_check_rejects_a_twelve_key_struct():
+    twelve = pa.schema([("guideline_findings", pa.struct([(c, pa.string()) for c in "BCDEFGHIJKLM"]))])
+    full = pa.schema([("guideline_findings", pa.struct([(c, pa.string()) for c in config.GUIDELINE_CODES]))])
+    assert not _findings_keys_ok(twelve)
+    assert _findings_keys_ok(full)
 
 
 if __name__ == "__main__":

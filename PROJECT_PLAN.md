@@ -257,7 +257,8 @@ below has an owner and a due date, and nothing is due before the work it depends
 Check-ins fall in the 2nd and 4th week of each month (Oct 8–14, Oct 22–28, Nov 8–14, Nov 22–28), so each
 check-in's showcase items are due just before it; if a check-in falls early in its week, move that week's
 dates up. Thanksgiving is Thursday Nov 26, so the final deliverables are due Tuesday Nov 24, with Nov 25–30
-as buffer. All LLM calls are Rashed's, so prompts, credentials and spending stay in one place; the app shows
+as buffer. That date slipped. As of Nov 27, everything left is due Sun Nov 29, and the presentation is
+Tue Dec 1. All LLM calls are Rashed's, so prompts, credentials and spending stay in one place; the app shows
 those outputs from his cached runs.
 
 ### Schedule
@@ -272,37 +273,39 @@ those outputs from his cached runs.
 | Fri Oct 16 (done) | Rashed | Laptop GPU ready: CUDA 12.8+ PyTorch | — |
 | Tue Oct 20 (done) | Aryan | `Challenge_Data/DATA_CARD.md` | EDA report |
 | Tue Oct 20 (done) | Brian | `src/sead4_reference.py`, the closed list of condition codes | — |
-| Fri Oct 23 | Everyone | Label check: 50 cases, ~13 each (§7) | — |
+| Sat Nov 28, results Sun Nov 29 | Everyone | Label check: 50 cases, ~13 each (§7) | — |
 | Fri Oct 23 (done) | Sam | 13-head TF-IDF baseline (per-guideline FOR/AGAINST) | Split, baseline |
 | Fri Oct 23 (done) | Rashed | LLM prompt templates and `src/llm/verify.py` | Code list |
 | Tue Oct 27 (done) | Brian | Rule-based extractor `src/conditions.py`, with negative tests | Code list |
-| Tue Oct 27 (in review, PR #24) | Aryan | Precedent index v1: embeddings + FAISS, smoke-tested | Loader |
+| Tue Oct 27 (done, PR #24) | Aryan | Precedent index v1: embeddings + FAISS, smoke-tested | Loader |
 | Fri Oct 30 (done) | Rashed | LLM pilot: ~50 cited cases, scored against the rule-based extractor | Templates, extractor |
 | Fri Oct 30 (done) | Rashed | First ModernBERT run (2,048-token cap) | 13-head baseline |
-| Tue Nov 10 (in review) | Rashed | LLM run on the test split's uncited F cases, PR #49; `src/schema.py`, PR #47 | Pilot, split, extractor |
+| Tue Nov 10 (done) | Rashed | LLM run on the test split's uncited F cases, PR #49; `src/schema.py`, PR #51 | Pilot, split, extractor |
 | Tue Nov 10 (done) | Rashed | ModernBERT at 4,096 tokens and the Legal-BERT comparison; per-head calibration | First run |
-| Tue Nov 10 (in review, PR #45) | Sam | Composed-vs-direct outcome | Head outputs |
-| Tue Nov 10 | Aryan | Hybrid retrieval (BM25 + dense, RRF); the 50-query set with relevance defined | Index v1 |
-| Tue Nov 10 (in review, PR #44) | Brian | Dashboard | Loader |
-| Tue Nov 10 (sheet built, PR #48 in review) | Everyone | Traceability check: ~25 findings each (§7) | Extractor, pilot |
-| Wed Nov 11 | Everyone | Retrieval relevance labels: ~13 queries each (§7) | Query set |
-| Fri Nov 13 (built, not merged) | Rashed | LLM layer, part two: similarity notes and narrative rationale | Retrieval, classifier |
-| Fri Nov 13 | Sam | Mitigator head; metrics against the judge-ruled labels by regime, with the label check's accuracy | Extractor, classifier, label check |
-| Fri Nov 13 | Aryan | precision@5 and MRR | Relevance labels |
-| Fri Nov 13 | Brian | Analyzer app shell running on cached outputs | `schema.py` |
-| Wed Nov 18 (skeleton built, not merged) | Rashed | Pipeline integration, plus cached outputs for the demo | Classifier, extraction, retrieval, LLM layer |
-| Fri Nov 20 | Brian | Analyzer wired to the pipeline, end to end from a raw PDF | Integration |
-| Fri Nov 20 | Sam | Evaluation write-up, model card, README draft | All metrics |
-| Fri Nov 20 | Aryan | CI: `pytest`, pre-commit and GitHub Actions running the tests and `src.validate` | — |
-| Tue Nov 24 | Everyone | Final README, demo rehearsal, final presentation | Everything above |
+| Sat Nov 28 (in review, PR #45) | Sam | Composed-vs-direct outcome | Head outputs |
+| Sat Nov 28 (built on `aryan_hybrid_search`, no PR yet) | Aryan | Hybrid retrieval (BM25 + dense, RRF); the 50-query set with relevance defined | Index v1 |
+| Sat Nov 28 (in review, PR #44) | Brian | Dashboard | Loader |
+| Rows Sat Nov 28, pass rate Sun Nov 29 (sheet built, PR #48 merged) | Everyone | Traceability check: ~25 findings each (§7) | Extractor, pilot |
+| Sun Nov 29 | Everyone | Retrieval relevance labels: ~13 queries each (§7) | Query set |
+| Sun Nov 29 (built and merged, PR #52; rationale rule Sat Nov 28; hybrid re-run Sun Nov 29) | Rashed | LLM layer, part two: similarity notes and narrative rationale | Retrieval, classifier |
+| Sun Nov 29 | Sam | Mitigator head; metrics against the judge-ruled labels by regime, with the label check's accuracy | Extractor, classifier, label check |
+| Sun Nov 29 | Aryan | precision@5 and MRR | Relevance labels |
+| Sat Nov 28 | Brian | Analyzer app shell running on cached outputs | `schema.py` |
+| Sun Nov 29 (skeleton merged, PR #53; live ModernBERT and pasted text Sat Nov 28; final demo cache Sun Nov 29) | Rashed | Pipeline integration, plus cached outputs for the demo | Classifier, extraction, retrieval, LLM layer |
+| Sun Nov 29 | Brian | Analyzer wired to the pipeline, end to end from a raw PDF | Integration |
+| Sun Nov 29 | Sam | Evaluation write-up, model card, README draft | All metrics |
+| Sat Nov 28 | Aryan | CI: `pytest`, pre-commit and GitHub Actions running the tests and `src.validate` | — |
+| README Sun Nov 29, presentation Tue Dec 1 | Everyone | Final README, demo rehearsal, final presentation | Everything above |
 
 **Two chains decide the final date.** Extraction: code list (Oct 20) → extractor (Oct 27) → LLM pilot
-(Oct 30) → LLM run (Nov 10). Retrieval: index (Oct 27) → hybrid retrieval (Nov 10) → similarity notes
-(Nov 13). Both feed integration (Nov 18) → the wired app (Nov 20) → the final week (Nov 24). A slip on
+(Oct 30) → LLM run (done, PR #49). Retrieval: index (done, PR #24) → hybrid retrieval (Nov 28) → similarity
+notes (built in PR #52, hybrid re-run Nov 29). Both feed integration (Nov 29) → the wired app (Nov 29) → the
+presentation (Dec 1). A slip on
 either chain moves everything after it, so tasks on them get help first.
 
-**If something has to give,** cut the stretch goals first. The Legal-BERT comparison is done, and the
-plan no longer has a local model to compare against Claude.
+**Stretch goals come last.** Nothing is cut. They start once every item above is finished, as the stretch
+goals section says. The Legal-BERT comparison is done, and the plan no longer has a local model to compare
+against Claude.
 
 ### Foundations — due by October 20
 
@@ -390,7 +393,7 @@ segmentation misses it. That gap is the LLM's job.
 
 - **Model and runs (Rashed):** Claude Haiku 5.5 on the Batch API, with total spend capped at $1.00. The
   pilot scored it against the rule-based channel on 50 cited cases. On the pilot, citation mode reached F1
-  83.3% and blind mode 80.0%. The run (Nov 10) covers the 74 F cases in the test split where the rule extractor
+  83.3% and blind mode 80.0%. The run (merged in PR #49) covers the 74 F cases in the test split where the rule extractor
   finds no citation, plus a sample of 100 cited test cases run blind. Every quote goes through
   `src/llm/verify.py` before it is kept.
 - `src/sead4_reference.py` — the closed list of 142 `AG ¶` condition codes with their paragraph text, so
@@ -414,16 +417,18 @@ evaluation follows in November. `sentence-transformers` for embeddings, FAISS fo
 over FINDINGS OF FACT paragraphs. Never index `full_text` — retrieving a verdict-bearing passage would
 leak the answer into the demo.
 
-**5. Label check — due Oct 23.** 50 pool cases, about 13 each. See §7.
+**5. Label check — due Oct 23, now Sat Nov 28 with results Sun Nov 29.** 50 pool cases, about 13 each. See §7.
 
 **Done when (Oct 30):** the 13-head TF-IDF baseline and a first ModernBERT run, each in a 13-label table
 with tier caveats; rule-based extractor validated on a hand-checked sample; LLM pilot scored against it;
 index returns sensible neighbours; 50-case label check done. Calibration curves, the Legal-BERT comparison
-and the composed-vs-direct outcome comparison follow by Nov 10.
+and the composed-vs-direct outcome comparison follow by Nov 10. As of Nov 27, the extractor hand check and the
+label check are due Sat Nov 28. The Legal-BERT comparison and per-head temperature scaling are done in PR #26.
+The reliability curve plots with the pooled curve, and composed-vs-direct in PR #45, are due Sat Nov 28.
 
 ---
 
-### November — End-to-End Analyzer & Demo (through Nov 24)
+### November — End-to-End Analyzer & Demo (through Nov 29)
 
 **Goal: everything wired into one app that takes a PDF and returns a traceable assessment, with every
 number tied to a hand-checked sample.**
@@ -464,9 +469,9 @@ repo's 147 regex tests all assert `should_match=True`, which is how two label bu
 
 **At each check-in:** Oct 8–14 the leak-free baseline and the split; Oct 22–28 the 13-head baseline, the
 extractor and index v1; Nov 8–14 retrieval, the calibrated classifier and the LLM layer; Nov 22–28 the full
-app and the presentation. Each item's date is in the schedule above.
+app and the presentation. Each item's date is in the schedule above. The presentation itself is on Tue Dec 1.
 
-**Done when (Nov 24):** the app runs end to end from a raw PDF, offline; every displayed span resolves in
+**Done when (Nov 29):** the app runs end to end from a raw PDF, offline; every displayed span resolves in
 `full_text`; metrics carry the label check's measured accuracy; README is no longer a template; CI is
 green.
 
@@ -503,9 +508,9 @@ rather than a full gold set.
 
 | Check | What a person does | When |
 |---|---|---|
-| **Label check** — 50 pool cases, ~13 each | Read the decision's FORMAL FINDINGS and confirm each stored guideline and FOR/AGAINST, noting any guideline the labels missed | Due Oct 23 |
-| **Traceability** — ~100 extracted findings | Confirm each cited span supports the `AG ¶` condition it is attached to | Due Nov 10, after the extractor (Oct 27) and the LLM pilot (Oct 30) |
-| **Retrieval relevance** — 50 queries × top 5 | Mark each precedent relevant or not, against a definition fixed before looking at results | Due Nov 11, after the query set (Nov 10) |
+| **Label check** — 50 pool cases, ~13 each | Read the decision's FORMAL FINDINGS and confirm each stored guideline and FOR/AGAINST, noting any guideline the labels missed | Rows Sat Nov 28, results Sun Nov 29 |
+| **Traceability** — ~100 extracted findings | Confirm each cited span supports the `AG ¶` condition it is attached to | Rows Sat Nov 28, pass rate Sun Nov 29 |
+| **Retrieval relevance** — 50 queries × top 5 | Mark each precedent relevant or not, against a definition fixed before looking at results | Due Sun Nov 29, after the query set (Sat Nov 28) |
 
 **What 50 cases buys, stated plainly:** the judge-ruled labels' accuracy to roughly ±6 points (95% CI, if
 it is near 95%), corpus-wide. Not per guideline, and not the Guideline F conditions — the LLM channel is
@@ -536,7 +541,9 @@ get done if left until November.
    uneven quality.
 4. **Can the program cover a small Claude API credit?** Optional: our default is an open-source model run
    locally. A credit would let us compare it against Claude Haiku 5.5 on the same pilot, which costs under
-   $1 at our scope (§6 October, item 3). A Claude subscription doesn't include API access.
+   $1 at our scope (§6 October, item 3). A Claude subscription doesn't include API access. **Decided
+   (Nov 9):** we use Claude Haiku 5.5 on the Batch API with our own API key, and the code caps total spend at
+   $1.00; $0.1924 was spent by Nov 27. No local model is run, so there is no local-versus-Claude comparison.
 
 ### One clarification on corpus size
 
@@ -646,6 +653,9 @@ Anything that would invalidate a result, checked as a test rather than by eye:
 1. `python -m src.validate` — existing checks plus split and condition assertions.
 2. `python tests/test_units.py` — including negative cases for the new `AG ¶ 19(x)` / `20(x)` and
    Directive-era patterns: they must not match bare `AG ¶ 19`, `AG ¶ 190`, or a POLICIES recitation.
+   These negative tests live in `tests/test_conditions.py`, in
+   `test_bare_paragraphs_and_invented_codes_do_not_match` and `test_a_policies_recitation_is_not_a_citation`,
+   not in `tests/test_units.py`.
 3. **Leakage** — retrain the outcome baseline on `text_features` and confirm it lands near 82.5%, not
    95.7%. Movement toward 95% means verdict text has re-entered the features.
 4. **Split integrity** — zero `split_group` overlap across train/val/test, and every guideline and
