@@ -18,6 +18,8 @@ import time
 
 import numpy as np
 import pandas as pd
+import pyarrow as pa
+import pyarrow.parquet as pq
 
 from src import config, dedupe, fields, labels, load, normalize, segment
 
@@ -156,6 +158,21 @@ def build(limit: int | None = None) -> tuple[pd.DataFrame, dict]:
     return out, stats, excluded
 
 
+FINDINGS_TYPE = pa.struct([(code, pa.string()) for code in config.GUIDELINE_CODES])
+
+
+def _shard_schema(shard: pd.DataFrame) -> pa.Schema:
+    """The shard's inferred schema with guideline_findings pinned to keys A-M.
+
+    pyarrow infers a struct from the keys present in the rows it sees, so a
+    shard with no Guideline A finding wrote 12 keys. Pinning the type keeps
+    every shard identical for this column.
+    """
+    schema = pa.Schema.from_pandas(shard, preserve_index=False)
+    index = schema.get_field_index("guideline_findings")
+    return schema.set(index, pa.field("guideline_findings", FINDINGS_TYPE))
+
+
 def write(df: pd.DataFrame, stats: dict, excluded: pd.DataFrame) -> None:
     config.OUT_DIR.mkdir(parents=True, exist_ok=True)
 
@@ -167,9 +184,9 @@ def write(df: pd.DataFrame, stats: dict, excluded: pd.DataFrame) -> None:
     written = []
     for index, shard in enumerate(shards, start=1):
         path = config.OUT_DIR / f"cases_clean_{index}.parquet"
-        shard.to_parquet(
-            path, index=False,
-            engine=config.PARQUET_ENGINE, compression=config.PARQUET_COMPRESSION,
+        pq.write_table(
+            pa.Table.from_pandas(shard, schema=_shard_schema(shard), preserve_index=False),
+            path, compression=config.PARQUET_COMPRESSION,
         )
         with open(path, "rb") as handle:          # parquet footer magic
             handle.seek(-4, 2)
