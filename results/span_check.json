@@ -1,0 +1,63 @@
+{
+  "demo": {
+    "documents": 10,
+    "kinds": {
+      "quote": {
+        "spans": 125,
+        "resolved": 125,
+        "failed": 0,
+        "pass_rate": 1.0
+      },
+      "context": {
+        "spans": 125,
+        "resolved": 125,
+        "failed": 0,
+        "pass_rate": 1.0
+      },
+      "lead_in": {
+        "spans": 38,
+        "resolved": 38,
+        "failed": 0,
+        "pass_rate": 1.0
+      },
+      "precedent": {
+        "spans": 50,
+        "resolved": 50,
+        "failed": 0,
+        "pass_rate": 1.0
+      },
+      "all": {
+        "spans": 338,
+        "resolved": 338,
+        "failed": 0,
+        "pass_rate": 1.0
+      }
+    },
+    "failed": [],
+    "other_problems": []
+  },
+  "llm": {
+    "cases": 156,
+    "kinds": {
+      "quote": {
+        "spans": 1001,
+        "resolved": 1001,
+        "failed": 0,
+        "pass_rate": 1.0
+      },
+      "all": {
+        "spans": 1001,
+        "resolved": 1001,
+        "failed": 0,
+        "pass_rate": 1.0
+      }
+    },
+    "failed": []
+  },
+  "total": {
+    "spans": 1339,
+    "resolved": 1339,
+    "failed": 0,
+    "pass_rate": 1.0
+  }
+}
