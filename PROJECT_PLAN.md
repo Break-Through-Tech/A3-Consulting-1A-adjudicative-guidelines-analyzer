@@ -196,10 +196,10 @@ Four in the dataset, four in the EDA script. All measured; each has a short fix.
 ### In `Challenge_Data/`
 
 **`guideline_findings` struct keys differed across shards. Fixed on Nov 27 in PR #58.** pyarrow inferred the struct schema per output
-shard, so `cases_clean_1–3` carry 12 keys (B–M) and `cases_clean_4` carries 13 (A–M). After
-`pd.concat`, 22,890 rows have no `A` key at all and 7,627 do — so `d.get("A")` means "key absent" or
+shard, so `cases_clean_1–3` carried 12 keys (B–M) and `cases_clean_4` carried 13 (A–M). After
+`pd.concat`, 22,890 rows had no `A` key at all and 7,627 did — so `d.get("A")` means "key absent" or
 "value null" depending only on which file a row came from. Most likely no findings were lost, since
-Guideline A has ~3 corpus-wide and they land in shard 4, but the schema is not self-consistent. Fix in
+Guideline A has ~3 corpus-wide and they land in shard 4, but the schema was not self-consistent. Fix in
 the writer in `src/build_dataset.py` with an explicit A–M schema, then rebuild (~2 min); a loader-side
 patch would leave the files wrong. PR #58 did this. `write()` now pins the column to a struct of keys A to M.
 All four shards were rebuilt and carry A–M, with the same 30,517 rows. `load_cases()` returns an identical
@@ -671,7 +671,7 @@ Anything that would invalidate a result, checked as a test rather than by eye:
    applied to those where they did not. Dropped quotes counted and reported, not silently discarded.
 8. Retrieval precision@5 and MRR on the 50-query set, relevance criterion fixed beforehand.
 9. Every span the app displays resolves exactly in `full_text`; report the pass rate. Done in PR #56 with
-   `python -m src.span_check`: 1,339 of 1,339 spans resolve, 338 in the 10 demo documents and 1,001 kept
+   `python -m src.span_check`. 1,339 of 1,339 spans resolve, 338 in the 10 demo documents and 1,001 kept
    LLM quotes.
 10. End to end: feed a held-out case never seen in training, download the JSON, and confirm each offset
     quotes the text it claims to.
