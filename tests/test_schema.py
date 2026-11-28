@@ -341,7 +341,7 @@ def test_json_schema_matches_the_typeddicts():
     assert schema["additionalProperties"] is False
     for name in ("CaseInfo", "Guideline", "Recommendation", "Span", "Condition", "Precedent", "Rationale", "Provenance"):
         cls = getattr(S, name)
-        assert schema["$defs"][name]["required"] == list(cls.__annotations__), name
+        assert schema["$defs"][name]["required"] == [k for k in cls.__annotations__ if k in cls.__required_keys__], name
     assert schema["$defs"]["Guideline"]["properties"]["status"]["enum"] == ["NOT_AT_ISSUE", "FOR", "AGAINST"]
     json.dumps(schema)
 

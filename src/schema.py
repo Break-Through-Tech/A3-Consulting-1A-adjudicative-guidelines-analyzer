@@ -18,7 +18,7 @@ One document holds everything the app shows for a case:
     precedents      similar decisions from retrieval, with the best paragraph
     rationale       a short text and the ids of what it rests on, or null
     provenance      model names, calibration file, prompt hashes, run dates and
-                    the drop counts from `verify`
+                    the drop counts from `verify`, and an optional list of warnings
 
 The TypedDicts below are the single definition. `json_schema()` is generated
 from them, and `validate()` checks a document against them and then checks the
@@ -160,7 +160,11 @@ class Rationale(TypedDict):
     guideline_codes: list[str]
 
 
-class Provenance(TypedDict):
+class _ProvenanceOptional(TypedDict, total=False):
+    warnings: list[str]             # read-time cautions, present only when there is one
+
+
+class Provenance(_ProvenanceOptional):
     schema_version: str
     heads_model: str
     calibration: str
@@ -228,7 +232,7 @@ def _schema_for(hint, defs: dict[str, dict]) -> dict:
             defs[name] = {
                 "type": "object",
                 "properties": {key: _schema_for(value, defs) for key, value in fields.items()},
-                "required": list(fields),
+                "required": [key for key in fields if key in hint.__required_keys__],
                 "additionalProperties": False,
             }
         return {"$ref": f"#/$defs/{name}"}
@@ -318,7 +322,7 @@ def _check_type(value, hint, path: str, problems: list[str]) -> None:
             return
         fields = get_type_hints(hint)
         for key in fields:
-            if key not in value:
+            if key not in value and key in hint.__required_keys__:
                 problems.append(f"{path}: missing {key!r}")
         for key in value:
             if key not in fields:
@@ -657,9 +661,11 @@ def build_document(
         "unmapped_hits": {"rule": rule_unmapped, "llm": llm_unmapped},
     }
     for key, value in (provenance or {}).items():
-        if key not in meta:
+        if key not in meta and key != "warnings":
             raise KeyError(f"unknown provenance field {key!r}")
         meta[key] = dict(value) if isinstance(value, Mapping) else value
+    if not meta.get("warnings", True):
+        del meta["warnings"]
 
     return {
         "schema_version": SCHEMA_VERSION,

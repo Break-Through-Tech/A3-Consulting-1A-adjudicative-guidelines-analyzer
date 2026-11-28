@@ -419,6 +419,12 @@
     "Provenance": {
       "type": "object",
       "properties": {
+        "warnings": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
         "schema_version": {
           "type": "string"
         },
