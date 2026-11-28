@@ -55,6 +55,7 @@ The run folders are gitignored, so the probabilities that other work needs live 
 | `val_probabilities.parquet` | 3,137 val cases, one row each |
 | `test_probabilities.parquet` | 3,137 test cases, one row each |
 | `calibration.json` | Per head `temperature` and `at_issue_threshold`, plus the val NLL and test ECE before and after scaling |
+| `mitigator_embeddings.npz` | 13,119 Guideline F pool cases, one row each, with `source_url`, `split` and a 768-wide `embedding` |
 
 Both parquet files have the same 42 columns. `case_number`, `source_url` and `split` come first. Then each guideline code G from A to M has `p_not_at_issue_G`, `p_for_G` and `p_against_G`, which sum to 1 for each head. Rows keep the order of `cases_val.csv` and `cases_test.csv`. Several cases share a `case_number`, so join on `source_url`.
 
@@ -75,10 +76,10 @@ It recomputes the temperatures and thresholds from `logits_val.npy` and stops if
 `src/heads/embed.py` writes the mean-pooled encoder vector, before dropout and the classifier, for every Guideline F pool case:
 
 ```bash
-python -m src.heads.embed --out runs/mitigator/mitigator_embeddings.npz
+python -m src.heads.embed --out results/heads/modernbert-4096/mitigator_embeddings.npz
 ```
 
-The file holds `source_url`, `split` and `embedding` (float16, n by 768). The full run, 13,119 cases, took about 12 minutes on an RTX 5060 laptop GPU.
+The file is committed at `results/heads/modernbert-4096/mitigator_embeddings.npz`. It holds `source_url`, `split` and `embedding` (float16, n by 768). The full run, 13,119 cases, took about 12 minutes on an RTX 5060 laptop GPU.
 
 ## What a run writes
 

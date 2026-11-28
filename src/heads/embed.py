@@ -1,6 +1,6 @@
 """Mean-pooled ModernBERT-4096 embeddings for every Guideline F pool case, for the mitigator head.
 
-    python -m src.heads.embed --out runs/mitigator/mitigator_embeddings.npz
+    python -m src.heads.embed --out results/heads/modernbert-4096/mitigator_embeddings.npz
     python -m src.heads.embed --out x.npz --limit 3          # a quick check
 
 The vector is the `pooled` tensor inside GuidelineHeads.forward: the mean of the
