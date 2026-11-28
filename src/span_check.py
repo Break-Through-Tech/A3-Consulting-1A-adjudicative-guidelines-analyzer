@@ -5,15 +5,17 @@
 PROJECT_PLAN.md section 11, item 9. A span resolves when `full_text[start:end]`
 equals the text stored with it. Two sources are checked:
 
-    demo      the 10 documents in results/demo/, through `schema.problems()`.
-              The kinds are condition quote, context and lead_in. A precedent
-              paragraph stores offsets only, so it is checked for being a
-              non-empty range inside the precedent case's own full_text.
+    demo      the 10 documents in results/demo/. The kinds are condition
+              quote, context and lead_in, each compared with full_text
+              directly. `schema.problems()` also runs, and any other problem
+              it reports fails the run. A precedent paragraph stores offsets
+              only, so it is checked for being a non-empty range inside the
+              precedent case's own full_text.
     llm       the quotes in results/llm/run/kept.csv against each case's
               full_text, joined on source_url through cases.csv.
 
 Writes results/span_check.json and results/span_check.md. Exit code 1 when any
-span fails.
+span fails or a demo document has any other schema problem.
 """
 from __future__ import annotations
 
@@ -73,22 +75,27 @@ def check_document(doc: dict, full_text: str, precedent_texts: dict[str, str] | 
     failed: list[dict] = []
     conditions = doc["conditions"]
     for item in conditions:
-        total["quote"] += 1
-        total["context"] += 1
+        spans = [("quote", item["start"], item["end"], item["quote"]),
+                 ("context", item["context"]["start"], item["context"]["end"], item["context"]["text"])]
         if item["lead_in"] is not None:
-            total["lead_in"] += 1
+            spans.append(("lead_in", item["lead_in"]["start"], item["lead_in"]["end"], item["lead_in"]["text"]))
+        for kind, start, end, text in spans:
+            total[kind] += 1
+            if not 0 <= start < end <= len(full_text):
+                detail = f"offsets fall outside full_text of length {len(full_text)}"
+            elif full_text[start:end] != text:
+                detail = "full_text[start:end] is not the stored text"
+            else:
+                continue
+            failed.append({"kind": kind, "id": item["id"], "start": start, "end": end, "detail": detail})
 
+    # The direct check above decides every span. schema.problems() runs too, and any line it gives
+    # that is not about one of those spans is kept as `other`, which also fails the run.
     other: list[str] = []
     for message in schema.problems(doc, full_text):
         match = _PROBLEM.match(message)
-        kind = _kind_of_problem(match.group(3)) if match else None
-        if kind is None:
+        if match is None or _kind_of_problem(match.group(3)) is None:
             other.append(message)
-            continue
-        item = conditions[int(match.group(1))]
-        span = item if kind == "quote" else item[kind]
-        failed.append({"kind": kind, "id": match.group(2), "start": span["start"], "end": span["end"],
-                       "detail": match.group(3)})
 
     for item in doc["precedents"]:
         total["precedent"] += 1
@@ -212,7 +219,7 @@ def main(argv: list[str] | None = None) -> int:
     OUT_JSON.write_text(json.dumps(result, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     OUT_MD.write_text(report(result), encoding="utf-8", newline="\n")
     print(report(result))
-    return 1 if result["total"]["failed"] else 0
+    return 1 if result["total"]["failed"] or result["demo"]["other_problems"] else 0
 
 
 if __name__ == "__main__":
