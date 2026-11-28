@@ -255,8 +255,12 @@ RATIONALE_SYSTEM_PROMPT = (
     "character for character from one Evidence or Sentence line, at least three words at "
     "a time. List every such quote in `quotes` with the id of the condition it came from.\n"
     "- Do not write condition ids or citation codes in the text.\n"
+    "- Write only about guidelines that have at least one condition in the list. Leave "
+    "out, by letter and by name, any guideline that has none, even when it has a predicted "
+    "status.\n"
     "- Put in `condition_ids` every condition the text relies on, and in "
-    "`guideline_codes` every guideline it discusses.\n\n"
+    "`guideline_codes` every guideline it discusses. Each of those guidelines must have a "
+    "condition in `condition_ids`.\n\n"
     "Answer only with JSON in the required shape."
 )
 
