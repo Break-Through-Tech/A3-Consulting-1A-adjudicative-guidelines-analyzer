@@ -65,7 +65,7 @@ _TOOL_REASONS = re.compile(
     r"(?:also\s+)?(?:judge[sd]?|conclude[sd]?|determine[sd]?|decide[sd]?|found\s+that|finds\s+that|"
     r"weigh(?:s|ed)?|consider(?:s|ed)?|reflects?|rests?\s+on|is\s+based\s+on|draws?\s+on|uses?|relies\s+on)\b",
     re.I)
-_GUIDELINE_LETTERS = re.compile(r"\bGuidelines?\s+([A-M](?:\s*(?:,|and|or|&)\s*(?:(?:and|or)\s+)?[A-M]\b)*)")
+_GUIDELINE_LETTERS = re.compile(r"\bGuidelines?\s+([A-M]\b(?:\s*(?:,|and|or|&)\s*(?:(?:and|or)\s+)?[A-M]\b)*)")
 _CODES_IN_TEXT = re.compile(r"\bc\d+\b|\[c\d+\]|AG\s*¶|\b(?:19|20)\([a-g]\)", re.I)
 
 

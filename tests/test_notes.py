@@ -214,6 +214,11 @@ def test_rationale_for_guidelines_with_conditions_still_passes():
     assert N.check_rationale(ok, _doc(), FULL)[1] == []
 
 
+def test_a_capitalised_word_after_guidelines_is_not_a_letter():
+    assert not N._names_other_guidelines("The Guidelines Apply to every case.", _doc(), {"F"})
+    assert N._names_other_guidelines("The Guidelines A and F apply.", _doc(), {"F"})
+
+
 def test_a_guideline_named_only_inside_a_quote_is_not_flagged():
     answer = _with(text="The tool predicts Guideline F against. The decision says \"Applicant owes $20,000 on "
                         "six credit cards\". Quoted aside: \"Guideline E, Name E\".")
