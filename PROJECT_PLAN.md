@@ -303,8 +303,9 @@ notes (built in PR #52, hybrid re-run Nov 29). Both feed integration (Nov 29) �
 presentation (Dec 1). A slip on
 either chain moves everything after it, so tasks on them get help first.
 
-**If something has to give,** cut the stretch goals first. The Legal-BERT comparison is done, and the
-plan no longer has a local model to compare against Claude.
+**Stretch goals come last.** Nothing is cut. They start once every item above is finished, as the stretch
+goals section says. The Legal-BERT comparison is done, and the plan no longer has a local model to compare
+against Claude.
 
 ### Foundations — due by October 20
 
@@ -421,7 +422,9 @@ leak the answer into the demo.
 **Done when (Oct 30):** the 13-head TF-IDF baseline and a first ModernBERT run, each in a 13-label table
 with tier caveats; rule-based extractor validated on a hand-checked sample; LLM pilot scored against it;
 index returns sensible neighbours; 50-case label check done. Calibration curves, the Legal-BERT comparison
-and the composed-vs-direct outcome comparison follow by Nov 10.
+and the composed-vs-direct outcome comparison follow by Nov 10. As of Nov 27, the extractor hand check and the
+label check are due Sat Nov 28. The Legal-BERT comparison and per-head temperature scaling are done in PR #26.
+The reliability curve plots with the pooled curve, and composed-vs-direct in PR #45, are due Sat Nov 28.
 
 ---
 
@@ -466,7 +469,7 @@ repo's 147 regex tests all assert `should_match=True`, which is how two label bu
 
 **At each check-in:** Oct 8–14 the leak-free baseline and the split; Oct 22–28 the 13-head baseline, the
 extractor and index v1; Nov 8–14 retrieval, the calibrated classifier and the LLM layer; Nov 22–28 the full
-app and the presentation. Each item's date is in the schedule above.
+app and the presentation. Each item's date is in the schedule above. The presentation itself is on Tue Dec 1.
 
 **Done when (Nov 29):** the app runs end to end from a raw PDF, offline; every displayed span resolves in
 `full_text`; metrics carry the label check's measured accuracy; README is no longer a template; CI is
@@ -538,7 +541,9 @@ get done if left until November.
    uneven quality.
 4. **Can the program cover a small Claude API credit?** Optional: our default is an open-source model run
    locally. A credit would let us compare it against Claude Haiku 5.5 on the same pilot, which costs under
-   $1 at our scope (§6 October, item 3). A Claude subscription doesn't include API access.
+   $1 at our scope (§6 October, item 3). A Claude subscription doesn't include API access. **Decided
+   (Nov 9):** we use Claude Haiku 5.5 on the Batch API with our own API key, and the code caps total spend at
+   $1.00; $0.1924 was spent by Nov 27. No local model is run, so there is no local-versus-Claude comparison.
 
 ### One clarification on corpus size
 
